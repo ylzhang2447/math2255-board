@@ -59,6 +59,7 @@ th{color:var(--y);font-size:.82em}
 .hw{min-height:1.2em}
 body.guides .hw{outline:1px dashed rgba(69,207,194,.32);border-radius:4px}
 
+#wet{position:absolute;inset:0;pointer-events:none;z-index:6;transform:translateZ(0)}
 #ink{position:absolute;inset:0;touch-action:none;z-index:5;
   transform:translateZ(0)}
 #topnav{position:absolute;top:0;right:0;z-index:12;display:flex;gap:6px;align-items:center;
@@ -272,6 +273,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
 </div>
 
 <canvas id="ink"></canvas>
+<canvas id="wet"></canvas>
 <div id="edge"></div>
 
 <div id="hint">
@@ -324,6 +326,9 @@ function fit(){
   var r=Math.min(window.devicePixelRatio||1,DPRCAP);
   cv.width=Math.round(innerWidth*r);cv.height=Math.round(innerHeight*r);
   cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+  wet.width=cv.width;wet.height=cv.height;
+  wet.style.width=innerWidth+'px';wet.style.height=innerHeight+'px';
+  wx.setTransform(r,0,0,r,0,0);wetBox=null;
   cx.setTransform(r,0,0,r,0,0);syncRect();redraw();
 }
 function setStyle(st){
@@ -381,8 +386,35 @@ cv.addEventListener('pointerdown',function(e){
   cx.globalCompositeOperation='source-over';
 },{passive:false});
 var pend=[],rafId=0,MINSTEP=1.7;
+var wet=document.getElementById('wet');
+var wx=wet.getContext('2d',{desynchronized:true})||wet.getContext('2d');
+var wetBox=null;
+function clearWet(){
+  if(!wetBox)return;
+  wx.clearRect(wetBox[0]-4,wetBox[1]-4,wetBox[2]-wetBox[0]+8,wetBox[3]-wetBox[1]+8);
+  wetBox=null;
+}
+function drawPredicted(e){
+  clearWet();
+  if(!cur||!e.getPredictedEvents)return;
+  var pr=e.getPredictedEvents(); if(!pr.length)return;
+  var a=cur.pts[cur.pts.length-1];
+  var x0=a.x,y0=a.y,x1=a.x,y1=a.y;
+  wx.lineCap='round';wx.lineJoin='round';
+  wx.strokeStyle=cur.c;wx.lineWidth=cur.w;
+  wx.globalCompositeOperation=cur.e?'destination-out':'source-over';
+  wx.beginPath();wx.moveTo(a.x,a.y);
+  for(var i=0;i<pr.length;i++){
+    var p=xy(pr[i]); wx.lineTo(p.x,p.y);
+    if(p.x<x0)x0=p.x; if(p.y<y0)y0=p.y;
+    if(p.x>x1)x1=p.x; if(p.y>y1)y1=p.y;
+  }
+  wx.stroke();
+  wetBox=[x0-cur.w,y0-cur.w,x1+cur.w,y1+cur.w];
+}
 function flush(){
   rafId=0;
+  clearWet();
   if(!cur||!pend.length)return;
   setStyle(cur);
   cx.beginPath();
@@ -405,10 +437,11 @@ cv.addEventListener('pointermove',function(e){
     pend.push(p); last=p;
   }
   if(pend.length && !rafId) rafId=requestAnimationFrame(flush);
+  drawPredicted(e);
 },{passive:false});
 function end(e){ if(e.pointerType&&e.pointerType!=='pen')return;
   if(rafId){cancelAnimationFrame(rafId);rafId=0;} flush();
-  drawing=false;cur=null;pend.length=0; }
+  clearWet(); drawing=false;cur=null;pend.length=0; }
 cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
 
 // ---- taps advance (finger/mouse only) ----
