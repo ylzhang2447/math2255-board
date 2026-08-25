@@ -17,7 +17,7 @@
   --fu:system-ui,-apple-system,"PingFang SC",sans-serif;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0;background:var(--bd);
+html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
   overscroll-behavior:none;-webkit-user-select:none;user-select:none}
 #app{position:relative;width:100%;height:100dvh;height:100svh;min-height:480px;overflow:hidden;background:var(--bd);
   background-image:linear-gradient(var(--gr) 1px,transparent 1px),
@@ -375,8 +375,13 @@ function pgDn(){ if(P<pgs.length-1){P++;S=maxStep[P];show();} }
 var RC={left:0,top:0};
 function syncRect(){RC=cv.getBoundingClientRect();}
 function xy(e){return {x:e.clientX-RC.left,y:e.clientY-RC.top};}
+function isPen(e){
+  if(e.pointerType==='pen')return true;
+  if(e.pointerType==='touch'&&(e.width||99)<=12&&(e.height||99)<=12)return true;
+  return false;
+}
 cv.addEventListener('pointerdown',function(e){
-  if(e.pointerType!=='pen')return;
+  if(!isPen(e))return;
   e.preventDefault();drawing=true;syncRect();
   var p=xy(e),w=erase?26:wid*(0.55+0.9*(e.pressure||0.5));
   cur={c:col,w:w,e:erase,pts:[p]};strokes[P].push(cur);
@@ -426,7 +431,7 @@ function flush(){
   pend.length=0;
 }
 cv.addEventListener('pointermove',function(e){
-  if(!drawing||e.pointerType!=='pen')return;
+  if(!drawing||!isPen(e))return;
   e.preventDefault();
   var evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];
   var last=pend.length?pend[pend.length-1]:cur.pts[cur.pts.length-1];
@@ -439,20 +444,24 @@ cv.addEventListener('pointermove',function(e){
   if(pend.length && !rafId) rafId=requestAnimationFrame(flush);
   drawPredicted(e);
 },{passive:false});
-function end(e){ if(e.pointerType&&e.pointerType!=='pen')return;
+function end(e){ if(e.pointerType&&!isPen(e))return;
   if(rafId){cancelAnimationFrame(rafId);rafId=0;} flush();
   clearWet(); drawing=false;cur=null;pend.length=0; }
 cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
 
 // ---- taps advance (finger/mouse only) ----
 cv.addEventListener('pointerup',function(e){
-  if(e.pointerType==='pen')return;
+  if(isPen(e))return;
   startClk();
   if(!document.getElementById('hint').classList.contains('hide')){
     document.getElementById('hint').classList.add('hide');sx=null;return;}
   var dx=(sx===null)?0:e.clientX-sx, dy=(sy===null)?0:e.clientY-sy;
-  sx=sy=null;
-  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)){ (dx<0?next:prev)(); return; }
+  var dur=sT?Date.now()-sT:0, mv=moved;
+  sx=sy=null; sT=0; moved=0;
+  // deliberate horizontal swipe -> navigate
+  if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*2){ (dx<0?next:prev)(); showChrome(); return; }
+  // a real tap: barely moved and short. anything else is writing -> ignore
+  if(mv>10||dur>350){ showChrome(); return; }
   (e.clientX<innerWidth*0.28?prev:next)();
   showChrome();
 });
@@ -468,8 +477,13 @@ bindNav('prev2',prev); bindNav('next2',next);
 
 // ---- swipe (touch only) ----
 var sx=null,sy=null;
+var sT=0,moved=0;
 cv.addEventListener('pointerdown',function(e){
-  if(e.pointerType==='pen')return; sx=e.clientX; sy=e.clientY;
+  if(e.pointerType==='pen')return; sx=e.clientX; sy=e.clientY; sT=Date.now(); moved=0;
+});
+cv.addEventListener('pointermove',function(e){
+  if(e.pointerType==='pen'||sx===null)return;
+  var d=Math.abs(e.clientX-sx)+Math.abs(e.clientY-sy); if(d>moved)moved=d;
 });
 
 // ---- toolbar ----
