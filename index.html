@@ -23,21 +23,21 @@ html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
   background-image:linear-gradient(var(--gr) 1px,transparent 1px),
     linear-gradient(90deg,var(--gr) 1px,transparent 1px);
   background-size:32px 32px;color:var(--w);font-family:var(--fm)}
-#stage{position:absolute;inset:0;padding:3.0vh 4vw 4px;overflow:hidden}
-.pg{display:none;height:auto;transform-origin:top left}
+#stage{position:absolute;inset:0;padding:3.0vh 4vw 60px;overflow:hidden}
+.pg{display:none;height:100%}
 .pg.on{display:block}
 [data-s]{opacity:0;transition:opacity .16s ease}
 [data-s].vis{opacity:1}
 [data-until].gone{display:none}
 
-.h{font-size:clamp(1.5rem,3.4vw,2.6rem);color:var(--y);display:table;
+.h{font-size:clamp(1.2rem,min(3.4vw,5.00vh),2.6rem);color:var(--y);display:table;
   border-bottom:.09em solid var(--y);padding-bottom:.08em;margin:0 0 .55em}
-.lb{font-size:clamp(1.05rem,2.1vw,1.6rem);color:var(--y);display:table;
+.lb{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);color:var(--y);display:table;
   border-bottom:.07em solid var(--y);padding-bottom:.06em;margin:.65em 0 .32em}
-.l{font-size:clamp(1.05rem,2.1vw,1.62rem);line-height:1.72;margin:0 0 .1em}
-.e{font-size:clamp(1.2rem,2.5vw,1.95rem);line-height:1.95;margin:.3em 0 .3em 1.1em}
+.l{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.62rem);line-height:1.72;margin:0 0 .1em}
+.e{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.95;margin:.3em 0 .3em 1.1em}
 .e.t{margin-top:.16em;margin-bottom:.16em}
-.a{font-size:clamp(.95rem,1.8vw,1.4rem);color:var(--m);margin:.12em 0 .3em 2em}
+.a{font-size:clamp(.8rem,min(1.8vw,2.65vh),1.4rem);color:var(--m);margin:.12em 0 .3em 2em}
 .i{margin-left:1.5em}
 .n{color:var(--m)} .g{color:var(--c)} .v{color:var(--o)}
 .d{color:#7C8A8E}
@@ -51,8 +51,8 @@ sup,sub{line-height:0;font-size:.68em}
 .fr>span{padding:0 .28em;display:block}
 .fr>span:first-child{border-bottom:.06em solid currentColor;padding-bottom:.1em}
 .fr>span:last-child{padding-top:.12em}
-ol.st{margin:.25em 0 .25em 1.1em;padding-left:1.1em;font-size:clamp(1.05rem,2.1vw,1.6rem);line-height:1.65}
-table{border-collapse:collapse;margin:.4em 0 .4em 1.1em;font-size:clamp(1rem,2vw,1.5rem);line-height:2}
+ol.st{margin:.25em 0 .25em 1.1em;padding-left:1.1em;font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);line-height:1.65}
+table{border-collapse:collapse;margin:.4em 0 .4em 1.1em;font-size:clamp(.85rem,min(2vw,2.94vh),1.5rem);line-height:2}
 td,th{padding:.16em 1.4em .16em 0;text-align:left;font-weight:400}
 th{color:var(--y);font-size:.82em}
 .cols{display:flex;gap:5vw;align-items:flex-start}
@@ -97,7 +97,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
 <div id="app">
 <div id="topnav">
   <button class="btn nav" id="prev2">&#9664;</button>
-  <span id="pos2">1 / 12</span>
+  <span id="pos2">1 / 13</span>
   <button class="btn nav" id="next2">&#9654;</button>
 </div>
 <div id="stage">
@@ -138,12 +138,22 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="e t" data-s="3"><span class="g">(3)</span>&nbsp; <span class="fr"><span><i>dx</i></span><span><i>dt</i></span></span> = <i>ax</i> &minus; &alpha;<i>xy</i>,&nbsp;&nbsp; <span class="fr"><span><i>dy</i></span><span><i>dt</i></span></span> = &minus;<i>cy</i> + &gamma;<i>xy</i></p>
   <p class="e t" data-s="4"><span class="g">(4)</span>&nbsp; <i>y</i>&#8244; + 2<b>e</b><sup><i>t</i></sup><i>y</i>&#8243; + <i>yy</i>&#8242; = <i>t</i><sup>4</sup></p>
   <p class="e t" data-s="5"><span class="g">(5)</span>&nbsp; <span class="fr"><span><i>d</i><sup>2</sup>&theta;</span><span><i>dt</i><sup>2</sup></span></span> + <span class="fr"><span><i>g</i></span><span><i>L</i></span></span> sin&thinsp;&theta; = 0 <span class="d">&nbsp;pendulum</span></p>
-  <div class="hw" style="min-height:1.2vh"></div>
-  <p class="e t" data-s="6"><span class="d">first</span> (3)&nbsp;&nbsp;&nbsp; <span class="d">second</span> (1)&nbsp;(2)&nbsp;(5)&nbsp;&nbsp;&nbsp; <span class="d">third</span> (4)</p>
-  <p class="l" data-s="7">Ordinary or partial, it makes no difference. This course: almost everything is <span class="g">first</span> or <span class="g">second</span> order.</p>
 </div>
 
 <div class="pg" data-n="4">
+  <p class="h" data-s="0">Order &#8212; where we landed</p>
+  <table data-s="0">
+    <tr><th>order</th><th>equations</th></tr>
+    <tr><td>first</td><td>(3)</td></tr>
+    <tr><td>second</td><td>(1)&nbsp; (2)&nbsp; (5)</td></tr>
+    <tr><td>third</td><td>(4)</td></tr>
+  </table>
+  <p class="l" data-s="1">Order doesn&#8217;t care whether the derivatives are ordinary or partial.</p>
+  <p class="a" data-s="2">&#8627; the wave equation is second order, and its derivatives are partial</p>
+  <p class="l" data-s="3">This course: almost everything is <span class="g">first</span> or <span class="g">second</span> order.</p>
+</div>
+
+<div class="pg" data-n="5">
   <p class="h" data-s="0">ODE, PDE, and systems</p>
   <p class="lb" data-s="1">One independent variable</p>
   <p class="e t" data-s="1" data-until="2"><span class="g">(1)</span>&nbsp; <i>mu</i>&#8243; + &gamma;<i>u</i>&#8242; + <i>ku</i> = <i>F</i>(<i>t</i>) <span class="d">&nbsp;spring</span></p>
@@ -164,7 +174,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="l" data-s="10">In this course: <span class="g">one ODE, one unknown function</span>.</p>
 </div>
 
-<div class="pg" data-n="5">
+<div class="pg" data-n="6">
   <p class="h" data-s="0">Linear equations</p>
   <p class="l" data-s="1">Linear if we can write it as</p>
   <p class="e" data-s="2"><i>a</i><sub>0</sub>(<i>t</i>)<i>y</i><sup>(<i>n</i>)</sup> + <i>a</i><sub>1</sub>(<i>t</i>)<i>y</i><sup>(<i>n</i>&minus;1)</sup> + &hellip; + <i>a<sub>n</sub></i>(<i>t</i>)<i>y</i> = <i>g</i>(<i>t</i>)</p>
@@ -183,7 +193,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="e t" data-s="11"><span class="g">nonlinear:</span>&nbsp; (4) <span class="d">&larr; <i>yy</i>&#8242;</span>&nbsp;&nbsp; (3) <span class="d">&larr; <i>xy</i></span>&nbsp;&nbsp; (5) <span class="d">&larr; sin&thinsp;&theta;</span></p>
 </div>
 
-<div class="pg" data-n="6">
+<div class="pg" data-n="7">
   <p class="h" data-s="0">Why we care: linearization</p>
   <p class="l" data-s="1">The pendulum is nonlinear because of sin&thinsp;&theta;.</p>
   <p class="e t" data-s="2"><span class="fr"><span><i>d</i><sup>2</sup>&theta;</span><span><i>dt</i><sup>2</sup></span></span> + <span class="fr"><span><i>g</i></span><span><i>L</i></span></span> sin&thinsp;&theta; = 0</p>
@@ -194,7 +204,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="a" data-s="6">&#8627; this is called <span class="n">linearization</span></p>
 </div>
 
-<div class="pg" data-n="7">
+<div class="pg" data-n="8">
   <p class="h" data-s="0">Solution</p>
   <p class="l" data-s="1">A <span class="n">solution</span> on &alpha; &lt; <i>t</i> &lt; &beta; is a function that makes the equation true for every <i>t</i> there.</p>
   <p class="a" data-s="2">&#8627; the interval is part of the answer</p>
@@ -208,7 +218,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="e" data-s="9"><span class="bw">to check a solution, substitute it in</span></p>
 </div>
 
-<div class="pg" data-n="8">
+<div class="pg" data-n="9">
   <p class="h" data-s="0">How many solutions?</p>
   <p class="l" data-s="1">The field mouse equation:</p>
   <p class="e t" data-s="2"><span class="fr"><span><i>dp</i></span><span><i>dt</i></span></span> = 0.5<i>p</i> &minus; 450</p>
@@ -222,7 +232,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="l" data-s="8">So &mdash; which one do we want?</p>
 </div>
 
-<div class="pg" data-n="9">
+<div class="pg" data-n="10">
   <p class="h" data-s="0">Picking one solution</p>
   <p class="l" data-s="1">Suppose there were 850 mice at time zero.</p>
   <p class="e" data-s="2"><span class="v"><i>p</i>(0) = 850</span></p>
@@ -237,7 +247,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="l" data-s="9">One equation. One condition. <span class="g">One</span> solution.</p>
 </div>
 
-<div class="pg" data-n="10">
+<div class="pg" data-n="11">
   <p class="h" data-s="0">Initial value problem</p>
   <p class="l" data-s="1">A differential equation together with an initial condition is an</p>
   <p class="l i" data-s="2"><span class="n">initial value problem</span>&nbsp; (IVP).</p>
@@ -247,7 +257,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="l i" data-s="5">first order &rarr; one&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;second order &rarr; two</p>
 </div>
 
-<div class="pg" data-n="11">
+<div class="pg" data-n="12">
   <p class="h" data-s="0">The general solution</p>
   <p class="l" data-s="1">Both models have the same shape:</p>
   <p class="e" data-s="2"><span class="fr"><span><i>dy</i></span><span><i>dt</i></span></span> = <i>ay</i> &minus; <i>b</i></p>
@@ -261,7 +271,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="e" data-s="8"><span class="bx"><i>y</i>(<i>t</i>) = <span class="fr"><span><i>b</i></span><span><i>a</i></span></span> + (<span class="v"><i>y</i><sub>0</sub></span> &minus; <span class="fr"><span><i>b</i></span><span><i>a</i></span></span>)<b>e</b><sup><i>at</i></sup></span></p>
 </div>
 
-<div class="pg" data-n="12">
+<div class="pg" data-n="13">
   <p class="h" data-s="0">The pattern</p>
   <ol class="st">
     <li data-s="1">Find the <span class="n">general solution</span> &mdash; it contains <span class="v"><i>c</i></span>.</li>
@@ -269,7 +279,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
     <li data-s="3">Solve for <span class="v"><i>c</i></span>.</li>
   </ol>
   <div class="hw" style="min-height:8vh"></div>
-  <p class="l" data-s="4" style="font-size:clamp(1.2rem,2.5vw,1.95rem)">Almost every problem this term is these three steps.</p>
+  <p class="l" data-s="4" style="font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem)">Almost every problem this term is these three steps.</p>
   <div class="hw" style="min-height:8vh"></div>
 </div>
 
@@ -285,7 +295,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <kbd>&#9664;</kbd> goes back<br>
   <kbd>1</kbd>&ndash;<kbd>5</kbd> pen colour &nbsp; <kbd>E</kbd> eraser &nbsp; <kbd>C</kbd> clear ink<br>
   <kbd>F</kbd> full screen &nbsp; <kbd>T</kbd> hide toolbar &nbsp; <kbd>G</kbd> writing zones<br>
-  <kbd>R</kbd> reset timer<br><br><span style="color:#7C8A8E">The toolbar hides itself after a few seconds.<br>Tap the very bottom edge to bring it back.</span><br><br>
+  <kbd>R</kbd> reset timer<br><br><span style="color:#7C8A8E">Pages turn with the arrow buttons only,<br>so nothing you touch by accident moves the board.<br><br>The toolbar hides itself after a few seconds.<br>Tap the very bottom edge to bring it back.</span><br><br>
   <span style="color:#7C8A8E">Only the Apple Pencil draws.<br>
   Your palm and fingers leave no marks.<br><br>Tap anywhere to begin.</span>
 </div>
@@ -302,7 +312,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <button class="btn" id="cl">Clear</button>
   <span class="sp"></span>
   <button class="btn nav" id="prev">&#9664;</button>
-  <span id="pos">1 / 12</span>
+  <span id="pos">1 / 13</span>
   <button class="btn nav" id="next">&#9654;</button>
   <span class="sp"></span>
   <span id="clk">00:00</span>
@@ -355,24 +365,6 @@ function redraw(){
   strokes[P].forEach(strokePath);
   cx.globalCompositeOperation='source-over';
 }
-var RESERVE=62;   // room for the bottom toolbar
-function fitPage(){
-  var pg=pgs[P]; if(!pg)return;
-  pg.style.transform='none'; pg.style.width='100%';
-  var top=pg.getBoundingClientRect().top, bot=top;
-  for(var i=0;i<pg.children.length;i++){
-    var el=pg.children[i];
-    if(getComputedStyle(el).display==='none')continue;
-    var r=el.getBoundingClientRect();
-    if(r.bottom>bot)bot=r.bottom;
-  }
-  var limit=innerHeight-RESERVE, h=bot-top;
-  if(h>4 && bot>limit){
-    var k=Math.max(0.55,(limit-top)/h);
-    pg.style.transform='scale('+k.toFixed(4)+')';
-    pg.style.width=(100/k).toFixed(2)+'%';
-  }
-}
 function show(){
   pgs.forEach(function(p,i){p.classList.toggle('on',i===P);});
   [].forEach.call(pgs[P].querySelectorAll('[data-s]'),function(e){
@@ -385,7 +377,6 @@ function show(){
   var pt=(P+1)+' / '+pgs.length;
   document.getElementById('pos').textContent=pt;
   var p2=document.getElementById('pos2'); if(p2)p2.textContent=pt;
-  fitPage();
   redraw();
 }
 function next(){ if(S<maxStep[P]){S++;} else if(P<pgs.length-1){P++;S=0;} show(); }
@@ -471,20 +462,12 @@ function end(e){ if(e.pointerType&&!isPen(e))return;
   clearWet(); drawing=false;cur=null;pend.length=0; }
 cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
 
-// ---- taps advance (finger/mouse only) ----
+// ---- buttons only. no tap-to-advance, no swipe. ----
 cv.addEventListener('pointerup',function(e){
   if(isPen(e))return;
   startClk();
-  if(!document.getElementById('hint').classList.contains('hide')){
-    document.getElementById('hint').classList.add('hide');sx=null;return;}
-  var dx=(sx===null)?0:e.clientX-sx, dy=(sy===null)?0:e.clientY-sy;
-  var dur=sT?Date.now()-sT:0, mv=moved;
-  sx=sy=null; sT=0; moved=0;
-  // deliberate horizontal swipe -> navigate
-  if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*2){ (dx<0?next:prev)(); showChrome(); return; }
-  // a real tap: barely moved and short. anything else is writing -> ignore
-  if(mv>10||dur>350){ showChrome(); return; }
-  (e.clientX<innerWidth*0.28?prev:next)();
+  var h=document.getElementById('hint');
+  if(!h.classList.contains('hide')) h.classList.add('hide');
   showChrome();
 });
 
@@ -497,16 +480,6 @@ function bindNav(id,fn){
 bindNav('prev',prev); bindNav('next',next);
 bindNav('prev2',prev); bindNav('next2',next);
 
-// ---- swipe (touch only) ----
-var sx=null,sy=null;
-var sT=0,moved=0;
-cv.addEventListener('pointerdown',function(e){
-  if(e.pointerType==='pen')return; sx=e.clientX; sy=e.clientY; sT=Date.now(); moved=0;
-});
-cv.addEventListener('pointermove',function(e){
-  if(e.pointerType==='pen'||sx===null)return;
-  var d=Math.abs(e.clientX-sx)+Math.abs(e.clientY-sy); if(d>moved)moved=d;
-});
 
 // ---- toolbar ----
 [].forEach.call(document.querySelectorAll('.pen'),function(b){
@@ -602,7 +575,7 @@ document.getElementById('bar').addEventListener('pointerdown',showChrome);
 document.getElementById('topnav').addEventListener('pointerdown',showChrome);
 showChrome();
 
-addEventListener('resize',function(){fit();syncRect();fitPage();});
+addEventListener('resize',function(){fit();syncRect();});
 addEventListener('orientationchange',function(){setTimeout(function(){fit();syncRect();},250);});
 addEventListener('scroll',syncRect,true);
 fit();show();
