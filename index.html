@@ -108,9 +108,13 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="a" data-s="2">&#8627; the unknown is a <i>function</i> &mdash; not a number</p>
   <p class="lb" data-s="3">You already know one</p>
   <p class="e t" data-s="4"><i>F</i> = <i>ma</i> <span class="d">&nbsp;&nbsp;and&nbsp;&nbsp;</span> <i>a</i> = <span class="fr"><span><i>dv</i></span><span><i>dt</i></span></span></p>
-  <div class="hw" style="min-height:6vh"></div>
-  <p class="e" data-s="5">&rArr;&nbsp; <span class="bw"><i>m</i><span class="fr"><span><i>dv</i></span><span><i>dt</i></span></span> = <i>mg</i> &minus; &gamma;<i>v</i></span></p>
-  <p class="l" data-s="6">The falling object from &sect;1.1.&nbsp;&nbsp;unknown = <i>v</i>(<i>t</i>)</p>
+  <p class="lb" data-s="5">A falling object</p>
+  <p class="e t" data-s="5"><span class="v">down = +</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="v">up = &minus;</span></p>
+  <p class="e t" data-s="6"><i>F<sub>G</sub></i> = <i>mg</i>&nbsp;&nbsp;<span class="d">acts down &rarr; +</span></p>
+  <p class="e t" data-s="7"><i>F<sub>A</sub></i> = &minus;&gamma;<i>v</i>&nbsp;&nbsp;<span class="d">acts up &rarr; &minus;</span>&nbsp;&nbsp;(&gamma; &gt; 0)</p>
+  <div class="hw" style="min-height:1.6vh"></div>
+  <p class="e" data-s="8">&rArr;&nbsp; <span class="bw"><i>m</i><span class="fr"><span><i>dv</i></span><span><i>dt</i></span></span> = <i>mg</i> &minus; &gamma;<i>v</i></span></p>
+  <p class="l" data-s="9">The falling object from &sect;1.1.&nbsp;&nbsp;unknown = <i>v</i>(<i>t</i>)</p>
 </div>
 
 <div class="pg" data-n="2">
@@ -181,19 +185,21 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
     <li data-s="5">No powers except the first. <span class="d">(no <i>y</i><sup>2</sup>)</span></li>
     <li data-s="6"><i>y</i> is never inside another function. <span class="d">(no sin&thinsp;<i>y</i>)</span></li>
   </ol>
-  <p class="l" data-s="7" style="margin-top:.5em">The coefficients can be <i>anything</i>.</p>
+  <p class="l" data-s="7">The coefficients can be <i>anything</i>.</p>
   <p class="a" data-s="8">&#8627; only <i>y</i> and its derivatives decide this</p>
-  <div class="hw" style="min-height:9vh"></div>
-  <p class="e t" data-s="9"><span class="g">linear:</span>&nbsp; (1) spring&nbsp;&nbsp; (2) wave</p>
-  <p class="e t" data-s="10"><span class="g">nonlinear:</span>&nbsp; (4) <span class="d">&larr; <i>yy</i>&#8242;</span>&nbsp;&nbsp; (3) <span class="d">&larr; <i>xy</i></span>&nbsp;&nbsp; (5) <span class="d">&larr; sin&thinsp;&theta;</span></p>
+  <p class="lb" data-s="9">Linear, or nonlinear?</p>
+  <p class="e t" data-s="9"><i>t</i><sup>3</sup><i>y</i>&#8242; + <b>e</b><sup><i>t</i></sup><i>y</i> = sin&thinsp;<i>t</i></p>
+  <div class="hw" style="min-height:4vh"></div>
+  <p class="e t" data-s="10"><span class="g">linear:</span>&nbsp; (1) spring&nbsp;&nbsp; (2) wave</p>
+  <p class="e t" data-s="11"><span class="g">nonlinear:</span>&nbsp; (4) <span class="d">&larr; <i>yy</i>&#8242;</span>&nbsp;&nbsp; (3) <span class="d">&larr; <i>xy</i></span>&nbsp;&nbsp; (5) <span class="d">&larr; sin&thinsp;&theta;</span></p>
 </div>
 
 <div class="pg" data-n="6">
   <p class="h" data-s="0">Why we care: linearization</p>
   <p class="l" data-s="1">The pendulum is nonlinear because of sin&thinsp;&theta;.</p>
   <p class="e t" data-s="2"><span class="fr"><span><i>d</i><sup>2</sup>&theta;</span><span><i>dt</i><sup>2</sup></span></span> + <span class="fr"><span><i>g</i></span><span><i>L</i></span></span> sin&thinsp;&theta; = 0</p>
-  <p class="l" data-s="3" style="margin-top:.6em">But if &theta; is small, then&nbsp; sin&thinsp;&theta; &asymp; &theta;.</p>
-  <div class="hw" style="min-height:8vh"></div>
+  <p class="l" data-s="3">But if &theta; is small, then&nbsp; sin&thinsp;&theta; &asymp; &theta;.</p>
+  <div class="hw" style="min-height:3vh"></div>
   <p class="e" data-s="4"><span class="bw"><span class="fr"><span><i>d</i><sup>2</sup>&theta;</span><span><i>dt</i><sup>2</sup></span></span> + <span class="fr"><span><i>g</i></span><span><i>L</i></span></span>&thinsp;&theta; = 0</span>&nbsp;&nbsp;<span class="g">linear</span></p>
   <p class="l" data-s="5">We can solve this one. We will, in Chapter 3.</p>
   <p class="a" data-s="6">&#8627; this is called <span class="n">linearization</span></p>
@@ -205,10 +211,12 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="a" data-s="2">&#8627; the interval is part of the answer</p>
   <p class="lb" data-s="3">Finding is hard. Checking is easy.</p>
   <p class="l" data-s="4">Does&nbsp; <i>y</i><sub>1</sub>(<i>t</i>) = cos&thinsp;<i>t</i>&nbsp; solve&nbsp; <i>y</i>&#8243; + <i>y</i> = 0 ?</p>
-  <div class="hw" style="min-height:16vh"></div>
-  <p class="e t" data-s="5"><i>y</i><sub>1</sub>&#8242; = &minus;sin&thinsp;<i>t</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>y</i><sub>1</sub>&#8243; = &minus;cos&thinsp;<i>t</i></p>
-  <p class="e t" data-s="6"><i>y</i><sub>1</sub>&#8243; + <i>y</i><sub>1</sub> = &minus;cos&thinsp;<i>t</i> + cos&thinsp;<i>t</i> = <span class="bw">0&nbsp;&#10003;</span></p>
-  <p class="e" data-s="7"><span class="bw">to check a solution, substitute it in</span></p>
+  <p class="e t" data-s="5"><i>y</i><sub>1</sub> = cos&thinsp;<i>t</i></p>
+  <p class="e t" data-s="6"><i>y</i><sub>1</sub>&#8242; = &minus;sin&thinsp;<i>t</i></p>
+  <p class="e t" data-s="7"><i>y</i><sub>1</sub>&#8243; = &minus;cos&thinsp;<i>t</i></p>
+  <p class="e t" data-s="8"><i>y</i><sub>1</sub>&#8243; + <i>y</i><sub>1</sub> = &minus;cos&thinsp;<i>t</i> + cos&thinsp;<i>t</i> = <span class="v">0 &#10003;</span></p>
+  <div class="hw" style="min-height:1.4vh"></div>
+  <p class="e" data-s="9"><span class="bw">to check a solution, substitute it in</span></p>
 </div>
 
 <div class="pg" data-n="8">
@@ -216,10 +224,13 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="l" data-s="1">The field mouse equation:</p>
   <p class="e t" data-s="2"><span class="fr"><span><i>dp</i></span><span><i>dt</i></span></span> = 0.5<i>p</i> &minus; 450</p>
   <p class="l" data-s="3">has the solution</p>
-  <p class="e" data-s="4"><i>p</i>(<i>t</i>) = 900 + <span class="v"><i>c</i></span><b>e</b><sup><i>t</i>/2</sup>&nbsp;&nbsp;<span class="d">&nbsp;<span class="v"><i>c</i></span> any constant</span></p>
-  <div class="hw" style="min-height:8vh"></div>
-  <p class="e" data-s="5"><span class="bx">There are <span class="v">infinitely many</span> solutions.</span></p>
-  <p class="l" data-s="6" style="margin-top:.7em">So &mdash; which one do we want?</p>
+  <p class="e" data-s="4"><i>p</i>(<i>t</i>) = 900 + <span class="v"><i>c</i></span><b>e</b><sup><i>t</i>/2</sup>&nbsp;&nbsp;<span class="d"><span class="v"><i>c</i></span> any constant</span></p>
+  <p class="lb" data-s="5">Check it</p>
+  <p class="e t" data-s="5"><span class="fr"><span><i>dp</i></span><span><i>dt</i></span></span> = <span class="fr"><span><span class='v'><i>c</i></span></span><span>2</span></span><b>e</b><sup><i>t</i>/2</sup></p>
+  <p class="e t" data-s="6">0.5<i>p</i> &minus; 450 = <span class="fr"><span><span class='v'><i>c</i></span></span><span>2</span></span><b>e</b><sup><i>t</i>/2</sup>&nbsp;&nbsp;<span class="v">&#10003;</span></p>
+  <div class="hw" style="min-height:1.4vh"></div>
+  <p class="e" data-s="7"><span class="bx">There are <span class="v">infinitely many</span> solutions.</span></p>
+  <p class="l" data-s="8">So &mdash; which one do we want?</p>
 </div>
 
 <div class="pg" data-n="9">
@@ -228,11 +239,13 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="e" data-s="2"><span class="v"><i>p</i>(0) = 850</span></p>
   <p class="l" data-s="3">This is an <span class="n">initial condition</span>.</p>
   <p class="lb" data-s="4">Put it in</p>
-  <div class="hw" style="min-height:14vh"></div>
-  <p class="e t" data-s="5">850 = 900 + <span class="v"><i>c</i></span><b>e</b><sup>0</sup> = 900 + <span class="v"><i>c</i></span></p>
-  <p class="e t" data-s="6"><span class="v"><i>c</i></span> = &minus;50</p>
-  <p class="e" data-s="7"><span class="bx"><i>p</i>(<i>t</i>) = 900 &minus; 50<b>e</b><sup><i>t</i>/2</sup></span></p>
-  <p class="l" data-s="8">One equation. One condition. <span class="g">One</span> solution.</p>
+  <p class="e t" data-s="4">850 = 900 + <span class="v"><i>c</i></span><b>e</b><sup>0</sup></p>
+  <p class="e t" data-s="5"><b>e</b><sup>0</sup> = 1</p>
+  <p class="e t" data-s="6">850 = 900 + <span class="v"><i>c</i></span></p>
+  <p class="e t" data-s="7"><span class="v"><i>c</i> = &minus;50</span></p>
+  <div class="hw" style="min-height:1.4vh"></div>
+  <p class="e" data-s="8"><span class="bx"><i>p</i>(<i>t</i>) = 900 &minus; 50<b>e</b><sup><i>t</i>/2</sup></span></p>
+  <p class="l" data-s="9">One equation. One condition. <span class="g">One</span> solution.</p>
 </div>
 
 <div class="pg" data-n="10">
@@ -253,8 +266,9 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="e" data-s="4"><span class="bw"><i>y</i>(<i>t</i>) = <span class="fr"><span><i>b</i></span><span><i>a</i></span></span> + <span class="v"><i>c</i></span><b>e</b><sup><i>at</i></sup></span></p>
   <p class="l" data-s="5">This is the <span class="n">general solution</span> &mdash; every solution has this form.</p>
   <p class="lb" data-s="6">With an initial condition</p>
-  <div class="hw" style="min-height:9vh"></div>
-  <p class="e t" data-s="7"><i>y</i>(0) = <span class="v"><i>y</i><sub>0</sub></span>&nbsp; &rArr;&nbsp; <span class="v"><i>c</i></span> = <span class="v"><i>y</i><sub>0</sub></span> &minus; <span class="fr"><span><i>b</i></span><span><i>a</i></span></span></p>
+  <p class="e t" data-s="6"><i>y</i>(0) = <span class="fr"><span><i>b</i></span><span><i>a</i></span></span> + <span class="v"><i>c</i></span> = <span class="v"><i>y</i><sub>0</sub></span></p>
+  <p class="e t" data-s="7"><span class="v"><i>c</i></span> = <span class="v"><i>y</i><sub>0</sub></span> &minus; <span class="fr"><span><i>b</i></span><span><i>a</i></span></span></p>
+  <div class="hw" style="min-height:1.4vh"></div>
   <p class="e" data-s="8"><span class="bx"><i>y</i>(<i>t</i>) = <span class="fr"><span><i>b</i></span><span><i>a</i></span></span> + (<span class="v"><i>y</i><sub>0</sub></span> &minus; <span class="fr"><span><i>b</i></span><span><i>a</i></span></span>)<b>e</b><sup><i>at</i></sup></span></p>
 </div>
 
