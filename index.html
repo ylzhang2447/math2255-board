@@ -23,8 +23,8 @@ html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
   background-image:linear-gradient(var(--gr) 1px,transparent 1px),
     linear-gradient(90deg,var(--gr) 1px,transparent 1px);
   background-size:32px 32px;color:var(--w);font-family:var(--fm)}
-#stage{position:absolute;inset:0;padding:3.2vh 4vw 8vh;overflow:hidden}
-.pg{display:none;height:100%}
+#stage{position:absolute;inset:0;padding:3.0vh 4vw 4px;overflow:hidden}
+.pg{display:none;height:auto;transform-origin:top left}
 .pg.on{display:block}
 [data-s]{opacity:0;transition:opacity .16s ease}
 [data-s].vis{opacity:1}
@@ -33,9 +33,9 @@ html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
 .h{font-size:clamp(1.5rem,3.4vw,2.6rem);color:var(--y);display:table;
   border-bottom:.09em solid var(--y);padding-bottom:.08em;margin:0 0 .55em}
 .lb{font-size:clamp(1.05rem,2.1vw,1.6rem);color:var(--y);display:table;
-  border-bottom:.07em solid var(--y);padding-bottom:.06em;margin:.85em 0 .4em}
-.l{font-size:clamp(1.05rem,2.1vw,1.62rem);line-height:1.9;margin:0 0 .12em}
-.e{font-size:clamp(1.2rem,2.5vw,1.95rem);line-height:2.15;margin:.34em 0 .34em 1.1em}
+  border-bottom:.07em solid var(--y);padding-bottom:.06em;margin:.65em 0 .32em}
+.l{font-size:clamp(1.05rem,2.1vw,1.62rem);line-height:1.72;margin:0 0 .1em}
+.e{font-size:clamp(1.2rem,2.5vw,1.95rem);line-height:1.95;margin:.3em 0 .3em 1.1em}
 .e.t{margin-top:.16em;margin-bottom:.16em}
 .a{font-size:clamp(.95rem,1.8vw,1.4rem);color:var(--m);margin:.12em 0 .3em 2em}
 .i{margin-left:1.5em}
@@ -51,7 +51,7 @@ sup,sub{line-height:0;font-size:.68em}
 .fr>span{padding:0 .28em;display:block}
 .fr>span:first-child{border-bottom:.06em solid currentColor;padding-bottom:.1em}
 .fr>span:last-child{padding-top:.12em}
-ol.st{margin:.3em 0 .3em 1.1em;padding-left:1.1em;font-size:clamp(1.05rem,2.1vw,1.6rem);line-height:1.8}
+ol.st{margin:.25em 0 .25em 1.1em;padding-left:1.1em;font-size:clamp(1.05rem,2.1vw,1.6rem);line-height:1.65}
 table{border-collapse:collapse;margin:.4em 0 .4em 1.1em;font-size:clamp(1rem,2vw,1.5rem);line-height:2}
 td,th{padding:.16em 1.4em .16em 0;text-align:left;font-weight:400}
 th{color:var(--y);font-size:.82em}
@@ -133,25 +133,14 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
 <div class="pg" data-n="3">
   <p class="h" data-s="0">Order</p>
   <p class="l" data-s="0">The <span class="n">order</span> is the order of the highest derivative that appears.</p>
-  <div class="hw" style="min-height:1.5vh"></div>
   <p class="e t" data-s="1"><span class="g">(1)</span>&nbsp; <i>mu</i>&#8243; + &gamma;<i>u</i>&#8242; + <i>ku</i> = <i>F</i>(<i>t</i>) <span class="d">&nbsp;spring</span></p>
-  <div class="hw" style="min-height:3.2vh"></div>
   <p class="e t" data-s="2"><span class="g">(2)</span>&nbsp; <i>a</i><sup>2</sup><span class="fr"><span>&part;<sup>2</sup><i>u</i></span><span>&part;<i>x</i><sup>2</sup></span></span> = <span class="fr"><span>&part;<sup>2</sup><i>u</i></span><span>&part;<i>t</i><sup>2</sup></span></span> <span class="d">&nbsp;wave</span></p>
-  <div class="hw" style="min-height:3.2vh"></div>
   <p class="e t" data-s="3"><span class="g">(3)</span>&nbsp; <span class="fr"><span><i>dx</i></span><span><i>dt</i></span></span> = <i>ax</i> &minus; &alpha;<i>xy</i>,&nbsp;&nbsp; <span class="fr"><span><i>dy</i></span><span><i>dt</i></span></span> = &minus;<i>cy</i> + &gamma;<i>xy</i></p>
-  <div class="hw" style="min-height:3.2vh"></div>
   <p class="e t" data-s="4"><span class="g">(4)</span>&nbsp; <i>y</i>&#8244; + 2<b>e</b><sup><i>t</i></sup><i>y</i>&#8243; + <i>yy</i>&#8242; = <i>t</i><sup>4</sup></p>
-  <div class="hw" style="min-height:3.2vh"></div>
   <p class="e t" data-s="5"><span class="g">(5)</span>&nbsp; <span class="fr"><span><i>d</i><sup>2</sup>&theta;</span><span><i>dt</i><sup>2</sup></span></span> + <span class="fr"><span><i>g</i></span><span><i>L</i></span></span> sin&thinsp;&theta; = 0 <span class="d">&nbsp;pendulum</span></p>
-  <div class="hw" style="min-height:3.2vh"></div>
-  <table data-s="6">
-    <tr><th>order</th><th>equations</th></tr>
-    <tr><td>first</td><td>(3)</td></tr>
-    <tr><td>second</td><td>(1)&nbsp; (2)&nbsp; (5)</td></tr>
-    <tr><td>third</td><td>(4)</td></tr>
-  </table>
-  <p class="l" data-s="7">Order doesn&#8217;t care whether the derivatives are ordinary or partial.</p>
-  <p class="l" data-s="8">This course: almost everything is <span class="g">first</span> or <span class="g">second</span> order.</p>
+  <div class="hw" style="min-height:1.2vh"></div>
+  <p class="e t" data-s="6"><span class="d">first</span> (3)&nbsp;&nbsp;&nbsp; <span class="d">second</span> (1)&nbsp;(2)&nbsp;(5)&nbsp;&nbsp;&nbsp; <span class="d">third</span> (4)</p>
+  <p class="l" data-s="7">Ordinary or partial, it makes no difference. This course: almost everything is <span class="g">first</span> or <span class="g">second</span> order.</p>
 </div>
 
 <div class="pg" data-n="4">
@@ -189,7 +178,7 @@ kbd{font-family:var(--fu);background:#1E2426;border:1px solid #333B3E;border-rad
   <p class="a" data-s="8">&#8627; only <i>y</i> and its derivatives decide this</p>
   <p class="lb" data-s="9">Linear, or nonlinear?</p>
   <p class="e t" data-s="9"><i>t</i><sup>3</sup><i>y</i>&#8242; + <b>e</b><sup><i>t</i></sup><i>y</i> = sin&thinsp;<i>t</i></p>
-  <div class="hw" style="min-height:4vh"></div>
+  <div class="hw" style="min-height:1.2vh"></div>
   <p class="e t" data-s="10"><span class="g">linear:</span>&nbsp; (1) spring&nbsp;&nbsp; (2) wave</p>
   <p class="e t" data-s="11"><span class="g">nonlinear:</span>&nbsp; (4) <span class="d">&larr; <i>yy</i>&#8242;</span>&nbsp;&nbsp; (3) <span class="d">&larr; <i>xy</i></span>&nbsp;&nbsp; (5) <span class="d">&larr; sin&thinsp;&theta;</span></p>
 </div>
@@ -366,6 +355,24 @@ function redraw(){
   strokes[P].forEach(strokePath);
   cx.globalCompositeOperation='source-over';
 }
+var RESERVE=62;   // room for the bottom toolbar
+function fitPage(){
+  var pg=pgs[P]; if(!pg)return;
+  pg.style.transform='none'; pg.style.width='100%';
+  var top=pg.getBoundingClientRect().top, bot=top;
+  for(var i=0;i<pg.children.length;i++){
+    var el=pg.children[i];
+    if(getComputedStyle(el).display==='none')continue;
+    var r=el.getBoundingClientRect();
+    if(r.bottom>bot)bot=r.bottom;
+  }
+  var limit=innerHeight-RESERVE, h=bot-top;
+  if(h>4 && bot>limit){
+    var k=Math.max(0.55,(limit-top)/h);
+    pg.style.transform='scale('+k.toFixed(4)+')';
+    pg.style.width=(100/k).toFixed(2)+'%';
+  }
+}
 function show(){
   pgs.forEach(function(p,i){p.classList.toggle('on',i===P);});
   [].forEach.call(pgs[P].querySelectorAll('[data-s]'),function(e){
@@ -378,6 +385,7 @@ function show(){
   var pt=(P+1)+' / '+pgs.length;
   document.getElementById('pos').textContent=pt;
   var p2=document.getElementById('pos2'); if(p2)p2.textContent=pt;
+  fitPage();
   redraw();
 }
 function next(){ if(S<maxStep[P]){S++;} else if(P<pgs.length-1){P++;S=0;} show(); }
@@ -594,7 +602,7 @@ document.getElementById('bar').addEventListener('pointerdown',showChrome);
 document.getElementById('topnav').addEventListener('pointerdown',showChrome);
 showChrome();
 
-addEventListener('resize',function(){fit();syncRect();});
+addEventListener('resize',function(){fit();syncRect();fitPage();});
 addEventListener('orientationchange',function(){setTimeout(function(){fit();syncRect();},250);});
 addEventListener('scroll',syncRect,true);
 fit();show();
