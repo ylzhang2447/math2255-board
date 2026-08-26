@@ -108,7 +108,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
 <div id="app">
 <div id="topnav">
   <button class="btn nav" id="prev2">&#9664;</button>
-  <span id="pos2">1 / 11</span>
+  <span id="pos2">1 / 13</span>
   <button class="btn nav" id="next2">&#9654;</button>
 </div>
 <div id="stage">
@@ -207,19 +207,43 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
 </div>
 
 <div class="pg" data-n="10">
-  <p class="h" data-s="0">The picture and the formula agree</p>
-  <p class="l" data-s="1">Every equation today had the same shape:</p>
-  <p class="e" data-s="2"><span class="fr"><span><i>dy</i></span><span><i>dt</i></span></span> = <i>ay</i> &minus; <i>b</i></p>
-  <p class="l" data-s="3">and last time we saw its solution:</p>
-  <p class="e" data-s="4"><span class="bw"><i>y</i>(<i>t</i>) = <span class="fr"><span><i>b</i></span><span><i>a</i></span></span> + <span class="v"><i>c</i></span><b>e</b><sup><i>at</i></sup></span></p>
-  <p class="l" data-s="5">When <i>a</i> is negative, that exponential dies as <i>t</i> grows, and what is left is:</p>
-  <div class="hw" style="min-height:1.4vh"></div>
-  <p class="e" data-s="6"><span class="bx"><i>y</i> &rarr; <span class="fr"><span><i>b</i></span><span><i>a</i></span></span></span></p>
-  <p class="a" data-s="7">&#8627; which is exactly the equilibrium the picture showed</p>
-  <p class="l" data-s="8">For the falling object, <span class="fr"><span><i>b</i></span><span><i>a</i></span></span> = <span class="v">49</span>.</p>
+  <p class="h" data-s="0">Now let&#8217;s actually solve one</p>
+  <p class="l" data-s="1">Last week I <em>handed</em> you this, and all we did was check it:</p>
+  <p class="e" data-s="2"><i>p</i>(<i>t</i>) = 900 + <span class="v"><i>c</i></span><b>e</b><sup><i>t</i>/2</sup></p>
+  <p class="l" data-s="3">Today you are going to get it <span class="g">yourself</span>.</p>
+  <p class="lb" data-s="4">The equation</p>
+  <p class="e t" data-s="4"><span class="fr"><span><i>dp</i></span><span><i>dt</i></span></span> = 0.5<i>p</i> &minus; 450</p>
+  <div class="hw" style="min-height:1.2vh"></div>
+  <p class="a" data-s="5">&#8627; four steps, and you already know all the calculus you need</p>
 </div>
 
 <div class="pg" data-n="11">
+  <p class="h" data-s="0">Activity 3 &mdash; solve it</p>
+  <ol class="st">
+    <li data-s="1">Factor 0.5 out of the right-hand side.</li>
+    <li data-s="2">Divide both sides by (<i>p</i> &minus; 900), and multiply both sides by <i>dt</i>.</li>
+    <li data-s="3">Integrate both sides.</li>
+    <li data-s="4">Solve for <i>p</i>.</li>
+  </ol>
+  <p class="e" data-s="5"><span class="bx">8 minutes.&nbsp; The steps are on your handout.</span></p>
+  <p class="l" data-s="6"><span class="d">Stuck on step 3?</span>&nbsp;&nbsp; <span class="g">&int;</span> <span class="fr"><span><i>du</i></span><span><i>u</i></span></span> = ln|<i>u</i>| + <i>C</i></p>
+</div>
+
+<div class="pg" data-n="12">
+  <p class="h" data-s="0">Activity 3 &mdash; the answer</p>
+  <p class="e t" data-s="1"><span class="fr"><span><i>dp</i></span><span><i>dt</i></span></span> = 0.5(<i>p</i> &minus; 900)</p>
+  <p class="e t" data-s="2"><span class="fr"><span><i>dp</i></span><span><i>p</i> &minus; 900</span></span> = 0.5&thinsp;<i>dt</i></p>
+  <p class="e t" data-s="3">ln|<i>p</i> &minus; 900| = 0.5<i>t</i> + <i>C</i></p>
+  <p class="e t" data-s="4"><i>p</i> &minus; 900 = <span class="v"><i>c</i></span><b>e</b><sup>0.5<i>t</i></sup></p>
+  <p class="e" data-s="5"><span class="bx"><i>p</i>(<i>t</i>) = 900 + <span class="v"><i>c</i></span><b>e</b><sup>0.5<i>t</i></sup></span></p>
+  <div class="hw" style="min-height:1.2vh"></div>
+  <p class="lb" data-s="6">Where did the 900 come from?</p>
+  <p class="l" data-s="7">It is the <span class="n">equilibrium</span> &mdash; the same number you found in Activity 2.</p>
+  <p class="a" data-s="8">&#8627; and <i>a</i> = 0.5 is <em>positive</em>, so the exponential <em>grows</em></p>
+  <p class="l" data-s="9">Solutions run <span class="g">away</span> from 900. Exactly what the direction field would have shown you.</p>
+</div>
+
+<div class="pg" data-n="13">
   <p class="h" data-s="0">Where this is going</p>
   <p class="l" data-s="1">Today: what a solution <span class="g">looks like</span>, without solving.</p>
   <p class="l" data-s="2">Monday: how to <span class="g">actually solve</span>. Chapter 2 starts.</p>
@@ -256,7 +280,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
   <button class="btn" id="cl">Clear</button>
   <span class="sp"></span>
   <button class="btn nav" id="prev">&#9664;</button>
-  <span id="pos">1 / 11</span>
+  <span id="pos">1 / 13</span>
   <button class="btn nav" id="next">&#9654;</button>
   <span class="sp"></span>
   <span id="clk">00:00</span>
