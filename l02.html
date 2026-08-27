@@ -39,6 +39,10 @@ html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
 [data-s]{opacity:0;transition:opacity .16s ease}
 [data-s].vis{opacity:1}
 [data-until].gone{display:none}
+.pg.rv .h{font-size:clamp(1.3rem,min(3.8vw,5.60vh),2.9rem)}
+.pg.rv .lb{font-size:clamp(1rem,min(2.5vw,3.68vh),1.9rem);margin:.62em 0 .12em}
+.pg.rv .l{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.6;margin:0 0 .1em 1.0em}
+.pg.rv .e{font-size:clamp(1.05rem,min(2.7vw,4.00vh),2.1rem);margin-left:1.0em}
 
 .h{font-size:clamp(1.2rem,min(3.4vw,5.00vh),2.6rem);color:var(--y);display:table;
   border-bottom:.09em solid var(--y);padding-bottom:.08em;margin:0 0 .55em}
@@ -113,33 +117,35 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
 </div>
 <div id="stage">
 
-<div class="pg on" data-n="1">
-  <p class="h" data-s="0">Last time, in one page</p>
-  <p class="l" data-s="1"><span class="n">Order</span> &mdash; the order of the highest derivative that appears.</p>
-  <p class="l" data-s="2"><span class="n">Linear</span> &mdash; <i>y</i> and its derivatives appear by themselves. <span class="d">No <i>y</i><sup>2</sup>, no sin&thinsp;<i>y</i>, no <i>y</i>&#8202;<i>y</i>&#8242;.</span></p>
-  <p class="l" data-s="3"><span class="n">ODE</span> &mdash; one independent variable, one unknown function. <span class="d">That is every equation in this course.</span></p>
-  <p class="l" data-s="4">A <span class="n">solution</span> is a function that makes the equation true.</p>
-  <p class="l" data-s="5">The <span class="n">general solution</span> contains <i>c</i>. An <span class="n">initial condition</span> pins <i>c</i> down.</p>
-  <p class="a" data-s="6">&#8627; find the general solution, put in the initial condition, solve for <i>c</i></p>
+<div class="pg on rv" data-n="1">
+  <p class="h" data-s="0">Quick review</p>
+  <p class="lb" data-s="1">Order</p>
+  <p class="l" data-s="1">The order of the highest derivative in the equation.</p>
+  <p class="lb" data-s="2">Linear</p>
+  <p class="l" data-s="2"><i>y</i> and its derivatives appear by themselves.</p>
+  <p class="e t" data-s="3"><span class="d">not linear:</span>&nbsp;&nbsp; <i>y</i><sup>2</sup>,&nbsp;&nbsp; sin&thinsp;<i>y</i>,&nbsp;&nbsp; <i>y</i>&#8202;<i>y</i>&#8242;</p>
+  <p class="lb" data-s="4">ODE</p>
+  <p class="l" data-s="4">One independent variable, one unknown function. <span class="d">Every equation in this course.</span></p>
 </div>
 
-<div class="pg" data-n="2">
-  <p class="h" data-s="0">Warm-up &mdash; classify these two</p>
+<div class="pg rv" data-n="2">
+  <p class="h" data-s="0">Quick review</p>
+  <p class="lb" data-s="1">Solution</p>
+  <p class="l" data-s="1">A function that makes the equation true.</p>
+  <p class="lb" data-s="2">General solution</p>
+  <p class="l" data-s="2">The solution that still has a <i>c</i> in it. It describes all of them at once.</p>
+  <p class="lb" data-s="3">Initial condition</p>
+  <p class="l" data-s="3">One value, like <i>y</i>(0) = 5. It picks out one <i>c</i>.</p>
+  <p class="e" data-s="4"><span class="bx">General solution, then initial condition, then solve for <i>c</i>.</span></p>
+</div>
+
+<div class="pg" data-n="3">
+  <p class="h" data-s="0">Warm-up</p>
   <p class="l" data-s="1">For each one: <span class="g">what order?</span> &nbsp; <span class="g">linear or nonlinear?</span></p>
   <p class="e t" data-s="2"><span class="g">(a)</span>&nbsp; <i>y</i>&#8243; + 3<i>y</i>&#8242; + 2<i>y</i> = cos&thinsp;<i>t</i></p>
   <p class="e t" data-s="3"><span class="g">(b)</span>&nbsp; <span class="fr"><span><i>dy</i></span><span><i>dt</i></span></span> = <i>y</i><sup>2</sup> &minus; 4</p>
   <p class="e" data-s="4"><span class="bx">4 minutes.&nbsp; With the person next to you.</span></p>
 </div>
-
-<div class="pg" data-n="3">
-  <p class="h" data-s="0">Warm-up &mdash; answers</p>
-  <p class="e t" data-s="1"><span class="g">(a)</span>&nbsp; <i>y</i>&#8243; + 3<i>y</i>&#8242; + 2<i>y</i> = cos&thinsp;<i>t</i></p>
-  <p class="a" data-s="2">&#8627; <span class="v">second order</span>, <span class="v">linear</span> &mdash; <span class="d">cos&thinsp;<i>t</i> is fine. There is no <i>y</i> inside it.</span></p>
-  <p class="e t" data-s="3"><span class="g">(b)</span>&nbsp; <span class="fr"><span><i>dy</i></span><span><i>dt</i></span></span> = <i>y</i><sup>2</sup> &minus; 4</p>
-  <p class="a" data-s="4">&#8627; <span class="v">first order</span>, <span class="v">nonlinear</span> &mdash; <span class="d">the <i>y</i><sup>2</sup> is what breaks it.</span></p>
-  <p class="l" data-s="5">Hold on to <span class="g">(b)</span>. <span class="d">You will see it again in about half an hour.</span></p>
-</div>
-
 
 <div class="pg" data-n="4">
   <p class="h" data-s="0">What does a solution look like?</p>
