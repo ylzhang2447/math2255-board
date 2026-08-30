@@ -122,7 +122,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
 <div id="app">
 <div id="topnav">
   <button class="btn nav" id="prev2">&#9664;</button>
-  <span id="pos2">1 / 13</span>
+  <span id="pos2">1 / 16</span>
   <button class="btn nav" id="next2">&#9654;</button>
 </div>
 <div id="stage">
@@ -254,6 +254,35 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
 </div>
 
 <div class="pg" data-n="13">
+  <p class="h" data-s="0">Example 4 &mdash; a different shape</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8242; + 2<i>y</i> = 3<b>e</b><sup>&minus;2<i>t</i></sup></span>&nbsp;&nbsp;<span class="d">same left side as Example 1</span></p>
+  <p class="e t" data-s="2">&mu; = <b>e</b><sup>2<i>t</i></sup>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; (<b>e</b><sup>2<i>t</i></sup><i>y</i>)&#8242; = 3<b>e</b><sup>&minus;2<i>t</i></sup>&thinsp;&middot;&thinsp;<b>e</b><sup>2<i>t</i></sup></p>
+  <p class="e t" data-s="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<b>e</b><sup>2<i>t</i></sup><i>y</i>)&#8242; = <span class="v">3</span>&nbsp;&nbsp;<span class="d">the exponentials cancel completely</span></p>
+  <p class="e t" data-s="4"><b>e</b><sup>2<i>t</i></sup><i>y</i> = 3<i>t</i> + <i>c</i></p>
+  <p class="e" data-s="5"><span class="bx"><i>y</i> = (3<i>t</i> + <i>c</i>)&thinsp;<b>e</b><sup>&minus;2<i>t</i></sup></span></p>
+  <p class="a" data-s="6">&#8627; no equilibrium this time, and a <i>t</i> appears out of nowhere</p>
+</div>
+
+<div class="pg" data-n="14">
+  <p class="h" data-s="0">Your turn &mdash; problems 9 to 11</p>
+  <p class="l" data-s="1">All three are the shape you just saw. Watch what happens to the exponentials.</p>
+  <p class="e t" data-s="2"><span class="g">9.</span>&nbsp; <i>y</i>&#8242; + 3<i>y</i> = 5<b>e</b><sup>&minus;3<i>t</i></sup></p>
+  <p class="e t" data-s="3"><span class="g">10.</span>&nbsp; <i>y</i>&#8242; &minus; <i>y</i> = 4<b>e</b><sup><i>t</i></sup></p>
+  <p class="e t" data-s="4"><span class="g">11.</span>&nbsp; <i>y</i>&#8242; + 2<i>y</i> = 6<b>e</b><sup>&minus;2<i>t</i></sup>,&nbsp;&nbsp; <i>y</i>(0) = 1</p>
+  <p class="e" data-s="5"><span class="bx">8 minutes.&nbsp; Same pairs.</span></p>
+</div>
+
+<div class="pg" data-n="15">
+  <p class="h" data-s="0">Problems 9 to 11 &mdash; answers</p>
+  <p class="e t" data-s="1"><span class="g">9.</span>&nbsp; &mu; = <b>e</b><sup>3<i>t</i></sup>&nbsp;&nbsp; (&mu;<i>y</i>)&#8242; = <span class="v">5</span>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>y</i> = (5<i>t</i> + <i>c</i>)<b>e</b><sup>&minus;3<i>t</i></sup></span></p>
+  <p class="e t" data-s="2"><span class="g">10.</span>&nbsp; <i>p</i> = &minus;1, &mu; = <b>e</b><sup>&minus;<i>t</i></sup>&nbsp;&nbsp; (&mu;<i>y</i>)&#8242; = <span class="v">4</span>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>y</i> = (4<i>t</i> + <i>c</i>)<b>e</b><sup><i>t</i></sup></span></p>
+  <p class="e t" data-s="3"><span class="g">11.</span>&nbsp; (&mu;<i>y</i>)&#8242; = <span class="v">6</span>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <i>y</i> = (6<i>t</i> + <i>c</i>)<b>e</b><sup>&minus;2<i>t</i></sup></p>
+  <p class="e t" data-s="4">&nbsp;&nbsp;&nbsp;&nbsp;<i>y</i>(0) = 1:&nbsp; 1 = (0 + <i>c</i>)&middot;1&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>y</i> = (6<i>t</i> + 1)<b>e</b><sup>&minus;2<i>t</i></sup></span></p>
+  <p class="lb" data-s="5">The rule behind all three</p>
+  <p class="e" data-s="6"><span class="bx">When <i>g</i> is <b>e</b><sup>&minus;<i>pt</i></sup>, the &mu; kills it and you integrate a constant.</span></p>
+</div>
+
+<div class="pg" data-n="16">
   <p class="h" data-s="0">Where this is going</p>
   <p class="l" data-s="1">Today <i>p</i> was always a <span class="g">number</span>, so &int;<i>p</i>&thinsp;<i>dt</i> was easy.</p>
   <p class="e" data-s="2"><span class="bw"><i>t</i>&thinsp;<i>y</i>&#8242; + 2<i>y</i> = 4<i>t</i><sup>2</sup></span>&nbsp;&nbsp;<span class="d">Wednesday</span></p>
@@ -289,7 +318,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
   <button class="btn" id="cl">Clear</button>
   <span class="sp"></span>
   <button class="btn nav" id="prev">&#9664;</button>
-  <span id="pos">1 / 13</span>
+  <span id="pos">1 / 16</span>
   <button class="btn nav" id="next">&#9654;</button>
   <span class="sp"></span>
   <span id="clk">00:00</span>
