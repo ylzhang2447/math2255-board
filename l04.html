@@ -788,7 +788,7 @@ addEventListener('resize',function(){fit();syncRect();});
 addEventListener('orientationchange',function(){setTimeout(function(){fit();syncRect();},250);});
 addEventListener('scroll',syncRect,true);
 try{var sv=localStorage.getItem('m2255theme');}catch(e){}
-setTheme(sv==='light'?'light':'dark');
+setTheme(sv==='dark'?'dark':'light');
 fit();show();
 })();
 </script>
