@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="2255 L2">
+<meta name="theme-color" content="#0D0F10">
+<title>Math 2255 - Lecture 2 Board</title>
+<style>
+:root{
+  --bd:#0D0F10; --gr:#1B1F21;
+  --w:#F0EFE8; --y:#E3E34B; --c:#45CFC2; --m:#E85CD2; --o:#F09A42;
+  --dm:#7C8A8E; --wash-w:rgba(240,239,232,.07); --wash-o:rgba(240,154,66,.10);
+  --chrome:rgba(13,15,16,.86); --line:#23282A; --bfg:#9DACB1; --bbd:#2E3538;
+  --act:#1C2224; --sel:#8FA0A5; --kbd:#1E2426; --kbdb:#333B3E; --kbdf:#C3CFD2;
+  --solid:#12171A;
+  --fm:"Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
+  --fu:system-ui,-apple-system,"PingFang SC",sans-serif;
+}
+body.light{--bd:#FBFAF7; --gr:#E7E4DC;
+  --w:#16181B; --y:#8F6A05; --c:#0E7A70; --m:#A0198A; --o:#B4530A;
+  --dm:#6E787E; --wash-w:rgba(20,24,28,.05); --wash-o:rgba(180,83,10,.09);
+  --chrome:rgba(251,250,247,.92); --line:#DBD6CB; --bfg:#4A5459; --bbd:#CAC4B9;
+  --act:#EDE9E1; --sel:#5A6469; --kbd:#EFEBE3; --kbdb:#D2CCC2; --kbdf:#39434A;
+  --solid:#F2F0EA;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
+  overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+#app{position:relative;width:100%;height:100dvh;height:100svh;min-height:480px;overflow:hidden;background:var(--bd);
+  background-image:linear-gradient(var(--gr) 1px,transparent 1px),
+    linear-gradient(90deg,var(--gr) 1px,transparent 1px);
+  background-size:32px 32px;color:var(--w);font-family:var(--fm)}
+#stage{position:absolute;inset:0;padding:3.0vh 4vw 60px;overflow:hidden}
+.pg{display:none;height:100%}
+.pg.on{display:block}
+[data-s]{opacity:0;transition:opacity .16s ease}
+[data-s].vis{opacity:1}
+[data-until].gone{display:none}
+.pg.rv .h{font-size:clamp(1.3rem,min(3.8vw,5.60vh),2.9rem)}
+.pg.rv .lb{font-size:clamp(1rem,min(2.5vw,3.68vh),1.9rem);margin:.62em 0 .12em}
+.pg.rv .l{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.6;margin:0 0 .1em 1.0em}
+.pg.rv .e{font-size:clamp(1.05rem,min(2.7vw,4.00vh),2.1rem);margin-left:1.0em}
+
+.h{font-size:clamp(1.2rem,min(3.4vw,5.00vh),2.6rem);color:var(--y);display:table;
+  border-bottom:.09em solid var(--y);padding-bottom:.08em;margin:0 0 .55em}
+.lb{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);color:var(--y);display:table;
+  border-bottom:.07em solid var(--y);padding-bottom:.06em;margin:.65em 0 .32em}
+.l{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.62rem);line-height:1.72;margin:0 0 .1em}
+.e{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.95;margin:.3em 0 .3em 1.1em}
+.e.t{margin-top:.16em;margin-bottom:.16em}
+.a{font-size:clamp(.8rem,min(1.8vw,2.65vh),1.4rem);color:var(--m);margin:.12em 0 .3em 2em}
+.i{margin-left:1.5em}
+.n{color:var(--m)} .g{color:var(--c)} .v{color:var(--o)}
+.d{color:var(--dm)}
+.bx{display:inline-block;border:.09em solid var(--o);color:var(--o);
+  background:var(--wash-o);border-radius:.16em;padding:.2em .6em}
+.bw{display:inline-block;border:.09em solid var(--w);color:var(--w);
+  background:var(--wash-w);border-radius:.16em;padding:.2em .6em}
+sup,sub{line-height:0;font-size:.68em}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  line-height:1.18;font-size:.86em;margin:0 .14em}
+.fr>span{padding:0 .28em;display:block}
+.fr>span:first-child{border-bottom:.06em solid currentColor;padding-bottom:.1em}
+.fr>span:last-child{padding-top:.12em}
+ol.st{margin:.25em 0 .25em 1.1em;padding-left:1.1em;font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);line-height:1.65}
+table{border-collapse:collapse;margin:.4em 0 .4em 1.1em;font-size:clamp(.85rem,min(2vw,2.94vh),1.5rem);line-height:2}
+td,th{padding:.16em 1.4em .16em 0;text-align:left;font-weight:400}
+th{color:var(--y);font-size:.82em}
+.cols{display:flex;gap:5vw;align-items:flex-start}
+.two{display:grid;grid-template-columns:1fr 1fr;column-gap:2.4vw;align-items:start;margin:.15em 0 0 .2em}
+.two>div>*:first-child{margin-top:0}
+.two .e{margin:.12em 0 .12em .2em;line-height:1.6}
+.two .l{margin:.1em 0 .1em .2em}
+.two .lb{margin:.5em 0 .14em}
+.two .a{margin:.1em 0 .2em 1em}
+.split{display:flex;gap:1.4vw;align-items:flex-start;margin:.2em 0 0 .4em}
+.split>.sl{flex:0 0 auto}
+.split>.sr{flex:1 1 auto;min-width:0;display:flex;justify-content:center;align-items:flex-start}
+.split .e{margin:.05em 0 .05em .2em;line-height:1.45}
+.split .sl .e{font-size:clamp(.85rem,min(2.1vw,3.02vh),1.65rem)}
+svg.df.sp{width:auto;height:51vh;max-width:100%;margin:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;column-gap:2vw;row-gap:0;margin:.2em 0 .2em 1.1em}
+.g2 .e{margin-left:0;line-height:1.62}
+svg.df{display:block;width:100%;max-width:min(76vw,104vh);height:auto;margin:.5vh 0 .5vh 1vw}
+svg.df.ax{width:auto;height:45vh;max-width:96%;margin:.3vh 0 .3vh 1.6vw}
+svg.df.fx{width:auto;height:46vh;max-width:97%;margin:.3vh 0 .3vh 1.2vw}
+.hw{min-height:1.2em}
+body.guides .hw{outline:1px dashed rgba(69,207,194,.32);border-radius:4px}
+
+#wet{position:absolute;inset:0;pointer-events:none;z-index:6;transform:translateZ(0)}
+#ink{position:absolute;inset:0;touch-action:none;z-index:5;
+  transform:translateZ(0)}
+#topnav{position:absolute;top:0;right:0;z-index:12;display:flex;gap:6px;align-items:center;
+  padding:calc(6px + env(safe-area-inset-top)) 10px 6px;background:var(--solid);border-radius:0 0 0 10px;
+  font-family:var(--fu);font-size:13px;color:var(--bfg)}
+#topnav.hide{opacity:0;pointer-events:none}
+#bar{position:absolute;left:0;right:0;bottom:0;z-index:9;display:flex;gap:.5vw;
+  align-items:center;padding:.7vh 1.2vw;padding-bottom:calc(.7vh + env(safe-area-inset-bottom));background:var(--solid);
+  border-top:1px solid var(--line);font-family:var(--fu);font-size:13px;color:var(--dm);
+  transition:opacity .3s}
+#bar.hide{opacity:0;pointer-events:none}
+#bar,#topnav{transition:opacity .25s}
+#edge{position:absolute;left:0;right:0;bottom:0;height:46px;z-index:8}
+.pen{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;flex:none}
+.pen.sel{border-color:var(--sel);transform:scale(1.12)}
+.btn{padding:5px 11px;border:1px solid var(--bbd);border-radius:5px;background:transparent;
+  color:var(--bfg);font-family:var(--fu);font-size:12px;cursor:pointer}
+.btn:active{background:var(--act)}
+.sp{flex:1}
+.btn.nav{font-size:19px;padding:3px 20px;line-height:1.05;min-width:62px}
+#pos{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+#clk{font-variant-numeric:tabular-nums;font-size:15px;color:var(--w)}
+#clk.over{color:var(--o)}
+#hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;
+  font-family:var(--fu);font-size:15px;line-height:2;color:var(--bfg);text-align:center;
+  background:var(--chrome);border:1px solid var(--bbd);border-radius:10px;padding:26px 34px}
+#hint.hide{display:none}
+#hint b{color:var(--w)}
+kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);border-radius:4px;
+  padding:1px 6px;color:var(--kbdf);font-size:12px}
+</style>
+</head>
+<body>
+
+<div id="app">
+<div id="topnav">
+  <button class="btn nav" id="prev2">&#9664;</button>
+  <span id="pos2">1 / 24</span>
+  <button class="btn nav" id="next2">&#9654;</button>
+</div>
+<div id="stage">
+
+<div class="pg on" data-n="1">
+  <p class="h" data-s="0">Friday, in one page</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">The three steps</p>
+      <ol class="st">
+        <li data-s="1">Split. Every <i>y</i> with <i>dy</i>, every <i>x</i> with <i>dx</i>.</li>
+        <li data-s="2">Integrate both sides. <span class="d">One constant.</span></li>
+        <li data-s="3">Solve for <i>y</i> &mdash; <span class="d">if you can, and if you are asked to.</span></li>
+      </ol>
+      <p class="e" data-s="4"><span class="bx">If it will not split, it is not separable.</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">And two things were new</p>
+      <p class="l" data-s="5">The answer is not always of the form <i>y</i> = something. An <span class="g">implicit</span> answer is complete.</p>
+      <p class="l" data-s="6">A solution has an <span class="g">interval</span>. It is not always the whole line.</p>
+      <p class="e" data-s="7"><span class="bx">Today is entirely about those two.</span></p>
+      <p class="a" data-s="8">&#8627; no new method today. Only a harder question about the answers.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="2">
+  <p class="h" data-s="0">Three from Friday &mdash; true or false?</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; Every separable equation can be solved for <i>y</i>.</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; An implicit answer is a complete answer.</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; If the equation is defined everywhere, the solution is defined everywhere.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="4"><span class="g">1.</span>&nbsp; <span class="v">false</span>&nbsp;&nbsp;<span class="d">you will see one in about five minutes</span></p>
+      <p class="e t" data-s="5"><span class="g">2.</span>&nbsp; <span class="v">true</span>&nbsp;&nbsp;<span class="d">unless the problem says &ldquo;solve explicitly&rdquo;</span></p>
+      <p class="e t" data-s="6"><span class="g">3.</span>&nbsp; <span class="v">false</span>&nbsp;&nbsp;<span class="d">and this one is worth a whole lecture</span></p>
+      <p class="e" data-s="7"><span class="bx">Number 3 is what today is about.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="3">
+  <p class="h" data-s="0">What the word &ldquo;solution&rdquo; actually means</p>
+  <p class="l" data-s="1">We have used it all term. <span class="d">Here is the whole definition, in five lines.</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">A solution of <i>y</i>&#8242; = <i>f</i>(<i>x</i>, <i>y</i>), <i>y</i>(<i>x</i><sub>0</sub>) = <i>y</i><sub>0</sub>, is</p>
+      <ol class="st">
+        <li data-s="2">a function <i>y</i>(<i>x</i>),</li>
+        <li data-s="3">on an <span class="g">open interval</span> <i>I</i> that contains <i>x</i><sub>0</sub>,</li>
+        <li data-s="4">differentiable at <span class="g">every</span> point of <i>I</i>,</li>
+        <li data-s="5">with <i>y</i>&#8242;(<i>x</i>) = <i>f</i>(<i>x</i>, <i>y</i>(<i>x</i>)) at every point of <i>I</i>, and <i>y</i>(<i>x</i><sub>0</sub>) = <i>y</i><sub>0</sub>.</li>
+      </ol>
+    </div>
+    <div>
+      <p class="l" data-s="6">Three of those four lines mention the interval.</p>
+      <p class="l" data-s="7">So a formula by itself is not a solution. <span class="d">A formula together with an interval is.</span></p>
+      <p class="e" data-s="8"><span class="bx">The interval is part of the answer, not a footnote.</span></p>
+      <p class="a" data-s="9">&#8627; every example today ends with one.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="4">
+  <p class="h" data-s="0">The problem I left you with</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = <span class="fr"><span>4<i>x</i> &minus; <i>x</i><sup>3</sup></span><span>4 + <i>y</i><sup>3</sup></span></span></span>,&nbsp;&nbsp; <i>y</i>(0) = 1</p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="2">First question, before any work: <span class="g">is it separable?</span></p>
+      <p class="e t" data-s="3">top: only <i>x</i>&nbsp;&nbsp;&middot;&nbsp;&nbsp;bottom: only <i>y</i></p>
+      <p class="e t" data-s="4"><i>f</i>(<i>x</i>) = 4<i>x</i> &minus; <i>x</i><sup>3</sup>,&nbsp;&nbsp; <i>g</i>(<i>y</i>) = <span class="fr"><span>1</span><span>4 + <i>y</i><sup>3</sup></span></span></p>
+    </div>
+    <div>
+      <p class="l" data-s="5">Second question: is it <span class="n">linear</span>?</p>
+      <p class="e t" data-s="6">No. <span class="d"><i>y</i><sup>3</sup> in a denominator is as far from linear as it gets.</span></p>
+      <p class="e" data-s="7"><span class="bx">Separable, not linear. Friday&#8217;s method, then.</span></p>
+      <p class="a" data-s="8">&#8627; splitting it is the easy part. What comes after is today&#8217;s lesson.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="5">
+  <p class="h" data-s="0">Example 1 &mdash; split and integrate</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = <span class="fr"><span>4<i>x</i> &minus; <i>x</i><sup>3</sup></span><span>4 + <i>y</i><sup>3</sup></span></span>,&nbsp;&nbsp; <i>y</i>(0) = 1</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Step 1&nbsp;&nbsp;split</p>
+      <p class="e t" data-s="2">(4 + <i>y</i><sup>3</sup>)&thinsp;<i>dy</i> = (4<i>x</i> &minus; <i>x</i><sup>3</sup>)&thinsp;<i>dx</i></p>
+      <p class="lb" data-s="3">Step 2&nbsp;&nbsp;integrate both sides</p>
+      <p class="e t" data-s="3">&int;(4 + <i>y</i><sup>3</sup>)&thinsp;<i>dy</i> = &int;(4<i>x</i> &minus; <i>x</i><sup>3</sup>)&thinsp;<i>dx</i></p>
+      <p class="e t" data-s="4">4<i>y</i> + <span class="fr"><span><i>y</i><sup>4</sup></span><span>4</span></span> = 2<i>x</i><sup>2</sup> &minus; <span class="fr"><span><i>x</i><sup>4</sup></span><span>4</span></span> + <i>C</i></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Initial condition, immediately</p>
+      <p class="e t" data-s="5"><i>x</i> = 0, <i>y</i> = 1:&nbsp;&nbsp; 4 + <span class="fr"><span>1</span><span>4</span></span> = 0 + <i>C</i>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>C</i> = <span class="fr"><span>17</span><span>4</span></span></span></p>
+      <p class="lb" data-s="6">Multiply everything by 4</p>
+      <p class="e" data-s="6"><span class="bx"><i>y</i><sup>4</sup> + 16<i>y</i> = 8<i>x</i><sup>2</sup> &minus; <i>x</i><sup>4</sup> + 17</span></p>
+      <p class="l" data-s="7">Every coefficient is a whole number now. <span class="d">Clear the fractions whenever you can.</span></p>
+      <p class="a" data-s="8">&#8627; that is the answer. It is implicit, and it is almost finished.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="6">
+  <p class="h" data-s="0">Now solve that for <i>y</i></p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i><sup>4</sup> + 16<i>y</i> = 8<i>x</i><sup>2</sup> &minus; <i>x</i><sup>4</sup> + 17</span></p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="2">It is a <span class="g">quartic</span> in <i>y</i>. <span class="d">There is a formula for those. It is about a page long.</span></p>
+      <p class="l" data-s="3">And it would give four branches, of which you would then have to choose one.</p>
+      <p class="e" data-s="4"><span class="bx">You are not going to solve this one for <i>y</i>.</span></p>
+    </div>
+    <div>
+      <p class="l" data-s="5">So the implicit form <span class="n">is</span> the answer. You write it down exactly as it stands.</p>
+      <p class="lb" data-s="6">But one thing is still missing</p>
+      <p class="e t" data-s="6">for which <i>x</i> is this actually a solution?</p>
+      <p class="l" data-s="7">On Friday we read that off the formula. <span class="d">Here there is no formula to read.</span></p>
+      <p class="a" data-s="8">&#8627; so we need a method that does not need one.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="7">
+  <p class="h" data-s="0">Example 1 &mdash; the solution stops at both ends</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1">The direction field for this equation.</p>
+      <p class="l" data-s="2">Look along the row near <i>y</i> = &minus;1.6. <span class="d">Those strokes are almost vertical.</span></p>
+      <p class="l" data-s="3">And the solution through <i>y</i>(0) = 1. <span class="d">Two humps, and then it stops.</span></p>
+      <p class="l" data-s="4">Both ends stop at the <span class="g">same height</span>, and the tangent there is vertical.</p>
+      <p class="e t" data-s="5"><i>y</i> = &minus;<span style="white-space:nowrap"><sup>3</sup>&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">4</span></span> &asymp; &minus;1.587</p>
+      <p class="l" data-s="6">A solution has to be differentiable. A vertical tangent is exactly where it cannot continue.</p>
+      <p class="e" data-s="7"><span class="bx">&minus;3.35 &lt; <i>x</i> &lt; 3.35&nbsp;&nbsp;<span class="d">read from the picture</span></span></p>
+      <p class="a" data-s="8">&#8627; but you will not have a picture on an exam. Next: the same answer by algebra.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="309.6" x2="0" y2="309.6"/><line x1="-7" y1="242.3" x2="0" y2="242.3"/><line x1="-7" y1="175" x2="0" y2="175"/><line x1="-7" y1="107.7" x2="0" y2="107.7"/><line x1="-7" y1="40.4" x2="0" y2="40.4"/><line x1="71.5" y1="350" x2="71.5" y2="357"/><line x1="151" y1="350" x2="151" y2="357"/><line x1="230.5" y1="350" x2="230.5" y2="357"/><line x1="310" y1="350" x2="310" y2="357"/><line x1="389.5" y1="350" x2="389.5" y2="357"/><line x1="469" y1="350" x2="469" y2="357"/><line x1="548.5" y1="350" x2="548.5" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="314.6" text-anchor="end">−2</text><text x="-12" y="247.3" text-anchor="end">−1</text><text x="-12" y="180" text-anchor="end">0</text><text x="-12" y="112.7" text-anchor="end">1</text><text x="-12" y="45.4" text-anchor="end">2</text><text x="71.5" y="375" text-anchor="middle">−3</text><text x="151" y="375" text-anchor="middle">−2</text><text x="230.5" y="375" text-anchor="middle">−1</text><text x="310" y="375" text-anchor="middle">0</text><text x="389.5" y="375" text-anchor="middle">1</text><text x="469" y="375" text-anchor="middle">2</text><text x="548.5" y="375" text-anchor="middle">3</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">x</text></g></g><g data-s="2" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"><line x1="62.4" y1="324.7" x2="80.7" y2="348.4"/><line x1="136" y1="336.5" x2="166" y2="336.5"/><line x1="216" y1="340.3" x2="245" y2="332.8"/><line x1="295" y1="336.5" x2="325" y2="336.5"/><line x1="375" y1="332.8" x2="404" y2="340.3"/><line x1="454" y1="336.5" x2="484" y2="336.5"/><line x1="539.3" y1="348.4" x2="557.6" y2="324.7"/><line x1="67" y1="295.3" x2="76" y2="323.9"/><line x1="136" y1="309.6" x2="166" y2="309.6"/><line x1="217.9" y1="317.7" x2="243.2" y2="301.6"/><line x1="295" y1="309.6" x2="325" y2="309.6"/><line x1="376.8" y1="301.6" x2="402.1" y2="317.7"/><line x1="454" y1="309.6" x2="484" y2="309.6"/><line x1="544" y1="323.9" x2="553" y2="295.3"/><line x1="68.1" y1="256.9" x2="75" y2="227.7"/><line x1="136" y1="242.3" x2="166" y2="242.3"/><line x1="219.1" y1="232.6" x2="242" y2="252"/><line x1="295" y1="242.3" x2="325" y2="242.3"/><line x1="378" y1="252" x2="400.9" y2="232.6"/><line x1="454" y1="242.3" x2="484" y2="242.3"/><line x1="545" y1="227.7" x2="551.9" y2="256.9"/><line x1="67.1" y1="216.3" x2="76" y2="187.6"/><line x1="136" y1="201.9" x2="166" y2="201.9"/><line x1="217.9" y1="193.8" x2="243.1" y2="210.1"/><line x1="295" y1="201.9" x2="325" y2="201.9"/><line x1="376.9" y1="210.1" x2="402.1" y2="193.8"/><line x1="454" y1="201.9" x2="484" y2="201.9"/><line x1="544" y1="187.6" x2="552.9" y2="216.3"/><line x1="67" y1="162.4" x2="76.1" y2="133.8"/><line x1="136" y1="148.1" x2="166" y2="148.1"/><line x1="217.8" y1="140.1" x2="243.2" y2="156"/><line x1="295" y1="148.1" x2="325" y2="148.1"/><line x1="376.8" y1="156" x2="402.2" y2="140.1"/><line x1="454" y1="148.1" x2="484" y2="148.1"/><line x1="543.9" y1="133.8" x2="553" y2="162.4"/><line x1="66" y1="121.6" x2="77" y2="93.7"/><line x1="136" y1="107.7" x2="166" y2="107.7"/><line x1="217.1" y1="100.9" x2="243.9" y2="114.5"/><line x1="295" y1="107.7" x2="325" y2="107.7"/><line x1="376.1" y1="114.5" x2="402.9" y2="100.9"/><line x1="454" y1="107.7" x2="484" y2="107.7"/><line x1="543" y1="93.7" x2="554" y2="121.6"/><line x1="63.5" y1="80" x2="79.6" y2="54.7"/><line x1="136" y1="67.3" x2="166" y2="67.3"/><line x1="216.2" y1="62.8" x2="244.8" y2="71.8"/><line x1="295" y1="67.3" x2="325" y2="67.3"/><line x1="375.2" y1="71.8" x2="403.8" y2="62.8"/><line x1="454" y1="67.3" x2="484" y2="67.3"/><line x1="540.4" y1="54.7" x2="556.5" y2="80"/><line x1="60.2" y1="36.7" x2="82.9" y2="17.1"/><line x1="136" y1="26.9" x2="166" y2="26.9"/><line x1="215.7" y1="24.4" x2="245.3" y2="29.5"/><line x1="295" y1="26.9" x2="325" y2="26.9"/><line x1="374.7" y1="29.5" x2="404.3" y2="24.4"/><line x1="454" y1="26.9" x2="484" y2="26.9"/><line x1="537.1" y1="17.1" x2="559.8" y2="36.7"/></g><g data-s="3" stroke="var(--c)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" fill="none"><polyline points="43.8,281.5 45.6,254.3 47.4,241.5 49.1,231 50.9,221.8 52.7,213.2 54.5,205.2 56.2,197.5 58,190.2 59.8,183.1 61.6,176.2 63.3,169.5 65.1,163.1 66.9,156.8 68.7,150.8 70.4,145.1 72.2,139.6 74,134.3 75.8,129.4 77.5,124.7 79.3,120.3 81.1,116.2 82.9,112.3 84.6,108.8 86.4,105.4 88.2,102.3 90,99.4 91.7,96.6 93.5,94.1 95.3,91.8 97.1,89.6 98.8,87.5 100.6,85.6 102.4,83.8 104.1,82.2 105.9,80.7 107.7,79.2 109.5,77.9 111.2,76.7 113,75.5 114.8,74.5 116.6,73.5 118.3,72.6 120.1,71.7 121.9,71 123.7,70.3 125.4,69.6 127.2,69 129,68.5 130.8,68 132.5,67.6 134.3,67.2 136.1,66.8 137.9,66.5 139.6,66.3 141.4,66.1 143.2,65.9 145,65.8 146.7,65.7 148.5,65.6 150.3,65.6 152.1,65.6 153.8,65.6 155.6,65.7 157.4,65.8 159.2,65.9 160.9,66 162.7,66.2 164.5,66.4 166.3,66.7 168,66.9 169.8,67.2 171.6,67.5 173.4,67.8 175.1,68.2 176.9,68.5 178.7,68.9 180.5,69.3 182.2,69.8 184,70.2 185.8,70.7 187.6,71.2 189.3,71.7 191.1,72.2 192.9,72.7 194.7,73.2 196.4,73.8 198.2,74.4 200,75 201.8,75.6 203.5,76.2 205.3,76.8 207.1,77.4 208.8,78.1 210.6,78.8 212.4,79.4 214.2,80.1 215.9,80.8 217.7,81.5 219.5,82.2 221.3,82.9 223,83.6 224.8,84.3 226.6,85 228.4,85.7 230.1,86.4 231.9,87.1 233.7,87.9 235.5,88.6 237.2,89.3 239,90 240.8,90.7 242.6,91.4 244.3,92.1 246.1,92.8 247.9,93.5 249.7,94.2 251.4,94.9 253.2,95.6 255,96.2 256.8,96.9 258.5,97.5 260.3,98.1 262.1,98.7 263.9,99.3 265.6,99.9 267.4,100.5 269.2,101 271,101.6 272.7,102.1 274.5,102.6 276.3,103.1 278.1,103.5 279.8,103.9 281.6,104.4 283.4,104.8 285.2,105.1 286.9,105.5 288.7,105.8 290.5,106.1 292.3,106.4 294,106.6 295.8,106.8 297.6,107 299.4,107.2 301.1,107.4 302.9,107.5 304.7,107.6 306.5,107.6 308.2,107.7 310,107.7 311.8,107.7 313.5,107.6 315.3,107.6 317.1,107.5 318.9,107.4 320.6,107.2 322.4,107 324.2,106.8 326,106.6 327.7,106.4 329.5,106.1 331.3,105.8 333.1,105.5 334.8,105.1 336.6,104.8 338.4,104.4 340.2,103.9 341.9,103.5 343.7,103.1 345.5,102.6 347.3,102.1 349,101.6 350.8,101 352.6,100.5 354.4,99.9 356.1,99.3 357.9,98.7 359.7,98.1 361.5,97.5 363.2,96.9 365,96.2 366.8,95.6 368.6,94.9 370.3,94.2 372.1,93.5 373.9,92.8 375.7,92.1 377.4,91.4 379.2,90.7 381,90 382.8,89.3 384.5,88.6 386.3,87.9 388.1,87.1 389.9,86.4 391.6,85.7 393.4,85 395.2,84.3 397,83.6 398.7,82.9 400.5,82.2 402.3,81.5 404.1,80.8 405.8,80.1 407.6,79.4 409.4,78.8 411.2,78.1 412.9,77.4 414.7,76.8 416.5,76.2 418.2,75.6 420,75 421.8,74.4 423.6,73.8 425.3,73.2 427.1,72.7 428.9,72.2 430.7,71.7 432.4,71.2 434.2,70.7 436,70.2 437.8,69.8 439.5,69.3 441.3,68.9 443.1,68.5 444.9,68.2 446.6,67.8 448.4,67.5 450.2,67.2 452,66.9 453.7,66.7 455.5,66.4 457.3,66.2 459.1,66 460.8,65.9 462.6,65.8 464.4,65.7 466.2,65.6 467.9,65.6 469.7,65.6 471.5,65.6 473.3,65.7 475,65.8 476.8,65.9 478.6,66.1 480.4,66.3 482.1,66.5 483.9,66.8 485.7,67.2 487.5,67.6 489.2,68 491,68.5 492.8,69 494.6,69.6 496.3,70.3 498.1,71 499.9,71.7 501.7,72.6 503.4,73.5 505.2,74.5 507,75.5 508.8,76.7 510.5,77.9 512.3,79.2 514.1,80.7 515.9,82.2 517.6,83.8 519.4,85.6 521.2,87.5 522.9,89.6 524.7,91.8 526.5,94.1 528.3,96.6 530,99.4 531.8,102.3 533.6,105.4 535.4,108.8 537.1,112.3 538.9,116.2 540.7,120.3 542.5,124.7 544.2,129.4 546,134.3 547.8,139.6 549.6,145.1 551.3,150.8 553.1,156.8 554.9,163.1 556.7,169.5 558.4,176.2 560.2,183.1 562,190.2 563.8,197.5 565.5,205.2 567.3,213.2 569.1,221.8 570.9,231 572.6,241.5 574.4,254.3 576.2,281.5"/></g><g data-s="5" stroke="var(--o)" stroke-width="2.4" stroke-dasharray="7 5"><line x1="0" y1="281.8" x2="638" y2="281.8"/><text x="10" y="270.8" fill="var(--o)" font-size="15" font-family="system-ui,-apple-system,sans-serif" stroke="none">y = −1.59</text></g></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="8">
+  <p class="h" data-s="0">Why the solution has to stop there</p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="1">Look at the <span class="g">equation</span>, not at the answer.</p>
+      <p class="e t" data-s="2"><span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = <span class="fr"><span>4<i>x</i> &minus; <i>x</i><sup>3</sup></span><span>4 + <i>y</i><sup>3</sup></span></span></p>
+      <p class="l" data-s="3">The right-hand side is undefined when the bottom is zero.</p>
+      <p class="e t" data-s="4">4 + <i>y</i><sup>3</sup> = 0&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <i>y</i><sup>3</sup> = &minus;4&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>y</i> = &minus;<span style="white-space:nowrap"><sup>3</sup>&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">4</span></span></span></p>
+    </div>
+    <div>
+      <p class="l" data-s="5">A solution must have a derivative at every point of its interval.</p>
+      <p class="l" data-s="6">At that one height, the equation cannot say what the derivative is.</p>
+      <p class="e" data-s="7"><span class="bx">So the solution stops the moment it reaches <i>y</i> = &minus;<span style="white-space:nowrap"><sup>3</sup>&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">4</span></span></span></p>
+      <p class="a" data-s="8">&#8627; notice we found that from the equation alone, before solving anything.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="9">
+  <p class="h" data-s="0">Where does it reach that height?</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i><sup>4</sup> + 16<i>y</i> = 8<i>x</i><sup>2</sup> &minus; <i>x</i><sup>4</sup> + 17</span>,&nbsp;&nbsp;<span class="d">with <i>y</i> = &minus;<span style="white-space:nowrap"><sup>3</sup>&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">4</span></span></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Put that <i>y</i> into the answer</p>
+      <p class="e t" data-s="2">(&minus;<span style="white-space:nowrap"><sup>3</sup>&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">4</span></span>)<sup>4</sup> + 16(&minus;<span style="white-space:nowrap"><sup>3</sup>&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">4</span></span>) = 8<i>x</i><sup>2</sup> &minus; <i>x</i><sup>4</sup> + 17</p>
+      <p class="lb" data-s="3">The left side is just a number</p>
+      <p class="e t" data-s="3">4<sup>4/3</sup> &minus; 16&middot;4<sup>1/3</sup> = 4<sup>1/3</sup>(4 &minus; 16) = &minus;12&thinsp;<span style="white-space:nowrap"><sup>3</sup>&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">4</span></span></p>
+      <p class="e t" data-s="4">&asymp; &minus;19.05</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">So <i>x</i> has to satisfy</p>
+      <p class="e t" data-s="5">8<i>x</i><sup>2</sup> &minus; <i>x</i><sup>4</sup> + 17 = &minus;19.05</p>
+      <p class="e t" data-s="6"><i>x</i><sup>4</sup> &minus; 8<i>x</i><sup>2</sup> &minus; 36.05 = 0&nbsp;&nbsp;<span class="d">a quadratic in <i>x</i><sup>2</sup></span></p>
+      <p class="e t" data-s="7"><i>x</i><sup>2</sup> = <span class="fr"><span>8 + <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">64 + 144.2</span></span></span><span>2</span></span> = 11.21&nbsp;&nbsp;<span class="d">the other root is negative, so it is out</span></p>
+      <p class="e" data-s="8"><span class="bx">&minus;3.35 &lt; <i>x</i> &lt; 3.35</span></p>
+      <p class="a" data-s="9">&#8627; and <i>x</i> = 0 is inside, which is what makes this the right piece.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="10">
+  <p class="h" data-s="0">Where does a solution stop? &mdash; three checks</p>
+  <div class="two">
+    <div>
+      <ol class="st">
+        <li data-s="1"><span class="g">The <i>x</i> part.</span> Where is <i>f</i>(<i>x</i>) undefined? <span class="d">1/<i>x</i>, ln <i>x</i>, a square root</span></li>
+        <li data-s="2"><span class="g">The <i>y</i> part.</span> Where does the denominator become zero? <span class="d">vertical tangent</span></li>
+        <li data-s="3"><span class="g">Infinity.</span> Does <i>y</i> run off to &plusmn;&infin; at a finite <i>x</i>?</li>
+      </ol>
+      <p class="e" data-s="4"><span class="bx">Then take the piece that contains <i>x</i><sub>0</sub>.</span></p>
+    </div>
+    <div>
+      <p class="l" data-s="5">Each check hands you some bad <i>x</i> values. Mark them all on the axis, with <i>x</i><sub>0</sub>.</p>
+      <p class="l" data-s="6">The nearest bad point on each side of <i>x</i><sub>0</sub> is the one that matters. <span class="d">The rest never come into it.</span></p>
+      <p class="l" data-s="7">The interval is <span class="g">open</span>. The endpoints themselves are not included.</p>
+      <p class="a" data-s="8">&#8627; the equation is fine everywhere. The <span class="n">solution</span> is what stops.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="11">
+  <p class="h" data-s="0">Which check stops it? &mdash; call it out</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = <span class="fr"><span>1</span><span><i>x</i>&thinsp;<i>y</i></span></span>,&nbsp;&nbsp; <i>y</i>(1) = 2</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = &minus;<span class="fr"><span><i>x</i></span><span><i>y</i></span></span>,&nbsp;&nbsp; <i>y</i>(0) = 3</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = 1 + <i>y</i><sup>2</sup>,&nbsp;&nbsp; <i>y</i>(0) = 0</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = <span class="fr"><span><b>e</b><sup>&minus;<i>x</i></sup> &minus; <b>e</b><sup><i>x</i></sup></span><span>3 + 4<i>y</i></span></span>,&nbsp;&nbsp; <i>y</i>(0) = 1</p>
+    </div>
+    <div>
+      <p class="e t" data-s="5"><span class="g">1.</span>&nbsp; <span class="v">checks 1 and 2</span>&nbsp;&nbsp;<span class="d">1/<i>x</i> on one side, <i>y</i> on the other</span></p>
+      <p class="e t" data-s="6"><span class="g">2.</span>&nbsp; <span class="v">check 2</span>&nbsp;&nbsp;<span class="d"><i>y</i> = 0 makes the slope infinite</span></p>
+      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; <span class="v">check 3</span>&nbsp;&nbsp;<span class="d">1 + <i>y</i><sup>2</sup> is never zero and never undefined</span></p>
+      <p class="e t" data-s="8"><span class="g">4.</span>&nbsp; <span class="v">check 2</span>&nbsp;&nbsp;<span class="d">3 + 4<i>y</i> = 0 somewhere</span></p>
+      <p class="e" data-s="9"><span class="bx">We are going to do all four.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="12">
+  <p class="h" data-s="0">Example 2 &mdash; two checks at once</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = <span class="fr"><span>1</span><span><i>x</i>&thinsp;<i>y</i></span></span>,&nbsp;&nbsp; <i>y</i>(1) = 2</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Step 1&nbsp;&nbsp;split</p>
+      <p class="e t" data-s="2"><i>y</i>&thinsp;<i>dy</i> = <span class="fr"><span><i>dx</i></span><span><i>x</i></span></span></p>
+      <p class="lb" data-s="3">Step 2&nbsp;&nbsp;integrate</p>
+      <p class="e t" data-s="3"><span class="fr"><span><i>y</i><sup>2</sup></span><span>2</span></span> = ln|<i>x</i>| + <i>C</i></p>
+      <p class="lb" data-s="4">Initial condition</p>
+      <p class="e t" data-s="4"><i>x</i> = 1, <i>y</i> = 2:&nbsp;&nbsp; 2 = ln 1 + <i>C</i>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>C</i> = 2</span>&nbsp;&nbsp;<span class="d">ln 1 = 0</span></p>
+    </div>
+    <div>
+      <p class="e t" data-s="5"><i>y</i><sup>2</sup> = 2&thinsp;ln|<i>x</i>| + 4&nbsp;&nbsp;<span class="d">multiply by 2</span></p>
+      <p class="lb" data-s="6">Take the square root &mdash; and choose the sign</p>
+      <p class="e" data-s="6"><span class="bx"><i>y</i> = <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">2&thinsp;ln <i>x</i> + 4</span></span></span></p>
+      <p class="l" data-s="7">Positive, because <i>y</i>(1) = 2 is positive. <span class="d">The minus branch solves <i>y</i>(1) = &minus;2.</span></p>
+      <p class="l" data-s="8">And the bars are gone because <i>x</i> is going to stay positive &mdash; which is check 1.</p>
+      <p class="a" data-s="9">&#8627; now run all three checks. They do not all give the same answer.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="13">
+  <p class="h" data-s="0">Example 2 &mdash; which one stops us first</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i> = <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">2&thinsp;ln <i>x</i> + 4</span></span></span>,&nbsp;&nbsp;<span class="d">from <span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = 1/(<i>x</i>&thinsp;<i>y</i>), <i>y</i>(1) = 2</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Check 1 &mdash; the <i>x</i> part</p>
+      <p class="e t" data-s="2">1/<i>x</i> needs <i>x</i> &ne; 0, and ln <i>x</i> needs <i>x</i> &gt; 0</p>
+      <p class="e t" data-s="3">&rArr;&nbsp; <i>x</i> &gt; 0</p>
+      <p class="lb" data-s="4">Check 2 &mdash; the <i>y</i> part</p>
+      <p class="e t" data-s="4">1/(<i>x y</i>) is undefined when <i>y</i> = 0</p>
+      <p class="e t" data-s="5"><i>y</i> = 0&nbsp; &hArr;&nbsp; 2&thinsp;ln <i>x</i> + 4 = 0&nbsp; &hArr;&nbsp; <span class="v"><i>x</i> = <b>e</b><sup>&minus;2</sup> &asymp; 0.135</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">Check 3 &mdash; infinity</p>
+      <p class="e t" data-s="6"><span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">2&thinsp;ln <i>x</i> + 4</span></span> grows forever, but never in finite <i>x</i>. <span class="d">Nothing here.</span></p>
+      <p class="l" data-s="7">Two bad points: <i>x</i> = 0 and <i>x</i> = <b>e</b><sup>&minus;2</sup>. The initial point is <i>x</i> = 1.</p>
+      <p class="e" data-s="8"><span class="bx"><i>x</i> &gt; <b>e</b><sup>&minus;2</sup></span></p>
+      <p class="l" data-s="9"><i>x</i> = 0 never matters. <span class="d"><b>e</b><sup>&minus;2</sup> stops us first, so 0 is never reached.</span></p>
+      <p class="a" data-s="10">&#8627; the nearest bad point wins. That is the whole rule.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="14">
+  <p class="h" data-s="0">Example 3 &mdash; a circle, and one arc of it</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = &minus;<span class="fr"><span><i>x</i></span><span><i>y</i></span></span>,&nbsp;&nbsp; <i>y</i>(0) = 3</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Step 1&nbsp;&nbsp;split</p>
+      <p class="e t" data-s="2"><i>y</i>&thinsp;<i>dy</i> = &minus;<i>x</i>&thinsp;<i>dx</i></p>
+      <p class="lb" data-s="3">Step 2&nbsp;&nbsp;integrate, then multiply by 2</p>
+      <p class="e t" data-s="3"><span class="fr"><span><i>y</i><sup>2</sup></span><span>2</span></span> = &minus;<span class="fr"><span><i>x</i><sup>2</sup></span><span>2</span></span> + <i>C</i>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <i>y</i><sup>2</sup> = &minus;<i>x</i><sup>2</sup> + <i>c</i></p>
+      <p class="lb" data-s="4">Initial condition</p>
+      <p class="e t" data-s="4"><i>x</i> = 0, <i>y</i> = 3:&nbsp;&nbsp; 9 = 0 + <i>c</i>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>c</i> = 9</span></p>
+    </div>
+    <div>
+      <p class="e" data-s="5"><span class="bx"><i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> = 9</span></p>
+      <p class="l" data-s="6">A circle of radius 3. <span class="d">And a circle is not a function, so this cannot be the whole answer.</span></p>
+      <p class="e t" data-s="7"><i>y</i> = <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">9 &minus; <i>x</i><sup>2</sup></span></span>&nbsp;&nbsp;<span class="d">upper half, because <i>y</i>(0) = 3 is positive</span></p>
+      <p class="l" data-s="8">The lower half is a solution too &mdash; of <i>y</i>(0) = &minus;3.</p>
+      <p class="a" data-s="9">&#8627; one circle, two solutions, and neither of them is the circle.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="15">
+  <p class="h" data-s="0">Example 3 &mdash; the upper arc, and where it ends</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1">The field for &minus;<i>x</i>/<i>y</i>. <span class="d">It has nothing to say along the <i>x</i>-axis.</span></p>
+      <p class="l" data-s="2">The strokes get steeper the closer you come to the <i>x</i>-axis.</p>
+      <p class="l" data-s="3">The solution through <i>y</i>(0) = 3 is the top half of the circle.</p>
+      <p class="l" data-s="4">It meets the <i>x</i>-axis at <i>x</i> = &plusmn;3, and there <i>y</i> = 0.</p>
+      <p class="e t" data-s="5">check 2:&nbsp; &minus;<i>x</i>/<i>y</i> is undefined when <i>y</i> = 0</p>
+      <p class="e" data-s="6"><span class="bx">&minus;3 &lt; <i>x</i> &lt; 3</span></p>
+      <p class="l" data-s="7">The tangent is vertical at both ends, so the solution cannot be continued past them.</p>
+      <p class="a" data-s="8">&#8627; the circle is one curve. The solution is one <span class="n">arc</span> of it.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="294.3" x2="0" y2="294.3"/><line x1="-7" y1="175" x2="0" y2="175"/><line x1="-7" y1="55.7" x2="0" y2="55.7"/><line x1="28.2" y1="350" x2="28.2" y2="357"/><line x1="98.6" y1="350" x2="98.6" y2="357"/><line x1="169.1" y1="350" x2="169.1" y2="357"/><line x1="239.5" y1="350" x2="239.5" y2="357"/><line x1="310" y1="350" x2="310" y2="357"/><line x1="380.5" y1="350" x2="380.5" y2="357"/><line x1="450.9" y1="350" x2="450.9" y2="357"/><line x1="521.4" y1="350" x2="521.4" y2="357"/><line x1="591.8" y1="350" x2="591.8" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="299.3" text-anchor="end">−3</text><text x="-12" y="180" text-anchor="end">0</text><text x="-12" y="60.7" text-anchor="end">3</text><text x="28.2" y="375" text-anchor="middle">−4</text><text x="98.6" y="375" text-anchor="middle">−3</text><text x="169.1" y="375" text-anchor="middle">−2</text><text x="239.5" y="375" text-anchor="middle">−1</text><text x="310" y="375" text-anchor="middle">0</text><text x="380.5" y="375" text-anchor="middle">1</text><text x="450.9" y="375" text-anchor="middle">2</text><text x="521.4" y="375" text-anchor="middle">3</text><text x="591.8" y="375" text-anchor="middle">4</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">x</text></g></g><g data-s="2" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"><line x1="15.5" y1="310.2" x2="40.9" y2="326.2"/><line x1="85.1" y1="311.8" x2="112.2" y2="324.6"/><line x1="154.8" y1="313.7" x2="183.4" y2="322.7"/><line x1="224.7" y1="315.9" x2="254.4" y2="320.5"/><line x1="295" y1="318.2" x2="325" y2="318.2"/><line x1="365.6" y1="320.5" x2="395.3" y2="315.9"/><line x1="436.6" y1="322.7" x2="465.2" y2="313.7"/><line x1="507.8" y1="324.6" x2="534.9" y2="311.8"/><line x1="579.1" y1="326.2" x2="604.5" y2="310.2"/><line x1="16.9" y1="268.6" x2="39.5" y2="288.2"/><line x1="86.1" y1="270.2" x2="111.2" y2="286.6"/><line x1="155.3" y1="272.4" x2="182.8" y2="284.4"/><line x1="224.9" y1="275.2" x2="254.2" y2="281.6"/><line x1="295" y1="278.4" x2="325" y2="278.4"/><line x1="365.8" y1="281.6" x2="395.1" y2="275.2"/><line x1="437.2" y1="284.4" x2="464.7" y2="272.4"/><line x1="508.8" y1="286.6" x2="533.9" y2="270.2"/><line x1="580.5" y1="288.2" x2="603.1" y2="268.6"/><line x1="19.5" y1="226.4" x2="36.9" y2="250.9"/><line x1="88.3" y1="227.7" x2="108.9" y2="249.5"/><line x1="156.8" y1="230" x2="181.3" y2="247.3"/><line x1="225.4" y1="233.6" x2="253.7" y2="243.6"/><line x1="295" y1="238.6" x2="325" y2="238.6"/><line x1="366.3" y1="243.6" x2="394.6" y2="233.6"/><line x1="438.7" y1="247.3" x2="463.2" y2="230"/><line x1="511.1" y1="249.5" x2="531.7" y2="227.7"/><line x1="583.1" y1="250.9" x2="600.5" y2="226.4"/><line x1="24.3" y1="184.4" x2="32" y2="213.4"/><line x1="93.6" y1="184.7" x2="103.6" y2="213"/><line x1="162.1" y1="185.6" x2="176.1" y2="212.1"/><line x1="228.6" y1="188.6" x2="250.5" y2="209.1"/><line x1="295" y1="198.9" x2="325" y2="198.9"/><line x1="369.5" y1="209.1" x2="391.4" y2="188.6"/><line x1="443.9" y1="212.1" x2="457.9" y2="185.6"/><line x1="516.4" y1="213" x2="526.4" y2="184.7"/><line x1="588" y1="213.4" x2="595.7" y2="184.4"/><line x1="24.3" y1="165.6" x2="32" y2="136.6"/><line x1="93.6" y1="165.3" x2="103.6" y2="137"/><line x1="162.1" y1="164.4" x2="176.1" y2="137.9"/><line x1="228.6" y1="161.4" x2="250.5" y2="140.9"/><line x1="295" y1="151.1" x2="325" y2="151.1"/><line x1="369.5" y1="140.9" x2="391.4" y2="161.4"/><line x1="443.9" y1="137.9" x2="457.9" y2="164.4"/><line x1="516.4" y1="137" x2="526.4" y2="165.3"/><line x1="588" y1="136.6" x2="595.7" y2="165.6"/><line x1="19.5" y1="123.6" x2="36.9" y2="99.1"/><line x1="88.3" y1="122.3" x2="108.9" y2="100.5"/><line x1="156.8" y1="120" x2="181.3" y2="102.7"/><line x1="225.4" y1="116.4" x2="253.7" y2="106.4"/><line x1="295" y1="111.4" x2="325" y2="111.4"/><line x1="366.3" y1="106.4" x2="394.6" y2="116.4"/><line x1="438.7" y1="102.7" x2="463.2" y2="120"/><line x1="511.1" y1="100.5" x2="531.7" y2="122.3"/><line x1="583.1" y1="99.1" x2="600.5" y2="123.6"/><line x1="16.9" y1="81.4" x2="39.5" y2="61.8"/><line x1="86.1" y1="79.8" x2="111.2" y2="63.4"/><line x1="155.3" y1="77.6" x2="182.8" y2="65.6"/><line x1="224.9" y1="74.8" x2="254.2" y2="68.4"/><line x1="295" y1="71.6" x2="325" y2="71.6"/><line x1="365.8" y1="68.4" x2="395.1" y2="74.8"/><line x1="437.2" y1="65.6" x2="464.7" y2="77.6"/><line x1="508.8" y1="63.4" x2="533.9" y2="79.8"/><line x1="580.5" y1="61.8" x2="603.1" y2="81.4"/><line x1="15.5" y1="39.8" x2="40.9" y2="23.8"/><line x1="85.1" y1="38.2" x2="112.2" y2="25.4"/><line x1="154.8" y1="36.3" x2="183.4" y2="27.3"/><line x1="224.7" y1="34.1" x2="254.4" y2="29.5"/><line x1="295" y1="31.8" x2="325" y2="31.8"/><line x1="365.6" y1="29.5" x2="395.3" y2="34.1"/><line x1="436.6" y1="27.3" x2="465.2" y2="36.3"/><line x1="507.8" y1="25.4" x2="534.9" y2="38.2"/><line x1="579.1" y1="23.8" x2="604.5" y2="39.8"/></g><g data-s="3" stroke="var(--c)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" fill="none"><polyline points="98.6,175 100.4,159.6 102.2,153.3 103.9,148.5 105.7,144.4 107.4,140.9 109.2,137.7 111,134.8 112.7,132.2 114.5,129.7 116.3,127.3 118,125.1 119.8,123 121.5,121 123.3,119.1 125.1,117.2 126.8,115.5 128.6,113.8 130.3,112.1 132.1,110.6 133.9,109 135.6,107.6 137.4,106.1 139.1,104.8 140.9,103.4 142.7,102.1 144.4,100.8 146.2,99.6 148,98.4 149.7,97.2 151.5,96.1 153.2,95 155,93.9 156.8,92.8 158.5,91.8 160.3,90.8 162,89.8 163.8,88.8 165.6,87.9 167.3,87 169.1,86.1 170.9,85.2 172.6,84.3 174.4,83.5 176.1,82.7 177.9,81.9 179.7,81.1 181.4,80.3 183.2,79.5 184.9,78.8 186.7,78.1 188.5,77.4 190.2,76.7 192,76 193.8,75.3 195.5,74.7 197.3,74.1 199,73.4 200.8,72.8 202.6,72.2 204.3,71.7 206.1,71.1 207.8,70.5 209.6,70 211.4,69.5 213.1,69 214.9,68.4 216.6,68 218.4,67.5 220.2,67 221.9,66.5 223.7,66.1 225.5,65.6 227.2,65.2 229,64.8 230.7,64.4 232.5,64 234.3,63.6 236,63.2 237.8,62.9 239.5,62.5 241.3,62.2 243.1,61.8 244.8,61.5 246.6,61.2 248.4,60.9 250.1,60.6 251.9,60.3 253.6,60 255.4,59.7 257.2,59.5 258.9,59.2 260.7,59 262.4,58.7 264.2,58.5 266,58.3 267.7,58.1 269.5,57.9 271.3,57.7 273,57.5 274.8,57.4 276.5,57.2 278.3,57 280.1,56.9 281.8,56.7 283.6,56.6 285.3,56.5 287.1,56.4 288.9,56.3 290.6,56.2 292.4,56.1 294.1,56 295.9,55.9 297.7,55.9 299.4,55.8 301.2,55.8 303,55.7 304.7,55.7 306.5,55.7 308.2,55.7 310,55.7 311.8,55.7 313.5,55.7 315.3,55.7 317,55.7 318.8,55.8 320.6,55.8 322.3,55.9 324.1,55.9 325.9,56 327.6,56.1 329.4,56.2 331.1,56.3 332.9,56.4 334.7,56.5 336.4,56.6 338.2,56.7 339.9,56.9 341.7,57 343.5,57.2 345.2,57.4 347,57.5 348.8,57.7 350.5,57.9 352.3,58.1 354,58.3 355.8,58.5 357.6,58.7 359.3,59 361.1,59.2 362.8,59.5 364.6,59.7 366.4,60 368.1,60.3 369.9,60.6 371.6,60.9 373.4,61.2 375.2,61.5 376.9,61.8 378.7,62.2 380.5,62.5 382.2,62.9 384,63.2 385.7,63.6 387.5,64 389.3,64.4 391,64.8 392.8,65.2 394.5,65.6 396.3,66.1 398.1,66.5 399.8,67 401.6,67.5 403.4,68 405.1,68.4 406.9,69 408.6,69.5 410.4,70 412.2,70.5 413.9,71.1 415.7,71.7 417.4,72.2 419.2,72.8 421,73.4 422.7,74.1 424.5,74.7 426.2,75.3 428,76 429.8,76.7 431.5,77.4 433.3,78.1 435.1,78.8 436.8,79.5 438.6,80.3 440.3,81.1 442.1,81.9 443.9,82.7 445.6,83.5 447.4,84.3 449.1,85.2 450.9,86.1 452.7,87 454.4,87.9 456.2,88.8 458,89.8 459.7,90.8 461.5,91.8 463.2,92.8 465,93.9 466.8,95 468.5,96.1 470.3,97.2 472,98.4 473.8,99.6 475.6,100.8 477.3,102.1 479.1,103.4 480.9,104.8 482.6,106.1 484.4,107.6 486.1,109 487.9,110.6 489.7,112.1 491.4,113.8 493.2,115.5 494.9,117.2 496.7,119.1 498.5,121 500.2,123 502,125.1 503.7,127.3 505.5,129.7 507.3,132.2 509,134.8 510.8,137.7 512.6,140.9 514.3,144.4 516.1,148.5 517.8,153.3 519.6,159.6 521.4,175"/></g></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="16">
+  <p class="h" data-s="0">What if you start on the bad set?</p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="1">That solution ended where <i>y</i> = 0. <span class="d">So the line <i>y</i> = 0 is the bad set here.</span></p>
+      <p class="e t" data-s="2"><span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = &minus;<span class="fr"><span><i>x</i></span><span><i>y</i></span></span>,&nbsp;&nbsp; <span class="v"><i>y</i>(0) = 0</span></p>
+      <p class="l" data-s="3">Now the initial point is <span class="n">on</span> that line.</p>
+      <p class="l" data-s="4">The equation cannot even say what <i>y</i>&#8242;(0) is, so nothing can start there.</p>
+    </div>
+    <div>
+      <p class="e" data-s="5"><span class="bx">No solution begins at that point.</span></p>
+      <p class="l" data-s="6">And the opposite can happen too: sometimes <span class="g">more than one</span> solution starts from the same point.</p>
+      <p class="e t" data-s="7">existence&nbsp;&nbsp;&middot;&nbsp;&nbsp;uniqueness&nbsp;&nbsp;<span class="d">two separate questions</span></p>
+      <p class="l" data-s="8">Today we assumed both, every time, without saying so.</p>
+      <p class="a" data-s="9">&#8627; &sect;2.4 says exactly when you are allowed to assume them.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="17">
+  <p class="h" data-s="0">Example 4 &mdash; an integral you know</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = 1 + <i>y</i><sup>2</sup>,&nbsp;&nbsp; <i>y</i>(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Step 1&nbsp;&nbsp;split</p>
+      <p class="e t" data-s="2"><span class="fr"><span><i>dy</i></span><span>1 + <i>y</i><sup>2</sup></span></span> = <i>dx</i></p>
+      <p class="lb" data-s="3">Step 2&nbsp;&nbsp;integrate &mdash; you have met this one</p>
+      <p class="e t" data-s="3">&int;<span class="fr"><span><i>dy</i></span><span>1 + <i>y</i><sup>2</sup></span></span> = arctan <i>y</i></p>
+      <p class="e t" data-s="4">arctan <i>y</i> = <i>x</i> + <i>C</i></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Initial condition</p>
+      <p class="e t" data-s="5"><i>x</i> = 0, <i>y</i> = 0:&nbsp;&nbsp; arctan 0 = 0&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>C</i> = 0</span></p>
+      <p class="e" data-s="6"><span class="bx"><i>y</i> = tan <i>x</i></span></p>
+      <p class="l" data-s="7">Check 1: the <i>x</i> side is just 1, so nothing there.</p>
+      <p class="l" data-s="8">Check 2: 1 + <i>y</i><sup>2</sup> is never zero, so nothing there either.</p>
+      <p class="a" data-s="9">&#8627; so it has to be check 3 &mdash; and tan is the standard example of it.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="18">
+  <p class="h" data-s="0">Example 4 &mdash; infinity at a finite <i>x</i></p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1">Every slope in this field is at least 1, and it grows very fast with |<i>y</i>|.</p>
+      <p class="l" data-s="2">There is no flat stroke anywhere. <span class="d">The slope is never less than 1.</span></p>
+      <p class="l" data-s="3">The solution through the origin is <i>y</i> = tan <i>x</i>.</p>
+      <p class="l" data-s="4">It runs to +&infin;, and it gets there at <i>x</i> = &pi;/2 &mdash; a <span class="g">finite</span> <i>x</i>.</p>
+      <p class="e" data-s="5"><span class="bx">&minus;&pi;/2 &lt; <i>x</i> &lt; &pi;/2</span></p>
+      <p class="l" data-s="6">Nothing in 1 + <i>y</i><sup>2</sup> is undefined anywhere. <span class="d">The equation is perfectly well behaved.</span></p>
+      <p class="a" data-s="7">&#8627; the solution still stops. That is check 3, and only the answer can show it to you.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="327.2" x2="0" y2="327.2"/><line x1="-7" y1="251.1" x2="0" y2="251.1"/><line x1="-7" y1="175" x2="0" y2="175"/><line x1="-7" y1="98.9" x2="0" y2="98.9"/><line x1="-7" y1="22.8" x2="0" y2="22.8"/><line x1="44.3" y1="350" x2="44.3" y2="357"/><line x1="132.9" y1="350" x2="132.9" y2="357"/><line x1="221.4" y1="350" x2="221.4" y2="357"/><line x1="310" y1="350" x2="310" y2="357"/><line x1="398.6" y1="350" x2="398.6" y2="357"/><line x1="487.1" y1="350" x2="487.1" y2="357"/><line x1="575.7" y1="350" x2="575.7" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="332.2" text-anchor="end">−4</text><text x="-12" y="256.1" text-anchor="end">−2</text><text x="-12" y="180" text-anchor="end">0</text><text x="-12" y="103.9" text-anchor="end">2</text><text x="-12" y="27.8" text-anchor="end">4</text><text x="44.3" y="375" text-anchor="middle">−1.5</text><text x="132.9" y="375" text-anchor="middle">−1</text><text x="221.4" y="375" text-anchor="middle">−0.5</text><text x="310" y="375" text-anchor="middle">0</text><text x="398.6" y="375" text-anchor="middle">0.5</text><text x="487.1" y="375" text-anchor="middle">1</text><text x="575.7" y="375" text-anchor="middle">1.5</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">x</text></g></g><g data-s="2" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"><line x1="40.3" y1="341.6" x2="48.2" y2="312.7"/><line x1="128.9" y1="341.6" x2="136.8" y2="312.7"/><line x1="217.5" y1="341.6" x2="225.4" y2="312.7"/><line x1="306" y1="341.6" x2="314" y2="312.7"/><line x1="394.6" y1="341.6" x2="402.5" y2="312.7"/><line x1="483.2" y1="341.6" x2="491.1" y2="312.7"/><line x1="571.8" y1="341.6" x2="579.7" y2="312.7"/><line x1="38" y1="302.7" x2="50.6" y2="275.5"/><line x1="126.5" y1="302.7" x2="139.2" y2="275.5"/><line x1="215.1" y1="302.7" x2="227.8" y2="275.5"/><line x1="303.7" y1="302.7" x2="316.3" y2="275.5"/><line x1="392.2" y1="302.7" x2="404.9" y2="275.5"/><line x1="480.8" y1="302.7" x2="493.5" y2="275.5"/><line x1="569.4" y1="302.7" x2="582" y2="275.5"/><line x1="34.1" y1="262.1" x2="54.5" y2="240.1"/><line x1="122.6" y1="262.1" x2="143.1" y2="240.1"/><line x1="211.2" y1="262.1" x2="231.7" y2="240.1"/><line x1="299.8" y1="262.1" x2="320.2" y2="240.1"/><line x1="388.3" y1="262.1" x2="408.8" y2="240.1"/><line x1="476.9" y1="262.1" x2="497.4" y2="240.1"/><line x1="565.5" y1="262.1" x2="585.9" y2="240.1"/><line x1="30.5" y1="219" x2="58.1" y2="207.1"/><line x1="119.1" y1="219" x2="146.6" y2="207.1"/><line x1="207.6" y1="219" x2="235.2" y2="207.1"/><line x1="296.2" y1="219" x2="323.8" y2="207.1"/><line x1="384.8" y1="219" x2="412.4" y2="207.1"/><line x1="473.4" y1="219" x2="500.9" y2="207.1"/><line x1="561.9" y1="219" x2="589.5" y2="207.1"/><line x1="29.6" y1="178.1" x2="59" y2="171.9"/><line x1="118.2" y1="178.1" x2="147.5" y2="171.9"/><line x1="206.8" y1="178.1" x2="236.1" y2="171.9"/><line x1="295.3" y1="178.1" x2="324.7" y2="171.9"/><line x1="383.9" y1="178.1" x2="413.2" y2="171.9"/><line x1="472.5" y1="178.1" x2="501.8" y2="171.9"/><line x1="561" y1="178.1" x2="590.4" y2="171.9"/><line x1="30.5" y1="142.9" x2="58.1" y2="131"/><line x1="119.1" y1="142.9" x2="146.6" y2="131"/><line x1="207.6" y1="142.9" x2="235.2" y2="131"/><line x1="296.2" y1="142.9" x2="323.8" y2="131"/><line x1="384.8" y1="142.9" x2="412.4" y2="131"/><line x1="473.4" y1="142.9" x2="500.9" y2="131"/><line x1="561.9" y1="142.9" x2="589.5" y2="131"/><line x1="34.1" y1="109.9" x2="54.5" y2="87.9"/><line x1="122.6" y1="109.9" x2="143.1" y2="87.9"/><line x1="211.2" y1="109.9" x2="231.7" y2="87.9"/><line x1="299.8" y1="109.9" x2="320.2" y2="87.9"/><line x1="388.3" y1="109.9" x2="408.8" y2="87.9"/><line x1="476.9" y1="109.9" x2="497.4" y2="87.9"/><line x1="565.5" y1="109.9" x2="585.9" y2="87.9"/><line x1="38" y1="74.5" x2="50.6" y2="47.3"/><line x1="126.5" y1="74.5" x2="139.2" y2="47.3"/><line x1="215.1" y1="74.5" x2="227.8" y2="47.3"/><line x1="303.7" y1="74.5" x2="316.3" y2="47.3"/><line x1="392.2" y1="74.5" x2="404.9" y2="47.3"/><line x1="480.8" y1="74.5" x2="493.5" y2="47.3"/><line x1="569.4" y1="74.5" x2="582" y2="47.3"/><line x1="40.3" y1="37.3" x2="48.2" y2="8.4"/><line x1="128.9" y1="37.3" x2="136.8" y2="8.4"/><line x1="217.5" y1="37.3" x2="225.4" y2="8.4"/><line x1="306" y1="37.3" x2="314" y2="8.4"/><line x1="394.6" y1="37.3" x2="402.5" y2="8.4"/><line x1="483.2" y1="37.3" x2="491.1" y2="8.4"/><line x1="571.8" y1="37.3" x2="579.7" y2="8.4"/></g><g data-s="3" stroke="var(--c)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" fill="none"><polyline points="66.7,365.2 68.7,354.5 70.8,344.9 72.8,336.2 74.8,328.3 76.8,321.2 78.9,314.6 80.9,308.6 82.9,303 85,297.8 87,293 89,288.5 91,284.4 93.1,280.5 95.1,276.8 97.1,273.4 99.2,270.1 101.2,267 103.2,264.1 105.2,261.4 107.3,258.8 109.3,256.3 111.3,253.9 113.3,251.7 115.4,249.5 117.4,247.5 119.4,245.5 121.5,243.6 123.5,241.8 125.5,240 127.5,238.4 129.6,236.7 131.6,235.2 133.6,233.7 135.6,232.2 137.7,230.9 139.7,229.5 141.7,228.2 143.8,226.9 145.8,225.7 147.8,224.5 149.8,223.4 151.9,222.2 153.9,221.1 155.9,220.1 157.9,219 160,218 162,217.1 164,216.1 166.1,215.2 168.1,214.3 170.1,213.4 172.1,212.5 174.2,211.7 176.2,210.8 178.2,210 180.2,209.2 182.3,208.4 184.3,207.7 186.3,206.9 188.4,206.2 190.4,205.5 192.4,204.8 194.4,204.1 196.5,203.4 198.5,202.7 200.5,202 202.5,201.4 204.6,200.8 206.6,200.1 208.6,199.5 210.7,198.9 212.7,198.3 214.7,197.7 216.7,197.1 218.8,196.5 220.8,196 222.8,195.4 224.8,194.8 226.9,194.3 228.9,193.7 230.9,193.2 233,192.7 235,192.1 237,191.6 239,191.1 241.1,190.6 243.1,190.1 245.1,189.6 247.2,189.1 249.2,188.6 251.2,188.1 253.2,187.6 255.3,187.1 257.3,186.7 259.3,186.2 261.3,185.7 263.4,185.3 265.4,184.8 267.4,184.3 269.5,183.9 271.5,183.4 273.5,183 275.5,182.5 277.6,182 279.6,181.6 281.6,181.1 283.6,180.7 285.7,180.3 287.7,179.8 289.7,179.4 291.8,178.9 293.8,178.5 295.8,178.1 297.8,177.6 299.9,177.2 301.9,176.7 303.9,176.3 305.9,175.9 308,175.4 310,175 312,174.6 314.1,174.1 316.1,173.7 318.1,173.3 320.1,172.8 322.2,172.4 324.2,171.9 326.2,171.5 328.2,171.1 330.3,170.6 332.3,170.2 334.3,169.7 336.4,169.3 338.4,168.9 340.4,168.4 342.4,168 344.5,167.5 346.5,167 348.5,166.6 350.5,166.1 352.6,165.7 354.6,165.2 356.6,164.7 358.7,164.3 360.7,163.8 362.7,163.3 364.7,162.9 366.8,162.4 368.8,161.9 370.8,161.4 372.8,160.9 374.9,160.4 376.9,159.9 378.9,159.4 381,158.9 383,158.4 385,157.9 387,157.3 389.1,156.8 391.1,156.3 393.1,155.7 395.2,155.2 397.2,154.6 399.2,154 401.2,153.5 403.3,152.9 405.3,152.3 407.3,151.7 409.3,151.1 411.4,150.5 413.4,149.9 415.4,149.2 417.5,148.6 419.5,148 421.5,147.3 423.5,146.6 425.6,145.9 427.6,145.2 429.6,144.5 431.6,143.8 433.7,143.1 435.7,142.3 437.7,141.6 439.8,140.8 441.8,140 443.8,139.2 445.8,138.3 447.9,137.5 449.9,136.6 451.9,135.7 453.9,134.8 456,133.9 458,132.9 460,132 462.1,131 464.1,129.9 466.1,128.9 468.1,127.8 470.2,126.6 472.2,125.5 474.2,124.3 476.2,123.1 478.3,121.8 480.3,120.5 482.3,119.1 484.4,117.8 486.4,116.3 488.4,114.8 490.4,113.3 492.5,111.6 494.5,110 496.5,108.2 498.5,106.4 500.6,104.5 502.6,102.5 504.6,100.5 506.7,98.3 508.7,96.1 510.7,93.7 512.7,91.2 514.8,88.6 516.8,85.9 518.8,83 520.8,79.9 522.9,76.6 524.9,73.2 526.9,69.5 529,65.6 531,61.5 533,57 535,52.2 537.1,47 539.1,41.4 541.1,35.4 543.2,28.8 545.2,21.7 547.2,13.8 549.2,5.1 551.3,-4.5 553.3,-15.2"/></g></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="19">
+  <p class="h" data-s="0">Example 5 &mdash; a harder integral</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = <span class="fr"><span><b>e</b><sup>&minus;<i>x</i></sup> &minus; <b>e</b><sup><i>x</i></sup></span><span>3 + 4<i>y</i></span></span>,&nbsp;&nbsp; <i>y</i>(0) = 1</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Step 1&nbsp;&nbsp;split</p>
+      <p class="e t" data-s="2">(3 + 4<i>y</i>)&thinsp;<i>dy</i> = (<b>e</b><sup>&minus;<i>x</i></sup> &minus; <b>e</b><sup><i>x</i></sup>)&thinsp;<i>dx</i></p>
+      <p class="lb" data-s="3">Step 2&nbsp;&nbsp;integrate &mdash; watch both signs on the right</p>
+      <p class="e t" data-s="3">3<i>y</i> + 2<i>y</i><sup>2</sup> = &minus;<b>e</b><sup>&minus;<i>x</i></sup> &minus; <b>e</b><sup><i>x</i></sup> + <i>C</i></p>
+      <p class="lb" data-s="4">Initial condition</p>
+      <p class="e t" data-s="4"><i>x</i> = 0, <i>y</i> = 1:&nbsp;&nbsp; 3 + 2 = &minus;1 &minus; 1 + <i>C</i>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>C</i> = 7</span></p>
+    </div>
+    <div>
+      <p class="e" data-s="5"><span class="bx">2<i>y</i><sup>2</sup> + 3<i>y</i> = 7 &minus; <b>e</b><sup><i>x</i></sup> &minus; <b>e</b><sup>&minus;<i>x</i></sup></span></p>
+      <p class="lb" data-s="6">This time it is only a quadratic in <i>y</i></p>
+      <p class="e t" data-s="6"><i>y</i> = <span class="fr"><span>&minus;3 &plusmn; <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">9 + 8(7 &minus; <b>e</b><sup><i>x</i></sup> &minus; <b>e</b><sup>&minus;<i>x</i></sup>)</span></span></span><span>4</span></span></p>
+      <p class="e t" data-s="7"><i>x</i> = 0:&nbsp; <i>y</i> = <span class="fr"><span>&minus;3 &plusmn; 7</span><span>4</span></span> = 1 or &minus;2.5&nbsp;&nbsp;<span class="d">we need 1, so the plus sign</span></p>
+      <p class="e" data-s="8"><span class="bx"><i>y</i> = <span class="fr"><span>&minus;3 + <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">65 &minus; 8<b>e</b><sup><i>x</i></sup> &minus; 8<b>e</b><sup>&minus;<i>x</i></sup></span></span></span><span>4</span></span></span></p>
+      <p class="a" data-s="9">&#8627; and now the interval, which comes out exactly.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="20">
+  <p class="h" data-s="0">Example 5 &mdash; the interval comes out exactly</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i> = <span class="fr"><span>&minus;3 + <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">65 &minus; 8<b>e</b><sup><i>x</i></sup> &minus; 8<b>e</b><sup>&minus;<i>x</i></sup></span></span></span><span>4</span></span></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Check 2 says the trouble is at</p>
+      <p class="e t" data-s="2">3 + 4<i>y</i> = 0&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <i>y</i> = &minus;<span class="fr"><span>3</span><span>4</span></span></p>
+      <p class="l" data-s="3">And that is the same moment the square root reaches zero.</p>
+      <p class="e t" data-s="4">65 &minus; 8<b>e</b><sup><i>x</i></sup> &minus; 8<b>e</b><sup>&minus;<i>x</i></sup> = 0</p>
+      <p class="lb" data-s="5">Write <i>u</i> = <b>e</b><sup><i>x</i></sup></p>
+      <p class="e t" data-s="5">8<i>u</i> + <span class="fr"><span>8</span><span><i>u</i></span></span> = 65&nbsp;&nbsp; &rArr;&nbsp;&nbsp; 8<i>u</i><sup>2</sup> &minus; 65<i>u</i> + 8 = 0</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><i>u</i> = <span class="fr"><span>65 &plusmn; <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">4225 &minus; 256</span></span></span><span>16</span></span> = <span class="fr"><span>65 &plusmn; 63</span><span>16</span></span></p>
+      <p class="e t" data-s="7"><i>u</i> = 8&nbsp;&nbsp;or&nbsp;&nbsp;<i>u</i> = <span class="fr"><span>1</span><span>8</span></span>&nbsp;&nbsp;<span class="d">both are clean</span></p>
+      <p class="e t" data-s="8"><b>e</b><sup><i>x</i></sup> = 8 &rArr; <i>x</i> = ln 8&nbsp;&nbsp;&middot;&nbsp;&nbsp;<b>e</b><sup><i>x</i></sup> = <span class="fr"><span>1</span><span>8</span></span> &rArr; <i>x</i> = &minus;ln 8</p>
+      <p class="e" data-s="9"><span class="bx">&minus;ln 8 &lt; <i>x</i> &lt; ln 8</span>&nbsp;&nbsp;<span class="d">about &minus;2.08 to 2.08</span></p>
+      <p class="l" data-s="10">At both ends <i>y</i> = &minus;3/4 exactly, which is where 3 + 4<i>y</i> dies.</p>
+      <p class="a" data-s="11">&#8627; check 2 and the square root gave the same two points. They always will.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="21">
+  <p class="h" data-s="0">Where does each one live? &mdash; call it out</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>y</i> = ln(<i>x</i> &minus; 2),&nbsp;&nbsp; <i>y</i>(3) = 0</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>y</i> = <span class="fr"><span>1</span><span>1 &minus; <i>x</i></span></span>,&nbsp;&nbsp; <i>y</i>(0) = 1</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i> = <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">4 &minus; <i>x</i><sup>2</sup></span></span>,&nbsp;&nbsp; <i>y</i>(0) = 2</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <i>y</i> = tan 2<i>x</i>,&nbsp;&nbsp; <i>y</i>(0) = 0</p>
+    </div>
+    <div>
+      <p class="e t" data-s="5"><span class="g">1.</span>&nbsp; <span class="v"><i>x</i> &gt; 2</span></p>
+      <p class="e t" data-s="6"><span class="g">2.</span>&nbsp; <span class="v"><i>x</i> &lt; 1</span>&nbsp;&nbsp;<span class="d">not <i>x</i> &ne; 1 &mdash; the piece with 0 in it</span></p>
+      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; <span class="v">&minus;2 &lt; <i>x</i> &lt; 2</span></p>
+      <p class="e t" data-s="8"><span class="g">4.</span>&nbsp; <span class="v">&minus;&pi;/4 &lt; <i>x</i> &lt; &pi;/4</span>&nbsp;&nbsp;<span class="d">the 2 halves the interval</span></p>
+      <p class="e" data-s="9"><span class="bx">Number 2 is the one people get wrong.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="22">
+  <p class="h" data-s="0">The card to photograph</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">Three checks</p>
+      <ol class="st">
+        <li data-s="1">Is the <i>x</i> part undefined somewhere?</li>
+        <li data-s="2">Does the <i>y</i> part become zero somewhere?</li>
+        <li data-s="3">Does <i>y</i> reach &plusmn;&infin; at a finite <i>x</i>?</li>
+      </ol>
+      <p class="e" data-s="4"><span class="bx">Take the open piece around <i>x</i><sub>0</sub>.</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Today, in four answers</p>
+      <p class="e t" data-s="5"><span class="g">1.</span>&nbsp; <i>x</i> &gt; <b>e</b><sup>&minus;2</sup>&nbsp;&nbsp;<span class="d">checks 1 and 2 &mdash; the nearer one wins</span></p>
+      <p class="e t" data-s="6"><span class="g">2.</span>&nbsp; &minus;3 &lt; <i>x</i> &lt; 3&nbsp;&nbsp;<span class="d">check 2</span></p>
+      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; &minus;&pi;/2 &lt; <i>x</i> &lt; &pi;/2&nbsp;&nbsp;<span class="d">check 3</span></p>
+      <p class="e t" data-s="8"><span class="g">4.</span>&nbsp; &minus;ln 8 &lt; <i>x</i> &lt; ln 8&nbsp;&nbsp;<span class="d">check 2, and exact</span></p>
+      <p class="a" data-s="9">&#8627; four equations, four different reasons to stop.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="23">
+  <p class="h" data-s="0">Where this is going</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">For a <span class="g">linear</span> equation</p>
+      <p class="e t" data-s="1"><i>y</i>&#8242; + <i>p</i>(<i>t</i>)<i>y</i> = <i>g</i>(<i>t</i>)</p>
+      <p class="l" data-s="2">The interval is the largest one around <i>t</i><sub>0</sub> on which <i>p</i> and <i>g</i> are both continuous.</p>
+      <p class="l" data-s="3">You can find it <span class="n">before</span> you solve anything.</p>
+      <p class="e" data-s="4"><span class="bx">Linear: the interval comes from <i>p</i> and <i>g</i>.</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">For a <span class="n">nonlinear</span> one</p>
+      <p class="l" data-s="5">There is no such shortcut. You solve it first, and then run the three checks.</p>
+      <p class="l" data-s="6">That is what we did four times today, and every time the answer was different.</p>
+      <p class="e" data-s="7"><span class="bx">Nonlinear: solve first, then find the interval.</span></p>
+      <p class="a" data-s="8">&#8627; &sect;2.4 is exactly this difference, stated as a theorem. Monday.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="24">
+  <p class="h" data-s="0">Where we are</p>
+  <p class="l" data-s="1">&sect;2.2 is finished.</p>
+  <p class="e t" data-s="2">separable&nbsp; &rarr;&nbsp; split, integrate, solve if you can&nbsp; &rarr;&nbsp; <span class="g">then say where it lives</span></p>
+  <p class="l" data-s="3">From now on, an answer that is only a formula is not a finished answer.</p>
+  <p class="lb" data-s="4">Friday</p>
+  <p class="l" data-s="4">&sect;2.3 &mdash; where these equations come from. <span class="d">Mixing tanks, and cooling coffee.</span></p>
+  <p class="l" data-s="5"><span class="g">HW1</span> is due this Friday, September 11. <span class="g">HW2</span> (&sect;2.1 and &sect;2.2) is due Friday the 18th.</p>
+  <p class="e" data-s="6"><span class="bx">See you Friday.</span></p>
+</div>
+
+<canvas id="ink"></canvas>
+<canvas id="wet"></canvas>
+<div id="edge"></div>
+
+<div id="hint">
+  <b>Math 2255 &mdash; Lecture 1</b><br><br>
+  <kbd>&#9654;</kbd> buttons (top right and bottom), or arrow keys<br>
+  <kbd>&#9664;</kbd> goes back<br>
+  <kbd>1</kbd>&ndash;<kbd>5</kbd> pen colour &nbsp; <kbd>E</kbd> eraser &nbsp; <kbd>C</kbd> clear ink<br>
+  <kbd>F</kbd> full screen &nbsp; <kbd>T</kbd> hide toolbar &nbsp; <kbd>G</kbd> writing zones<br>
+  <kbd>R</kbd> reset timer&nbsp;&nbsp;&nbsp;<kbd>D</kbd> dark / light<br><br><span style="color:var(--dm)">Pages turn with the arrow buttons only,<br>so nothing you touch by accident moves the board.<br><br>The toolbar hides itself after a few seconds.<br>Tap the very bottom edge to bring it back.</span><br><br>
+  <span style="color:var(--dm)">Only the Apple Pencil draws.<br>
+  Your palm and fingers leave no marks.<br><br>Tap anywhere to begin.</span>
+</div>
+
+<div id="bar">
+  <span class="pen sel" data-i="0" style="background:#F0EFE8"></span>
+  <span class="pen" data-i="1" style="background:#E3E34B"></span>
+  <span class="pen" data-i="2" style="background:#45CFC2"></span>
+  <span class="pen" data-i="3" style="background:#E85CD2"></span>
+  <span class="pen" data-i="4" style="background:#F09A42"></span>
+  <button class="btn" id="th">Pen M</button>
+  <button class="btn" id="hd">HD</button>
+  <button class="btn" id="er">Erase</button>
+  <button class="btn" id="cl">Clear</button>
+  <span class="sp"></span>
+  <button class="btn nav" id="prev">&#9664;</button>
+  <span id="pos">1 / 24</span>
+  <button class="btn nav" id="next">&#9654;</button>
+  <span class="sp"></span>
+  <span id="clk">00:00</span>
+  <button class="btn" id="tm">Light</button>
+  <button class="btn" id="fs">Full</button>
+  <button class="btn" id="hp">?</button>
+</div>
+</div>
+
+<script>
+(function(){
+var pgs=[].slice.call(document.querySelectorAll('.pg'));
+var maxStep=pgs.map(function(p){
+  var m=0;[].forEach.call(p.querySelectorAll('[data-s]'),function(e){
+    m=Math.max(m,+e.getAttribute('data-s'));});return m;});
+var P=0,S=0;
+var cv=document.getElementById('ink');
+var cx=cv.getContext('2d',{desynchronized:true,alpha:true})||cv.getContext('2d');
+var strokes=pgs.map(function(){return [];});
+var DPRCAP=1.5;
+var PAL={dark: ['#F0EFE8','#E3E34B','#45CFC2','#E85CD2','#F09A42'],
+          light:['#16181B','#8F6A05','#0E7A70','#A0198A','#B4530A']};
+var theme='dark', ci=0, wid=4.2, erase=false, drawing=false, cur=null;
+function inks(){return PAL[theme];}
+var WIDS=[3.0,4.2,6.0],wi=1;
+
+function fit(){
+  var r=Math.min(window.devicePixelRatio||1,DPRCAP);
+  cv.width=Math.round(innerWidth*r);cv.height=Math.round(innerHeight*r);
+  cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+  wet.width=cv.width;wet.height=cv.height;
+  wet.style.width=innerWidth+'px';wet.style.height=innerHeight+'px';
+  wx.setTransform(r,0,0,r,0,0);wetBox=null;
+  cx.setTransform(r,0,0,r,0,0);syncRect();redraw();
+}
+function setStyle(st){
+  cx.lineCap='round';cx.lineJoin='round';
+  cx.strokeStyle=inks()[st.ci];cx.lineWidth=st.w;
+  cx.globalCompositeOperation=st.e?'destination-out':'source-over';
+}
+function strokePath(st){
+  if(st.pts.length<2)return;
+  setStyle(st);
+  cx.beginPath();cx.moveTo(st.pts[0].x,st.pts[0].y);
+  for(var i=1;i<st.pts.length;i++){
+    var a=st.pts[i-1],b=st.pts[i];
+    cx.quadraticCurveTo(a.x,a.y,(a.x+b.x)/2,(a.y+b.y)/2);
+  }
+  cx.stroke();
+}
+// full repaint only on page change / clear / resize -- never while drawing
+function redraw(){
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  strokes[P].forEach(strokePath);
+  cx.globalCompositeOperation='source-over';
+}
+function show(){
+  pgs.forEach(function(p,i){p.classList.toggle('on',i===P);});
+  [].forEach.call(pgs[P].querySelectorAll('[data-s]'),function(e){
+    var from=+e.getAttribute('data-s');
+    var u=e.getAttribute('data-until');
+    var until=(u===null||u==='')?1e9:+u;
+    var live=(S>=from && S<=until);
+    e.classList.toggle('vis', live);
+    if(u!==null&&u!=='') e.classList.toggle('gone', S>until);});
+  var pt=(P+1)+' / '+pgs.length;
+  document.getElementById('pos').textContent=pt;
+  var p2=document.getElementById('pos2'); if(p2)p2.textContent=pt;
+  redraw();
+}
+function next(){ if(S<maxStep[P]){S++;} else if(P<pgs.length-1){P++;S=0;} show(); }
+function prev(){ if(S>0){S--;} else if(P>0){P--;S=maxStep[P];} show(); }
+function pgUp(){ if(P>0){P--;S=maxStep[P];show();} }
+function pgDn(){ if(P<pgs.length-1){P++;S=maxStep[P];show();} }
+
+// ---- pencil drawing ----
+var RC={left:0,top:0};
+function syncRect(){RC=cv.getBoundingClientRect();}
+function xy(e){return {x:e.clientX-RC.left,y:e.clientY-RC.top};}
+function isPen(e){
+  if(e.pointerType==='pen')return true;
+  if(e.pointerType==='touch'&&(e.width||99)<=12&&(e.height||99)<=12)return true;
+  return false;
+}
+cv.addEventListener('pointerdown',function(e){
+  if(!isPen(e))return;
+  e.preventDefault();drawing=true;syncRect();
+  var p=xy(e),w=erase?26:wid*(0.55+0.9*(e.pressure||0.5));
+  cur={ci:ci,w:w,e:erase,pts:[p]};strokes[P].push(cur);
+  setStyle(cur);
+  cx.beginPath();cx.arc(p.x,p.y,Math.max(w,1)/2,0,6.2832);
+  cx.fillStyle=inks()[cur.ci];cx.fill();
+  cx.globalCompositeOperation='source-over';
+},{passive:false});
+var pend=[],rafId=0,MINSTEP=1.7;
+var wet=document.getElementById('wet');
+var wx=wet.getContext('2d',{desynchronized:true})||wet.getContext('2d');
+var wetBox=null;
+function clearWet(){
+  if(!wetBox)return;
+  wx.clearRect(wetBox[0]-4,wetBox[1]-4,wetBox[2]-wetBox[0]+8,wetBox[3]-wetBox[1]+8);
+  wetBox=null;
+}
+function drawPredicted(e){
+  clearWet();
+  if(!cur||!e.getPredictedEvents)return;
+  var pr=e.getPredictedEvents(); if(!pr.length)return;
+  var a=cur.pts[cur.pts.length-1];
+  var x0=a.x,y0=a.y,x1=a.x,y1=a.y;
+  wx.lineCap='round';wx.lineJoin='round';
+  wx.strokeStyle=cur.c;wx.lineWidth=cur.w;
+  wx.globalCompositeOperation=cur.e?'destination-out':'source-over';
+  wx.beginPath();wx.moveTo(a.x,a.y);
+  for(var i=0;i<pr.length;i++){
+    var p=xy(pr[i]); wx.lineTo(p.x,p.y);
+    if(p.x<x0)x0=p.x; if(p.y<y0)y0=p.y;
+    if(p.x>x1)x1=p.x; if(p.y>y1)y1=p.y;
+  }
+  wx.stroke();
+  wetBox=[x0-cur.w,y0-cur.w,x1+cur.w,y1+cur.w];
+}
+function flush(){
+  rafId=0;
+  clearWet();
+  if(!cur||!pend.length)return;
+  setStyle(cur);
+  cx.beginPath();
+  var a=cur.pts[cur.pts.length-1];
+  cx.moveTo(a.x,a.y);
+  for(var i=0;i<pend.length;i++){ cx.lineTo(pend[i].x,pend[i].y); cur.pts.push(pend[i]); }
+  cx.stroke();
+  cx.globalCompositeOperation='source-over';
+  pend.length=0;
+}
+cv.addEventListener('pointermove',function(e){
+  if(!drawing||!isPen(e))return;
+  e.preventDefault();
+  var evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];
+  var last=pend.length?pend[pend.length-1]:cur.pts[cur.pts.length-1];
+  for(var i=0;i<evs.length;i++){
+    var p=xy(evs[i]);
+    var dx=p.x-last.x, dy=p.y-last.y;
+    if(dx*dx+dy*dy < MINSTEP) continue;
+    pend.push(p); last=p;
+  }
+  if(pend.length && !rafId) rafId=requestAnimationFrame(flush);
+  drawPredicted(e);
+},{passive:false});
+function end(e){ if(e.pointerType&&!isPen(e))return;
+  if(rafId){cancelAnimationFrame(rafId);rafId=0;} flush();
+  clearWet(); drawing=false;cur=null;pend.length=0; }
+cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+
+// ---- buttons only. no tap-to-advance, no swipe. ----
+cv.addEventListener('pointerup',function(e){
+  if(isPen(e))return;
+  startClk();
+  var h=document.getElementById('hint');
+  if(!h.classList.contains('hide')) h.classList.add('hide');
+  showChrome();
+});
+
+function bindNav(id,fn){
+  var el=document.getElementById(id); if(!el)return;
+  var go=function(e){ e.preventDefault(); e.stopPropagation(); fn(); startClk(); };
+  el.addEventListener('click',go);
+  el.addEventListener('touchend',go,{passive:false});
+}
+bindNav('prev',prev); bindNav('next',next);
+bindNav('prev2',prev); bindNav('next2',next);
+
+
+// ---- toolbar ----
+[].forEach.call(document.querySelectorAll('.pen'),function(b){
+  b.onclick=function(){
+    [].forEach.call(document.querySelectorAll('.pen'),function(x){x.classList.remove('sel');});
+    b.classList.add('sel');ci=+b.getAttribute('data-i');erase=false;
+    document.getElementById('er').style.borderColor='var(--bbd)';
+  };
+});
+document.getElementById('th').onclick=function(){
+  wi=(wi+1)%3; wid=WIDS[wi];
+  this.textContent='Pen '+['S','M','L'][wi];
+};
+document.getElementById('hd').onclick=function(){
+  DPRCAP=(DPRCAP===1.5)?1:1.5;
+  this.textContent=(DPRCAP===1.5)?'HD':'Fast';
+  fit();
+};
+document.getElementById('er').onclick=function(){
+  erase=!erase;this.style.borderColor=erase?'var(--o)':'var(--bbd)';};
+document.getElementById('cl').onclick=function(){strokes[P]=[];redraw();};
+document.getElementById('hp').onclick=function(){
+  document.getElementById('hint').classList.toggle('hide');};
+function isStandalone(){
+  return window.navigator.standalone===true ||
+         (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches);
+}
+function setTheme(t){
+  theme=t;
+  document.body.classList.toggle('light', t==='light');
+  document.getElementById('tm').textContent = (t==='dark')?'Light':'Dark';
+  var sw=document.querySelectorAll('.pen');
+  for(var i=0;i<sw.length;i++) sw[i].style.background=PAL[t][i];
+  var tc=document.querySelector('meta[name="theme-color"]');
+  if(tc)tc.setAttribute('content', t==='light'?'#F2F0EA':'#0D0F10');
+  try{localStorage.setItem('m2255theme',t);}catch(e){}
+  redraw();
+}
+document.getElementById('tm').onclick=function(){ setTheme(theme==='dark'?'light':'dark'); };
+document.getElementById('fs').onclick=function(){
+  var d=document.documentElement;
+  var req=d.requestFullscreen||d.webkitRequestFullscreen;
+  if(document.fullscreenElement||document.webkitFullscreenElement){
+    (document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);
+    return;
+  }
+  if(req){ try{ req.call(d); return; }catch(err){} }
+  if(isStandalone()){ alert('Already running full screen.'); return; }
+  alert('For true full screen on iPad:\n\n'+
+        '1. Tap the Share button in Safari\n'+
+        '2. Choose "Add to Home Screen"\n'+
+        '3. Launch it from the home-screen icon\n\n'+
+        'It then opens with no address bar and no toolbars.');
+};
+if(isStandalone()){ document.getElementById('fs').textContent='FS'; }
+
+// ---- clock ----
+var t0=null,tick=null;
+function fmt(s){var m=Math.floor(s/60);return (m<10?'0':'')+m+':'+((s%60)<10?'0':'')+(s%60);}
+function startClk(){
+  if(tick)return;t0=Date.now();
+  tick=setInterval(function(){
+    var s=Math.floor((Date.now()-t0)/1000);
+    var el=document.getElementById('clk');
+    el.textContent=fmt(s);el.classList.toggle('over',s>55*60);
+  },1000);
+}
+
+// ---- keys ----
+addEventListener('keydown',function(e){
+  var k=e.key;
+  if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();next();}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev();}
+  else if(k==='ArrowDown'){e.preventDefault();pgDn();}
+  else if(k==='ArrowUp'){e.preventDefault();pgUp();}
+  else if(k>='1'&&k<='5'){document.querySelectorAll('.pen')[+k-1].click();}
+  else if(k==='e'||k==='E'){document.getElementById('er').click();}
+  else if(k==='c'||k==='C'){document.getElementById('cl').click();}
+  else if(k==='f'||k==='F'){document.getElementById('fs').click();}
+  else if(k==='t'||k==='T'){document.getElementById('bar').classList.toggle('hide');document.getElementById('topnav').classList.toggle('hide');}
+  else if(k==='g'||k==='G'){document.body.classList.toggle('guides');}
+  else if(k==='d'||k==='D'){document.getElementById('tm').click();}
+  else if(k==='r'||k==='R'){t0=Date.now();}
+  else if(k==='?'||k==='h'){document.getElementById('hp').click();}
+  if(k!=='?'&&k!=='h')startClk();
+});
+document.getElementById('hint').addEventListener('click',function(){
+  this.classList.add('hide');startClk();});
+
+// ---- auto-hiding chrome ----
+var chromeT=null;
+function showChrome(){
+  document.getElementById('bar').classList.remove('hide');
+  document.getElementById('topnav').classList.remove('hide');
+  clearTimeout(chromeT);
+  chromeT=setTimeout(hideChrome,3500);
+}
+function hideChrome(){
+  document.getElementById('bar').classList.add('hide');
+  document.getElementById('topnav').classList.add('hide');
+}
+document.getElementById('edge').addEventListener('pointerdown',function(e){
+  e.stopPropagation(); showChrome();
+});
+document.getElementById('bar').addEventListener('pointerdown',showChrome);
+document.getElementById('topnav').addEventListener('pointerdown',showChrome);
+showChrome();
+
+addEventListener('resize',function(){fit();syncRect();});
+addEventListener('orientationchange',function(){setTimeout(function(){fit();syncRect();},250);});
+addEventListener('scroll',syncRect,true);
+try{var sv=localStorage.getItem('m2255theme');}catch(e){}
+setTheme(sv==='light'?'light':'dark');
+fit();show();
+})();
+</script>
+
+</body>
+</html>
