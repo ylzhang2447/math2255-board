@@ -1,0 +1,945 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="2255 L2">
+<meta name="theme-color" content="#0D0F10">
+<title>Math 2255 - Lecture 2 Board</title>
+<style>
+:root{
+  --bd:#0D0F10; --gr:#1B1F21;
+  --w:#F0EFE8; --y:#E3E34B; --c:#45CFC2; --m:#E85CD2; --o:#F09A42;
+  --dm:#7C8A8E; --wash-w:rgba(240,239,232,.07); --wash-o:rgba(240,154,66,.10);
+  --chrome:rgba(13,15,16,.86); --line:#23282A; --bfg:#9DACB1; --bbd:#2E3538;
+  --act:#1C2224; --sel:#8FA0A5; --kbd:#1E2426; --kbdb:#333B3E; --kbdf:#C3CFD2;
+  --solid:#12171A;
+  --fm:"Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
+  --fu:system-ui,-apple-system,"PingFang SC",sans-serif;
+}
+body.light{--bd:#FBFAF7; --gr:#E7E4DC;
+  --w:#16181B; --y:#8F6A05; --c:#0E7A70; --m:#A0198A; --o:#B4530A;
+  --dm:#6E787E; --wash-w:rgba(20,24,28,.05); --wash-o:rgba(180,83,10,.09);
+  --chrome:rgba(251,250,247,.92); --line:#DBD6CB; --bfg:#4A5459; --bbd:#CAC4B9;
+  --act:#EDE9E1; --sel:#5A6469; --kbd:#EFEBE3; --kbdb:#D2CCC2; --kbdf:#39434A;
+  --solid:#F2F0EA;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
+  overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+#app{position:relative;width:100%;height:100dvh;height:100svh;min-height:480px;overflow:hidden;background:var(--bd);
+  background-image:linear-gradient(var(--gr) 1px,transparent 1px),
+    linear-gradient(90deg,var(--gr) 1px,transparent 1px);
+  background-size:32px 32px;color:var(--w);font-family:var(--fm)}
+#stage{position:absolute;inset:0;padding:3.0vh 4vw 60px;overflow:hidden}
+.pg{display:none;height:100%}
+.pg.on{display:block}
+[data-s]{opacity:0;transition:opacity .16s ease}
+[data-s].vis{opacity:1}
+[data-until].gone{display:none}
+.pg.rv .h{font-size:clamp(1.3rem,min(3.8vw,5.60vh),2.9rem)}
+.pg.rv .lb{font-size:clamp(1rem,min(2.5vw,3.68vh),1.9rem);margin:.62em 0 .12em}
+.pg.rv .l{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.6;margin:0 0 .1em 1.0em}
+.pg.rv .e{font-size:clamp(1.05rem,min(2.7vw,4.00vh),2.1rem);margin-left:1.0em}
+
+.h{font-size:clamp(1.2rem,min(3.4vw,5.00vh),2.6rem);color:var(--y);display:table;
+  border-bottom:.09em solid var(--y);padding-bottom:.08em;margin:0 0 .55em}
+.lb{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);color:var(--y);display:table;
+  border-bottom:.07em solid var(--y);padding-bottom:.06em;margin:.65em 0 .32em}
+.l{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.62rem);line-height:1.72;margin:0 0 .1em}
+.e{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.95;margin:.3em 0 .3em 1.1em}
+.e.t{margin-top:.16em;margin-bottom:.16em}
+.a{font-size:clamp(.8rem,min(1.8vw,2.65vh),1.4rem);color:var(--m);margin:.12em 0 .3em 2em}
+.i{margin-left:1.5em}
+.n{color:var(--m)} .g{color:var(--c)} .v{color:var(--o)}
+.d{color:var(--dm)}
+.bx{display:inline-block;border:.09em solid var(--o);color:var(--o);
+  background:var(--wash-o);border-radius:.16em;padding:.2em .6em}
+.bw{display:inline-block;border:.09em solid var(--w);color:var(--w);
+  background:var(--wash-w);border-radius:.16em;padding:.2em .6em}
+sup,sub{line-height:0;font-size:.68em}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  line-height:1.18;font-size:.86em;margin:0 .14em}
+.fr>span{padding:0 .28em;display:block}
+.fr>span:first-child{border-bottom:.06em solid currentColor;padding-bottom:.1em}
+.fr>span:last-child{padding-top:.12em}
+ol.st{margin:.25em 0 .25em 1.1em;padding-left:1.1em;font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);line-height:1.65}
+table{border-collapse:collapse;margin:.4em 0 .4em 1.1em;font-size:clamp(.85rem,min(2vw,2.94vh),1.5rem);line-height:2}
+td,th{padding:.16em 1.4em .16em 0;text-align:left;font-weight:400}
+th{color:var(--y);font-size:.82em}
+.cols{display:flex;gap:5vw;align-items:flex-start}
+.two{display:grid;grid-template-columns:1fr 1fr;column-gap:2.4vw;align-items:start;margin:.15em 0 0 .2em}
+.two>div>*:first-child{margin-top:0}
+.two .e{margin:.12em 0 .12em .2em;line-height:1.6}
+.two .l{margin:.1em 0 .1em .2em}
+.two .lb{margin:.5em 0 .14em}
+.two .a{margin:.1em 0 .2em 1em}
+.split{display:flex;gap:1.4vw;align-items:flex-start;margin:.2em 0 0 .4em}
+.split>.sl{flex:0 0 auto}
+.split>.sr{flex:1 1 auto;min-width:0;display:flex;justify-content:center;align-items:flex-start}
+.split .e{margin:.05em 0 .05em .2em;line-height:1.45}
+.split .sl .e{font-size:clamp(.85rem,min(2.1vw,3.02vh),1.65rem)}
+svg.df.sp{width:auto;height:51vh;max-width:100%;margin:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;column-gap:2vw;row-gap:0;margin:.2em 0 .2em 1.1em}
+.g2 .e{margin-left:0;line-height:1.62}
+svg.df{display:block;width:100%;max-width:min(76vw,104vh);height:auto;margin:.5vh 0 .5vh 1vw}
+svg.df.ax{width:auto;height:45vh;max-width:96%;margin:.3vh 0 .3vh 1.6vw}
+svg.df.fx{width:auto;height:46vh;max-width:97%;margin:.3vh 0 .3vh 1.2vw}
+.hw{min-height:1.2em}
+body.guides .hw{outline:1px dashed rgba(69,207,194,.32);border-radius:4px}
+
+#wet{position:absolute;inset:0;pointer-events:none;z-index:6;transform:translateZ(0)}
+#ink{position:absolute;inset:0;touch-action:none;z-index:5;
+  transform:translateZ(0)}
+#topnav{position:absolute;top:0;right:0;z-index:12;display:flex;gap:6px;align-items:center;
+  padding:calc(6px + env(safe-area-inset-top)) 10px 6px;background:var(--solid);border-radius:0 0 0 10px;
+  font-family:var(--fu);font-size:13px;color:var(--bfg)}
+#topnav.hide{opacity:0;pointer-events:none}
+#bar{position:absolute;left:0;right:0;bottom:0;z-index:9;display:flex;gap:.5vw;
+  align-items:center;padding:.7vh 1.2vw;padding-bottom:calc(.7vh + env(safe-area-inset-bottom));background:var(--solid);
+  border-top:1px solid var(--line);font-family:var(--fu);font-size:13px;color:var(--dm);
+  transition:opacity .3s}
+#bar.hide{opacity:0;pointer-events:none}
+#bar,#topnav{transition:opacity .25s}
+#edge{position:absolute;left:0;right:0;bottom:0;height:46px;z-index:8}
+.pen{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;flex:none}
+.pen.sel{border-color:var(--sel);transform:scale(1.12)}
+.btn{padding:5px 11px;border:1px solid var(--bbd);border-radius:5px;background:transparent;
+  color:var(--bfg);font-family:var(--fu);font-size:12px;cursor:pointer}
+.btn:active{background:var(--act)}
+.sp{flex:1}
+.btn.nav{font-size:19px;padding:3px 20px;line-height:1.05;min-width:62px}
+#pos{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+#clk{font-variant-numeric:tabular-nums;font-size:15px;color:var(--w)}
+#clk.over{color:var(--o)}
+#hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;
+  font-family:var(--fu);font-size:15px;line-height:2;color:var(--bfg);text-align:center;
+  background:var(--chrome);border:1px solid var(--bbd);border-radius:10px;padding:26px 34px}
+#hint.hide{display:none}
+#hint b{color:var(--w)}
+kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);border-radius:4px;
+  padding:1px 6px;color:var(--kbdf);font-size:12px}
+</style>
+</head>
+<body>
+
+<div id="app">
+<div id="topnav">
+  <button class="btn nav" id="prev2">&#9664;</button>
+  <span id="pos2">1 / 25</span>
+  <button class="btn nav" id="next2">&#9654;</button>
+</div>
+<div id="stage">
+
+<div class="pg on" data-n="1">
+  <p class="h" data-s="0">Three weeks in</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">You can solve two kinds by hand</p>
+      <p class="e t" data-s="1"><i>y</i>&#8242; + <i>p</i>(<i>t</i>)<i>y</i> = <i>g</i>(<i>t</i>)&nbsp;&nbsp;<span class="d">integrating factor</span></p>
+      <p class="e t" data-s="2"><span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = <i>f</i>(<i>x</i>)&thinsp;<i>g</i>(<i>y</i>)&nbsp;&nbsp;<span class="d">split and integrate</span></p>
+      <p class="l" data-s="3">And on Wednesday, how to say <span class="g">where</span> the answer lives.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Today is the other half</p>
+      <p class="l" data-s="4">Every equation so far was handed to you already written.</p>
+      <p class="l" data-s="5">Today <span class="n">you</span> write it. <span class="d">From a paragraph of English about a tank, or a cup of coffee.</span></p>
+      <p class="e" data-s="6"><span class="bx">Setting it up is the part that is graded, and the part that is hard.</span></p>
+      <p class="a" data-s="7">&#8627; every equation today turns out to be linear. You already know how to finish.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="2">
+  <p class="h" data-s="0">Modeling, in three steps</p>
+  <div class="two">
+    <div>
+      <ol class="st">
+        <li data-s="1"><span class="g">Build.</span> Turn the words into an equation and an initial condition.</li>
+        <li data-s="2"><span class="g">Solve.</span> This is the part you already know.</li>
+        <li data-s="3"><span class="g">Interpret.</span> Answer the question that was actually asked, with units.</li>
+      </ol>
+      <p class="l" data-s="4">Step 2 is usually the shortest of the three.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">And step 1 always uses one law</p>
+      <p class="e" data-s="5"><span class="bx">rate of change = rate in &minus; rate out</span></p>
+      <p class="l" data-s="6">Salt, water, heat, money. <span class="d">Same sentence every time.</span></p>
+      <p class="e t" data-s="7"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = (in) &minus; (out)</p>
+      <p class="a" data-s="8">&#8627; the whole difficulty is writing those two brackets correctly.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="3">
+  <p class="h" data-s="0">Three things to name before you write anything</p>
+  <div class="two">
+    <div>
+      <ol class="st">
+        <li data-s="1">What is the <span class="g">unknown</span>, and what are its units? <span class="d">Pounds of salt &mdash; not concentration.</span></li>
+        <li data-s="2">When is <i>t</i> = 0, and what is true then? <span class="d">That is your initial condition.</span></li>
+        <li data-s="3">What is <i>V</i>(<i>t</i>)? <span class="d">A constant, or not?</span></li>
+      </ol>
+      <p class="l" data-s="4">Only then write the two brackets.</p>
+    </div>
+    <div>
+      <p class="l" data-s="5">Most of the wrong answers I have ever graded went wrong at number 1.</p>
+      <p class="e t" data-s="6"><i>Q</i>(<i>t</i>) = pounds of salt&nbsp;&nbsp;<span class="v">good</span></p>
+      <p class="e t" data-s="7"><i>Q</i>(<i>t</i>) = amount of salt&nbsp;&nbsp;<span class="n">no units, so no equation</span></p>
+      <p class="e" data-s="8"><span class="bx">Write the sentence &ldquo;Let <i>Q</i>(<i>t</i>) be &hellip;&rdquo; on your paper. Every time.</span></p>
+      <p class="a" data-s="9">&#8627; it costs you one line, and it decides whether the next ten are right.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="4">
+  <p class="h" data-s="0">The stirred tank</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1">Salt water flows in. <span class="d">The tank is stirred, so it is the same everywhere.</span> Mixture flows out.</p>
+      <p class="l" data-s="2">It holds 100 gallons, and <i>Q</i>(<i>t</i>) pounds of salt at time <i>t</i>. <span class="d">That is what we are after.</span></p>
+      <p class="lb" data-s="3">Rate in</p>
+      <p class="e t" data-s="3">(3 gal/min)(&frac14; lb/gal) = <span class="fr"><span>3</span><span>4</span></span> lb/min</p>
+      <p class="lb" data-s="4">Rate out &mdash; and this is the one people get wrong</p>
+      <p class="e t" data-s="4">(3 gal/min)(<span class="fr"><span><i>Q</i></span><span>100</span></span> lb/gal) = <span class="fr"><span>3<i>Q</i></span><span>100</span></span> lb/min</p>
+      <p class="e" data-s="5"><span class="bx"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = <span class="fr"><span>3</span><span>4</span></span> &minus; <span class="fr"><span>3<i>Q</i></span><span>100</span></span></span></p>
+      <p class="a" data-s="6">&#8627; what leaves carries the concentration <span class="n">inside</span> the tank, not the one coming in.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="0 0 640 400" preserveAspectRatio="xMidYMid meet"><g data-s="1"><rect x="150" y="120" width="250" height="215" fill="none" stroke="var(--dm)" stroke-width="2.4"/><rect x="152" y="192" width="246" height="141" fill="var(--wash-w)" stroke="none"/><line x1="152" y1="192" x2="398" y2="192" stroke="var(--c)" stroke-width="2.4"/></g><g data-s="3"><line x1="215" y1="40" x2="215" y2="106" stroke="var(--c)" stroke-width="2.6"/><polygon points="215,120 206,100 224,100" fill="var(--c)" stroke="none"/><g fill="var(--c)" font-size="18" font-family="system-ui,-apple-system,sans-serif"><text x="238" y="56"><tspan font-style="italic">r</tspan><tspan baseline-shift="sub" font-size="0.72em">in</tspan> = 3 gal/min</text><text x="238" y="82"><tspan font-style="italic">c</tspan><tspan baseline-shift="sub" font-size="0.72em">in</tspan> = ¼ lb/gal</text></g></g><g data-s="4"><line x1="400" y1="292" x2="512" y2="292" stroke="var(--o)" stroke-width="2.6"/><polygon points="526,292 506,283 506,301" fill="var(--o)" stroke="none"/><g fill="var(--o)" font-size="18" font-family="system-ui,-apple-system,sans-serif"><text x="406" y="272"><tspan font-style="italic">r</tspan><tspan baseline-shift="sub" font-size="0.72em">out</tspan> = 3 gal/min</text><text x="406" y="324">carrying <tspan font-style="italic">Q</tspan>/<tspan font-style="italic">V</tspan> lb/gal</text></g></g><g data-s="2" fill="var(--w)" font-size="20" font-family="system-ui,-apple-system,sans-serif"><text x="275" y="246" text-anchor="middle"><tspan font-style="italic">V</tspan> = 100 gal</text><text x="275" y="278" text-anchor="middle"><tspan font-style="italic">Q</tspan>(<tspan font-style="italic">t</tspan>) lb of salt</text></g></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="5">
+  <p class="h" data-s="0">The most common mistake, and how to catch it</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">Three versions students write</p>
+      <p class="e t" data-s="1"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = <span class="fr"><span>3</span><span>4</span></span> &minus; 3<i>Q</i>&nbsp;&nbsp;<span class="n">wrong</span></p>
+      <p class="e t" data-s="2"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = <span class="fr"><span>3</span><span>4</span></span> &minus; <span class="fr"><span>3</span><span>4</span></span>&nbsp;&nbsp;<span class="n">wrong</span></p>
+      <p class="e t" data-s="3"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = <span class="fr"><span>3</span><span>4</span></span> &minus; <span class="fr"><span>3<i>Q</i></span><span>100</span></span>&nbsp;&nbsp;<span class="v">right</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Check the units and the first one dies</p>
+      <p class="e t" data-s="4">3<i>Q</i> is (gal/min)(lb) = <span class="fr"><span>gal &middot; lb</span><span>min</span></span>&nbsp;&nbsp;<span class="n">not lb/min</span></p>
+      <p class="l" data-s="5">The second one has correct units, so units will <span class="n">not</span> save you there.</p>
+      <p class="l" data-s="6">It fails on meaning: it says the tank never changes, whatever is inside it.</p>
+      <p class="e" data-s="7"><span class="bx">Every term must be lb per minute. Check that first, every time.</span></p>
+      <p class="a" data-s="8">&#8627; units catch about half the setup errors, for free.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="6">
+  <p class="h" data-s="0">Example 1 &mdash; now solve it</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = <span class="fr"><span>3</span><span>4</span></span> &minus; <span class="fr"><span>3<i>Q</i></span><span>100</span></span>,&nbsp;&nbsp; <i>Q</i>(0) = 0</span>&nbsp;&nbsp;<span class="d">the tank starts as pure water</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Standard form &mdash; it is <span class="g">linear</span></p>
+      <p class="e t" data-s="2"><i>Q</i>&#8242; + 0.03&thinsp;<i>Q</i> = 0.75&nbsp;&nbsp;<span class="d"><i>p</i> = 0.03, a constant</span></p>
+      <p class="lb" data-s="3">1&nbsp;&nbsp;build &mu;</p>
+      <p class="e t" data-s="3">&mu; = <span style="white-space:nowrap"><b>e</b><sup>&int;0.03&thinsp;<i>dt</i></sup></span> = <span style="white-space:nowrap"><b>e</b><sup>0.03<i>t</i></sup></span></p>
+      <p class="lb" data-s="4">2&nbsp;&nbsp;multiply every term</p>
+      <p class="e t" data-s="4"><span style="white-space:nowrap"><b>e</b><sup>0.03<i>t</i></sup></span><i>Q</i>&#8242; + 0.03&thinsp;<span style="white-space:nowrap"><b>e</b><sup>0.03<i>t</i></sup></span><i>Q</i> = 0.75&thinsp;<span style="white-space:nowrap"><b>e</b><sup>0.03<i>t</i></sup></span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">3&nbsp;&nbsp;the left side is one derivative</p>
+      <p class="e t" data-s="5">(<span style="white-space:nowrap"><b>e</b><sup>0.03<i>t</i></sup></span><i>Q</i>)&#8242; = 0.75&thinsp;<span style="white-space:nowrap"><b>e</b><sup>0.03<i>t</i></sup></span></p>
+      <p class="lb" data-s="6">4&nbsp;&nbsp;integrate, then divide by &mu;</p>
+      <p class="e t" data-s="6"><span style="white-space:nowrap"><b>e</b><sup>0.03<i>t</i></sup></span><i>Q</i> = 25&thinsp;<span style="white-space:nowrap"><b>e</b><sup>0.03<i>t</i></sup></span> + <i>c</i>&nbsp;&nbsp;<span class="d">0.75/0.03 = 25</span></p>
+      <p class="e t" data-s="7"><i>Q</i> = 25 + <i>c</i>&thinsp;<span style="white-space:nowrap"><b>e</b><sup>&minus;0.03<i>t</i></sup></span></p>
+      <p class="e t" data-s="8"><i>Q</i>(0) = 0:&nbsp;&nbsp; 0 = 25 + <i>c</i>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>c</i> = &minus;25</span></p>
+      <p class="e" data-s="9"><span class="bx"><i>Q</i>(<i>t</i>) = 25(1 &minus; <span style="white-space:nowrap"><b>e</b><sup>&minus;0.03<i>t</i></sup></span>) lb</span></p>
+      <p class="a" data-s="10">&#8627; step 2 took six lines. Step 1 took the whole previous page.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="7">
+  <p class="h" data-s="0">Does that answer make sense?</p>
+  <p class="e" data-s="1"><span class="bw"><i>Q</i>(<i>t</i>) = 25(1 &minus; <span style="white-space:nowrap"><b>e</b><sup>&minus;0.03<i>t</i></sup></span>)</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">At <i>t</i> = 0</p>
+      <p class="e t" data-s="2"><i>Q</i>(0) = 25(1 &minus; 1) = 0&nbsp;&nbsp;<span class="d">pure water, as we said</span></p>
+      <p class="lb" data-s="3">As <i>t</i> grows</p>
+      <p class="e t" data-s="3"><i>Q</i> &rarr; 25 lb&nbsp;&nbsp;<span class="d">and it never passes it</span></p>
+      <p class="lb" data-s="4">Is 25 the right number?</p>
+      <p class="e t" data-s="4">(100 gal)(&frac14; lb/gal) = 25 lb</p>
+    </div>
+    <div>
+      <p class="l" data-s="5">So in the long run the tank simply reaches the concentration of what is pouring in. <span class="d">Which is obvious &mdash; afterwards.</span></p>
+      <p class="l" data-s="6">You could have written that number down before solving anything, and used it to check.</p>
+      <p class="e" data-s="7"><span class="bx">Set <span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = 0:&nbsp; <span class="fr"><span>3</span><span>4</span></span> = <span class="fr"><span>3<i>Q</i></span><span>100</span></span> &rArr; <i>Q</i> = 25</span></p>
+      <p class="a" data-s="8">&#8627; that is the equilibrium solution, from the second week. It is the answer to &ldquo;eventually&rdquo;.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="8">
+  <p class="h" data-s="0">Example 1 &mdash; every start ends at 25</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1">The direction field for the tank.</p>
+      <p class="l" data-s="2">The strokes are flat along one height and nowhere else.</p>
+      <p class="e t" data-s="3"><i>Q</i> = 25 lb&nbsp;&nbsp;<span class="d">the equilibrium</span></p>
+      <p class="l" data-s="4">Start empty and the salt climbs to 25. Start above 25 and it falls to 25.</p>
+      <p class="l" data-s="5">Nothing crosses that line, and nothing stays away from it.</p>
+      <p class="e" data-s="6"><span class="bx">The tank forgets where it started.</span></p>
+      <p class="a" data-s="7">&#8627; this is the picture from week two, now with a tank attached to it.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="272.2" x2="0" y2="272.2"/><line x1="-7" y1="194.4" x2="0" y2="194.4"/><line x1="-7" y1="116.7" x2="0" y2="116.7"/><line x1="-7" y1="38.9" x2="0" y2="38.9"/><line x1="91.9" y1="350" x2="91.9" y2="357"/><line x1="183.7" y1="350" x2="183.7" y2="357"/><line x1="275.6" y1="350" x2="275.6" y2="357"/><line x1="367.4" y1="350" x2="367.4" y2="357"/><line x1="459.3" y1="350" x2="459.3" y2="357"/><line x1="551.1" y1="350" x2="551.1" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">0</text><text x="-12" y="277.2" text-anchor="end">10</text><text x="-12" y="199.4" text-anchor="end">20</text><text x="-12" y="121.7" text-anchor="end">30</text><text x="-12" y="43.9" text-anchor="end">40</text><text x="0" y="375" text-anchor="middle">0</text><text x="91.9" y="375" text-anchor="middle">20</text><text x="183.7" y="375" text-anchor="middle">40</text><text x="275.6" y="375" text-anchor="middle">60</text><text x="367.4" y="375" text-anchor="middle">80</text><text x="459.3" y="375" text-anchor="middle">100</text><text x="551.1" y="375" text-anchor="middle">120</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">Q</text><text x="650" y="355">t</text></g></g><g data-s="2" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"><line x1="-9.3" y1="361.8" x2="9.3" y2="338.2"/><line x1="82.6" y1="361.8" x2="101.1" y2="338.2"/><line x1="174.4" y1="361.8" x2="193" y2="338.2"/><line x1="266.3" y1="361.8" x2="284.8" y2="338.2"/><line x1="358.1" y1="361.8" x2="376.7" y2="338.2"/><line x1="450" y1="361.8" x2="468.5" y2="338.2"/><line x1="541.8" y1="361.8" x2="560.4" y2="338.2"/><line x1="-10.5" y1="321.8" x2="10.5" y2="300.4"/><line x1="81.3" y1="321.8" x2="102.4" y2="300.4"/><line x1="173.2" y1="321.8" x2="194.2" y2="300.4"/><line x1="265" y1="321.8" x2="286.1" y2="300.4"/><line x1="356.9" y1="321.8" x2="377.9" y2="300.4"/><line x1="448.7" y1="321.8" x2="469.8" y2="300.4"/><line x1="540.6" y1="321.8" x2="561.6" y2="300.4"/><line x1="-11.9" y1="281.3" x2="11.9" y2="263.1"/><line x1="79.9" y1="281.3" x2="103.8" y2="263.1"/><line x1="171.8" y1="281.3" x2="195.6" y2="263.1"/><line x1="263.6" y1="281.3" x2="287.5" y2="263.1"/><line x1="355.5" y1="281.3" x2="379.3" y2="263.1"/><line x1="447.3" y1="281.3" x2="471.2" y2="263.1"/><line x1="539.2" y1="281.3" x2="563" y2="263.1"/><line x1="-13.4" y1="240.1" x2="13.4" y2="226.5"/><line x1="78.5" y1="240.1" x2="105.2" y2="226.5"/><line x1="170.3" y1="240.1" x2="197.1" y2="226.5"/><line x1="262.2" y1="240.1" x2="288.9" y2="226.5"/><line x1="354" y1="240.1" x2="380.8" y2="226.5"/><line x1="445.9" y1="240.1" x2="472.6" y2="226.5"/><line x1="537.7" y1="240.1" x2="564.5" y2="226.5"/><line x1="-14.5" y1="198.1" x2="14.5" y2="190.8"/><line x1="77.3" y1="198.1" x2="106.4" y2="190.8"/><line x1="169.2" y1="198.1" x2="198.2" y2="190.8"/><line x1="261" y1="198.1" x2="290.1" y2="190.8"/><line x1="352.9" y1="198.1" x2="381.9" y2="190.8"/><line x1="444.7" y1="198.1" x2="473.8" y2="190.8"/><line x1="536.6" y1="198.1" x2="565.6" y2="190.8"/><line x1="-14.5" y1="113" x2="14.5" y2="120.4"/><line x1="77.3" y1="113" x2="106.4" y2="120.4"/><line x1="169.2" y1="113" x2="198.2" y2="120.4"/><line x1="261" y1="113" x2="290.1" y2="120.4"/><line x1="352.9" y1="113" x2="381.9" y2="120.4"/><line x1="444.7" y1="113" x2="473.8" y2="120.4"/><line x1="536.6" y1="113" x2="565.6" y2="120.4"/><line x1="-13.4" y1="71" x2="13.4" y2="84.6"/><line x1="78.5" y1="71" x2="105.2" y2="84.6"/><line x1="170.3" y1="71" x2="197.1" y2="84.6"/><line x1="262.2" y1="71" x2="288.9" y2="84.6"/><line x1="354" y1="71" x2="380.8" y2="84.6"/><line x1="445.9" y1="71" x2="472.6" y2="84.6"/><line x1="537.7" y1="71" x2="564.5" y2="84.6"/><line x1="-11.9" y1="29.8" x2="11.9" y2="48"/><line x1="79.9" y1="29.8" x2="103.8" y2="48"/><line x1="171.8" y1="29.8" x2="195.6" y2="48"/><line x1="263.6" y1="29.8" x2="287.5" y2="48"/><line x1="355.5" y1="29.8" x2="379.3" y2="48"/><line x1="447.3" y1="29.8" x2="471.2" y2="48"/><line x1="539.2" y1="29.8" x2="563" y2="48"/><line x1="-10.5" y1="-10.7" x2="10.5" y2="10.7"/><line x1="81.3" y1="-10.7" x2="102.4" y2="10.7"/><line x1="173.2" y1="-10.7" x2="194.2" y2="10.7"/><line x1="265" y1="-10.7" x2="286.1" y2="10.7"/><line x1="356.9" y1="-10.7" x2="377.9" y2="10.7"/><line x1="448.7" y1="-10.7" x2="469.8" y2="10.7"/><line x1="540.6" y1="-10.7" x2="561.6" y2="10.7"/></g><g data-s="4" stroke="var(--c)" stroke-width="2.6" stroke-linejoin="round" fill="none"><polyline points="0,350 0.7,349.1 1.4,348.3 2.1,347.4 2.8,346.5 3.4,345.7 4.1,344.8 4.8,344 5.5,343.1 6.2,342.3 6.9,341.4 7.6,340.6 8.3,339.8 9,338.9 9.6,338.1 10.3,337.3 11,336.5 11.7,335.6 12.4,334.8 13.1,334 13.8,333.2 14.5,332.4 15.2,331.6 15.8,330.8 16.5,330.1 17.2,329.3 17.9,328.5 18.6,327.7 19.3,326.9 20,326.2 20.7,325.4 21.4,324.6 22,323.9 22.7,323.1 23.4,322.4 24.1,321.6 24.8,320.9 25.5,320.1 26.2,319.4 26.9,318.6 27.6,317.9 28.2,317.2 28.9,316.4 29.6,315.7 30.3,315 31,314.3 31.7,313.6 32.4,312.9 33.1,312.1 33.8,311.4 34.4,310.7 35.1,310 35.8,309.4 36.5,308.7 37.2,308 37.9,307.3 38.6,306.6 39.3,305.9 40,305.2 40.6,304.6 41.3,303.9 42,303.2 42.7,302.6 43.4,301.9 44.1,301.2 44.8,300.6 45.5,299.9 46.2,299.3 46.8,298.6 47.5,298 48.2,297.4 48.9,296.7 49.6,296.1 50.3,295.5 51,294.8 51.7,294.2 52.4,293.6 53,293 53.7,292.3 54.4,291.7 55.1,291.1 55.8,290.5 56.5,289.9 57.2,289.3 57.9,288.7 58.6,288.1 59.2,287.5 59.9,286.9 60.6,286.3 61.3,285.7 62,285.1 62.7,284.5 63.4,284 64.1,283.4 64.8,282.8 65.4,282.2 66.1,281.7 66.8,281.1 67.5,280.5 68.2,280 68.9,279.4 69.6,278.9 70.3,278.3 71,277.7 71.6,277.2 72.3,276.7 73,276.1 73.7,275.6 74.4,275 75.1,274.5 75.8,274 76.5,273.4 77.2,272.9 77.8,272.4 78.5,271.8 79.2,271.3 79.9,270.8 80.6,270.3 81.3,269.8 82,269.2 82.7,268.7 83.4,268.2 84,267.7 84.7,267.2 85.4,266.7 86.1,266.2 86.8,265.7 87.5,265.2 88.2,264.7 88.9,264.2 89.6,263.7 90.2,263.3 90.9,262.8 91.6,262.3 92.3,261.8 93,261.3 93.7,260.9 94.4,260.4 95.1,259.9 95.8,259.4 96.4,259 97.1,258.5 97.8,258 98.5,257.6 99.2,257.1 99.9,256.7 100.6,256.2 101.3,255.8 102,255.3 102.6,254.9 103.3,254.4 104,254 104.7,253.5 105.4,253.1 106.1,252.6 106.8,252.2 107.5,251.8 108.2,251.3 108.8,250.9 109.5,250.5 110.2,250 110.9,249.6 111.6,249.2 112.3,248.8 113,248.4 113.7,247.9 114.4,247.5 115,247.1 115.7,246.7 116.4,246.3 117.1,245.9 117.8,245.5 118.5,245.1 119.2,244.7 119.9,244.3 120.6,243.9 121.2,243.5 121.9,243.1 122.6,242.7 123.3,242.3 124,241.9 124.7,241.5 125.4,241.1 126.1,240.7 126.8,240.4 127.4,240 128.1,239.6 128.8,239.2 129.5,238.8 130.2,238.5 130.9,238.1 131.6,237.7 132.3,237.3 133,237 133.6,236.6 134.3,236.2 135,235.9 135.7,235.5 136.4,235.2 137.1,234.8 137.8,234.5 138.5,234.1 139.2,233.7 139.8,233.4 140.5,233 141.2,232.7 141.9,232.3 142.6,232 143.3,231.7 144,231.3 144.7,231 145.4,230.6 146,230.3 146.7,230 147.4,229.6 148.1,229.3 148.8,229 149.5,228.6 150.2,228.3 150.9,228 151.6,227.6 152.2,227.3 152.9,227 153.6,226.7 154.3,226.4 155,226 155.7,225.7 156.4,225.4 157.1,225.1 157.8,224.8 158.4,224.5 159.1,224.2 159.8,223.8 160.5,223.5 161.2,223.2 161.9,222.9 162.6,222.6 163.3,222.3 164,222 164.6,221.7 165.3,221.4 166,221.1 166.7,220.8 167.4,220.5 168.1,220.2 168.8,220 169.5,219.7 170.2,219.4 170.8,219.1 171.5,218.8 172.2,218.5 172.9,218.2 173.6,218 174.3,217.7 175,217.4 175.7,217.1 176.4,216.8 177,216.6 177.7,216.3 178.4,216 179.1,215.7 179.8,215.5 180.5,215.2 181.2,214.9 181.9,214.7 182.6,214.4 183.2,214.1 183.9,213.9 184.6,213.6 185.3,213.4 186,213.1 186.7,212.8 187.4,212.6 188.1,212.3 188.8,212.1 189.4,211.8 190.1,211.6 190.8,211.3 191.5,211.1 192.2,210.8 192.9,210.6 193.6,210.3 194.3,210.1 195,209.8 195.6,209.6 196.3,209.3 197,209.1 197.7,208.8 198.4,208.6 199.1,208.4 199.8,208.1 200.5,207.9 201.2,207.7 201.8,207.4 202.5,207.2 203.2,207 203.9,206.7 204.6,206.5 205.3,206.3 206,206 206.7,205.8 207.4,205.6 208,205.4 208.7,205.1 209.4,204.9 210.1,204.7 210.8,204.5 211.5,204.2 212.2,204 212.9,203.8 213.6,203.6 214.2,203.4 214.9,203.2 215.6,202.9 216.3,202.7 217,202.5 217.7,202.3 218.4,202.1 219.1,201.9 219.8,201.7 220.4,201.5 221.1,201.3 221.8,201.1 222.5,200.9 223.2,200.7 223.9,200.5 224.6,200.2 225.3,200 226,199.8 226.6,199.6 227.3,199.5 228,199.3 228.7,199.1 229.4,198.9 230.1,198.7 230.8,198.5 231.5,198.3 232.2,198.1 232.8,197.9 233.5,197.7 234.2,197.5 234.9,197.3 235.6,197.1 236.3,197 237,196.8 237.7,196.6 238.4,196.4 239,196.2 239.7,196 240.4,195.8 241.1,195.7 241.8,195.5 242.5,195.3 243.2,195.1 243.9,194.9 244.6,194.8 245.2,194.6 245.9,194.4 246.6,194.2 247.3,194.1 248,193.9 248.7,193.7 249.4,193.6 250.1,193.4 250.8,193.2 251.4,193 252.1,192.9 252.8,192.7 253.5,192.5 254.2,192.4 254.9,192.2 255.6,192 256.3,191.9 257,191.7 257.6,191.5 258.3,191.4 259,191.2 259.7,191.1 260.4,190.9 261.1,190.7 261.8,190.6 262.5,190.4 263.2,190.3 263.8,190.1 264.5,190 265.2,189.8 265.9,189.7 266.6,189.5 267.3,189.3 268,189.2 268.7,189 269.4,188.9 270,188.7 270.7,188.6 271.4,188.4 272.1,188.3 272.8,188.1 273.5,188 274.2,187.9 274.9,187.7 275.6,187.6 276.2,187.4 276.9,187.3 277.6,187.1 278.3,187 279,186.9 279.7,186.7 280.4,186.6 281.1,186.4 281.8,186.3 282.4,186.2 283.1,186 283.8,185.9 284.5,185.7 285.2,185.6 285.9,185.5 286.6,185.3 287.3,185.2 288,185.1 288.6,184.9 289.3,184.8 290,184.7 290.7,184.5 291.4,184.4 292.1,184.3 292.8,184.2 293.5,184 294.2,183.9 294.8,183.8 295.5,183.6 296.2,183.5 296.9,183.4 297.6,183.3 298.3,183.1 299,183 299.7,182.9 300.4,182.8 301,182.6 301.7,182.5 302.4,182.4 303.1,182.3 303.8,182.2 304.5,182 305.2,181.9 305.9,181.8 306.6,181.7 307.2,181.6 307.9,181.5 308.6,181.3 309.3,181.2 310,181.1 310.7,181 311.4,180.9 312.1,180.8 312.8,180.6 313.4,180.5 314.1,180.4 314.8,180.3 315.5,180.2 316.2,180.1 316.9,180 317.6,179.9 318.3,179.8 319,179.6 319.6,179.5 320.3,179.4 321,179.3 321.7,179.2 322.4,179.1 323.1,179 323.8,178.9 324.5,178.8 325.2,178.7 325.8,178.6 326.5,178.5 327.2,178.4 327.9,178.3 328.6,178.2 329.3,178.1 330,178 330.7,177.9 331.4,177.8 332,177.7 332.7,177.6 333.4,177.5 334.1,177.4 334.8,177.3 335.5,177.2 336.2,177.1 336.9,177 337.6,176.9 338.2,176.8 338.9,176.7 339.6,176.6 340.3,176.5 341,176.4 341.7,176.3 342.4,176.2 343.1,176.1 343.8,176 344.4,175.9 345.1,175.9 345.8,175.8 346.5,175.7 347.2,175.6 347.9,175.5 348.6,175.4 349.3,175.3 350,175.2 350.6,175.1 351.3,175 352,175 352.7,174.9 353.4,174.8 354.1,174.7 354.8,174.6 355.5,174.5 356.2,174.4 356.8,174.4 357.5,174.3 358.2,174.2 358.9,174.1 359.6,174 360.3,173.9 361,173.9 361.7,173.8 362.4,173.7 363,173.6 363.7,173.5 364.4,173.4 365.1,173.4 365.8,173.3 366.5,173.2 367.2,173.1 367.9,173 368.6,173 369.2,172.9 369.9,172.8 370.6,172.7 371.3,172.7 372,172.6 372.7,172.5 373.4,172.4 374.1,172.4 374.8,172.3 375.4,172.2 376.1,172.1 376.8,172.1 377.5,172 378.2,171.9 378.9,171.8 379.6,171.8 380.3,171.7 381,171.6 381.6,171.5 382.3,171.5 383,171.4 383.7,171.3 384.4,171.3 385.1,171.2 385.8,171.1 386.5,171 387.2,171 387.8,170.9 388.5,170.8 389.2,170.8 389.9,170.7 390.6,170.6 391.3,170.6 392,170.5 392.7,170.4 393.4,170.4 394,170.3 394.7,170.2 395.4,170.2 396.1,170.1 396.8,170 397.5,170 398.2,169.9 398.9,169.8 399.6,169.8 400.2,169.7 400.9,169.6 401.6,169.6 402.3,169.5 403,169.5 403.7,169.4 404.4,169.3 405.1,169.3 405.8,169.2 406.4,169.1 407.1,169.1 407.8,169 408.5,169 409.2,168.9 409.9,168.8 410.6,168.8 411.3,168.7 412,168.7 412.6,168.6 413.3,168.5 414,168.5 414.7,168.4 415.4,168.4 416.1,168.3 416.8,168.3 417.5,168.2 418.2,168.1 418.8,168.1 419.5,168 420.2,168 420.9,167.9 421.6,167.9 422.3,167.8 423,167.7 423.7,167.7 424.4,167.6 425,167.6 425.7,167.5 426.4,167.5 427.1,167.4 427.8,167.4 428.5,167.3 429.2,167.3 429.9,167.2 430.6,167.2 431.2,167.1 431.9,167.1 432.6,167 433.3,167 434,166.9 434.7,166.8 435.4,166.8 436.1,166.7 436.8,166.7 437.4,166.6 438.1,166.6 438.8,166.5 439.5,166.5 440.2,166.4 440.9,166.4 441.6,166.4 442.3,166.3 443,166.3 443.6,166.2 444.3,166.2 445,166.1 445.7,166.1 446.4,166 447.1,166 447.8,165.9 448.5,165.9 449.2,165.8 449.8,165.8 450.5,165.7 451.2,165.7 451.9,165.6 452.6,165.6 453.3,165.6 454,165.5 454.7,165.5 455.4,165.4 456,165.4 456.7,165.3 457.4,165.3 458.1,165.2 458.8,165.2 459.5,165.2 460.2,165.1 460.9,165.1 461.6,165 462.2,165 462.9,164.9 463.6,164.9 464.3,164.9 465,164.8 465.7,164.8 466.4,164.7 467.1,164.7 467.8,164.7 468.4,164.6 469.1,164.6 469.8,164.5 470.5,164.5 471.2,164.4 471.9,164.4 472.6,164.4 473.3,164.3 474,164.3 474.6,164.2 475.3,164.2 476,164.2 476.7,164.1 477.4,164.1 478.1,164.1 478.8,164 479.5,164 480.2,163.9 480.8,163.9 481.5,163.9 482.2,163.8 482.9,163.8 483.6,163.8 484.3,163.7 485,163.7 485.7,163.6 486.4,163.6 487,163.6 487.7,163.5 488.4,163.5 489.1,163.5 489.8,163.4 490.5,163.4 491.2,163.4 491.9,163.3 492.6,163.3 493.2,163.3 493.9,163.2 494.6,163.2 495.3,163.1 496,163.1 496.7,163.1 497.4,163 498.1,163 498.8,163 499.4,162.9 500.1,162.9 500.8,162.9 501.5,162.8 502.2,162.8 502.9,162.8 503.6,162.7 504.3,162.7 505,162.7 505.6,162.7 506.3,162.6 507,162.6 507.7,162.6 508.4,162.5 509.1,162.5 509.8,162.5 510.5,162.4 511.2,162.4 511.8,162.4 512.5,162.3 513.2,162.3 513.9,162.3 514.6,162.2 515.3,162.2 516,162.2 516.7,162.2 517.4,162.1 518,162.1 518.7,162.1 519.4,162 520.1,162 520.8,162 521.5,162 522.2,161.9 522.9,161.9 523.6,161.9 524.2,161.8 524.9,161.8 525.6,161.8 526.3,161.8 527,161.7 527.7,161.7 528.4,161.7 529.1,161.6 529.8,161.6 530.4,161.6 531.1,161.6 531.8,161.5 532.5,161.5 533.2,161.5 533.9,161.5 534.6,161.4 535.3,161.4 536,161.4 536.6,161.3 537.3,161.3 538,161.3 538.7,161.3 539.4,161.2 540.1,161.2 540.8,161.2 541.5,161.2 542.2,161.1 542.8,161.1 543.5,161.1 544.2,161.1 544.9,161 545.6,161 546.3,161 547,161 547.7,160.9 548.4,160.9 549,160.9 549.7,160.9 550.4,160.8 551.1,160.8 551.8,160.8 552.5,160.8 553.2,160.8 553.9,160.7 554.6,160.7 555.2,160.7 555.9,160.7 556.6,160.6 557.3,160.6 558,160.6 558.7,160.6 559.4,160.5 560.1,160.5 560.8,160.5 561.4,160.5 562.1,160.5 562.8,160.4 563.5,160.4 564.2,160.4 564.9,160.4 565.6,160.3 566.3,160.3 567,160.3 567.6,160.3 568.3,160.3 569,160.2 569.7,160.2 570.4,160.2 571.1,160.2 571.8,160.2 572.5,160.1 573.2,160.1 573.8,160.1 574.5,160.1 575.2,160.1 575.9,160 576.6,160 577.3,160 578,160 578.7,160 579.4,159.9 580,159.9 580.7,159.9 581.4,159.9 582.1,159.9 582.8,159.8 583.5,159.8 584.2,159.8 584.9,159.8 585.6,159.8 586.2,159.7 586.9,159.7 587.6,159.7 588.3,159.7 589,159.7 589.7,159.6 590.4,159.6 591.1,159.6 591.8,159.6 592.4,159.6 593.1,159.6 593.8,159.5 594.5,159.5 595.2,159.5 595.9,159.5 596.6,159.5 597.3,159.5 598,159.4 598.6,159.4 599.3,159.4 600,159.4 600.7,159.4 601.4,159.3 602.1,159.3 602.8,159.3 603.5,159.3 604.2,159.3 604.8,159.3 605.5,159.2 606.2,159.2 606.9,159.2 607.6,159.2 608.3,159.2 609,159.2 609.7,159.1 610.4,159.1 611,159.1 611.7,159.1 612.4,159.1 613.1,159.1 613.8,159.1 614.5,159 615.2,159 615.9,159 616.6,159 617.2,159 617.9,159 618.6,158.9 619.3,158.9 620,158.9"/><polyline points="0,256.7 0.7,256.2 1.4,255.8 2.1,255.3 2.8,254.9 3.4,254.4 4.1,254 4.8,253.5 5.5,253.1 6.2,252.6 6.9,252.2 7.6,251.8 8.3,251.3 9,250.9 9.6,250.5 10.3,250.1 11,249.6 11.7,249.2 12.4,248.8 13.1,248.4 13.8,247.9 14.5,247.5 15.2,247.1 15.8,246.7 16.5,246.3 17.2,245.9 17.9,245.5 18.6,245.1 19.3,244.7 20,244.3 20.7,243.9 21.4,243.5 22,243.1 22.7,242.7 23.4,242.3 24.1,241.9 24.8,241.5 25.5,241.1 26.2,240.7 26.9,240.4 27.6,240 28.2,239.6 28.9,239.2 29.6,238.8 30.3,238.5 31,238.1 31.7,237.7 32.4,237.4 33.1,237 33.8,236.6 34.4,236.3 35.1,235.9 35.8,235.5 36.5,235.2 37.2,234.8 37.9,234.5 38.6,234.1 39.3,233.7 40,233.4 40.6,233 41.3,232.7 42,232.3 42.7,232 43.4,231.7 44.1,231.3 44.8,231 45.5,230.6 46.2,230.3 46.8,230 47.5,229.6 48.2,229.3 48.9,229 49.6,228.6 50.3,228.3 51,228 51.7,227.6 52.4,227.3 53,227 53.7,226.7 54.4,226.4 55.1,226 55.8,225.7 56.5,225.4 57.2,225.1 57.9,224.8 58.6,224.5 59.2,224.2 59.9,223.9 60.6,223.5 61.3,223.2 62,222.9 62.7,222.6 63.4,222.3 64.1,222 64.8,221.7 65.4,221.4 66.1,221.1 66.8,220.8 67.5,220.5 68.2,220.3 68.9,220 69.6,219.7 70.3,219.4 71,219.1 71.6,218.8 72.3,218.5 73,218.2 73.7,218 74.4,217.7 75.1,217.4 75.8,217.1 76.5,216.8 77.2,216.6 77.8,216.3 78.5,216 79.2,215.7 79.9,215.5 80.6,215.2 81.3,214.9 82,214.7 82.7,214.4 83.4,214.1 84,213.9 84.7,213.6 85.4,213.4 86.1,213.1 86.8,212.8 87.5,212.6 88.2,212.3 88.9,212.1 89.6,211.8 90.2,211.6 90.9,211.3 91.6,211.1 92.3,210.8 93,210.6 93.7,210.3 94.4,210.1 95.1,209.8 95.8,209.6 96.4,209.3 97.1,209.1 97.8,208.8 98.5,208.6 99.2,208.4 99.9,208.1 100.6,207.9 101.3,207.7 102,207.4 102.6,207.2 103.3,207 104,206.7 104.7,206.5 105.4,206.3 106.1,206 106.8,205.8 107.5,205.6 108.2,205.4 108.8,205.1 109.5,204.9 110.2,204.7 110.9,204.5 111.6,204.3 112.3,204 113,203.8 113.7,203.6 114.4,203.4 115,203.2 115.7,203 116.4,202.7 117.1,202.5 117.8,202.3 118.5,202.1 119.2,201.9 119.9,201.7 120.6,201.5 121.2,201.3 121.9,201.1 122.6,200.9 123.3,200.7 124,200.5 124.7,200.3 125.4,200.1 126.1,199.9 126.8,199.7 127.4,199.5 128.1,199.3 128.8,199.1 129.5,198.9 130.2,198.7 130.9,198.5 131.6,198.3 132.3,198.1 133,197.9 133.6,197.7 134.3,197.5 135,197.3 135.7,197.1 136.4,197 137.1,196.8 137.8,196.6 138.5,196.4 139.2,196.2 139.8,196 140.5,195.8 141.2,195.7 141.9,195.5 142.6,195.3 143.3,195.1 144,194.9 144.7,194.8 145.4,194.6 146,194.4 146.7,194.2 147.4,194.1 148.1,193.9 148.8,193.7 149.5,193.6 150.2,193.4 150.9,193.2 151.6,193 152.2,192.9 152.9,192.7 153.6,192.5 154.3,192.4 155,192.2 155.7,192 156.4,191.9 157.1,191.7 157.8,191.6 158.4,191.4 159.1,191.2 159.8,191.1 160.5,190.9 161.2,190.7 161.9,190.6 162.6,190.4 163.3,190.3 164,190.1 164.6,190 165.3,189.8 166,189.7 166.7,189.5 167.4,189.3 168.1,189.2 168.8,189 169.5,188.9 170.2,188.7 170.8,188.6 171.5,188.4 172.2,188.3 172.9,188.2 173.6,188 174.3,187.9 175,187.7 175.7,187.6 176.4,187.4 177,187.3 177.7,187.1 178.4,187 179.1,186.9 179.8,186.7 180.5,186.6 181.2,186.4 181.9,186.3 182.6,186.2 183.2,186 183.9,185.9 184.6,185.7 185.3,185.6 186,185.5 186.7,185.3 187.4,185.2 188.1,185.1 188.8,184.9 189.4,184.8 190.1,184.7 190.8,184.5 191.5,184.4 192.2,184.3 192.9,184.2 193.6,184 194.3,183.9 195,183.8 195.6,183.6 196.3,183.5 197,183.4 197.7,183.3 198.4,183.1 199.1,183 199.8,182.9 200.5,182.8 201.2,182.6 201.8,182.5 202.5,182.4 203.2,182.3 203.9,182.2 204.6,182 205.3,181.9 206,181.8 206.7,181.7 207.4,181.6 208,181.5 208.7,181.3 209.4,181.2 210.1,181.1 210.8,181 211.5,180.9 212.2,180.8 212.9,180.6 213.6,180.5 214.2,180.4 214.9,180.3 215.6,180.2 216.3,180.1 217,180 217.7,179.9 218.4,179.8 219.1,179.7 219.8,179.5 220.4,179.4 221.1,179.3 221.8,179.2 222.5,179.1 223.2,179 223.9,178.9 224.6,178.8 225.3,178.7 226,178.6 226.6,178.5 227.3,178.4 228,178.3 228.7,178.2 229.4,178.1 230.1,178 230.8,177.9 231.5,177.8 232.2,177.7 232.8,177.6 233.5,177.5 234.2,177.4 234.9,177.3 235.6,177.2 236.3,177.1 237,177 237.7,176.9 238.4,176.8 239,176.7 239.7,176.6 240.4,176.5 241.1,176.4 241.8,176.3 242.5,176.2 243.2,176.1 243.9,176 244.6,175.9 245.2,175.9 245.9,175.8 246.6,175.7 247.3,175.6 248,175.5 248.7,175.4 249.4,175.3 250.1,175.2 250.8,175.1 251.4,175 252.1,175 252.8,174.9 253.5,174.8 254.2,174.7 254.9,174.6 255.6,174.5 256.3,174.4 257,174.4 257.6,174.3 258.3,174.2 259,174.1 259.7,174 260.4,173.9 261.1,173.9 261.8,173.8 262.5,173.7 263.2,173.6 263.8,173.5 264.5,173.4 265.2,173.4 265.9,173.3 266.6,173.2 267.3,173.1 268,173 268.7,173 269.4,172.9 270,172.8 270.7,172.7 271.4,172.7 272.1,172.6 272.8,172.5 273.5,172.4 274.2,172.4 274.9,172.3 275.6,172.2 276.2,172.1 276.9,172.1 277.6,172 278.3,171.9 279,171.8 279.7,171.8 280.4,171.7 281.1,171.6 281.8,171.5 282.4,171.5 283.1,171.4 283.8,171.3 284.5,171.3 285.2,171.2 285.9,171.1 286.6,171 287.3,171 288,170.9 288.6,170.8 289.3,170.8 290,170.7 290.7,170.6 291.4,170.6 292.1,170.5 292.8,170.4 293.5,170.4 294.2,170.3 294.8,170.2 295.5,170.2 296.2,170.1 296.9,170 297.6,170 298.3,169.9 299,169.8 299.7,169.8 300.4,169.7 301,169.6 301.7,169.6 302.4,169.5 303.1,169.5 303.8,169.4 304.5,169.3 305.2,169.3 305.9,169.2 306.6,169.1 307.2,169.1 307.9,169 308.6,169 309.3,168.9 310,168.8 310.7,168.8 311.4,168.7 312.1,168.7 312.8,168.6 313.4,168.5 314.1,168.5 314.8,168.4 315.5,168.4 316.2,168.3 316.9,168.3 317.6,168.2 318.3,168.1 319,168.1 319.6,168 320.3,168 321,167.9 321.7,167.9 322.4,167.8 323.1,167.7 323.8,167.7 324.5,167.6 325.2,167.6 325.8,167.5 326.5,167.5 327.2,167.4 327.9,167.4 328.6,167.3 329.3,167.3 330,167.2 330.7,167.2 331.4,167.1 332,167.1 332.7,167 333.4,167 334.1,166.9 334.8,166.8 335.5,166.8 336.2,166.7 336.9,166.7 337.6,166.6 338.2,166.6 338.9,166.5 339.6,166.5 340.3,166.4 341,166.4 341.7,166.4 342.4,166.3 343.1,166.3 343.8,166.2 344.4,166.2 345.1,166.1 345.8,166.1 346.5,166 347.2,166 347.9,165.9 348.6,165.9 349.3,165.8 350,165.8 350.6,165.7 351.3,165.7 352,165.6 352.7,165.6 353.4,165.6 354.1,165.5 354.8,165.5 355.5,165.4 356.2,165.4 356.8,165.3 357.5,165.3 358.2,165.2 358.9,165.2 359.6,165.2 360.3,165.1 361,165.1 361.7,165 362.4,165 363,164.9 363.7,164.9 364.4,164.9 365.1,164.8 365.8,164.8 366.5,164.7 367.2,164.7 367.9,164.7 368.6,164.6 369.2,164.6 369.9,164.5 370.6,164.5 371.3,164.4 372,164.4 372.7,164.4 373.4,164.3 374.1,164.3 374.8,164.3 375.4,164.2 376.1,164.2 376.8,164.1 377.5,164.1 378.2,164.1 378.9,164 379.6,164 380.3,163.9 381,163.9 381.6,163.9 382.3,163.8 383,163.8 383.7,163.8 384.4,163.7 385.1,163.7 385.8,163.6 386.5,163.6 387.2,163.6 387.8,163.5 388.5,163.5 389.2,163.5 389.9,163.4 390.6,163.4 391.3,163.4 392,163.3 392.7,163.3 393.4,163.3 394,163.2 394.7,163.2 395.4,163.1 396.1,163.1 396.8,163.1 397.5,163 398.2,163 398.9,163 399.6,162.9 400.2,162.9 400.9,162.9 401.6,162.8 402.3,162.8 403,162.8 403.7,162.7 404.4,162.7 405.1,162.7 405.8,162.7 406.4,162.6 407.1,162.6 407.8,162.6 408.5,162.5 409.2,162.5 409.9,162.5 410.6,162.4 411.3,162.4 412,162.4 412.6,162.3 413.3,162.3 414,162.3 414.7,162.2 415.4,162.2 416.1,162.2 416.8,162.2 417.5,162.1 418.2,162.1 418.8,162.1 419.5,162 420.2,162 420.9,162 421.6,162 422.3,161.9 423,161.9 423.7,161.9 424.4,161.8 425,161.8 425.7,161.8 426.4,161.8 427.1,161.7 427.8,161.7 428.5,161.7 429.2,161.6 429.9,161.6 430.6,161.6 431.2,161.6 431.9,161.5 432.6,161.5 433.3,161.5 434,161.5 434.7,161.4 435.4,161.4 436.1,161.4 436.8,161.3 437.4,161.3 438.1,161.3 438.8,161.3 439.5,161.2 440.2,161.2 440.9,161.2 441.6,161.2 442.3,161.1 443,161.1 443.6,161.1 444.3,161.1 445,161 445.7,161 446.4,161 447.1,161 447.8,160.9 448.5,160.9 449.2,160.9 449.8,160.9 450.5,160.8 451.2,160.8 451.9,160.8 452.6,160.8 453.3,160.8 454,160.7 454.7,160.7 455.4,160.7 456,160.7 456.7,160.6 457.4,160.6 458.1,160.6 458.8,160.6 459.5,160.5 460.2,160.5 460.9,160.5 461.6,160.5 462.2,160.5 462.9,160.4 463.6,160.4 464.3,160.4 465,160.4 465.7,160.3 466.4,160.3 467.1,160.3 467.8,160.3 468.4,160.3 469.1,160.2 469.8,160.2 470.5,160.2 471.2,160.2 471.9,160.2 472.6,160.1 473.3,160.1 474,160.1 474.6,160.1 475.3,160.1 476,160 476.7,160 477.4,160 478.1,160 478.8,160 479.5,159.9 480.2,159.9 480.8,159.9 481.5,159.9 482.2,159.9 482.9,159.8 483.6,159.8 484.3,159.8 485,159.8 485.7,159.8 486.4,159.7 487,159.7 487.7,159.7 488.4,159.7 489.1,159.7 489.8,159.6 490.5,159.6 491.2,159.6 491.9,159.6 492.6,159.6 493.2,159.6 493.9,159.5 494.6,159.5 495.3,159.5 496,159.5 496.7,159.5 497.4,159.5 498.1,159.4 498.8,159.4 499.4,159.4 500.1,159.4 500.8,159.4 501.5,159.3 502.2,159.3 502.9,159.3 503.6,159.3 504.3,159.3 505,159.3 505.6,159.2 506.3,159.2 507,159.2 507.7,159.2 508.4,159.2 509.1,159.2 509.8,159.1 510.5,159.1 511.2,159.1 511.8,159.1 512.5,159.1 513.2,159.1 513.9,159.1 514.6,159 515.3,159 516,159 516.7,159 517.4,159 518,159 518.7,158.9 519.4,158.9 520.1,158.9 520.8,158.9 521.5,158.9 522.2,158.9 522.9,158.9 523.6,158.8 524.2,158.8 524.9,158.8 525.6,158.8 526.3,158.8 527,158.8 527.7,158.8 528.4,158.7 529.1,158.7 529.8,158.7 530.4,158.7 531.1,158.7 531.8,158.7 532.5,158.7 533.2,158.6 533.9,158.6 534.6,158.6 535.3,158.6 536,158.6 536.6,158.6 537.3,158.6 538,158.5 538.7,158.5 539.4,158.5 540.1,158.5 540.8,158.5 541.5,158.5 542.2,158.5 542.8,158.4 543.5,158.4 544.2,158.4 544.9,158.4 545.6,158.4 546.3,158.4 547,158.4 547.7,158.4 548.4,158.3 549,158.3 549.7,158.3 550.4,158.3 551.1,158.3 551.8,158.3 552.5,158.3 553.2,158.3 553.9,158.2 554.6,158.2 555.2,158.2 555.9,158.2 556.6,158.2 557.3,158.2 558,158.2 558.7,158.2 559.4,158.2 560.1,158.1 560.8,158.1 561.4,158.1 562.1,158.1 562.8,158.1 563.5,158.1 564.2,158.1 564.9,158.1 565.6,158 566.3,158 567,158 567.6,158 568.3,158 569,158 569.7,158 570.4,158 571.1,158 571.8,157.9 572.5,157.9 573.2,157.9 573.8,157.9 574.5,157.9 575.2,157.9 575.9,157.9 576.6,157.9 577.3,157.9 578,157.9 578.7,157.8 579.4,157.8 580,157.8 580.7,157.8 581.4,157.8 582.1,157.8 582.8,157.8 583.5,157.8 584.2,157.8 584.9,157.8 585.6,157.7 586.2,157.7 586.9,157.7 587.6,157.7 588.3,157.7 589,157.7 589.7,157.7 590.4,157.7 591.1,157.7 591.8,157.7 592.4,157.6 593.1,157.6 593.8,157.6 594.5,157.6 595.2,157.6 595.9,157.6 596.6,157.6 597.3,157.6 598,157.6 598.6,157.6 599.3,157.6 600,157.5 600.7,157.5 601.4,157.5 602.1,157.5 602.8,157.5 603.5,157.5 604.2,157.5 604.8,157.5 605.5,157.5 606.2,157.5 606.9,157.5 607.6,157.4 608.3,157.4 609,157.4 609.7,157.4 610.4,157.4 611,157.4 611.7,157.4 612.4,157.4 613.1,157.4 613.8,157.4 614.5,157.4 615.2,157.4 615.9,157.3 616.6,157.3 617.2,157.3 617.9,157.3 618.6,157.3 619.3,157.3 620,157.3"/><polyline points="0,7.8 0.7,8.4 1.4,9.1 2.1,9.8 2.8,10.4 3.4,11.1 4.1,11.7 4.8,12.4 5.5,13 6.2,13.7 6.9,14.3 7.6,14.9 8.3,15.6 9,16.2 9.6,16.8 10.3,17.4 11,18.1 11.7,18.7 12.4,19.3 13.1,19.9 13.8,20.5 14.5,21.1 15.2,21.7 15.8,22.3 16.5,22.9 17.2,23.5 17.9,24.1 18.6,24.7 19.3,25.3 20,25.9 20.7,26.5 21.4,27.1 22,27.6 22.7,28.2 23.4,28.8 24.1,29.4 24.8,29.9 25.5,30.5 26.2,31.1 26.9,31.6 27.6,32.2 28.2,32.7 28.9,33.3 29.6,33.8 30.3,34.4 31,34.9 31.7,35.5 32.4,36 33.1,36.5 33.8,37.1 34.4,37.6 35.1,38.1 35.8,38.7 36.5,39.2 37.2,39.7 37.9,40.2 38.6,40.8 39.3,41.3 40,41.8 40.6,42.3 41.3,42.8 42,43.3 42.7,43.8 43.4,44.3 44.1,44.8 44.8,45.3 45.5,45.8 46.2,46.3 46.8,46.8 47.5,47.3 48.2,47.8 48.9,48.3 49.6,48.8 50.3,49.2 51,49.7 51.7,50.2 52.4,50.7 53,51.1 53.7,51.6 54.4,52.1 55.1,52.5 55.8,53 56.5,53.5 57.2,53.9 57.9,54.4 58.6,54.8 59.2,55.3 59.9,55.7 60.6,56.2 61.3,56.6 62,57.1 62.7,57.5 63.4,58 64.1,58.4 64.8,58.8 65.4,59.3 66.1,59.7 66.8,60.1 67.5,60.6 68.2,61 68.9,61.4 69.6,61.8 70.3,62.3 71,62.7 71.6,63.1 72.3,63.5 73,63.9 73.7,64.3 74.4,64.8 75.1,65.2 75.8,65.6 76.5,66 77.2,66.4 77.8,66.8 78.5,67.2 79.2,67.6 79.9,68 80.6,68.4 81.3,68.8 82,69.2 82.7,69.5 83.4,69.9 84,70.3 84.7,70.7 85.4,71.1 86.1,71.5 86.8,71.8 87.5,72.2 88.2,72.6 88.9,73 89.6,73.3 90.2,73.7 90.9,74.1 91.6,74.4 92.3,74.8 93,75.2 93.7,75.5 94.4,75.9 95.1,76.2 95.8,76.6 96.4,77 97.1,77.3 97.8,77.7 98.5,78 99.2,78.4 99.9,78.7 100.6,79.1 101.3,79.4 102,79.7 102.6,80.1 103.3,80.4 104,80.8 104.7,81.1 105.4,81.4 106.1,81.8 106.8,82.1 107.5,82.4 108.2,82.8 108.8,83.1 109.5,83.4 110.2,83.7 110.9,84.1 111.6,84.4 112.3,84.7 113,85 113.7,85.3 114.4,85.7 115,86 115.7,86.3 116.4,86.6 117.1,86.9 117.8,87.2 118.5,87.5 119.2,87.8 119.9,88.1 120.6,88.4 121.2,88.7 121.9,89 122.6,89.3 123.3,89.6 124,89.9 124.7,90.2 125.4,90.5 126.1,90.8 126.8,91.1 127.4,91.4 128.1,91.7 128.8,92 129.5,92.3 130.2,92.5 130.9,92.8 131.6,93.1 132.3,93.4 133,93.7 133.6,94 134.3,94.2 135,94.5 135.7,94.8 136.4,95.1 137.1,95.3 137.8,95.6 138.5,95.9 139.2,96.1 139.8,96.4 140.5,96.7 141.2,96.9 141.9,97.2 142.6,97.5 143.3,97.7 144,98 144.7,98.2 145.4,98.5 146,98.8 146.7,99 147.4,99.3 148.1,99.5 148.8,99.8 149.5,100 150.2,100.3 150.9,100.5 151.6,100.8 152.2,101 152.9,101.3 153.6,101.5 154.3,101.7 155,102 155.7,102.2 156.4,102.5 157.1,102.7 157.8,102.9 158.4,103.2 159.1,103.4 159.8,103.7 160.5,103.9 161.2,104.1 161.9,104.4 162.6,104.6 163.3,104.8 164,105 164.6,105.3 165.3,105.5 166,105.7 166.7,105.9 167.4,106.2 168.1,106.4 168.8,106.6 169.5,106.8 170.2,107 170.8,107.3 171.5,107.5 172.2,107.7 172.9,107.9 173.6,108.1 174.3,108.3 175,108.6 175.7,108.8 176.4,109 177,109.2 177.7,109.4 178.4,109.6 179.1,109.8 179.8,110 180.5,110.2 181.2,110.4 181.9,110.6 182.6,110.8 183.2,111 183.9,111.2 184.6,111.4 185.3,111.6 186,111.8 186.7,112 187.4,112.2 188.1,112.4 188.8,112.6 189.4,112.8 190.1,113 190.8,113.2 191.5,113.4 192.2,113.6 192.9,113.8 193.6,113.9 194.3,114.1 195,114.3 195.6,114.5 196.3,114.7 197,114.9 197.7,115.1 198.4,115.2 199.1,115.4 199.8,115.6 200.5,115.8 201.2,116 201.8,116.1 202.5,116.3 203.2,116.5 203.9,116.7 204.6,116.8 205.3,117 206,117.2 206.7,117.4 207.4,117.5 208,117.7 208.7,117.9 209.4,118 210.1,118.2 210.8,118.4 211.5,118.5 212.2,118.7 212.9,118.9 213.6,119 214.2,119.2 214.9,119.4 215.6,119.5 216.3,119.7 217,119.9 217.7,120 218.4,120.2 219.1,120.3 219.8,120.5 220.4,120.7 221.1,120.8 221.8,121 222.5,121.1 223.2,121.3 223.9,121.4 224.6,121.6 225.3,121.7 226,121.9 226.6,122 227.3,122.2 228,122.3 228.7,122.5 229.4,122.6 230.1,122.8 230.8,122.9 231.5,123.1 232.2,123.2 232.8,123.4 233.5,123.5 234.2,123.7 234.9,123.8 235.6,124 236.3,124.1 237,124.2 237.7,124.4 238.4,124.5 239,124.7 239.7,124.8 240.4,124.9 241.1,125.1 241.8,125.2 242.5,125.3 243.2,125.5 243.9,125.6 244.6,125.8 245.2,125.9 245.9,126 246.6,126.2 247.3,126.3 248,126.4 248.7,126.5 249.4,126.7 250.1,126.8 250.8,126.9 251.4,127.1 252.1,127.2 252.8,127.3 253.5,127.4 254.2,127.6 254.9,127.7 255.6,127.8 256.3,128 257,128.1 257.6,128.2 258.3,128.3 259,128.4 259.7,128.6 260.4,128.7 261.1,128.8 261.8,128.9 262.5,129.1 263.2,129.2 263.8,129.3 264.5,129.4 265.2,129.5 265.9,129.6 266.6,129.8 267.3,129.9 268,130 268.7,130.1 269.4,130.2 270,130.3 270.7,130.4 271.4,130.6 272.1,130.7 272.8,130.8 273.5,130.9 274.2,131 274.9,131.1 275.6,131.2 276.2,131.3 276.9,131.4 277.6,131.6 278.3,131.7 279,131.8 279.7,131.9 280.4,132 281.1,132.1 281.8,132.2 282.4,132.3 283.1,132.4 283.8,132.5 284.5,132.6 285.2,132.7 285.9,132.8 286.6,132.9 287.3,133 288,133.1 288.6,133.2 289.3,133.3 290,133.4 290.7,133.5 291.4,133.6 292.1,133.7 292.8,133.8 293.5,133.9 294.2,134 294.8,134.1 295.5,134.2 296.2,134.3 296.9,134.4 297.6,134.5 298.3,134.6 299,134.7 299.7,134.8 300.4,134.9 301,135 301.7,135.1 302.4,135.2 303.1,135.2 303.8,135.3 304.5,135.4 305.2,135.5 305.9,135.6 306.6,135.7 307.2,135.8 307.9,135.9 308.6,136 309.3,136.1 310,136.1 310.7,136.2 311.4,136.3 312.1,136.4 312.8,136.5 313.4,136.6 314.1,136.7 314.8,136.7 315.5,136.8 316.2,136.9 316.9,137 317.6,137.1 318.3,137.2 319,137.2 319.6,137.3 320.3,137.4 321,137.5 321.7,137.6 322.4,137.7 323.1,137.7 323.8,137.8 324.5,137.9 325.2,138 325.8,138.1 326.5,138.1 327.2,138.2 327.9,138.3 328.6,138.4 329.3,138.4 330,138.5 330.7,138.6 331.4,138.7 332,138.7 332.7,138.8 333.4,138.9 334.1,139 334.8,139 335.5,139.1 336.2,139.2 336.9,139.3 337.6,139.3 338.2,139.4 338.9,139.5 339.6,139.6 340.3,139.6 341,139.7 341.7,139.8 342.4,139.8 343.1,139.9 343.8,140 344.4,140.1 345.1,140.1 345.8,140.2 346.5,140.3 347.2,140.3 347.9,140.4 348.6,140.5 349.3,140.5 350,140.6 350.6,140.7 351.3,140.7 352,140.8 352.7,140.9 353.4,140.9 354.1,141 354.8,141.1 355.5,141.1 356.2,141.2 356.8,141.3 357.5,141.3 358.2,141.4 358.9,141.5 359.6,141.5 360.3,141.6 361,141.6 361.7,141.7 362.4,141.8 363,141.8 363.7,141.9 364.4,142 365.1,142 365.8,142.1 366.5,142.1 367.2,142.2 367.9,142.3 368.6,142.3 369.2,142.4 369.9,142.4 370.6,142.5 371.3,142.6 372,142.6 372.7,142.7 373.4,142.7 374.1,142.8 374.8,142.8 375.4,142.9 376.1,143 376.8,143 377.5,143.1 378.2,143.1 378.9,143.2 379.6,143.2 380.3,143.3 381,143.4 381.6,143.4 382.3,143.5 383,143.5 383.7,143.6 384.4,143.6 385.1,143.7 385.8,143.7 386.5,143.8 387.2,143.8 387.8,143.9 388.5,143.9 389.2,144 389.9,144 390.6,144.1 391.3,144.2 392,144.2 392.7,144.3 393.4,144.3 394,144.4 394.7,144.4 395.4,144.5 396.1,144.5 396.8,144.6 397.5,144.6 398.2,144.7 398.9,144.7 399.6,144.8 400.2,144.8 400.9,144.8 401.6,144.9 402.3,144.9 403,145 403.7,145 404.4,145.1 405.1,145.1 405.8,145.2 406.4,145.2 407.1,145.3 407.8,145.3 408.5,145.4 409.2,145.4 409.9,145.5 410.6,145.5 411.3,145.5 412,145.6 412.6,145.6 413.3,145.7 414,145.7 414.7,145.8 415.4,145.8 416.1,145.9 416.8,145.9 417.5,145.9 418.2,146 418.8,146 419.5,146.1 420.2,146.1 420.9,146.2 421.6,146.2 422.3,146.2 423,146.3 423.7,146.3 424.4,146.4 425,146.4 425.7,146.5 426.4,146.5 427.1,146.5 427.8,146.6 428.5,146.6 429.2,146.7 429.9,146.7 430.6,146.7 431.2,146.8 431.9,146.8 432.6,146.9 433.3,146.9 434,146.9 434.7,147 435.4,147 436.1,147 436.8,147.1 437.4,147.1 438.1,147.2 438.8,147.2 439.5,147.2 440.2,147.3 440.9,147.3 441.6,147.4 442.3,147.4 443,147.4 443.6,147.5 444.3,147.5 445,147.5 445.7,147.6 446.4,147.6 447.1,147.6 447.8,147.7 448.5,147.7 449.2,147.7 449.8,147.8 450.5,147.8 451.2,147.9 451.9,147.9 452.6,147.9 453.3,148 454,148 454.7,148 455.4,148.1 456,148.1 456.7,148.1 457.4,148.2 458.1,148.2 458.8,148.2 459.5,148.3 460.2,148.3 460.9,148.3 461.6,148.4 462.2,148.4 462.9,148.4 463.6,148.5 464.3,148.5 465,148.5 465.7,148.5 466.4,148.6 467.1,148.6 467.8,148.6 468.4,148.7 469.1,148.7 469.8,148.7 470.5,148.8 471.2,148.8 471.9,148.8 472.6,148.9 473.3,148.9 474,148.9 474.6,148.9 475.3,149 476,149 476.7,149 477.4,149.1 478.1,149.1 478.8,149.1 479.5,149.2 480.2,149.2 480.8,149.2 481.5,149.2 482.2,149.3 482.9,149.3 483.6,149.3 484.3,149.4 485,149.4 485.7,149.4 486.4,149.4 487,149.5 487.7,149.5 488.4,149.5 489.1,149.5 489.8,149.6 490.5,149.6 491.2,149.6 491.9,149.7 492.6,149.7 493.2,149.7 493.9,149.7 494.6,149.8 495.3,149.8 496,149.8 496.7,149.8 497.4,149.9 498.1,149.9 498.8,149.9 499.4,149.9 500.1,150 500.8,150 501.5,150 502.2,150 502.9,150.1 503.6,150.1 504.3,150.1 505,150.1 505.6,150.2 506.3,150.2 507,150.2 507.7,150.2 508.4,150.3 509.1,150.3 509.8,150.3 510.5,150.3 511.2,150.4 511.8,150.4 512.5,150.4 513.2,150.4 513.9,150.4 514.6,150.5 515.3,150.5 516,150.5 516.7,150.5 517.4,150.6 518,150.6 518.7,150.6 519.4,150.6 520.1,150.6 520.8,150.7 521.5,150.7 522.2,150.7 522.9,150.7 523.6,150.8 524.2,150.8 524.9,150.8 525.6,150.8 526.3,150.8 527,150.9 527.7,150.9 528.4,150.9 529.1,150.9 529.8,150.9 530.4,151 531.1,151 531.8,151 532.5,151 533.2,151.1 533.9,151.1 534.6,151.1 535.3,151.1 536,151.1 536.6,151.2 537.3,151.2 538,151.2 538.7,151.2 539.4,151.2 540.1,151.3 540.8,151.3 541.5,151.3 542.2,151.3 542.8,151.3 543.5,151.3 544.2,151.4 544.9,151.4 545.6,151.4 546.3,151.4 547,151.4 547.7,151.5 548.4,151.5 549,151.5 549.7,151.5 550.4,151.5 551.1,151.6 551.8,151.6 552.5,151.6 553.2,151.6 553.9,151.6 554.6,151.6 555.2,151.7 555.9,151.7 556.6,151.7 557.3,151.7 558,151.7 558.7,151.7 559.4,151.8 560.1,151.8 560.8,151.8 561.4,151.8 562.1,151.8 562.8,151.8 563.5,151.9 564.2,151.9 564.9,151.9 565.6,151.9 566.3,151.9 567,151.9 567.6,152 568.3,152 569,152 569.7,152 570.4,152 571.1,152 571.8,152.1 572.5,152.1 573.2,152.1 573.8,152.1 574.5,152.1 575.2,152.1 575.9,152.2 576.6,152.2 577.3,152.2 578,152.2 578.7,152.2 579.4,152.2 580,152.2 580.7,152.3 581.4,152.3 582.1,152.3 582.8,152.3 583.5,152.3 584.2,152.3 584.9,152.3 585.6,152.4 586.2,152.4 586.9,152.4 587.6,152.4 588.3,152.4 589,152.4 589.7,152.4 590.4,152.5 591.1,152.5 591.8,152.5 592.4,152.5 593.1,152.5 593.8,152.5 594.5,152.5 595.2,152.6 595.9,152.6 596.6,152.6 597.3,152.6 598,152.6 598.6,152.6 599.3,152.6 600,152.6 600.7,152.7 601.4,152.7 602.1,152.7 602.8,152.7 603.5,152.7 604.2,152.7 604.8,152.7 605.5,152.8 606.2,152.8 606.9,152.8 607.6,152.8 608.3,152.8 609,152.8 609.7,152.8 610.4,152.8 611,152.9 611.7,152.9 612.4,152.9 613.1,152.9 613.8,152.9 614.5,152.9 615.2,152.9 615.9,152.9 616.6,152.9 617.2,153 617.9,153 618.6,153 619.3,153 620,153"/></g><g data-s="3" stroke="var(--o)" stroke-width="2.4" stroke-dasharray="7 5"><line x1="0" y1="155.6" x2="638" y2="155.6"/><text x="10" y="144.6" fill="var(--o)" font-size="15" font-family="system-ui,-apple-system,sans-serif" stroke="none">Q = 25</text></g></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="9">
+  <p class="h" data-s="0">Example 1 &mdash; answering the question that was asked</p>
+  <p class="e" data-s="1"><span class="bw">How long until the tank holds 22.5 lb of salt?</span>&nbsp;&nbsp;<span class="d">that is 90% of the way</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Set the answer equal to it</p>
+      <p class="e t" data-s="2">25(1 &minus; <span style="white-space:nowrap"><b>e</b><sup>&minus;0.03<i>t</i></sup></span>) = 22.5</p>
+      <p class="e t" data-s="3">1 &minus; <span style="white-space:nowrap"><b>e</b><sup>&minus;0.03<i>t</i></sup></span> = 0.9</p>
+      <p class="e t" data-s="4"><span style="white-space:nowrap"><b>e</b><sup>&minus;0.03<i>t</i></sup></span> = 0.1</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Take a logarithm of both sides</p>
+      <p class="e t" data-s="5">&minus;0.03<i>t</i> = ln 0.1 = &minus;ln 10</p>
+      <p class="e t" data-s="6"><i>t</i> = <span class="fr"><span>ln 10</span><span>0.03</span></span> &asymp; 76.8 min</p>
+      <p class="e" data-s="7"><span class="bx">about 1 hour 17 minutes</span></p>
+      <p class="l" data-s="8">Give the units. <span class="d">A number with no units is not an answer to this question.</span></p>
+      <p class="a" data-s="9">&#8627; and notice it never reaches 25 exactly. Only 90%, or 99%, of the way.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="10">
+  <p class="h" data-s="0">Change one number &mdash; call out the new limit</p>
+  <p class="e" data-s="1"><span class="bw">100 gal&nbsp;&middot;&nbsp; 3 gal/min in at &frac14; lb/gal&nbsp;&middot;&nbsp; 3 gal/min out</span>&nbsp;&nbsp;<span class="d">limit was 25 lb</span></p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="2"><span class="g">1.</span>&nbsp; the inflow concentration doubles to &frac12; lb/gal</p>
+      <p class="e t" data-s="3"><span class="g">2.</span>&nbsp; both flow rates double to 6 gal/min</p>
+      <p class="e t" data-s="4"><span class="g">3.</span>&nbsp; the tank is 200 gal instead of 100</p>
+      <p class="e t" data-s="5"><span class="g">4.</span>&nbsp; the tank starts with 40 lb of salt already in it</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="v">50 lb</span>&nbsp;&nbsp;<span class="d">doubles</span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="v">still 25 lb</span>&nbsp;&nbsp;<span class="d">it just gets there faster</span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="v">50 lb</span>&nbsp;&nbsp;<span class="d">same concentration, twice the water</span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="v">still 25 lb</span>&nbsp;&nbsp;<span class="d">it comes down to it instead of up</span></p>
+      <p class="e" data-s="10"><span class="bx">The limit is <i>V</i> &times; <i>c</i><sub>in</sub>. The rate only sets the speed.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="11">
+  <p class="h" data-s="0">Just the equation &mdash; call it out</p>
+  <p class="l" data-s="1">Three paragraphs. <span class="d">I want <span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> and <i>Q</i>(0). Nothing else.</span></p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="2"><span class="g">1.</span>&nbsp; A 300 gal tank of pure water. In: 5 gal/min at 2 lb/gal. Out: 5 gal/min.</p>
+      <p class="e t" data-s="3"><span class="g">2.</span>&nbsp; 400 gal holding 20 lb of salt. In: <span class="n">pure water</span>, 8 gal/min. Out: 8 gal/min.</p>
+      <p class="e t" data-s="4"><span class="g">3.</span>&nbsp; 100 gal of pure water. In: 6 gal/min at 3 lb/gal. Out: <span class="n">4</span> gal/min.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="5"><span class="g">1.</span>&nbsp; <span class="v"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = 10 &minus; <span class="fr"><span><i>Q</i></span><span>60</span></span></span>,&nbsp; <i>Q</i>(0) = 0</p>
+      <p class="e t" data-s="6"><span class="g">2.</span>&nbsp; <span class="v"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = &minus;<span class="fr"><span><i>Q</i></span><span>50</span></span></span>,&nbsp; <i>Q</i>(0) = 20&nbsp;&nbsp;<span class="d">rate in is zero</span></p>
+      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; <span class="v"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = 18 &minus; <span class="fr"><span>2<i>Q</i></span><span>50 + <i>t</i></span></span></span>,&nbsp; <i>Q</i>(0) = 0&nbsp;&nbsp;<span class="d"><i>V</i> = 100 + 2<i>t</i></span></p>
+      <p class="e" data-s="8"><span class="bx">Number 2 catches people. Pure water still flows in &mdash; it just brings no salt.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="12">
+  <p class="h" data-s="0">When the rates are not equal</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1">Same tank, same sentence. <span class="d">Only now the two rates do not match.</span></p>
+      <p class="l" data-s="2">Four gallons in, two gallons out. <span class="g">The tank is filling.</span></p>
+      <p class="lb" data-s="3">So the volume is not a constant any more</p>
+      <p class="e t" data-s="3"><span class="fr"><span><i>dV</i></span><span><i>dt</i></span></span> = 4 &minus; 2 = 2&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <i>V</i>(<i>t</i>) = 200 + 2<i>t</i></p>
+      <p class="l" data-s="4">Everything else is the same sentence. Rate in minus rate out.</p>
+      <p class="e t" data-s="5"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = (4)(1) &minus; (2)<span class="fr"><span><i>Q</i></span><span>200 + 2<i>t</i></span></span></p>
+      <p class="e" data-s="6"><span class="bx"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = 4 &minus; <span class="fr"><span><i>Q</i></span><span>100 + <i>t</i></span></span></span></p>
+      <p class="a" data-s="7">&#8627; now <i>p</i> is a function of <i>t</i>. That is Wednesday of week two &mdash; you have done this.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="0 0 640 400" preserveAspectRatio="xMidYMid meet"><g data-s="1"><rect x="150" y="120" width="250" height="215" fill="none" stroke="var(--dm)" stroke-width="2.4"/><rect x="152" y="192" width="246" height="141" fill="var(--wash-w)" stroke="none"/><line x1="152" y1="192" x2="398" y2="192" stroke="var(--c)" stroke-width="2.4"/></g><g data-s="2"><line x1="215" y1="40" x2="215" y2="106" stroke="var(--c)" stroke-width="2.6"/><polygon points="215,120 206,100 224,100" fill="var(--c)" stroke="none"/><g fill="var(--c)" font-size="18" font-family="system-ui,-apple-system,sans-serif"><text x="238" y="56"><tspan font-style="italic">r</tspan><tspan baseline-shift="sub" font-size="0.72em">in</tspan> = 4 gal/min</text><text x="238" y="82"><tspan font-style="italic">c</tspan><tspan baseline-shift="sub" font-size="0.72em">in</tspan> = 1 lb/gal</text></g></g><g data-s="2"><line x1="400" y1="292" x2="512" y2="292" stroke="var(--o)" stroke-width="2.6"/><polygon points="526,292 506,283 506,301" fill="var(--o)" stroke="none"/><g fill="var(--o)" font-size="18" font-family="system-ui,-apple-system,sans-serif"><text x="406" y="272"><tspan font-style="italic">r</tspan><tspan baseline-shift="sub" font-size="0.72em">out</tspan> = 2 gal/min</text><text x="406" y="324">carrying <tspan font-style="italic">Q</tspan>/<tspan font-style="italic">V</tspan>(<tspan font-style="italic">t</tspan>) lb/gal</text></g></g><g data-s="3" fill="var(--w)" font-size="20" font-family="system-ui,-apple-system,sans-serif"><text x="275" y="246" text-anchor="middle"><tspan font-style="italic">V</tspan>(<tspan font-style="italic">t</tspan>) = 200 + 2<tspan font-style="italic">t</tspan></text><text x="275" y="278" text-anchor="middle"><tspan font-style="italic">Q</tspan>(<tspan font-style="italic">t</tspan>) lb of salt</text></g></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="13">
+  <p class="h" data-s="0">Example 2 &mdash; a tank that is filling</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = 4 &minus; <span class="fr"><span><i>Q</i></span><span>100 + <i>t</i></span></span>,&nbsp;&nbsp; <i>Q</i>(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Standard form</p>
+      <p class="e t" data-s="2"><i>Q</i>&#8242; + <span class="fr"><span>1</span><span>100 + <i>t</i></span></span><i>Q</i> = 4&nbsp;&nbsp;<span class="d"><i>p</i> = 1/(100 + <i>t</i>)</span></p>
+      <p class="lb" data-s="3">1&nbsp;&nbsp;build &mu;</p>
+      <p class="e t" data-s="3">&int;<span class="fr"><span><i>dt</i></span><span>100 + <i>t</i></span></span> = ln(100 + <i>t</i>)&nbsp;&nbsp;<span class="d">no bars &mdash; it is positive</span></p>
+      <p class="e t" data-s="4">&mu; = <span style="white-space:nowrap"><b>e</b><sup>ln(100 + <i>t</i>)</sup></span> = 100 + <i>t</i></p>
+      <p class="lb" data-s="5">2&nbsp;&nbsp;multiply every term</p>
+      <p class="e t" data-s="5">(100 + <i>t</i>)<i>Q</i>&#8242; + <i>Q</i> = 4(100 + <i>t</i>)</p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">3&nbsp;&nbsp;the left side is one derivative</p>
+      <p class="e t" data-s="6">&#40;(100 + <i>t</i>)<i>Q</i>&#41;&#8242; = 4(100 + <i>t</i>)</p>
+      <p class="lb" data-s="7">4&nbsp;&nbsp;integrate, then divide by &mu;</p>
+      <p class="e t" data-s="7">(100 + <i>t</i>)<i>Q</i> = 2(100 + <i>t</i>)<sup>2</sup> + <i>c</i></p>
+      <p class="e t" data-s="8"><i>Q</i> = 2(100 + <i>t</i>) + <span class="fr"><span><i>c</i></span><span>100 + <i>t</i></span></span></p>
+      <p class="e t" data-s="9"><i>Q</i>(0) = 0:&nbsp;&nbsp; 0 = 200 + <span class="fr"><span><i>c</i></span><span>100</span></span>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>c</i> = &minus;20000</span></p>
+      <p class="e" data-s="10"><span class="bx"><i>Q</i>(<i>t</i>) = 2(100 + <i>t</i>) &minus; <span class="fr"><span>20000</span><span>100 + <i>t</i></span></span></span></p>
+      <p class="a" data-s="11">&#8627; no equilibrium this time. The tank is filling, so nothing settles.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="14">
+  <p class="h" data-s="0">Example 2 &mdash; the tank holds 500 gallons</p>
+  <p class="e" data-s="1"><span class="bw"><i>Q</i>(<i>t</i>) = 2(100 + <i>t</i>) &minus; <span class="fr"><span>20000</span><span>100 + <i>t</i></span></span></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">When does it overflow?</p>
+      <p class="e t" data-s="2">200 + 2<i>t</i> = 500&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>t</i> = 150 min</span></p>
+      <p class="lb" data-s="3">How much salt is in it then?</p>
+      <p class="e t" data-s="3"><i>Q</i>(150) = 2(250) &minus; <span class="fr"><span>20000</span><span>250</span></span></p>
+      <p class="e t" data-s="4">= 500 &minus; 80 = <span class="v">420 lb</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">And the concentration at that moment</p>
+      <p class="e t" data-s="5"><span class="fr"><span>420 lb</span><span>500 gal</span></span> = 0.84 lb/gal</p>
+      <p class="l" data-s="6">Which is below 1 lb/gal, the concentration coming in. <span class="d">It has to be &mdash; it started from pure water and never catches up.</span></p>
+      <p class="e" data-s="7"><span class="bx">The model is only valid for 0 &le; <i>t</i> &le; 150.</span></p>
+      <p class="a" data-s="8">&#8627; after that the tank is full and the words of the problem no longer describe it.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="15">
+  <p class="h" data-s="0">Newton&#8217;s law of cooling</p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="1">A hot object in a cool room. <span class="d">How fast does it cool?</span></p>
+      <p class="l" data-s="2">Newton&#8217;s observation: the rate is proportional to how far the object is from the room.</p>
+      <p class="e" data-s="3"><span class="bx"><span class="fr"><span><i>dT</i></span><span><i>dt</i></span></span> = &minus;<i>k</i>(<i>T</i> &minus; <i>T</i><sub>a</sub>)</span></p>
+      <p class="l" data-s="4"><i>T</i><sub>a</sub> is the room. <i>k</i> &gt; 0 depends on the cup, not on the coffee.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Check the sign, do not memorize it</p>
+      <p class="e t" data-s="5"><i>T</i> &gt; <i>T</i><sub>a</sub>&nbsp; &rArr;&nbsp; <span class="fr"><span><i>dT</i></span><span><i>dt</i></span></span> &lt; 0&nbsp;&nbsp;<span class="d">hot object cools</span></p>
+      <p class="e t" data-s="6"><i>T</i> &lt; <i>T</i><sub>a</sub>&nbsp; &rArr;&nbsp; <span class="fr"><span><i>dT</i></span><span><i>dt</i></span></span> &gt; 0&nbsp;&nbsp;<span class="d">cold object warms</span></p>
+      <p class="l" data-s="7">Expand it and it is the tank again.</p>
+      <p class="e t" data-s="8"><span class="fr"><span><i>dT</i></span><span><i>dt</i></span></span> + <i>kT</i> = <i>k</i><i>T</i><sub>a</sub>&nbsp;&nbsp;<span class="d">linear, constant coefficient</span></p>
+      <p class="a" data-s="9">&#8627; different words, same equation, and you already know its shape.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="16">
+  <p class="h" data-s="0">Example 3 &mdash; coffee, with two measurements</p>
+  <p class="e" data-s="1"><span class="bw">Coffee at 200&deg;F, room at 70&deg;F. After 10 minutes it is 150&deg;F.</span>&nbsp;&nbsp;<span class="d">find <i>T</i>(<i>t</i>)</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">The equation, and the general solution</p>
+      <p class="e t" data-s="2"><span class="fr"><span><i>dT</i></span><span><i>dt</i></span></span> = &minus;<i>k</i>(<i>T</i> &minus; 70)</p>
+      <p class="e t" data-s="3"><i>T</i> = 70 + <i>A</i>&thinsp;<span style="white-space:nowrap"><b>e</b><sup>&minus;<i>kt</i></sup></span>&nbsp;&nbsp;<span class="d">separable, or linear &mdash; either way</span></p>
+      <p class="lb" data-s="4">The first measurement gives <i>A</i></p>
+      <p class="e t" data-s="4"><i>T</i>(0) = 200:&nbsp;&nbsp; 200 = 70 + <i>A</i>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>A</i> = 130</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">The second measurement gives <i>k</i></p>
+      <p class="e t" data-s="5"><i>T</i>(10) = 150:&nbsp;&nbsp; 150 = 70 + 130&thinsp;<span style="white-space:nowrap"><b>e</b><sup>&minus;10<i>k</i></sup></span></p>
+      <p class="e t" data-s="6"><span style="white-space:nowrap"><b>e</b><sup>&minus;10<i>k</i></sup></span> = <span class="fr"><span>80</span><span>130</span></span> = <span class="fr"><span>8</span><span>13</span></span></p>
+      <p class="e t" data-s="7"><i>k</i> = <span class="fr"><span>1</span><span>10</span></span> ln <span class="fr"><span>13</span><span>8</span></span> &asymp; 0.0486 per min</p>
+      <p class="e" data-s="8"><span class="bx"><i>T</i>(<i>t</i>) = 70 + 130&#40;<span class="fr"><span>8</span><span>13</span></span>&#41;<sup><i>t</i>/10</sup></span></p>
+      <p class="a" data-s="9">&#8627; two unknowns, so you need two pieces of data. That is why the problem gave you two.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="17">
+  <p class="h" data-s="0">Example 3 &mdash; when is it drinkable?</p>
+  <p class="e" data-s="1"><span class="bw"><i>T</i>(<i>t</i>) = 70 + 130&#40;<span class="fr"><span>8</span><span>13</span></span>&#41;<sup><i>t</i>/10</sup></span>&nbsp;&nbsp;<span class="d">say drinkable means 100&deg;F</span></p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="2">70 + 130&#40;<span class="fr"><span>8</span><span>13</span></span>&#41;<sup><i>t</i>/10</sup> = 100</p>
+      <p class="e t" data-s="3">&#40;<span class="fr"><span>8</span><span>13</span></span>&#41;<sup><i>t</i>/10</sup> = <span class="fr"><span>30</span><span>130</span></span> = <span class="fr"><span>3</span><span>13</span></span></p>
+      <p class="lb" data-s="4">Logarithm of both sides</p>
+      <p class="e t" data-s="4"><span class="fr"><span><i>t</i></span><span>10</span></span> ln <span class="fr"><span>8</span><span>13</span></span> = ln <span class="fr"><span>3</span><span>13</span></span></p>
+    </div>
+    <div>
+      <p class="e t" data-s="5"><i>t</i> = 10 &middot; <span class="fr"><span>ln(3/13)</span><span>ln(8/13)</span></span> = 10 &middot; <span class="fr"><span>&minus;1.4663</span><span>&minus;0.4855</span></span></p>
+      <p class="e" data-s="6"><span class="bx"><i>t</i> &asymp; 30 minutes</span></p>
+      <p class="l" data-s="7">Both logarithms are negative, and the negatives cancel. <span class="d">If your answer is negative, you divided the wrong way round.</span></p>
+      <p class="l" data-s="8">And it never reaches 70&deg;F. <span class="d">It only gets arbitrarily close.</span></p>
+      <p class="a" data-s="9">&#8627; the room temperature is the equilibrium, exactly like the 25 lb in the tank.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="18">
+  <p class="h" data-s="0">Example 3 &mdash; the room is the equilibrium</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1">The field for the coffee. <span class="d">Time in minutes, temperature in &deg;F.</span></p>
+      <p class="l" data-s="2">Steep at the top, and flatter as it comes down.</p>
+      <p class="e t" data-s="3"><i>T</i> = 70&deg;F&nbsp;&nbsp;<span class="d">the room</span></p>
+      <p class="l" data-s="4">The coffee falls toward the room. A cold drink below the line rises toward it.</p>
+      <p class="l" data-s="5">Neither one arrives. <span class="d">Which is why &ldquo;how long until it is exactly 70&rdquo; has no answer.</span></p>
+      <p class="e" data-s="6"><span class="bx">Same picture as the tank, with different labels.</span></p>
+      <p class="a" data-s="7">&#8627; that is not a coincidence. Next page.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="307.6" x2="0" y2="307.6"/><line x1="-7" y1="243.9" x2="0" y2="243.9"/><line x1="-7" y1="159.1" x2="0" y2="159.1"/><line x1="-7" y1="74.2" x2="0" y2="74.2"/><line x1="93.9" y1="350" x2="93.9" y2="357"/><line x1="187.9" y1="350" x2="187.9" y2="357"/><line x1="281.8" y1="350" x2="281.8" y2="357"/><line x1="375.8" y1="350" x2="375.8" y2="357"/><line x1="469.7" y1="350" x2="469.7" y2="357"/><line x1="563.6" y1="350" x2="563.6" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="312.6" text-anchor="end">70</text><text x="-12" y="248.9" text-anchor="end">100</text><text x="-12" y="164.1" text-anchor="end">140</text><text x="-12" y="79.2" text-anchor="end">180</text><text x="0" y="375" text-anchor="middle">0</text><text x="93.9" y="375" text-anchor="middle">10</text><text x="187.9" y="375" text-anchor="middle">20</text><text x="281.8" y="375" text-anchor="middle">30</text><text x="375.8" y="375" text-anchor="middle">40</text><text x="469.7" y="375" text-anchor="middle">50</text><text x="563.6" y="375" text-anchor="middle">60</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">T</text><text x="650" y="355">t</text></g></g><g data-s="2" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"><line x1="-14.8" y1="341.8" x2="14.8" y2="337"/><line x1="79.1" y1="341.8" x2="108.7" y2="337"/><line x1="173.1" y1="341.8" x2="202.7" y2="337"/><line x1="267" y1="341.8" x2="296.6" y2="337"/><line x1="361" y1="341.8" x2="390.6" y2="337"/><line x1="454.9" y1="341.8" x2="484.5" y2="337"/><line x1="548.8" y1="341.8" x2="578.4" y2="337"/><line x1="-14.9" y1="284.7" x2="14.9" y2="288"/><line x1="79" y1="284.7" x2="108.9" y2="288"/><line x1="173" y1="284.7" x2="202.8" y2="288"/><line x1="266.9" y1="284.7" x2="296.7" y2="288"/><line x1="360.8" y1="284.7" x2="390.7" y2="288"/><line x1="454.8" y1="284.7" x2="484.6" y2="288"/><line x1="548.7" y1="284.7" x2="578.5" y2="288"/><line x1="-14.2" y1="239.3" x2="14.2" y2="248.6"/><line x1="79.7" y1="239.3" x2="108.2" y2="248.6"/><line x1="173.6" y1="239.3" x2="202.1" y2="248.6"/><line x1="267.6" y1="239.3" x2="296.1" y2="248.6"/><line x1="361.5" y1="239.3" x2="390" y2="248.6"/><line x1="455.4" y1="239.3" x2="483.9" y2="248.6"/><line x1="549.4" y1="239.3" x2="577.9" y2="248.6"/><line x1="-13.2" y1="194.3" x2="13.2" y2="208.7"/><line x1="80.8" y1="194.3" x2="107.1" y2="208.7"/><line x1="174.7" y1="194.3" x2="201" y2="208.7"/><line x1="268.7" y1="194.3" x2="295" y2="208.7"/><line x1="362.6" y1="194.3" x2="388.9" y2="208.7"/><line x1="456.5" y1="194.3" x2="482.9" y2="208.7"/><line x1="550.5" y1="194.3" x2="576.8" y2="208.7"/><line x1="-11.6" y1="139" x2="11.6" y2="158"/><line x1="82.4" y1="139" x2="105.5" y2="158"/><line x1="176.3" y1="139" x2="199.5" y2="158"/><line x1="270.2" y1="139" x2="293.4" y2="158"/><line x1="364.2" y1="139" x2="387.3" y2="158"/><line x1="458.1" y1="139" x2="481.3" y2="158"/><line x1="552.1" y1="139" x2="575.2" y2="158"/><line x1="-10.1" y1="84.4" x2="10.1" y2="106.5"/><line x1="83.8" y1="84.4" x2="104" y2="106.5"/><line x1="177.8" y1="84.4" x2="198" y2="106.5"/><line x1="271.7" y1="84.4" x2="291.9" y2="106.5"/><line x1="365.6" y1="84.4" x2="385.9" y2="106.5"/><line x1="459.6" y1="84.4" x2="479.8" y2="106.5"/><line x1="553.5" y1="84.4" x2="573.7" y2="106.5"/><line x1="-8.8" y1="30.3" x2="8.8" y2="54.5"/><line x1="85.1" y1="30.3" x2="102.8" y2="54.5"/><line x1="179" y1="30.3" x2="196.7" y2="54.5"/><line x1="273" y1="30.3" x2="290.7" y2="54.5"/><line x1="366.9" y1="30.3" x2="384.6" y2="54.5"/><line x1="460.9" y1="30.3" x2="478.5" y2="54.5"/><line x1="554.8" y1="30.3" x2="572.5" y2="54.5"/><line x1="-8.2" y1="-2" x2="8.2" y2="23.2"/><line x1="85.8" y1="-2" x2="102.1" y2="23.2"/><line x1="179.7" y1="-2" x2="196.1" y2="23.2"/><line x1="273.6" y1="-2" x2="290" y2="23.2"/><line x1="367.6" y1="-2" x2="383.9" y2="23.2"/><line x1="461.5" y1="-2" x2="477.9" y2="23.2"/><line x1="555.4" y1="-2" x2="571.8" y2="23.2"/></g><g data-s="4" stroke="var(--c)" stroke-width="2.6" stroke-linejoin="round" fill="none"><polyline points="0,31.8 0.7,32.8 1.4,33.8 2.1,34.8 2.8,35.7 3.4,36.7 4.1,37.7 4.8,38.6 5.5,39.6 6.2,40.5 6.9,41.5 7.6,42.4 8.3,43.4 9,44.3 9.6,45.2 10.3,46.2 11,47.1 11.7,48 12.4,49 13.1,49.9 13.8,50.8 14.5,51.7 15.2,52.6 15.8,53.5 16.5,54.4 17.2,55.3 17.9,56.2 18.6,57.1 19.3,58 20,58.9 20.7,59.8 21.4,60.7 22,61.6 22.7,62.4 23.4,63.3 24.1,64.2 24.8,65 25.5,65.9 26.2,66.8 26.9,67.6 27.6,68.5 28.2,69.3 28.9,70.2 29.6,71 30.3,71.9 31,72.7 31.7,73.5 32.4,74.4 33.1,75.2 33.8,76 34.4,76.9 35.1,77.7 35.8,78.5 36.5,79.3 37.2,80.1 37.9,80.9 38.6,81.7 39.3,82.5 40,83.4 40.6,84.1 41.3,84.9 42,85.7 42.7,86.5 43.4,87.3 44.1,88.1 44.8,88.9 45.5,89.7 46.2,90.4 46.8,91.2 47.5,92 48.2,92.7 48.9,93.5 49.6,94.3 50.3,95 51,95.8 51.7,96.5 52.4,97.3 53,98 53.7,98.8 54.4,99.5 55.1,100.3 55.8,101 56.5,101.7 57.2,102.5 57.9,103.2 58.6,103.9 59.2,104.7 59.9,105.4 60.6,106.1 61.3,106.8 62,107.5 62.7,108.2 63.4,109 64.1,109.7 64.8,110.4 65.4,111.1 66.1,111.8 66.8,112.5 67.5,113.2 68.2,113.9 68.9,114.5 69.6,115.2 70.3,115.9 71,116.6 71.6,117.3 72.3,118 73,118.6 73.7,119.3 74.4,120 75.1,120.6 75.8,121.3 76.5,122 77.2,122.6 77.8,123.3 78.5,123.9 79.2,124.6 79.9,125.3 80.6,125.9 81.3,126.5 82,127.2 82.7,127.8 83.4,128.5 84,129.1 84.7,129.7 85.4,130.4 86.1,131 86.8,131.6 87.5,132.3 88.2,132.9 88.9,133.5 89.6,134.1 90.2,134.8 90.9,135.4 91.6,136 92.3,136.6 93,137.2 93.7,137.8 94.4,138.4 95.1,139 95.8,139.6 96.4,140.2 97.1,140.8 97.8,141.4 98.5,142 99.2,142.6 99.9,143.2 100.6,143.8 101.3,144.3 102,144.9 102.6,145.5 103.3,146.1 104,146.6 104.7,147.2 105.4,147.8 106.1,148.4 106.8,148.9 107.5,149.5 108.2,150.1 108.8,150.6 109.5,151.2 110.2,151.7 110.9,152.3 111.6,152.8 112.3,153.4 113,153.9 113.7,154.5 114.4,155 115,155.6 115.7,156.1 116.4,156.7 117.1,157.2 117.8,157.7 118.5,158.3 119.2,158.8 119.9,159.3 120.6,159.9 121.2,160.4 121.9,160.9 122.6,161.4 123.3,161.9 124,162.5 124.7,163 125.4,163.5 126.1,164 126.8,164.5 127.4,165 128.1,165.5 128.8,166 129.5,166.5 130.2,167 130.9,167.5 131.6,168 132.3,168.5 133,169 133.6,169.5 134.3,170 135,170.5 135.7,171 136.4,171.5 137.1,172 137.8,172.5 138.5,172.9 139.2,173.4 139.8,173.9 140.5,174.4 141.2,174.8 141.9,175.3 142.6,175.8 143.3,176.3 144,176.7 144.7,177.2 145.4,177.7 146,178.1 146.7,178.6 147.4,179 148.1,179.5 148.8,179.9 149.5,180.4 150.2,180.9 150.9,181.3 151.6,181.8 152.2,182.2 152.9,182.7 153.6,183.1 154.3,183.5 155,184 155.7,184.4 156.4,184.9 157.1,185.3 157.8,185.7 158.4,186.2 159.1,186.6 159.8,187 160.5,187.5 161.2,187.9 161.9,188.3 162.6,188.7 163.3,189.2 164,189.6 164.6,190 165.3,190.4 166,190.8 166.7,191.3 167.4,191.7 168.1,192.1 168.8,192.5 169.5,192.9 170.2,193.3 170.8,193.7 171.5,194.1 172.2,194.5 172.9,194.9 173.6,195.3 174.3,195.7 175,196.1 175.7,196.5 176.4,196.9 177,197.3 177.7,197.7 178.4,198.1 179.1,198.5 179.8,198.9 180.5,199.3 181.2,199.6 181.9,200 182.6,200.4 183.2,200.8 183.9,201.2 184.6,201.6 185.3,201.9 186,202.3 186.7,202.7 187.4,203.1 188.1,203.4 188.8,203.8 189.4,204.2 190.1,204.5 190.8,204.9 191.5,205.3 192.2,205.6 192.9,206 193.6,206.4 194.3,206.7 195,207.1 195.6,207.4 196.3,207.8 197,208.1 197.7,208.5 198.4,208.9 199.1,209.2 199.8,209.6 200.5,209.9 201.2,210.3 201.8,210.6 202.5,210.9 203.2,211.3 203.9,211.6 204.6,212 205.3,212.3 206,212.7 206.7,213 207.4,213.3 208,213.7 208.7,214 209.4,214.3 210.1,214.7 210.8,215 211.5,215.3 212.2,215.7 212.9,216 213.6,216.3 214.2,216.6 214.9,217 215.6,217.3 216.3,217.6 217,217.9 217.7,218.2 218.4,218.6 219.1,218.9 219.8,219.2 220.4,219.5 221.1,219.8 221.8,220.1 222.5,220.4 223.2,220.8 223.9,221.1 224.6,221.4 225.3,221.7 226,222 226.6,222.3 227.3,222.6 228,222.9 228.7,223.2 229.4,223.5 230.1,223.8 230.8,224.1 231.5,224.4 232.2,224.7 232.8,225 233.5,225.3 234.2,225.6 234.9,225.9 235.6,226.1 236.3,226.4 237,226.7 237.7,227 238.4,227.3 239,227.6 239.7,227.9 240.4,228.2 241.1,228.4 241.8,228.7 242.5,229 243.2,229.3 243.9,229.6 244.6,229.8 245.2,230.1 245.9,230.4 246.6,230.7 247.3,230.9 248,231.2 248.7,231.5 249.4,231.8 250.1,232 250.8,232.3 251.4,232.6 252.1,232.8 252.8,233.1 253.5,233.4 254.2,233.6 254.9,233.9 255.6,234.2 256.3,234.4 257,234.7 257.6,234.9 258.3,235.2 259,235.4 259.7,235.7 260.4,236 261.1,236.2 261.8,236.5 262.5,236.7 263.2,237 263.8,237.2 264.5,237.5 265.2,237.7 265.9,238 266.6,238.2 267.3,238.5 268,238.7 268.7,239 269.4,239.2 270,239.4 270.7,239.7 271.4,239.9 272.1,240.2 272.8,240.4 273.5,240.7 274.2,240.9 274.9,241.1 275.6,241.4 276.2,241.6 276.9,241.8 277.6,242.1 278.3,242.3 279,242.5 279.7,242.8 280.4,243 281.1,243.2 281.8,243.5 282.4,243.7 283.1,243.9 283.8,244.1 284.5,244.4 285.2,244.6 285.9,244.8 286.6,245 287.3,245.3 288,245.5 288.6,245.7 289.3,245.9 290,246.1 290.7,246.4 291.4,246.6 292.1,246.8 292.8,247 293.5,247.2 294.2,247.4 294.8,247.7 295.5,247.9 296.2,248.1 296.9,248.3 297.6,248.5 298.3,248.7 299,248.9 299.7,249.1 300.4,249.3 301,249.6 301.7,249.8 302.4,250 303.1,250.2 303.8,250.4 304.5,250.6 305.2,250.8 305.9,251 306.6,251.2 307.2,251.4 307.9,251.6 308.6,251.8 309.3,252 310,252.2 310.7,252.4 311.4,252.6 312.1,252.8 312.8,253 313.4,253.2 314.1,253.4 314.8,253.5 315.5,253.7 316.2,253.9 316.9,254.1 317.6,254.3 318.3,254.5 319,254.7 319.6,254.9 320.3,255.1 321,255.3 321.7,255.4 322.4,255.6 323.1,255.8 323.8,256 324.5,256.2 325.2,256.4 325.8,256.5 326.5,256.7 327.2,256.9 327.9,257.1 328.6,257.3 329.3,257.4 330,257.6 330.7,257.8 331.4,258 332,258.2 332.7,258.3 333.4,258.5 334.1,258.7 334.8,258.9 335.5,259 336.2,259.2 336.9,259.4 337.6,259.5 338.2,259.7 338.9,259.9 339.6,260.1 340.3,260.2 341,260.4 341.7,260.6 342.4,260.7 343.1,260.9 343.8,261.1 344.4,261.2 345.1,261.4 345.8,261.6 346.5,261.7 347.2,261.9 347.9,262 348.6,262.2 349.3,262.4 350,262.5 350.6,262.7 351.3,262.9 352,263 352.7,263.2 353.4,263.3 354.1,263.5 354.8,263.6 355.5,263.8 356.2,264 356.8,264.1 357.5,264.3 358.2,264.4 358.9,264.6 359.6,264.7 360.3,264.9 361,265 361.7,265.2 362.4,265.3 363,265.5 363.7,265.6 364.4,265.8 365.1,265.9 365.8,266.1 366.5,266.2 367.2,266.4 367.9,266.5 368.6,266.7 369.2,266.8 369.9,267 370.6,267.1 371.3,267.2 372,267.4 372.7,267.5 373.4,267.7 374.1,267.8 374.8,268 375.4,268.1 376.1,268.2 376.8,268.4 377.5,268.5 378.2,268.7 378.9,268.8 379.6,268.9 380.3,269.1 381,269.2 381.6,269.3 382.3,269.5 383,269.6 383.7,269.8 384.4,269.9 385.1,270 385.8,270.2 386.5,270.3 387.2,270.4 387.8,270.6 388.5,270.7 389.2,270.8 389.9,271 390.6,271.1 391.3,271.2 392,271.3 392.7,271.5 393.4,271.6 394,271.7 394.7,271.9 395.4,272 396.1,272.1 396.8,272.2 397.5,272.4 398.2,272.5 398.9,272.6 399.6,272.7 400.2,272.9 400.9,273 401.6,273.1 402.3,273.2 403,273.4 403.7,273.5 404.4,273.6 405.1,273.7 405.8,273.8 406.4,274 407.1,274.1 407.8,274.2 408.5,274.3 409.2,274.4 409.9,274.5 410.6,274.7 411.3,274.8 412,274.9 412.6,275 413.3,275.1 414,275.2 414.7,275.4 415.4,275.5 416.1,275.6 416.8,275.7 417.5,275.8 418.2,275.9 418.8,276 419.5,276.2 420.2,276.3 420.9,276.4 421.6,276.5 422.3,276.6 423,276.7 423.7,276.8 424.4,276.9 425,277 425.7,277.2 426.4,277.3 427.1,277.4 427.8,277.5 428.5,277.6 429.2,277.7 429.9,277.8 430.6,277.9 431.2,278 431.9,278.1 432.6,278.2 433.3,278.3 434,278.4 434.7,278.5 435.4,278.6 436.1,278.7 436.8,278.8 437.4,278.9 438.1,279 438.8,279.1 439.5,279.2 440.2,279.3 440.9,279.4 441.6,279.5 442.3,279.6 443,279.7 443.6,279.8 444.3,279.9 445,280 445.7,280.1 446.4,280.2 447.1,280.3 447.8,280.4 448.5,280.5 449.2,280.6 449.8,280.7 450.5,280.8 451.2,280.9 451.9,281 452.6,281.1 453.3,281.2 454,281.3 454.7,281.4 455.4,281.5 456,281.6 456.7,281.7 457.4,281.8 458.1,281.8 458.8,281.9 459.5,282 460.2,282.1 460.9,282.2 461.6,282.3 462.2,282.4 462.9,282.5 463.6,282.6 464.3,282.7 465,282.7 465.7,282.8 466.4,282.9 467.1,283 467.8,283.1 468.4,283.2 469.1,283.3 469.8,283.4 470.5,283.4 471.2,283.5 471.9,283.6 472.6,283.7 473.3,283.8 474,283.9 474.6,284 475.3,284 476,284.1 476.7,284.2 477.4,284.3 478.1,284.4 478.8,284.5 479.5,284.5 480.2,284.6 480.8,284.7 481.5,284.8 482.2,284.9 482.9,284.9 483.6,285 484.3,285.1 485,285.2 485.7,285.3 486.4,285.3 487,285.4 487.7,285.5 488.4,285.6 489.1,285.7 489.8,285.7 490.5,285.8 491.2,285.9 491.9,286 492.6,286 493.2,286.1 493.9,286.2 494.6,286.3 495.3,286.4 496,286.4 496.7,286.5 497.4,286.6 498.1,286.7 498.8,286.7 499.4,286.8 500.1,286.9 500.8,287 501.5,287 502.2,287.1 502.9,287.2 503.6,287.2 504.3,287.3 505,287.4 505.6,287.5 506.3,287.5 507,287.6 507.7,287.7 508.4,287.7 509.1,287.8 509.8,287.9 510.5,288 511.2,288 511.8,288.1 512.5,288.2 513.2,288.2 513.9,288.3 514.6,288.4 515.3,288.4 516,288.5 516.7,288.6 517.4,288.6 518,288.7 518.7,288.8 519.4,288.8 520.1,288.9 520.8,289 521.5,289 522.2,289.1 522.9,289.2 523.6,289.2 524.2,289.3 524.9,289.4 525.6,289.4 526.3,289.5 527,289.6 527.7,289.6 528.4,289.7 529.1,289.8 529.8,289.8 530.4,289.9 531.1,289.9 531.8,290 532.5,290.1 533.2,290.1 533.9,290.2 534.6,290.3 535.3,290.3 536,290.4 536.6,290.4 537.3,290.5 538,290.6 538.7,290.6 539.4,290.7 540.1,290.7 540.8,290.8 541.5,290.9 542.2,290.9 542.8,291 543.5,291 544.2,291.1 544.9,291.2 545.6,291.2 546.3,291.3 547,291.3 547.7,291.4 548.4,291.5 549,291.5 549.7,291.6 550.4,291.6 551.1,291.7 551.8,291.7 552.5,291.8 553.2,291.8 553.9,291.9 554.6,292 555.2,292 555.9,292.1 556.6,292.1 557.3,292.2 558,292.2 558.7,292.3 559.4,292.3 560.1,292.4 560.8,292.5 561.4,292.5 562.1,292.6 562.8,292.6 563.5,292.7 564.2,292.7 564.9,292.8 565.6,292.8 566.3,292.9 567,292.9 567.6,293 568.3,293 569,293.1 569.7,293.1 570.4,293.2 571.1,293.2 571.8,293.3 572.5,293.3 573.2,293.4 573.8,293.4 574.5,293.5 575.2,293.5 575.9,293.6 576.6,293.6 577.3,293.7 578,293.7 578.7,293.8 579.4,293.8 580,293.9 580.7,293.9 581.4,294 582.1,294 582.8,294.1 583.5,294.1 584.2,294.2 584.9,294.2 585.6,294.3 586.2,294.3 586.9,294.4 587.6,294.4 588.3,294.5 589,294.5 589.7,294.6 590.4,294.6 591.1,294.6 591.8,294.7 592.4,294.7 593.1,294.8 593.8,294.8 594.5,294.9 595.2,294.9 595.9,295 596.6,295 597.3,295.1 598,295.1 598.6,295.1 599.3,295.2 600,295.2 600.7,295.3 601.4,295.3 602.1,295.4 602.8,295.4 603.5,295.5 604.2,295.5 604.8,295.5 605.5,295.6 606.2,295.6 606.9,295.7 607.6,295.7 608.3,295.8 609,295.8 609.7,295.8 610.4,295.9 611,295.9 611.7,296 612.4,296 613.1,296 613.8,296.1 614.5,296.1 615.2,296.2 615.9,296.2 616.6,296.2 617.2,296.3 617.9,296.3 618.6,296.4 619.3,296.4 620,296.4"/><polyline points="0,180.3 0.7,180.8 1.4,181.2 2.1,181.7 2.8,182.1 3.4,182.6 4.1,183 4.8,183.4 5.5,183.9 6.2,184.3 6.9,184.8 7.6,185.2 8.3,185.6 9,186.1 9.6,186.5 10.3,186.9 11,187.4 11.7,187.8 12.4,188.2 13.1,188.6 13.8,189.1 14.5,189.5 15.2,189.9 15.8,190.3 16.5,190.7 17.2,191.2 17.9,191.6 18.6,192 19.3,192.4 20,192.8 20.7,193.2 21.4,193.6 22,194 22.7,194.4 23.4,194.8 24.1,195.2 24.8,195.6 25.5,196 26.2,196.4 26.9,196.8 27.6,197.2 28.2,197.6 28.9,198 29.6,198.4 30.3,198.8 31,199.2 31.7,199.6 32.4,199.9 33.1,200.3 33.8,200.7 34.4,201.1 35.1,201.5 35.8,201.8 36.5,202.2 37.2,202.6 37.9,203 38.6,203.3 39.3,203.7 40,204.1 40.6,204.5 41.3,204.8 42,205.2 42.7,205.6 43.4,205.9 44.1,206.3 44.8,206.6 45.5,207 46.2,207.4 46.8,207.7 47.5,208.1 48.2,208.4 48.9,208.8 49.6,209.1 50.3,209.5 51,209.8 51.7,210.2 52.4,210.5 53,210.9 53.7,211.2 54.4,211.6 55.1,211.9 55.8,212.2 56.5,212.6 57.2,212.9 57.9,213.3 58.6,213.6 59.2,213.9 59.9,214.3 60.6,214.6 61.3,214.9 62,215.2 62.7,215.6 63.4,215.9 64.1,216.2 64.8,216.6 65.4,216.9 66.1,217.2 66.8,217.5 67.5,217.8 68.2,218.2 68.9,218.5 69.6,218.8 70.3,219.1 71,219.4 71.6,219.7 72.3,220.1 73,220.4 73.7,220.7 74.4,221 75.1,221.3 75.8,221.6 76.5,221.9 77.2,222.2 77.8,222.5 78.5,222.8 79.2,223.1 79.9,223.4 80.6,223.7 81.3,224 82,224.3 82.7,224.6 83.4,224.9 84,225.2 84.7,225.5 85.4,225.8 86.1,226.1 86.8,226.4 87.5,226.7 88.2,227 88.9,227.2 89.6,227.5 90.2,227.8 90.9,228.1 91.6,228.4 92.3,228.7 93,228.9 93.7,229.2 94.4,229.5 95.1,229.8 95.8,230.1 96.4,230.3 97.1,230.6 97.8,230.9 98.5,231.2 99.2,231.4 99.9,231.7 100.6,232 101.3,232.2 102,232.5 102.6,232.8 103.3,233 104,233.3 104.7,233.6 105.4,233.8 106.1,234.1 106.8,234.4 107.5,234.6 108.2,234.9 108.8,235.1 109.5,235.4 110.2,235.6 110.9,235.9 111.6,236.2 112.3,236.4 113,236.7 113.7,236.9 114.4,237.2 115,237.4 115.7,237.7 116.4,237.9 117.1,238.2 117.8,238.4 118.5,238.7 119.2,238.9 119.9,239.2 120.6,239.4 121.2,239.6 121.9,239.9 122.6,240.1 123.3,240.4 124,240.6 124.7,240.8 125.4,241.1 126.1,241.3 126.8,241.5 127.4,241.8 128.1,242 128.8,242.3 129.5,242.5 130.2,242.7 130.9,242.9 131.6,243.2 132.3,243.4 133,243.6 133.6,243.9 134.3,244.1 135,244.3 135.7,244.5 136.4,244.8 137.1,245 137.8,245.2 138.5,245.4 139.2,245.7 139.8,245.9 140.5,246.1 141.2,246.3 141.9,246.5 142.6,246.7 143.3,247 144,247.2 144.7,247.4 145.4,247.6 146,247.8 146.7,248 147.4,248.2 148.1,248.5 148.8,248.7 149.5,248.9 150.2,249.1 150.9,249.3 151.6,249.5 152.2,249.7 152.9,249.9 153.6,250.1 154.3,250.3 155,250.5 155.7,250.7 156.4,250.9 157.1,251.1 157.8,251.3 158.4,251.5 159.1,251.7 159.8,251.9 160.5,252.1 161.2,252.3 161.9,252.5 162.6,252.7 163.3,252.9 164,253.1 164.6,253.3 165.3,253.5 166,253.7 166.7,253.9 167.4,254.1 168.1,254.3 168.8,254.5 169.5,254.6 170.2,254.8 170.8,255 171.5,255.2 172.2,255.4 172.9,255.6 173.6,255.8 174.3,256 175,256.1 175.7,256.3 176.4,256.5 177,256.7 177.7,256.9 178.4,257 179.1,257.2 179.8,257.4 180.5,257.6 181.2,257.8 181.9,257.9 182.6,258.1 183.2,258.3 183.9,258.5 184.6,258.6 185.3,258.8 186,259 186.7,259.2 187.4,259.3 188.1,259.5 188.8,259.7 189.4,259.8 190.1,260 190.8,260.2 191.5,260.4 192.2,260.5 192.9,260.7 193.6,260.9 194.3,261 195,261.2 195.6,261.4 196.3,261.5 197,261.7 197.7,261.8 198.4,262 199.1,262.2 199.8,262.3 200.5,262.5 201.2,262.7 201.8,262.8 202.5,263 203.2,263.1 203.9,263.3 204.6,263.5 205.3,263.6 206,263.8 206.7,263.9 207.4,264.1 208,264.2 208.7,264.4 209.4,264.5 210.1,264.7 210.8,264.8 211.5,265 212.2,265.1 212.9,265.3 213.6,265.5 214.2,265.6 214.9,265.8 215.6,265.9 216.3,266 217,266.2 217.7,266.3 218.4,266.5 219.1,266.6 219.8,266.8 220.4,266.9 221.1,267.1 221.8,267.2 222.5,267.4 223.2,267.5 223.9,267.6 224.6,267.8 225.3,267.9 226,268.1 226.6,268.2 227.3,268.4 228,268.5 228.7,268.6 229.4,268.8 230.1,268.9 230.8,269 231.5,269.2 232.2,269.3 232.8,269.5 233.5,269.6 234.2,269.7 234.9,269.9 235.6,270 236.3,270.1 237,270.3 237.7,270.4 238.4,270.5 239,270.7 239.7,270.8 240.4,270.9 241.1,271.1 241.8,271.2 242.5,271.3 243.2,271.4 243.9,271.6 244.6,271.7 245.2,271.8 245.9,272 246.6,272.1 247.3,272.2 248,272.3 248.7,272.5 249.4,272.6 250.1,272.7 250.8,272.8 251.4,273 252.1,273.1 252.8,273.2 253.5,273.3 254.2,273.4 254.9,273.6 255.6,273.7 256.3,273.8 257,273.9 257.6,274 258.3,274.2 259,274.3 259.7,274.4 260.4,274.5 261.1,274.6 261.8,274.8 262.5,274.9 263.2,275 263.8,275.1 264.5,275.2 265.2,275.3 265.9,275.5 266.6,275.6 267.3,275.7 268,275.8 268.7,275.9 269.4,276 270,276.1 270.7,276.2 271.4,276.4 272.1,276.5 272.8,276.6 273.5,276.7 274.2,276.8 274.9,276.9 275.6,277 276.2,277.1 276.9,277.2 277.6,277.3 278.3,277.5 279,277.6 279.7,277.7 280.4,277.8 281.1,277.9 281.8,278 282.4,278.1 283.1,278.2 283.8,278.3 284.5,278.4 285.2,278.5 285.9,278.6 286.6,278.7 287.3,278.8 288,278.9 288.6,279 289.3,279.1 290,279.2 290.7,279.3 291.4,279.4 292.1,279.5 292.8,279.6 293.5,279.7 294.2,279.8 294.8,279.9 295.5,280 296.2,280.1 296.9,280.2 297.6,280.3 298.3,280.4 299,280.5 299.7,280.6 300.4,280.7 301,280.8 301.7,280.9 302.4,281 303.1,281.1 303.8,281.2 304.5,281.3 305.2,281.4 305.9,281.5 306.6,281.5 307.2,281.6 307.9,281.7 308.6,281.8 309.3,281.9 310,282 310.7,282.1 311.4,282.2 312.1,282.3 312.8,282.4 313.4,282.5 314.1,282.6 314.8,282.6 315.5,282.7 316.2,282.8 316.9,282.9 317.6,283 318.3,283.1 319,283.2 319.6,283.3 320.3,283.3 321,283.4 321.7,283.5 322.4,283.6 323.1,283.7 323.8,283.8 324.5,283.9 325.2,283.9 325.8,284 326.5,284.1 327.2,284.2 327.9,284.3 328.6,284.4 329.3,284.4 330,284.5 330.7,284.6 331.4,284.7 332,284.8 332.7,284.8 333.4,284.9 334.1,285 334.8,285.1 335.5,285.2 336.2,285.2 336.9,285.3 337.6,285.4 338.2,285.5 338.9,285.6 339.6,285.6 340.3,285.7 341,285.8 341.7,285.9 342.4,286 343.1,286 343.8,286.1 344.4,286.2 345.1,286.3 345.8,286.3 346.5,286.4 347.2,286.5 347.9,286.6 348.6,286.6 349.3,286.7 350,286.8 350.6,286.9 351.3,286.9 352,287 352.7,287.1 353.4,287.2 354.1,287.2 354.8,287.3 355.5,287.4 356.2,287.4 356.8,287.5 357.5,287.6 358.2,287.7 358.9,287.7 359.6,287.8 360.3,287.9 361,287.9 361.7,288 362.4,288.1 363,288.1 363.7,288.2 364.4,288.3 365.1,288.4 365.8,288.4 366.5,288.5 367.2,288.6 367.9,288.6 368.6,288.7 369.2,288.8 369.9,288.8 370.6,288.9 371.3,289 372,289 372.7,289.1 373.4,289.2 374.1,289.2 374.8,289.3 375.4,289.4 376.1,289.4 376.8,289.5 377.5,289.6 378.2,289.6 378.9,289.7 379.6,289.7 380.3,289.8 381,289.9 381.6,289.9 382.3,290 383,290.1 383.7,290.1 384.4,290.2 385.1,290.2 385.8,290.3 386.5,290.4 387.2,290.4 387.8,290.5 388.5,290.6 389.2,290.6 389.9,290.7 390.6,290.7 391.3,290.8 392,290.9 392.7,290.9 393.4,291 394,291 394.7,291.1 395.4,291.1 396.1,291.2 396.8,291.3 397.5,291.3 398.2,291.4 398.9,291.4 399.6,291.5 400.2,291.6 400.9,291.6 401.6,291.7 402.3,291.7 403,291.8 403.7,291.8 404.4,291.9 405.1,291.9 405.8,292 406.4,292.1 407.1,292.1 407.8,292.2 408.5,292.2 409.2,292.3 409.9,292.3 410.6,292.4 411.3,292.4 412,292.5 412.6,292.5 413.3,292.6 414,292.7 414.7,292.7 415.4,292.8 416.1,292.8 416.8,292.9 417.5,292.9 418.2,293 418.8,293 419.5,293.1 420.2,293.1 420.9,293.2 421.6,293.2 422.3,293.3 423,293.3 423.7,293.4 424.4,293.4 425,293.5 425.7,293.5 426.4,293.6 427.1,293.6 427.8,293.7 428.5,293.7 429.2,293.8 429.9,293.8 430.6,293.9 431.2,293.9 431.9,294 432.6,294 433.3,294.1 434,294.1 434.7,294.2 435.4,294.2 436.1,294.3 436.8,294.3 437.4,294.4 438.1,294.4 438.8,294.5 439.5,294.5 440.2,294.5 440.9,294.6 441.6,294.6 442.3,294.7 443,294.7 443.6,294.8 444.3,294.8 445,294.9 445.7,294.9 446.4,295 447.1,295 447.8,295 448.5,295.1 449.2,295.1 449.8,295.2 450.5,295.2 451.2,295.3 451.9,295.3 452.6,295.4 453.3,295.4 454,295.4 454.7,295.5 455.4,295.5 456,295.6 456.7,295.6 457.4,295.7 458.1,295.7 458.8,295.7 459.5,295.8 460.2,295.8 460.9,295.9 461.6,295.9 462.2,296 462.9,296 463.6,296 464.3,296.1 465,296.1 465.7,296.2 466.4,296.2 467.1,296.2 467.8,296.3 468.4,296.3 469.1,296.4 469.8,296.4 470.5,296.4 471.2,296.5 471.9,296.5 472.6,296.6 473.3,296.6 474,296.6 474.6,296.7 475.3,296.7 476,296.8 476.7,296.8 477.4,296.8 478.1,296.9 478.8,296.9 479.5,296.9 480.2,297 480.8,297 481.5,297.1 482.2,297.1 482.9,297.1 483.6,297.2 484.3,297.2 485,297.2 485.7,297.3 486.4,297.3 487,297.4 487.7,297.4 488.4,297.4 489.1,297.5 489.8,297.5 490.5,297.5 491.2,297.6 491.9,297.6 492.6,297.6 493.2,297.7 493.9,297.7 494.6,297.7 495.3,297.8 496,297.8 496.7,297.9 497.4,297.9 498.1,297.9 498.8,298 499.4,298 500.1,298 500.8,298.1 501.5,298.1 502.2,298.1 502.9,298.2 503.6,298.2 504.3,298.2 505,298.3 505.6,298.3 506.3,298.3 507,298.4 507.7,298.4 508.4,298.4 509.1,298.5 509.8,298.5 510.5,298.5 511.2,298.6 511.8,298.6 512.5,298.6 513.2,298.6 513.9,298.7 514.6,298.7 515.3,298.7 516,298.8 516.7,298.8 517.4,298.8 518,298.9 518.7,298.9 519.4,298.9 520.1,299 520.8,299 521.5,299 522.2,299.1 522.9,299.1 523.6,299.1 524.2,299.1 524.9,299.2 525.6,299.2 526.3,299.2 527,299.3 527.7,299.3 528.4,299.3 529.1,299.4 529.8,299.4 530.4,299.4 531.1,299.4 531.8,299.5 532.5,299.5 533.2,299.5 533.9,299.6 534.6,299.6 535.3,299.6 536,299.6 536.6,299.7 537.3,299.7 538,299.7 538.7,299.8 539.4,299.8 540.1,299.8 540.8,299.8 541.5,299.9 542.2,299.9 542.8,299.9 543.5,299.9 544.2,300 544.9,300 545.6,300 546.3,300.1 547,300.1 547.7,300.1 548.4,300.1 549,300.2 549.7,300.2 550.4,300.2 551.1,300.2 551.8,300.3 552.5,300.3 553.2,300.3 553.9,300.3 554.6,300.4 555.2,300.4 555.9,300.4 556.6,300.4 557.3,300.5 558,300.5 558.7,300.5 559.4,300.5 560.1,300.6 560.8,300.6 561.4,300.6 562.1,300.6 562.8,300.7 563.5,300.7 564.2,300.7 564.9,300.7 565.6,300.8 566.3,300.8 567,300.8 567.6,300.8 568.3,300.9 569,300.9 569.7,300.9 570.4,300.9 571.1,301 571.8,301 572.5,301 573.2,301 573.8,301.1 574.5,301.1 575.2,301.1 575.9,301.1 576.6,301.1 577.3,301.2 578,301.2 578.7,301.2 579.4,301.2 580,301.3 580.7,301.3 581.4,301.3 582.1,301.3 582.8,301.3 583.5,301.4 584.2,301.4 584.9,301.4 585.6,301.4 586.2,301.5 586.9,301.5 587.6,301.5 588.3,301.5 589,301.5 589.7,301.6 590.4,301.6 591.1,301.6 591.8,301.6 592.4,301.7 593.1,301.7 593.8,301.7 594.5,301.7 595.2,301.7 595.9,301.8 596.6,301.8 597.3,301.8 598,301.8 598.6,301.8 599.3,301.9 600,301.9 600.7,301.9 601.4,301.9 602.1,301.9 602.8,302 603.5,302 604.2,302 604.8,302 605.5,302 606.2,302.1 606.9,302.1 607.6,302.1 608.3,302.1 609,302.1 609.7,302.2 610.4,302.2 611,302.2 611.7,302.2 612.4,302.2 613.1,302.3 613.8,302.3 614.5,302.3 615.2,302.3 615.9,302.3 616.6,302.3 617.2,302.4 617.9,302.4 618.6,302.4 619.3,302.4 620,302.4"/><polyline points="0,345.8 0.7,345.6 1.4,345.5 2.1,345.4 2.8,345.2 3.4,345.1 4.1,344.9 4.8,344.8 5.5,344.7 6.2,344.6 6.9,344.4 7.6,344.3 8.3,344.2 9,344 9.6,343.9 10.3,343.8 11,343.6 11.7,343.5 12.4,343.4 13.1,343.3 13.8,343.1 14.5,343 15.2,342.9 15.8,342.8 16.5,342.6 17.2,342.5 17.9,342.4 18.6,342.3 19.3,342.1 20,342 20.7,341.9 21.4,341.8 22,341.6 22.7,341.5 23.4,341.4 24.1,341.3 24.8,341.2 25.5,341 26.2,340.9 26.9,340.8 27.6,340.7 28.2,340.6 28.9,340.4 29.6,340.3 30.3,340.2 31,340.1 31.7,340 32.4,339.9 33.1,339.7 33.8,339.6 34.4,339.5 35.1,339.4 35.8,339.3 36.5,339.2 37.2,339.1 37.9,339 38.6,338.8 39.3,338.7 40,338.6 40.6,338.5 41.3,338.4 42,338.3 42.7,338.2 43.4,338.1 44.1,338 44.8,337.9 45.5,337.7 46.2,337.6 46.8,337.5 47.5,337.4 48.2,337.3 48.9,337.2 49.6,337.1 50.3,337 51,336.9 51.7,336.8 52.4,336.7 53,336.6 53.7,336.5 54.4,336.4 55.1,336.3 55.8,336.2 56.5,336.1 57.2,336 57.9,335.9 58.6,335.8 59.2,335.7 59.9,335.6 60.6,335.5 61.3,335.4 62,335.3 62.7,335.2 63.4,335.1 64.1,335 64.8,334.9 65.4,334.8 66.1,334.7 66.8,334.6 67.5,334.5 68.2,334.4 68.9,334.3 69.6,334.2 70.3,334.1 71,334 71.6,333.9 72.3,333.8 73,333.7 73.7,333.6 74.4,333.6 75.1,333.5 75.8,333.4 76.5,333.3 77.2,333.2 77.8,333.1 78.5,333 79.2,332.9 79.9,332.8 80.6,332.7 81.3,332.6 82,332.6 82.7,332.5 83.4,332.4 84,332.3 84.7,332.2 85.4,332.1 86.1,332 86.8,331.9 87.5,331.8 88.2,331.8 88.9,331.7 89.6,331.6 90.2,331.5 90.9,331.4 91.6,331.3 92.3,331.3 93,331.2 93.7,331.1 94.4,331 95.1,330.9 95.8,330.8 96.4,330.7 97.1,330.7 97.8,330.6 98.5,330.5 99.2,330.4 99.9,330.3 100.6,330.3 101.3,330.2 102,330.1 102.6,330 103.3,329.9 104,329.9 104.7,329.8 105.4,329.7 106.1,329.6 106.8,329.5 107.5,329.5 108.2,329.4 108.8,329.3 109.5,329.2 110.2,329.2 110.9,329.1 111.6,329 112.3,328.9 113,328.8 113.7,328.8 114.4,328.7 115,328.6 115.7,328.5 116.4,328.5 117.1,328.4 117.8,328.3 118.5,328.2 119.2,328.2 119.9,328.1 120.6,328 121.2,328 121.9,327.9 122.6,327.8 123.3,327.7 124,327.7 124.7,327.6 125.4,327.5 126.1,327.5 126.8,327.4 127.4,327.3 128.1,327.2 128.8,327.2 129.5,327.1 130.2,327 130.9,327 131.6,326.9 132.3,326.8 133,326.8 133.6,326.7 134.3,326.6 135,326.6 135.7,326.5 136.4,326.4 137.1,326.4 137.8,326.3 138.5,326.2 139.2,326.2 139.8,326.1 140.5,326 141.2,326 141.9,325.9 142.6,325.8 143.3,325.8 144,325.7 144.7,325.6 145.4,325.6 146,325.5 146.7,325.4 147.4,325.4 148.1,325.3 148.8,325.2 149.5,325.2 150.2,325.1 150.9,325.1 151.6,325 152.2,324.9 152.9,324.9 153.6,324.8 154.3,324.7 155,324.7 155.7,324.6 156.4,324.6 157.1,324.5 157.8,324.4 158.4,324.4 159.1,324.3 159.8,324.3 160.5,324.2 161.2,324.1 161.9,324.1 162.6,324 163.3,324 164,323.9 164.6,323.9 165.3,323.8 166,323.7 166.7,323.7 167.4,323.6 168.1,323.6 168.8,323.5 169.5,323.5 170.2,323.4 170.8,323.3 171.5,323.3 172.2,323.2 172.9,323.2 173.6,323.1 174.3,323.1 175,323 175.7,323 176.4,322.9 177,322.8 177.7,322.8 178.4,322.7 179.1,322.7 179.8,322.6 180.5,322.6 181.2,322.5 181.9,322.5 182.6,322.4 183.2,322.4 183.9,322.3 184.6,322.3 185.3,322.2 186,322.2 186.7,322.1 187.4,322 188.1,322 188.8,321.9 189.4,321.9 190.1,321.8 190.8,321.8 191.5,321.7 192.2,321.7 192.9,321.6 193.6,321.6 194.3,321.5 195,321.5 195.6,321.4 196.3,321.4 197,321.3 197.7,321.3 198.4,321.2 199.1,321.2 199.8,321.1 200.5,321.1 201.2,321.1 201.8,321 202.5,321 203.2,320.9 203.9,320.9 204.6,320.8 205.3,320.8 206,320.7 206.7,320.7 207.4,320.6 208,320.6 208.7,320.5 209.4,320.5 210.1,320.4 210.8,320.4 211.5,320.3 212.2,320.3 212.9,320.3 213.6,320.2 214.2,320.2 214.9,320.1 215.6,320.1 216.3,320 217,320 217.7,319.9 218.4,319.9 219.1,319.9 219.8,319.8 220.4,319.8 221.1,319.7 221.8,319.7 222.5,319.6 223.2,319.6 223.9,319.6 224.6,319.5 225.3,319.5 226,319.4 226.6,319.4 227.3,319.3 228,319.3 228.7,319.3 229.4,319.2 230.1,319.2 230.8,319.1 231.5,319.1 232.2,319.1 232.8,319 233.5,319 234.2,318.9 234.9,318.9 235.6,318.9 236.3,318.8 237,318.8 237.7,318.7 238.4,318.7 239,318.7 239.7,318.6 240.4,318.6 241.1,318.5 241.8,318.5 242.5,318.5 243.2,318.4 243.9,318.4 244.6,318.3 245.2,318.3 245.9,318.3 246.6,318.2 247.3,318.2 248,318.1 248.7,318.1 249.4,318.1 250.1,318 250.8,318 251.4,318 252.1,317.9 252.8,317.9 253.5,317.9 254.2,317.8 254.9,317.8 255.6,317.7 256.3,317.7 257,317.7 257.6,317.6 258.3,317.6 259,317.6 259.7,317.5 260.4,317.5 261.1,317.5 261.8,317.4 262.5,317.4 263.2,317.4 263.8,317.3 264.5,317.3 265.2,317.2 265.9,317.2 266.6,317.2 267.3,317.1 268,317.1 268.7,317.1 269.4,317 270,317 270.7,317 271.4,316.9 272.1,316.9 272.8,316.9 273.5,316.8 274.2,316.8 274.9,316.8 275.6,316.7 276.2,316.7 276.9,316.7 277.6,316.6 278.3,316.6 279,316.6 279.7,316.5 280.4,316.5 281.1,316.5 281.8,316.5 282.4,316.4 283.1,316.4 283.8,316.4 284.5,316.3 285.2,316.3 285.9,316.3 286.6,316.2 287.3,316.2 288,316.2 288.6,316.1 289.3,316.1 290,316.1 290.7,316.1 291.4,316 292.1,316 292.8,316 293.5,315.9 294.2,315.9 294.8,315.9 295.5,315.8 296.2,315.8 296.9,315.8 297.6,315.8 298.3,315.7 299,315.7 299.7,315.7 300.4,315.6 301,315.6 301.7,315.6 302.4,315.6 303.1,315.5 303.8,315.5 304.5,315.5 305.2,315.4 305.9,315.4 306.6,315.4 307.2,315.4 307.9,315.3 308.6,315.3 309.3,315.3 310,315.2 310.7,315.2 311.4,315.2 312.1,315.2 312.8,315.1 313.4,315.1 314.1,315.1 314.8,315.1 315.5,315 316.2,315 316.9,315 317.6,315 318.3,314.9 319,314.9 319.6,314.9 320.3,314.8 321,314.8 321.7,314.8 322.4,314.8 323.1,314.7 323.8,314.7 324.5,314.7 325.2,314.7 325.8,314.6 326.5,314.6 327.2,314.6 327.9,314.6 328.6,314.5 329.3,314.5 330,314.5 330.7,314.5 331.4,314.4 332,314.4 332.7,314.4 333.4,314.4 334.1,314.3 334.8,314.3 335.5,314.3 336.2,314.3 336.9,314.2 337.6,314.2 338.2,314.2 338.9,314.2 339.6,314.2 340.3,314.1 341,314.1 341.7,314.1 342.4,314.1 343.1,314 343.8,314 344.4,314 345.1,314 345.8,313.9 346.5,313.9 347.2,313.9 347.9,313.9 348.6,313.9 349.3,313.8 350,313.8 350.6,313.8 351.3,313.8 352,313.7 352.7,313.7 353.4,313.7 354.1,313.7 354.8,313.7 355.5,313.6 356.2,313.6 356.8,313.6 357.5,313.6 358.2,313.6 358.9,313.5 359.6,313.5 360.3,313.5 361,313.5 361.7,313.4 362.4,313.4 363,313.4 363.7,313.4 364.4,313.4 365.1,313.3 365.8,313.3 366.5,313.3 367.2,313.3 367.9,313.3 368.6,313.2 369.2,313.2 369.9,313.2 370.6,313.2 371.3,313.2 372,313.1 372.7,313.1 373.4,313.1 374.1,313.1 374.8,313.1 375.4,313 376.1,313 376.8,313 377.5,313 378.2,313 378.9,312.9 379.6,312.9 380.3,312.9 381,312.9 381.6,312.9 382.3,312.8 383,312.8 383.7,312.8 384.4,312.8 385.1,312.8 385.8,312.8 386.5,312.7 387.2,312.7 387.8,312.7 388.5,312.7 389.2,312.7 389.9,312.6 390.6,312.6 391.3,312.6 392,312.6 392.7,312.6 393.4,312.6 394,312.5 394.7,312.5 395.4,312.5 396.1,312.5 396.8,312.5 397.5,312.5 398.2,312.4 398.9,312.4 399.6,312.4 400.2,312.4 400.9,312.4 401.6,312.3 402.3,312.3 403,312.3 403.7,312.3 404.4,312.3 405.1,312.3 405.8,312.2 406.4,312.2 407.1,312.2 407.8,312.2 408.5,312.2 409.2,312.2 409.9,312.1 410.6,312.1 411.3,312.1 412,312.1 412.6,312.1 413.3,312.1 414,312.1 414.7,312 415.4,312 416.1,312 416.8,312 417.5,312 418.2,312 418.8,311.9 419.5,311.9 420.2,311.9 420.9,311.9 421.6,311.9 422.3,311.9 423,311.8 423.7,311.8 424.4,311.8 425,311.8 425.7,311.8 426.4,311.8 427.1,311.8 427.8,311.7 428.5,311.7 429.2,311.7 429.9,311.7 430.6,311.7 431.2,311.7 431.9,311.7 432.6,311.6 433.3,311.6 434,311.6 434.7,311.6 435.4,311.6 436.1,311.6 436.8,311.6 437.4,311.5 438.1,311.5 438.8,311.5 439.5,311.5 440.2,311.5 440.9,311.5 441.6,311.5 442.3,311.4 443,311.4 443.6,311.4 444.3,311.4 445,311.4 445.7,311.4 446.4,311.4 447.1,311.3 447.8,311.3 448.5,311.3 449.2,311.3 449.8,311.3 450.5,311.3 451.2,311.3 451.9,311.3 452.6,311.2 453.3,311.2 454,311.2 454.7,311.2 455.4,311.2 456,311.2 456.7,311.2 457.4,311.2 458.1,311.1 458.8,311.1 459.5,311.1 460.2,311.1 460.9,311.1 461.6,311.1 462.2,311.1 462.9,311.1 463.6,311 464.3,311 465,311 465.7,311 466.4,311 467.1,311 467.8,311 468.4,311 469.1,310.9 469.8,310.9 470.5,310.9 471.2,310.9 471.9,310.9 472.6,310.9 473.3,310.9 474,310.9 474.6,310.8 475.3,310.8 476,310.8 476.7,310.8 477.4,310.8 478.1,310.8 478.8,310.8 479.5,310.8 480.2,310.8 480.8,310.7 481.5,310.7 482.2,310.7 482.9,310.7 483.6,310.7 484.3,310.7 485,310.7 485.7,310.7 486.4,310.7 487,310.6 487.7,310.6 488.4,310.6 489.1,310.6 489.8,310.6 490.5,310.6 491.2,310.6 491.9,310.6 492.6,310.6 493.2,310.5 493.9,310.5 494.6,310.5 495.3,310.5 496,310.5 496.7,310.5 497.4,310.5 498.1,310.5 498.8,310.5 499.4,310.5 500.1,310.4 500.8,310.4 501.5,310.4 502.2,310.4 502.9,310.4 503.6,310.4 504.3,310.4 505,310.4 505.6,310.4 506.3,310.4 507,310.3 507.7,310.3 508.4,310.3 509.1,310.3 509.8,310.3 510.5,310.3 511.2,310.3 511.8,310.3 512.5,310.3 513.2,310.3 513.9,310.2 514.6,310.2 515.3,310.2 516,310.2 516.7,310.2 517.4,310.2 518,310.2 518.7,310.2 519.4,310.2 520.1,310.2 520.8,310.2 521.5,310.1 522.2,310.1 522.9,310.1 523.6,310.1 524.2,310.1 524.9,310.1 525.6,310.1 526.3,310.1 527,310.1 527.7,310.1 528.4,310.1 529.1,310 529.8,310 530.4,310 531.1,310 531.8,310 532.5,310 533.2,310 533.9,310 534.6,310 535.3,310 536,310 536.6,309.9 537.3,309.9 538,309.9 538.7,309.9 539.4,309.9 540.1,309.9 540.8,309.9 541.5,309.9 542.2,309.9 542.8,309.9 543.5,309.9 544.2,309.9 544.9,309.8 545.6,309.8 546.3,309.8 547,309.8 547.7,309.8 548.4,309.8 549,309.8 549.7,309.8 550.4,309.8 551.1,309.8 551.8,309.8 552.5,309.8 553.2,309.8 553.9,309.7 554.6,309.7 555.2,309.7 555.9,309.7 556.6,309.7 557.3,309.7 558,309.7 558.7,309.7 559.4,309.7 560.1,309.7 560.8,309.7 561.4,309.7 562.1,309.7 562.8,309.6 563.5,309.6 564.2,309.6 564.9,309.6 565.6,309.6 566.3,309.6 567,309.6 567.6,309.6 568.3,309.6 569,309.6 569.7,309.6 570.4,309.6 571.1,309.6 571.8,309.6 572.5,309.5 573.2,309.5 573.8,309.5 574.5,309.5 575.2,309.5 575.9,309.5 576.6,309.5 577.3,309.5 578,309.5 578.7,309.5 579.4,309.5 580,309.5 580.7,309.5 581.4,309.5 582.1,309.5 582.8,309.4 583.5,309.4 584.2,309.4 584.9,309.4 585.6,309.4 586.2,309.4 586.9,309.4 587.6,309.4 588.3,309.4 589,309.4 589.7,309.4 590.4,309.4 591.1,309.4 591.8,309.4 592.4,309.4 593.1,309.3 593.8,309.3 594.5,309.3 595.2,309.3 595.9,309.3 596.6,309.3 597.3,309.3 598,309.3 598.6,309.3 599.3,309.3 600,309.3 600.7,309.3 601.4,309.3 602.1,309.3 602.8,309.3 603.5,309.3 604.2,309.2 604.8,309.2 605.5,309.2 606.2,309.2 606.9,309.2 607.6,309.2 608.3,309.2 609,309.2 609.7,309.2 610.4,309.2 611,309.2 611.7,309.2 612.4,309.2 613.1,309.2 613.8,309.2 614.5,309.2 615.2,309.2 615.9,309.1 616.6,309.1 617.2,309.1 617.9,309.1 618.6,309.1 619.3,309.1 620,309.1"/></g><g data-s="3" stroke="var(--o)" stroke-width="2.4" stroke-dasharray="7 5"><line x1="0" y1="307.6" x2="638" y2="307.6"/><text x="10" y="296.6" fill="var(--o)" font-size="15" font-family="system-ui,-apple-system,sans-serif" stroke="none">T = 70</text></g></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="19">
+  <p class="h" data-s="0">Three problems, one equation</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1">tank:&nbsp;&nbsp; <i>Q</i>&#8242; = <span class="fr"><span>3</span><span>4</span></span> &minus; 0.03&thinsp;<i>Q</i></p>
+      <p class="e t" data-s="2">coffee:&nbsp; <i>T</i>&#8242; = 70<i>k</i> &minus; <i>kT</i></p>
+      <p class="e t" data-s="3">and in general</p>
+      <p class="e" data-s="3"><span class="bx"><i>y</i>&#8242; = <i>a</i> &minus; <i>by</i>,&nbsp;&nbsp; <i>b</i> &gt; 0</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">One solution covers all of them</p>
+      <p class="e t" data-s="4"><i>y</i>(<i>t</i>) = <span class="fr"><span><i>a</i></span><span><i>b</i></span></span> + &#40;<i>y</i><sub>0</sub> &minus; <span class="fr"><span><i>a</i></span><span><i>b</i></span></span>&#41;<span style="white-space:nowrap"><b>e</b><sup>&minus;<i>bt</i></sup></span></p>
+      <p class="l" data-s="5">The equilibrium is <i>a</i>/<i>b</i>. <span class="d">25 lb for the tank, 70&deg;F for the coffee.</span></p>
+      <p class="l" data-s="6">Everything approaches it, and the starting value only decides from which side.</p>
+      <p class="e t" data-s="7"><i>b</i> sets the <span class="g">speed</span>, <i>a</i>/<i>b</i> sets the <span class="g">destination</span></p>
+      <p class="a" data-s="8">&#8627; Example 2 was the exception: <i>b</i> depended on <i>t</i>, so there was no destination.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="20">
+  <p class="h" data-s="0">Example 4 &mdash; the same equation with one sign flipped</p>
+  <p class="e" data-s="1"><span class="bw"><i>S</i>&#8242; = 0.08&thinsp;<i>S</i> + 2000,&nbsp;&nbsp; <i>S</i>(0) = 0</span>&nbsp;&nbsp;<span class="d">savings: 8% a year, plus $2000 a year paid in</span></p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="2">Rate in is the deposit. Rate in is <span class="n">also</span> the interest, and the interest depends on <i>S</i>.</p>
+      <p class="lb" data-s="3">Standard form &mdash; watch the sign of <i>p</i></p>
+      <p class="e t" data-s="3"><i>S</i>&#8242; &minus; 0.08&thinsp;<i>S</i> = 2000&nbsp;&nbsp;<span class="d"><i>p</i> = &minus;0.08, negative</span></p>
+      <p class="lb" data-s="4">1&nbsp;&nbsp;build &mu;</p>
+      <p class="e t" data-s="4">&mu; = <span style="white-space:nowrap"><b>e</b><sup>&minus;0.08<i>t</i></sup></span></p>
+      <p class="lb" data-s="5">2 and 3&nbsp;&nbsp;multiply, then read the product rule</p>
+      <p class="e t" data-s="5">&#40;<span style="white-space:nowrap"><b>e</b><sup>&minus;0.08<i>t</i></sup></span><i>S</i>&#41;&#8242; = 2000&thinsp;<span style="white-space:nowrap"><b>e</b><sup>&minus;0.08<i>t</i></sup></span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">4&nbsp;&nbsp;integrate, then divide by &mu;</p>
+      <p class="e t" data-s="6"><span style="white-space:nowrap"><b>e</b><sup>&minus;0.08<i>t</i></sup></span><i>S</i> = &minus;25000&thinsp;<span style="white-space:nowrap"><b>e</b><sup>&minus;0.08<i>t</i></sup></span> + <i>c</i></p>
+      <p class="e t" data-s="7"><i>S</i> = &minus;25000 + <i>c</i>&thinsp;<span style="white-space:nowrap"><b>e</b><sup>0.08<i>t</i></sup></span>&nbsp;&nbsp;<span class="d">a <span class="n">growing</span> exponential this time</span></p>
+      <p class="e t" data-s="8"><i>S</i>(0) = 0:&nbsp;&nbsp; 0 = &minus;25000 + <i>c</i>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>c</i> = 25000</span></p>
+      <p class="e" data-s="9"><span class="bx"><i>S</i>(<i>t</i>) = 25000&#40;<span style="white-space:nowrap"><b>e</b><sup>0.08<i>t</i></sup></span> &minus; 1&#41;</span></p>
+      <p class="a" data-s="10">&#8627; the four steps did not change at all. Only the sign of <i>p</i> did.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="21">
+  <p class="h" data-s="0">Example 4 &mdash; the equilibrium is negative</p>
+  <p class="e" data-s="1"><span class="bw"><i>S</i>(<i>t</i>) = 25000&#40;<span style="white-space:nowrap"><b>e</b><sup>0.08<i>t</i></sup></span> &minus; 1&#41;</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">After 40 years</p>
+      <p class="e t" data-s="2"><i>S</i>(40) = 25000&#40;<span style="white-space:nowrap"><b>e</b><sup>3.2</sup></span> &minus; 1&#41; &asymp; $588,000</p>
+      <p class="l" data-s="3">And you paid in 40 &times; $2000 = <span class="g">$80,000</span>. <span class="d">The rest is the interest on the interest.</span></p>
+      <p class="lb" data-s="4">Now set the derivative to zero</p>
+      <p class="e t" data-s="4">0.08&thinsp;<i>S</i> + 2000 = 0&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>S</i> = &minus;$25,000</span></p>
+    </div>
+    <div>
+      <p class="l" data-s="5">A negative equilibrium. <span class="d">It means: owe exactly $25,000, and the interest you are charged is exactly the $2000 you pay in.</span></p>
+      <p class="l" data-s="6">But nothing approaches it. <span class="n">Everything runs away from it.</span></p>
+      <p class="e" data-s="7"><span class="bx"><i>y</i>&#8242; = <i>a</i> &minus; <i>by</i> with <i>b</i> &lt; 0: the equilibrium repels.</span></p>
+      <p class="l" data-s="8">Same formula, same equilibrium <i>a</i>/<i>b</i>. <span class="d">Only the sign of <i>b</i> decides whether it attracts or repels.</span></p>
+      <p class="a" data-s="9">&#8627; that is why I wrote <i>b</i> &gt; 0 on the previous page. It was doing real work.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="22">
+  <p class="h" data-s="0">Example 4 &mdash; an equilibrium that pushes away</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1">Years along the bottom, <span class="g">thousands</span> of dollars up the side. <span class="d">Below the axis is debt.</span></p>
+      <p class="l" data-s="2">The strokes are flat along one line only, and it is below the axis.</p>
+      <p class="e t" data-s="3"><i>S</i> = &minus;25&nbsp;&nbsp;<span class="d">that is &minus;$25,000, where the interest exactly cancels the deposits</span></p>
+      <p class="l" data-s="4">Start above it and you run away upward. Start below it and you run away downward.</p>
+      <p class="l" data-s="5">Compare with the tank and the coffee, where every curve came <span class="g">toward</span> the line.</p>
+      <p class="e" data-s="6"><span class="bx">Attracting or repelling &mdash; the sign of <i>b</i> decides, and nothing else.</span></p>
+      <p class="a" data-s="7">&#8627; this distinction is the whole of &sect;2.5. For today, just notice that it exists.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="320.8" x2="0" y2="320.8"/><line x1="-7" y1="247.9" x2="0" y2="247.9"/><line x1="-7" y1="175" x2="0" y2="175"/><line x1="-7" y1="102.1" x2="0" y2="102.1"/><line x1="-7" y1="29.2" x2="0" y2="29.2"/><line x1="114.8" y1="350" x2="114.8" y2="357"/><line x1="229.6" y1="350" x2="229.6" y2="357"/><line x1="344.4" y1="350" x2="344.4" y2="357"/><line x1="459.3" y1="350" x2="459.3" y2="357"/><line x1="574.1" y1="350" x2="574.1" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="325.8" text-anchor="end">−50</text><text x="-12" y="252.9" text-anchor="end">−25</text><text x="-12" y="180" text-anchor="end">0</text><text x="-12" y="107.1" text-anchor="end">25</text><text x="-12" y="34.2" text-anchor="end">50</text><text x="0" y="375" text-anchor="middle">0</text><text x="114.8" y="375" text-anchor="middle">5</text><text x="229.6" y="375" text-anchor="middle">10</text><text x="344.4" y="375" text-anchor="middle">15</text><text x="459.3" y="375" text-anchor="middle">20</text><text x="574.1" y="375" text-anchor="middle">25</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">S</text><text x="650" y="355">t</text></g></g><g data-s="2" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"><line x1="-14.3" y1="331" x2="14.3" y2="339.8"/><line x1="100.5" y1="331" x2="129.2" y2="339.8"/><line x1="215.3" y1="331" x2="244" y2="339.8"/><line x1="330.1" y1="331" x2="358.8" y2="339.8"/><line x1="444.9" y1="331" x2="473.6" y2="339.8"/><line x1="559.7" y1="331" x2="588.4" y2="339.8"/><line x1="-14.8" y1="289.4" x2="14.8" y2="293.9"/><line x1="100" y1="289.4" x2="129.6" y2="293.9"/><line x1="214.8" y1="289.4" x2="244.5" y2="293.9"/><line x1="329.6" y1="289.4" x2="359.3" y2="293.9"/><line x1="444.4" y1="289.4" x2="474.1" y2="293.9"/><line x1="559.2" y1="289.4" x2="588.9" y2="293.9"/><line x1="-15" y1="247.9" x2="15" y2="247.9"/><line x1="99.8" y1="247.9" x2="129.8" y2="247.9"/><line x1="214.6" y1="247.9" x2="244.6" y2="247.9"/><line x1="329.4" y1="247.9" x2="359.4" y2="247.9"/><line x1="444.3" y1="247.9" x2="474.3" y2="247.9"/><line x1="559.1" y1="247.9" x2="589.1" y2="247.9"/><line x1="-14.8" y1="206.4" x2="14.8" y2="201.9"/><line x1="100" y1="206.4" x2="129.6" y2="201.9"/><line x1="214.8" y1="206.4" x2="244.5" y2="201.9"/><line x1="329.6" y1="206.4" x2="359.3" y2="201.9"/><line x1="444.4" y1="206.4" x2="474.1" y2="201.9"/><line x1="559.2" y1="206.4" x2="588.9" y2="201.9"/><line x1="-14.3" y1="164.8" x2="14.3" y2="156"/><line x1="100.5" y1="164.8" x2="129.2" y2="156"/><line x1="215.3" y1="164.8" x2="244" y2="156"/><line x1="330.1" y1="164.8" x2="358.8" y2="156"/><line x1="444.9" y1="164.8" x2="473.6" y2="156"/><line x1="559.7" y1="164.8" x2="588.4" y2="156"/><line x1="-13.6" y1="122.9" x2="13.6" y2="110.4"/><line x1="101.2" y1="122.9" x2="128.5" y2="110.4"/><line x1="216" y1="122.9" x2="243.3" y2="110.4"/><line x1="330.8" y1="122.9" x2="358.1" y2="110.4"/><line x1="445.6" y1="122.9" x2="472.9" y2="110.4"/><line x1="560.4" y1="122.9" x2="587.7" y2="110.4"/><line x1="-12.5" y1="66.6" x2="12.5" y2="50.1"/><line x1="102.3" y1="66.6" x2="127.3" y2="50.1"/><line x1="217.1" y1="66.6" x2="242.1" y2="50.1"/><line x1="331.9" y1="66.6" x2="357" y2="50.1"/><line x1="446.7" y1="66.6" x2="471.8" y2="50.1"/><line x1="561.6" y1="66.6" x2="586.6" y2="50.1"/><line x1="-11.6" y1="24" x2="11.6" y2="5.1"/><line x1="103.2" y1="24" x2="126.5" y2="5.1"/><line x1="218" y1="24" x2="241.3" y2="5.1"/><line x1="332.8" y1="24" x2="356.1" y2="5.1"/><line x1="447.6" y1="24" x2="470.9" y2="5.1"/><line x1="562.4" y1="24" x2="585.7" y2="5.1"/></g><g data-s="4" stroke="var(--c)" stroke-width="2.6" stroke-linejoin="round" fill="none"><polyline points="0,291.7 0.7,291.8 1.4,291.9 2.1,292 2.8,292.1 3.4,292.2 4.1,292.3 4.8,292.4 5.5,292.5 6.2,292.6 6.9,292.7 7.6,292.8 8.3,292.9 9,293.1 9.6,293.2 10.3,293.3 11,293.4 11.7,293.5 12.4,293.6 13.1,293.7 13.8,293.8 14.5,293.9 15.2,294 15.8,294.1 16.5,294.3 17.2,294.4 17.9,294.5 18.6,294.6 19.3,294.7 20,294.8 20.7,294.9 21.4,295 22,295.2 22.7,295.3 23.4,295.4 24.1,295.5 24.8,295.6 25.5,295.7 26.2,295.8 26.9,296 27.6,296.1 28.2,296.2 28.9,296.3 29.6,296.4 30.3,296.5 31,296.6 31.7,296.8 32.4,296.9 33.1,297 33.8,297.1 34.4,297.2 35.1,297.4 35.8,297.5 36.5,297.6 37.2,297.7 37.9,297.8 38.6,298 39.3,298.1 40,298.2 40.6,298.3 41.3,298.4 42,298.6 42.7,298.7 43.4,298.8 44.1,298.9 44.8,299 45.5,299.2 46.2,299.3 46.8,299.4 47.5,299.5 48.2,299.7 48.9,299.8 49.6,299.9 50.3,300 51,300.2 51.7,300.3 52.4,300.4 53,300.5 53.7,300.7 54.4,300.8 55.1,300.9 55.8,301 56.5,301.2 57.2,301.3 57.9,301.4 58.6,301.6 59.2,301.7 59.9,301.8 60.6,301.9 61.3,302.1 62,302.2 62.7,302.3 63.4,302.5 64.1,302.6 64.8,302.7 65.4,302.9 66.1,303 66.8,303.1 67.5,303.3 68.2,303.4 68.9,303.5 69.6,303.7 70.3,303.8 71,303.9 71.6,304.1 72.3,304.2 73,304.3 73.7,304.5 74.4,304.6 75.1,304.7 75.8,304.9 76.5,305 77.2,305.1 77.8,305.3 78.5,305.4 79.2,305.6 79.9,305.7 80.6,305.8 81.3,306 82,306.1 82.7,306.2 83.4,306.4 84,306.5 84.7,306.7 85.4,306.8 86.1,307 86.8,307.1 87.5,307.2 88.2,307.4 88.9,307.5 89.6,307.7 90.2,307.8 90.9,308 91.6,308.1 92.3,308.2 93,308.4 93.7,308.5 94.4,308.7 95.1,308.8 95.8,309 96.4,309.1 97.1,309.3 97.8,309.4 98.5,309.6 99.2,309.7 99.9,309.9 100.6,310 101.3,310.1 102,310.3 102.6,310.4 103.3,310.6 104,310.7 104.7,310.9 105.4,311.1 106.1,311.2 106.8,311.4 107.5,311.5 108.2,311.7 108.8,311.8 109.5,312 110.2,312.1 110.9,312.3 111.6,312.4 112.3,312.6 113,312.7 113.7,312.9 114.4,313 115,313.2 115.7,313.4 116.4,313.5 117.1,313.7 117.8,313.8 118.5,314 119.2,314.2 119.9,314.3 120.6,314.5 121.2,314.6 121.9,314.8 122.6,314.9 123.3,315.1 124,315.3 124.7,315.4 125.4,315.6 126.1,315.8 126.8,315.9 127.4,316.1 128.1,316.2 128.8,316.4 129.5,316.6 130.2,316.7 130.9,316.9 131.6,317.1 132.3,317.2 133,317.4 133.6,317.6 134.3,317.7 135,317.9 135.7,318.1 136.4,318.2 137.1,318.4 137.8,318.6 138.5,318.7 139.2,318.9 139.8,319.1 140.5,319.3 141.2,319.4 141.9,319.6 142.6,319.8 143.3,319.9 144,320.1 144.7,320.3 145.4,320.5 146,320.6 146.7,320.8 147.4,321 148.1,321.2 148.8,321.3 149.5,321.5 150.2,321.7 150.9,321.9 151.6,322 152.2,322.2 152.9,322.4 153.6,322.6 154.3,322.8 155,322.9 155.7,323.1 156.4,323.3 157.1,323.5 157.8,323.7 158.4,323.8 159.1,324 159.8,324.2 160.5,324.4 161.2,324.6 161.9,324.8 162.6,324.9 163.3,325.1 164,325.3 164.6,325.5 165.3,325.7 166,325.9 166.7,326.1 167.4,326.3 168.1,326.4 168.8,326.6 169.5,326.8 170.2,327 170.8,327.2 171.5,327.4 172.2,327.6 172.9,327.8 173.6,328 174.3,328.2 175,328.3 175.7,328.5 176.4,328.7 177,328.9 177.7,329.1 178.4,329.3 179.1,329.5 179.8,329.7 180.5,329.9 181.2,330.1 181.9,330.3 182.6,330.5 183.2,330.7 183.9,330.9 184.6,331.1 185.3,331.3 186,331.5 186.7,331.7 187.4,331.9 188.1,332.1 188.8,332.3 189.4,332.5 190.1,332.7 190.8,332.9 191.5,333.1 192.2,333.3 192.9,333.5 193.6,333.7 194.3,333.9 195,334.1 195.6,334.3 196.3,334.5 197,334.8 197.7,335 198.4,335.2 199.1,335.4 199.8,335.6 200.5,335.8 201.2,336 201.8,336.2 202.5,336.4 203.2,336.7 203.9,336.9 204.6,337.1 205.3,337.3 206,337.5 206.7,337.7 207.4,337.9 208,338.2 208.7,338.4 209.4,338.6 210.1,338.8 210.8,339 211.5,339.2 212.2,339.5 212.9,339.7 213.6,339.9 214.2,340.1 214.9,340.3 215.6,340.6 216.3,340.8 217,341 217.7,341.2 218.4,341.5 219.1,341.7 219.8,341.9 220.4,342.1 221.1,342.4 221.8,342.6 222.5,342.8 223.2,343 223.9,343.3 224.6,343.5 225.3,343.7 226,344 226.6,344.2 227.3,344.4 228,344.6 228.7,344.9 229.4,345.1 230.1,345.3 230.8,345.6 231.5,345.8 232.2,346 232.8,346.3 233.5,346.5 234.2,346.8 234.9,347 235.6,347.2 236.3,347.5 237,347.7 237.7,347.9 238.4,348.2 239,348.4 239.7,348.7 240.4,348.9 241.1,349.2 241.8,349.4 242.5,349.6 243.2,349.9 243.9,350.1 244.6,350.4 245.2,350.6 245.9,350.9 246.6,351.1 247.3,351.4 248,351.6 248.7,351.9 249.4,352.1 250.1,352.4 250.8,352.6 251.4,352.9 252.1,353.1 252.8,353.4 253.5,353.6 254.2,353.9 254.9,354.1 255.6,354.4 256.3,354.6 257,354.9 257.6,355.2 258.3,355.4 259,355.7 259.7,355.9 260.4,356.2 261.1,356.4 261.8,356.7 262.5,357 263.2,357.2 263.8,357.5 264.5,357.8 265.2,358 265.9,358.3 266.6,358.5 267.3,358.8 268,359.1 268.7,359.3 269.4,359.6 270,359.9 270.7,360.1 271.4,360.4 272.1,360.7 272.8,361 273.5,361.2 274.2,361.5 274.9,361.8 275.6,362 276.2,362.3 276.9,362.6 277.6,362.9 278.3,363.1 279,363.4 279.7,363.7 280.4,364 281.1,364.3 281.8,364.5 282.4,364.8 283.1,365.1 283.8,365.4 284.5,365.7 285.2,365.9 285.9,366.2 286.6,366.5 287.3,366.8 288,367.1 288.6,367.4 289.3,367.7 290,367.9 290.7,368.2 291.4,368.5 292.1,368.8 292.8,369.1 293.5,369.4 294.2,369.7 294.8,370 295.5,370.3 296.2,370.6 296.9,370.9 297.6,371.1 298.3,371.4 299,371.7 299.7,372 300.4,372.3 301,372.6 301.7,372.9 302.4,373.2 303.1,373.5 303.8,373.8 304.5,374.1 305.2,374.4 305.9,374.7 306.6,375 307.2,375.4 307.9,375.7 308.6,376 309.3,376.3 310,376.6 310.7,376.9 311.4,377.2 312.1,377.5 312.8,377.8 313.4,378.1 314.1,378.4 314.8,378.8 315.5,379.1 316.2,379.4 316.9,379.7 317.6,380 318.3,380.3 319,380.7 319.6,381 320.3,381.3 321,381.6 321.7,381.9 322.4,382.3 323.1,382.6 323.8,382.9 324.5,383.2 325.2,383.5 325.8,383.9 326.5,384.2 327.2,384.5 327.9,384.9 328.6,385.2 329.3,385.5 330,385.8 330.7,386.2 331.4,386.5 332,386.8 332.7,387.2 333.4,387.5 334.1,387.8 334.8,388.2 335.5,388.5 336.2,388.9 336.9,389.2 337.6,389.5 338.2,389.9 338.9,390.2 339.6,390.5 340.3,390.9 341,391.2 341.7,391.6 342.4,391.9 343.1,392.3 343.8,392.6 344.4,393 345.1,393.3 345.8,393.7 346.5,394 347.2,394.4 347.9,394.7 348.6,395.1 349.3,395.4 350,395.8 350.6,396.1 351.3,396.5 352,396.8 352.7,397.2 353.4,397.6 354.1,397.9 354.8,398.3 355.5,398.6 356.2,399 356.8,399.4 357.5,399.7 358.2,400.1 358.9,400.5 359.6,400.8 360.3,401.2 361,401.6 361.7,401.9 362.4,402.3 363,402.7 363.7,403 364.4,403.4 365.1,403.8 365.8,404.2 366.5,404.5 367.2,404.9 367.9,405.3 368.6,405.7 369.2,406 369.9,406.4 370.6,406.8 371.3,407.2 372,407.6 372.7,407.9 373.4,408.3 374.1,408.7 374.8,409.1 375.4,409.5 376.1,409.9 376.8,410.3 377.5,410.7 378.2,411 378.9,411.4 379.6,411.8 380.3,412.2 381,412.6 381.6,413 382.3,413.4 383,413.8 383.7,414.2 384.4,414.6 385.1,415 385.8,415.4 386.5,415.8 387.2,416.2 387.8,416.6 388.5,417 389.2,417.4 389.9,417.8 390.6,418.2 391.3,418.6 392,419.1 392.7,419.5 393.4,419.9 394,420.3 394.7,420.7 395.4,421.1 396.1,421.5 396.8,421.9 397.5,422.4 398.2,422.8 398.9,423.2 399.6,423.6 400.2,424 400.9,424.5 401.6,424.9 402.3,425.3 403,425.7 403.7,426.2 404.4,426.6 405.1,427 405.8,427.5 406.4,427.9 407.1,428.3 407.8,428.8 408.5,429.2 409.2,429.6 409.9,430.1 410.6,430.5 411.3,430.9 412,431.4 412.6,431.8 413.3,432.3 414,432.7 414.7,433.1 415.4,433.6 416.1,434 416.8,434.5 417.5,434.9 418.2,435.4 418.8,435.8 419.5,436.3 420.2,436.7 420.9,437.2 421.6,437.6 422.3,438.1 423,438.5 423.7,439 424.4,439.5 425,439.9 425.7,440.4 426.4,440.8 427.1,441.3 427.8,441.8 428.5,442.2 429.2,442.7 429.9,443.2 430.6,443.6 431.2,444.1 431.9,444.6 432.6,445.1 433.3,445.5 434,446 434.7,446.5 435.4,447 436.1,447.4 436.8,447.9 437.4,448.4 438.1,448.9 438.8,449.4 439.5,449.8 440.2,450.3 440.9,450.8 441.6,451.3 442.3,451.8 443,452.3 443.6,452.8 444.3,453.3 445,453.7 445.7,454.2 446.4,454.7 447.1,455.2 447.8,455.7 448.5,456.2 449.2,456.7 449.8,457.2 450.5,457.7 451.2,458.2 451.9,458.7 452.6,459.2 453.3,459.7 454,460.3 454.7,460.8 455.4,461.3 456,461.8 456.7,462.3 457.4,462.8 458.1,463.3 458.8,463.9 459.5,464.4 460.2,464.9 460.9,465.4 461.6,465.9 462.2,466.5"/><polyline points="0,204.2 0.7,204.1 1.4,204 2.1,203.9 2.8,203.7 3.4,203.6 4.1,203.5 4.8,203.4 5.5,203.3 6.2,203.2 6.9,203.1 7.6,203 8.3,202.9 9,202.8 9.6,202.7 10.3,202.6 11,202.5 11.7,202.3 12.4,202.2 13.1,202.1 13.8,202 14.5,201.9 15.2,201.8 15.8,201.7 16.5,201.6 17.2,201.5 17.9,201.4 18.6,201.2 19.3,201.1 20,201 20.7,200.9 21.4,200.8 22,200.7 22.7,200.6 23.4,200.5 24.1,200.3 24.8,200.2 25.5,200.1 26.2,200 26.9,199.9 27.6,199.8 28.2,199.6 28.9,199.5 29.6,199.4 30.3,199.3 31,199.2 31.7,199.1 32.4,198.9 33.1,198.8 33.8,198.7 34.4,198.6 35.1,198.5 35.8,198.4 36.5,198.2 37.2,198.1 37.9,198 38.6,197.9 39.3,197.8 40,197.6 40.6,197.5 41.3,197.4 42,197.3 42.7,197.2 43.4,197 44.1,196.9 44.8,196.8 45.5,196.7 46.2,196.5 46.8,196.4 47.5,196.3 48.2,196.2 48.9,196 49.6,195.9 50.3,195.8 51,195.7 51.7,195.5 52.4,195.4 53,195.3 53.7,195.2 54.4,195 55.1,194.9 55.8,194.8 56.5,194.7 57.2,194.5 57.9,194.4 58.6,194.3 59.2,194.2 59.9,194 60.6,193.9 61.3,193.8 62,193.6 62.7,193.5 63.4,193.4 64.1,193.2 64.8,193.1 65.4,193 66.1,192.8 66.8,192.7 67.5,192.6 68.2,192.4 68.9,192.3 69.6,192.2 70.3,192 71,191.9 71.6,191.8 72.3,191.6 73,191.5 73.7,191.4 74.4,191.2 75.1,191.1 75.8,191 76.5,190.8 77.2,190.7 77.8,190.6 78.5,190.4 79.2,190.3 79.9,190.1 80.6,190 81.3,189.9 82,189.7 82.7,189.6 83.4,189.4 84,189.3 84.7,189.2 85.4,189 86.1,188.9 86.8,188.7 87.5,188.6 88.2,188.5 88.9,188.3 89.6,188.2 90.2,188 90.9,187.9 91.6,187.7 92.3,187.6 93,187.4 93.7,187.3 94.4,187.2 95.1,187 95.8,186.9 96.4,186.7 97.1,186.6 97.8,186.4 98.5,186.3 99.2,186.1 99.9,186 100.6,185.8 101.3,185.7 102,185.5 102.6,185.4 103.3,185.2 104,185.1 104.7,184.9 105.4,184.8 106.1,184.6 106.8,184.5 107.5,184.3 108.2,184.2 108.8,184 109.5,183.9 110.2,183.7 110.9,183.6 111.6,183.4 112.3,183.3 113,183.1 113.7,182.9 114.4,182.8 115,182.6 115.7,182.5 116.4,182.3 117.1,182.2 117.8,182 118.5,181.8 119.2,181.7 119.9,181.5 120.6,181.4 121.2,181.2 121.9,181 122.6,180.9 123.3,180.7 124,180.6 124.7,180.4 125.4,180.2 126.1,180.1 126.8,179.9 127.4,179.7 128.1,179.6 128.8,179.4 129.5,179.3 130.2,179.1 130.9,178.9 131.6,178.8 132.3,178.6 133,178.4 133.6,178.3 134.3,178.1 135,177.9 135.7,177.8 136.4,177.6 137.1,177.4 137.8,177.3 138.5,177.1 139.2,176.9 139.8,176.7 140.5,176.6 141.2,176.4 141.9,176.2 142.6,176.1 143.3,175.9 144,175.7 144.7,175.5 145.4,175.4 146,175.2 146.7,175 147.4,174.8 148.1,174.7 148.8,174.5 149.5,174.3 150.2,174.1 150.9,174 151.6,173.8 152.2,173.6 152.9,173.4 153.6,173.2 154.3,173.1 155,172.9 155.7,172.7 156.4,172.5 157.1,172.3 157.8,172.2 158.4,172 159.1,171.8 159.8,171.6 160.5,171.4 161.2,171.3 161.9,171.1 162.6,170.9 163.3,170.7 164,170.5 164.6,170.3 165.3,170.1 166,170 166.7,169.8 167.4,169.6 168.1,169.4 168.8,169.2 169.5,169 170.2,168.8 170.8,168.6 171.5,168.4 172.2,168.3 172.9,168.1 173.6,167.9 174.3,167.7 175,167.5 175.7,167.3 176.4,167.1 177,166.9 177.7,166.7 178.4,166.5 179.1,166.3 179.8,166.1 180.5,165.9 181.2,165.7 181.9,165.5 182.6,165.3 183.2,165.1 183.9,164.9 184.6,164.7 185.3,164.5 186,164.3 186.7,164.1 187.4,163.9 188.1,163.7 188.8,163.5 189.4,163.3 190.1,163.1 190.8,162.9 191.5,162.7 192.2,162.5 192.9,162.3 193.6,162.1 194.3,161.9 195,161.7 195.6,161.5 196.3,161.3 197,161.1 197.7,160.9 198.4,160.7 199.1,160.4 199.8,160.2 200.5,160 201.2,159.8 201.8,159.6 202.5,159.4 203.2,159.2 203.9,159 204.6,158.8 205.3,158.5 206,158.3 206.7,158.1 207.4,157.9 208,157.7 208.7,157.5 209.4,157.2 210.1,157 210.8,156.8 211.5,156.6 212.2,156.4 212.9,156.2 213.6,155.9 214.2,155.7 214.9,155.5 215.6,155.3 216.3,155 217,154.8 217.7,154.6 218.4,154.4 219.1,154.2 219.8,153.9 220.4,153.7 221.1,153.5 221.8,153.2 222.5,153 223.2,152.8 223.9,152.6 224.6,152.3 225.3,152.1 226,151.9 226.6,151.6 227.3,151.4 228,151.2 228.7,151 229.4,150.7 230.1,150.5 230.8,150.3 231.5,150 232.2,149.8 232.8,149.5 233.5,149.3 234.2,149.1 234.9,148.8 235.6,148.6 236.3,148.4 237,148.1 237.7,147.9 238.4,147.6 239,147.4 239.7,147.2 240.4,146.9 241.1,146.7 241.8,146.4 242.5,146.2 243.2,145.9 243.9,145.7 244.6,145.5 245.2,145.2 245.9,145 246.6,144.7 247.3,144.5 248,144.2 248.7,144 249.4,143.7 250.1,143.5 250.8,143.2 251.4,143 252.1,142.7 252.8,142.5 253.5,142.2 254.2,142 254.9,141.7 255.6,141.5 256.3,141.2 257,140.9 257.6,140.7 258.3,140.4 259,140.2 259.7,139.9 260.4,139.6 261.1,139.4 261.8,139.1 262.5,138.9 263.2,138.6 263.8,138.3 264.5,138.1 265.2,137.8 265.9,137.6 266.6,137.3 267.3,137 268,136.8 268.7,136.5 269.4,136.2 270,136 270.7,135.7 271.4,135.4 272.1,135.1 272.8,134.9 273.5,134.6 274.2,134.3 274.9,134.1 275.6,133.8 276.2,133.5 276.9,133.2 277.6,133 278.3,132.7 279,132.4 279.7,132.1 280.4,131.9 281.1,131.6 281.8,131.3 282.4,131 283.1,130.7 283.8,130.5 284.5,130.2 285.2,129.9 285.9,129.6 286.6,129.3 287.3,129 288,128.8 288.6,128.5 289.3,128.2 290,127.9 290.7,127.6 291.4,127.3 292.1,127 292.8,126.7 293.5,126.4 294.2,126.2 294.8,125.9 295.5,125.6 296.2,125.3 296.9,125 297.6,124.7 298.3,124.4 299,124.1 299.7,123.8 300.4,123.5 301,123.2 301.7,122.9 302.4,122.6 303.1,122.3 303.8,122 304.5,121.7 305.2,121.4 305.9,121.1 306.6,120.8 307.2,120.5 307.9,120.2 308.6,119.9 309.3,119.6 310,119.3 310.7,118.9 311.4,118.6 312.1,118.3 312.8,118 313.4,117.7 314.1,117.4 314.8,117.1 315.5,116.8 316.2,116.4 316.9,116.1 317.6,115.8 318.3,115.5 319,115.2 319.6,114.9 320.3,114.5 321,114.2 321.7,113.9 322.4,113.6 323.1,113.3 323.8,112.9 324.5,112.6 325.2,112.3 325.8,112 326.5,111.6 327.2,111.3 327.9,111 328.6,110.7 329.3,110.3 330,110 330.7,109.7 331.4,109.3 332,109 332.7,108.7 333.4,108.3 334.1,108 334.8,107.7 335.5,107.3 336.2,107 336.9,106.6 337.6,106.3 338.2,106 338.9,105.6 339.6,105.3 340.3,104.9 341,104.6 341.7,104.3 342.4,103.9 343.1,103.6 343.8,103.2 344.4,102.9 345.1,102.5 345.8,102.2 346.5,101.8 347.2,101.5 347.9,101.1 348.6,100.8 349.3,100.4 350,100.1 350.6,99.7 351.3,99.4 352,99 352.7,98.6 353.4,98.3 354.1,97.9 354.8,97.6 355.5,97.2 356.2,96.8 356.8,96.5 357.5,96.1 358.2,95.7 358.9,95.4 359.6,95 360.3,94.6 361,94.3 361.7,93.9 362.4,93.5 363,93.2 363.7,92.8 364.4,92.4 365.1,92.1 365.8,91.7 366.5,91.3 367.2,90.9 367.9,90.6 368.6,90.2 369.2,89.8 369.9,89.4 370.6,89 371.3,88.7 372,88.3 372.7,87.9 373.4,87.5 374.1,87.1 374.8,86.7 375.4,86.3 376.1,86 376.8,85.6 377.5,85.2 378.2,84.8 378.9,84.4 379.6,84 380.3,83.6 381,83.2 381.6,82.8 382.3,82.4 383,82 383.7,81.6 384.4,81.2 385.1,80.8 385.8,80.4 386.5,80 387.2,79.6 387.8,79.2 388.5,78.8 389.2,78.4 389.9,78 390.6,77.6 391.3,77.2 392,76.8 392.7,76.4 393.4,76 394,75.5 394.7,75.1 395.4,74.7 396.1,74.3 396.8,73.9 397.5,73.5 398.2,73 398.9,72.6 399.6,72.2 400.2,71.8 400.9,71.4 401.6,70.9 402.3,70.5 403,70.1 403.7,69.7 404.4,69.2 405.1,68.8 405.8,68.4 406.4,67.9 407.1,67.5 407.8,67.1 408.5,66.6 409.2,66.2 409.9,65.8 410.6,65.3 411.3,64.9 412,64.5 412.6,64 413.3,63.6 414,63.1 414.7,62.7 415.4,62.2 416.1,61.8 416.8,61.4 417.5,60.9 418.2,60.5 418.8,60 419.5,59.6 420.2,59.1 420.9,58.7 421.6,58.2 422.3,57.7 423,57.3 423.7,56.8 424.4,56.4 425,55.9 425.7,55.5 426.4,55 427.1,54.5 427.8,54.1 428.5,53.6 429.2,53.1 429.9,52.7 430.6,52.2 431.2,51.7 431.9,51.3 432.6,50.8 433.3,50.3 434,49.8 434.7,49.4 435.4,48.9 436.1,48.4 436.8,47.9 437.4,47.4 438.1,47 438.8,46.5 439.5,46 440.2,45.5 440.9,45 441.6,44.5 442.3,44.1 443,43.6 443.6,43.1 444.3,42.6 445,42.1 445.7,41.6 446.4,41.1 447.1,40.6 447.8,40.1 448.5,39.6 449.2,39.1 449.8,38.6 450.5,38.1 451.2,37.6 451.9,37.1 452.6,36.6 453.3,36.1 454,35.6 454.7,35.1 455.4,34.6 456,34 456.7,33.5 457.4,33 458.1,32.5 458.8,32 459.5,31.5 460.2,30.9 460.9,30.4 461.6,29.9 462.2,29.4 462.9,28.9 463.6,28.3 464.3,27.8 465,27.3 465.7,26.7 466.4,26.2 467.1,25.7 467.8,25.1 468.4,24.6 469.1,24.1 469.8,23.5 470.5,23 471.2,22.5 471.9,21.9 472.6,21.4 473.3,20.8 474,20.3 474.6,19.7 475.3,19.2 476,18.6 476.7,18.1 477.4,17.5 478.1,17 478.8,16.4 479.5,15.9 480.2,15.3 480.8,14.8 481.5,14.2 482.2,13.6 482.9,13.1 483.6,12.5 484.3,12 485,11.4 485.7,10.8 486.4,10.3 487,9.7 487.7,9.1 488.4,8.5 489.1,8 489.8,7.4 490.5,6.8 491.2,6.2 491.9,5.7 492.6,5.1 493.2,4.5 493.9,3.9 494.6,3.3 495.3,2.7 496,2.1 496.7,1.6 497.4,1 498.1,0.4 498.8,-0.2 499.4,-0.8 500.1,-1.4 500.8,-2 501.5,-2.6 502.2,-3.2 502.9,-3.8 503.6,-4.4 504.3,-5 505,-5.6 505.6,-6.2 506.3,-6.9 507,-7.5 507.7,-8.1 508.4,-8.7 509.1,-9.3 509.8,-9.9 510.5,-10.5 511.2,-11.2 511.8,-11.8 512.5,-12.4 513.2,-13 513.9,-13.7 514.6,-14.3 515.3,-14.9 516,-15.6 516.7,-16.2 517.4,-16.8 518,-17.5 518.7,-18.1 519.4,-18.7 520.1,-19.4 520.8,-20 521.5,-20.7 522.2,-21.3 522.9,-21.9 523.6,-22.6 524.2,-23.2 524.9,-23.9 525.6,-24.5 526.3,-25.2 527,-25.9 527.7,-26.5 528.4,-27.2 529.1,-27.8 529.8,-28.5 530.4,-29.2 531.1,-29.8 531.8,-30.5 532.5,-31.2 533.2,-31.8 533.9,-32.5 534.6,-33.2 535.3,-33.8 536,-34.5 536.6,-35.2 537.3,-35.9 538,-36.6 538.7,-37.2 539.4,-37.9 540.1,-38.6 540.8,-39.3 541.5,-40 542.2,-40.7 542.8,-41.4 543.5,-42.1 544.2,-42.8 544.9,-43.5 545.6,-44.2 546.3,-44.9 547,-45.6 547.7,-46.3 548.4,-47 549,-47.7 549.7,-48.4 550.4,-49.1 551.1,-49.8 551.8,-50.5 552.5,-51.2 553.2,-52 553.9,-52.7 554.6,-53.4 555.2,-54.1 555.9,-54.9 556.6,-55.6 557.3,-56.3 558,-57 558.7,-57.8 559.4,-58.5 560.1,-59.2 560.8,-60 561.4,-60.7 562.1,-61.5 562.8,-62.2 563.5,-62.9 564.2,-63.7 564.9,-64.4 565.6,-65.2 566.3,-65.9 567,-66.7 567.6,-67.4 568.3,-68.2 569,-69 569.7,-69.7 570.4,-70.5 571.1,-71.2 571.8,-72 572.5,-72.8 573.2,-73.6 573.8,-74.3 574.5,-75.1 575.2,-75.9 575.9,-76.6 576.6,-77.4 577.3,-78.2 578,-79 578.7,-79.8 579.4,-80.6 580,-81.4 580.7,-82.1 581.4,-82.9 582.1,-83.7 582.8,-84.5 583.5,-85.3 584.2,-86.1 584.9,-86.9 585.6,-87.7 586.2,-88.5 586.9,-89.3 587.6,-90.1 588.3,-91 589,-91.8 589.7,-92.6 590.4,-93.4 591.1,-94.2 591.8,-95 592.4,-95.9 593.1,-96.7 593.8,-97.5 594.5,-98.4 595.2,-99.2 595.9,-100 596.6,-100.8 597.3,-101.7 598,-102.5 598.6,-103.4 599.3,-104.2 600,-105.1 600.7,-105.9 601.4,-106.8 602.1,-107.6 602.8,-108.5 603.5,-109.3 604.2,-110.2 604.8,-111 605.5,-111.9 606.2,-112.8 606.9,-113.6 607.6,-114.5 608.3,-115.4 609,-116.2"/><polyline points="0,160.4 0.7,160.2 1.4,160 2.1,159.8 2.8,159.6 3.4,159.4 4.1,159.1 4.8,158.9 5.5,158.7 6.2,158.5 6.9,158.3 7.6,158.1 8.3,157.9 9,157.6 9.6,157.4 10.3,157.2 11,157 11.7,156.8 12.4,156.6 13.1,156.3 13.8,156.1 14.5,155.9 15.2,155.7 15.8,155.5 16.5,155.2 17.2,155 17.9,154.8 18.6,154.6 19.3,154.3 20,154.1 20.7,153.9 21.4,153.7 22,153.4 22.7,153.2 23.4,153 24.1,152.8 24.8,152.5 25.5,152.3 26.2,152.1 26.9,151.8 27.6,151.6 28.2,151.4 28.9,151.1 29.6,150.9 30.3,150.7 31,150.5 31.7,150.2 32.4,150 33.1,149.7 33.8,149.5 34.4,149.3 35.1,149 35.8,148.8 36.5,148.6 37.2,148.3 37.9,148.1 38.6,147.8 39.3,147.6 40,147.4 40.6,147.1 41.3,146.9 42,146.6 42.7,146.4 43.4,146.2 44.1,145.9 44.8,145.7 45.5,145.4 46.2,145.2 46.8,144.9 47.5,144.7 48.2,144.4 48.9,144.2 49.6,143.9 50.3,143.7 51,143.4 51.7,143.2 52.4,142.9 53,142.7 53.7,142.4 54.4,142.2 55.1,141.9 55.8,141.7 56.5,141.4 57.2,141.2 57.9,140.9 58.6,140.6 59.2,140.4 59.9,140.1 60.6,139.9 61.3,139.6 62,139.3 62.7,139.1 63.4,138.8 64.1,138.6 64.8,138.3 65.4,138 66.1,137.8 66.8,137.5 67.5,137.2 68.2,137 68.9,136.7 69.6,136.4 70.3,136.2 71,135.9 71.6,135.6 72.3,135.4 73,135.1 73.7,134.8 74.4,134.6 75.1,134.3 75.8,134 76.5,133.7 77.2,133.5 77.8,133.2 78.5,132.9 79.2,132.6 79.9,132.4 80.6,132.1 81.3,131.8 82,131.5 82.7,131.3 83.4,131 84,130.7 84.7,130.4 85.4,130.1 86.1,129.8 86.8,129.6 87.5,129.3 88.2,129 88.9,128.7 89.6,128.4 90.2,128.1 90.9,127.8 91.6,127.6 92.3,127.3 93,127 93.7,126.7 94.4,126.4 95.1,126.1 95.8,125.8 96.4,125.5 97.1,125.2 97.8,124.9 98.5,124.6 99.2,124.3 99.9,124 100.6,123.8 101.3,123.5 102,123.2 102.6,122.9 103.3,122.6 104,122.3 104.7,122 105.4,121.6 106.1,121.3 106.8,121 107.5,120.7 108.2,120.4 108.8,120.1 109.5,119.8 110.2,119.5 110.9,119.2 111.6,118.9 112.3,118.6 113,118.3 113.7,118 114.4,117.7 115,117.3 115.7,117 116.4,116.7 117.1,116.4 117.8,116.1 118.5,115.8 119.2,115.4 119.9,115.1 120.6,114.8 121.2,114.5 121.9,114.2 122.6,113.9 123.3,113.5 124,113.2 124.7,112.9 125.4,112.6 126.1,112.2 126.8,111.9 127.4,111.6 128.1,111.3 128.8,110.9 129.5,110.6 130.2,110.3 130.9,109.9 131.6,109.6 132.3,109.3 133,108.9 133.6,108.6 134.3,108.3 135,107.9 135.7,107.6 136.4,107.3 137.1,106.9 137.8,106.6 138.5,106.3 139.2,105.9 139.8,105.6 140.5,105.2 141.2,104.9 141.9,104.5 142.6,104.2 143.3,103.9 144,103.5 144.7,103.2 145.4,102.8 146,102.5 146.7,102.1 147.4,101.8 148.1,101.4 148.8,101.1 149.5,100.7 150.2,100.4 150.9,100 151.6,99.7 152.2,99.3 152.9,98.9 153.6,98.6 154.3,98.2 155,97.9 155.7,97.5 156.4,97.1 157.1,96.8 157.8,96.4 158.4,96.1 159.1,95.7 159.8,95.3 160.5,95 161.2,94.6 161.9,94.2 162.6,93.9 163.3,93.5 164,93.1 164.6,92.7 165.3,92.4 166,92 166.7,91.6 167.4,91.2 168.1,90.9 168.8,90.5 169.5,90.1 170.2,89.7 170.8,89.4 171.5,89 172.2,88.6 172.9,88.2 173.6,87.8 174.3,87.4 175,87.1 175.7,86.7 176.4,86.3 177,85.9 177.7,85.5 178.4,85.1 179.1,84.7 179.8,84.3 180.5,83.9 181.2,83.6 181.9,83.2 182.6,82.8 183.2,82.4 183.9,82 184.6,81.6 185.3,81.2 186,80.8 186.7,80.4 187.4,80 188.1,79.6 188.8,79.2 189.4,78.8 190.1,78.4 190.8,77.9 191.5,77.5 192.2,77.1 192.9,76.7 193.6,76.3 194.3,75.9 195,75.5 195.6,75.1 196.3,74.7 197,74.2 197.7,73.8 198.4,73.4 199.1,73 199.8,72.6 200.5,72.1 201.2,71.7 201.8,71.3 202.5,70.9 203.2,70.4 203.9,70 204.6,69.6 205.3,69.2 206,68.7 206.7,68.3 207.4,67.9 208,67.4 208.7,67 209.4,66.6 210.1,66.1 210.8,65.7 211.5,65.3 212.2,64.8 212.9,64.4 213.6,64 214.2,63.5 214.9,63.1 215.6,62.6 216.3,62.2 217,61.7 217.7,61.3 218.4,60.8 219.1,60.4 219.8,59.9 220.4,59.5 221.1,59 221.8,58.6 222.5,58.1 223.2,57.7 223.9,57.2 224.6,56.8 225.3,56.3 226,55.8 226.6,55.4 227.3,54.9 228,54.5 228.7,54 229.4,53.5 230.1,53.1 230.8,52.6 231.5,52.1 232.2,51.7 232.8,51.2 233.5,50.7 234.2,50.2 234.9,49.8 235.6,49.3 236.3,48.8 237,48.3 237.7,47.9 238.4,47.4 239,46.9 239.7,46.4 240.4,45.9 241.1,45.4 241.8,45 242.5,44.5 243.2,44 243.9,43.5 244.6,43 245.2,42.5 245.9,42 246.6,41.5 247.3,41 248,40.5 248.7,40 249.4,39.5 250.1,39 250.8,38.5 251.4,38 252.1,37.5 252.8,37 253.5,36.5 254.2,36 254.9,35.5 255.6,35 256.3,34.5 257,34 257.6,33.4 258.3,32.9 259,32.4 259.7,31.9 260.4,31.4 261.1,30.9 261.8,30.3 262.5,29.8 263.2,29.3 263.8,28.8 264.5,28.2 265.2,27.7 265.9,27.2 266.6,26.7 267.3,26.1 268,25.6 268.7,25.1 269.4,24.5 270,24 270.7,23.5 271.4,22.9 272.1,22.4 272.8,21.8 273.5,21.3 274.2,20.7 274.9,20.2 275.6,19.7 276.2,19.1 276.9,18.6 277.6,18 278.3,17.5 279,16.9 279.7,16.3 280.4,15.8 281.1,15.2 281.8,14.7 282.4,14.1 283.1,13.6 283.8,13 284.5,12.4 285.2,11.9 285.9,11.3 286.6,10.7 287.3,10.2 288,9.6 288.6,9 289.3,8.4 290,7.9 290.7,7.3 291.4,6.7 292.1,6.1 292.8,5.6 293.5,5 294.2,4.4 294.8,3.8 295.5,3.2 296.2,2.6 296.9,2 297.6,1.5 298.3,0.9 299,0.3 299.7,-0.3 300.4,-0.9 301,-1.5 301.7,-2.1 302.4,-2.7 303.1,-3.3 303.8,-3.9 304.5,-4.5 305.2,-5.1 305.9,-5.7 306.6,-6.3 307.2,-7 307.9,-7.6 308.6,-8.2 309.3,-8.8 310,-9.4 310.7,-10 311.4,-10.6 312.1,-11.3 312.8,-11.9 313.4,-12.5 314.1,-13.1 314.8,-13.8 315.5,-14.4 316.2,-15 316.9,-15.7 317.6,-16.3 318.3,-16.9 319,-17.6 319.6,-18.2 320.3,-18.8 321,-19.5 321.7,-20.1 322.4,-20.8 323.1,-21.4 323.8,-22 324.5,-22.7 325.2,-23.3 325.8,-24 326.5,-24.6 327.2,-25.3 327.9,-26 328.6,-26.6 329.3,-27.3 330,-27.9 330.7,-28.6 331.4,-29.3 332,-29.9 332.7,-30.6 333.4,-31.3 334.1,-31.9 334.8,-32.6 335.5,-33.3 336.2,-34 336.9,-34.6 337.6,-35.3 338.2,-36 338.9,-36.7 339.6,-37.3 340.3,-38 341,-38.7 341.7,-39.4 342.4,-40.1 343.1,-40.8 343.8,-41.5 344.4,-42.2 345.1,-42.9 345.8,-43.6 346.5,-44.3 347.2,-45 347.9,-45.7 348.6,-46.4 349.3,-47.1 350,-47.8 350.6,-48.5 351.3,-49.2 352,-49.9 352.7,-50.6 353.4,-51.4 354.1,-52.1 354.8,-52.8 355.5,-53.5 356.2,-54.2 356.8,-55 357.5,-55.7 358.2,-56.4 358.9,-57.2 359.6,-57.9 360.3,-58.6 361,-59.4 361.7,-60.1 362.4,-60.8 363,-61.6 363.7,-62.3 364.4,-63.1 365.1,-63.8 365.8,-64.6 366.5,-65.3 367.2,-66.1 367.9,-66.8 368.6,-67.6 369.2,-68.3 369.9,-69.1 370.6,-69.8 371.3,-70.6 372,-71.4 372.7,-72.1 373.4,-72.9 374.1,-73.7 374.8,-74.4 375.4,-75.2 376.1,-76 376.8,-76.8 377.5,-77.6 378.2,-78.3 378.9,-79.1 379.6,-79.9 380.3,-80.7 381,-81.5 381.6,-82.3 382.3,-83.1 383,-83.9 383.7,-84.6 384.4,-85.4 385.1,-86.2 385.8,-87 386.5,-87.9 387.2,-88.7 387.8,-89.5 388.5,-90.3 389.2,-91.1 389.9,-91.9 390.6,-92.7 391.3,-93.5 392,-94.4 392.7,-95.2 393.4,-96 394,-96.8 394.7,-97.7 395.4,-98.5 396.1,-99.3 396.8,-100.1 397.5,-101 398.2,-101.8 398.9,-102.7 399.6,-103.5 400.2,-104.3 400.9,-105.2 401.6,-106 402.3,-106.9 403,-107.7 403.7,-108.6 404.4,-109.4 405.1,-110.3 405.8,-111.2 406.4,-112 407.1,-112.9 407.8,-113.8 408.5,-114.6 409.2,-115.5 409.9,-116.4"/><polyline points="0,87.5 0.7,87.1 1.4,86.7 2.1,86.3 2.8,86 3.4,85.6 4.1,85.2 4.8,84.8 5.5,84.4 6.2,84 6.9,83.6 7.6,83.2 8.3,82.8 9,82.4 9.6,82 10.3,81.6 11,81.2 11.7,80.8 12.4,80.4 13.1,80 13.8,79.6 14.5,79.2 15.2,78.8 15.8,78.4 16.5,78 17.2,77.6 17.9,77.2 18.6,76.8 19.3,76.4 20,76 20.7,75.5 21.4,75.1 22,74.7 22.7,74.3 23.4,73.9 24.1,73.5 24.8,73 25.5,72.6 26.2,72.2 26.9,71.8 27.6,71.4 28.2,70.9 28.9,70.5 29.6,70.1 30.3,69.7 31,69.2 31.7,68.8 32.4,68.4 33.1,67.9 33.8,67.5 34.4,67.1 35.1,66.6 35.8,66.2 36.5,65.8 37.2,65.3 37.9,64.9 38.6,64.5 39.3,64 40,63.6 40.6,63.1 41.3,62.7 42,62.2 42.7,61.8 43.4,61.3 44.1,60.9 44.8,60.5 45.5,60 46.2,59.6 46.8,59.1 47.5,58.6 48.2,58.2 48.9,57.7 49.6,57.3 50.3,56.8 51,56.4 51.7,55.9 52.4,55.4 53,55 53.7,54.5 54.4,54.1 55.1,53.6 55.8,53.1 56.5,52.7 57.2,52.2 57.9,51.7 58.6,51.2 59.2,50.8 59.9,50.3 60.6,49.8 61.3,49.4 62,48.9 62.7,48.4 63.4,47.9 64.1,47.4 64.8,47 65.4,46.5 66.1,46 66.8,45.5 67.5,45 68.2,44.5 68.9,44 69.6,43.6 70.3,43.1 71,42.6 71.6,42.1 72.3,41.6 73,41.1 73.7,40.6 74.4,40.1 75.1,39.6 75.8,39.1 76.5,38.6 77.2,38.1 77.8,37.6 78.5,37.1 79.2,36.6 79.9,36.1 80.6,35.6 81.3,35.1 82,34.5 82.7,34 83.4,33.5 84,33 84.7,32.5 85.4,32 86.1,31.5 86.8,30.9 87.5,30.4 88.2,29.9 88.9,29.4 89.6,28.8 90.2,28.3 90.9,27.8 91.6,27.3 92.3,26.7 93,26.2 93.7,25.7 94.4,25.1 95.1,24.6 95.8,24.1 96.4,23.5 97.1,23 97.8,22.5 98.5,21.9 99.2,21.4 99.9,20.8 100.6,20.3 101.3,19.7 102,19.2 102.6,18.6 103.3,18.1 104,17.5 104.7,17 105.4,16.4 106.1,15.9 106.8,15.3 107.5,14.8 108.2,14.2 108.8,13.6 109.5,13.1 110.2,12.5 110.9,11.9 111.6,11.4 112.3,10.8 113,10.2 113.7,9.7 114.4,9.1 115,8.5 115.7,8 116.4,7.4 117.1,6.8 117.8,6.2 118.5,5.6 119.2,5.1 119.9,4.5 120.6,3.9 121.2,3.3 121.9,2.7 122.6,2.1 123.3,1.5 124,0.9 124.7,0.4 125.4,-0.2 126.1,-0.8 126.8,-1.4 127.4,-2 128.1,-2.6 128.8,-3.2 129.5,-3.8 130.2,-4.4 130.9,-5 131.6,-5.6 132.3,-6.3 133,-6.9 133.6,-7.5 134.3,-8.1 135,-8.7 135.7,-9.3 136.4,-9.9 137.1,-10.6 137.8,-11.2 138.5,-11.8 139.2,-12.4 139.8,-13 140.5,-13.7 141.2,-14.3 141.9,-14.9 142.6,-15.6 143.3,-16.2 144,-16.8 144.7,-17.5 145.4,-18.1 146,-18.7 146.7,-19.4 147.4,-20 148.1,-20.7 148.8,-21.3 149.5,-22 150.2,-22.6 150.9,-23.3 151.6,-23.9 152.2,-24.6 152.9,-25.2 153.6,-25.9 154.3,-26.5 155,-27.2 155.7,-27.8 156.4,-28.5 157.1,-29.2 157.8,-29.8 158.4,-30.5 159.1,-31.2 159.8,-31.8 160.5,-32.5 161.2,-33.2 161.9,-33.9 162.6,-34.5 163.3,-35.2 164,-35.9 164.6,-36.6 165.3,-37.3 166,-37.9 166.7,-38.6 167.4,-39.3 168.1,-40 168.8,-40.7 169.5,-41.4 170.2,-42.1 170.8,-42.8 171.5,-43.5 172.2,-44.2 172.9,-44.9 173.6,-45.6 174.3,-46.3 175,-47 175.7,-47.7 176.4,-48.4 177,-49.1 177.7,-49.8 178.4,-50.5 179.1,-51.3 179.8,-52 180.5,-52.7 181.2,-53.4 181.9,-54.1 182.6,-54.9 183.2,-55.6 183.9,-56.3 184.6,-57.1 185.3,-57.8 186,-58.5 186.7,-59.3 187.4,-60 188.1,-60.7 188.8,-61.5 189.4,-62.2 190.1,-63 190.8,-63.7 191.5,-64.4 192.2,-65.2 192.9,-66 193.6,-66.7 194.3,-67.5 195,-68.2 195.6,-69 196.3,-69.7 197,-70.5 197.7,-71.3 198.4,-72 199.1,-72.8 199.8,-73.6 200.5,-74.3 201.2,-75.1 201.8,-75.9 202.5,-76.7 203.2,-77.4 203.9,-78.2 204.6,-79 205.3,-79.8 206,-80.6 206.7,-81.4 207.4,-82.2 208,-82.9 208.7,-83.7 209.4,-84.5 210.1,-85.3 210.8,-86.1 211.5,-86.9 212.2,-87.7 212.9,-88.5 213.6,-89.4 214.2,-90.2 214.9,-91 215.6,-91.8 216.3,-92.6 217,-93.4 217.7,-94.2 218.4,-95.1 219.1,-95.9 219.8,-96.7 220.4,-97.5 221.1,-98.4 221.8,-99.2 222.5,-100 223.2,-100.9 223.9,-101.7 224.6,-102.5 225.3,-103.4 226,-104.2 226.6,-105.1 227.3,-105.9 228,-106.8 228.7,-107.6 229.4,-108.5 230.1,-109.3 230.8,-110.2 231.5,-111 232.2,-111.9 232.8,-112.8 233.5,-113.6 234.2,-114.5 234.9,-115.4 235.6,-116.2"/></g><g data-s="3" stroke="var(--o)" stroke-width="2.4" stroke-dasharray="7 5"><line x1="0" y1="247.9" x2="638" y2="247.9"/><text x="10" y="236.9" fill="var(--o)" font-size="15" font-family="system-ui,-apple-system,sans-serif" stroke="none">S = −25</text></g></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="23">
+  <p class="h" data-s="0">Equilibrium only &mdash; call it out</p>
+  <p class="l" data-s="1">Do not solve anything. <span class="d">Set the derivative to zero.</span></p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="2"><span class="g">1.</span>&nbsp; <i>y</i>&#8242; = 10 &minus; 2<i>y</i></p>
+      <p class="e t" data-s="3"><span class="g">2.</span>&nbsp; <i>T</i>&#8242; = &minus;0.2(<i>T</i> &minus; 65)</p>
+      <p class="e t" data-s="4"><span class="g">3.</span>&nbsp; <i>Q</i>&#8242; = 2 &minus; <span class="fr"><span><i>Q</i></span><span>50</span></span></p>
+      <p class="e t" data-s="5"><span class="g">4.</span>&nbsp; <i>Q</i>&#8242; = 4 &minus; <span class="fr"><span><i>Q</i></span><span>100 + <i>t</i></span></span></p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="v"><i>y</i> = 5</span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="v"><i>T</i> = 65</span>&nbsp;&nbsp;<span class="d">read it straight from the bracket</span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="v"><i>Q</i> = 100</span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="v">none</span>&nbsp;&nbsp;<span class="d"><i>t</i> is in the equation, so there is no constant solution</span></p>
+      <p class="e" data-s="10"><span class="bx">Number 4 is the filling tank. It never settles.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="24">
+  <p class="h" data-s="0">Four checks before you hand it in</p>
+  <div class="two">
+    <div>
+      <ol class="st">
+        <li data-s="1"><span class="g">Units.</span> Every term the same. lb per minute, or degrees per minute.</li>
+        <li data-s="2"><span class="g">Sign.</span> Does a hot cup cool, and an empty tank fill?</li>
+        <li data-s="3"><span class="g">Limit.</span> Compare with the equilibrium you can read from the equation.</li>
+        <li data-s="4"><span class="g">The question.</span> Read it again. It usually asks for a time, or an amount, not for <i>Q</i>(<i>t</i>).</li>
+      </ol>
+    </div>
+    <div>
+      <p class="l" data-s="5">Number 4 is the one that costs marks most often.</p>
+      <p class="l" data-s="6">A perfect solution of the differential equation, with the final question left unanswered, is not a complete answer.</p>
+      <p class="e" data-s="7"><span class="bx">Finish with a sentence, and put the units in it.</span></p>
+      <p class="a" data-s="8">&#8627; &ldquo;The tank holds 420 lb of salt when it fills, after 150 minutes.&rdquo;</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="25">
+  <p class="h" data-s="0">Where we are</p>
+  <p class="l" data-s="1">&sect;2.3 is one skill: <span class="g">turning a paragraph into an equation</span>. The solving was revision.</p>
+  <p class="e t" data-s="2">rate of change = rate in &minus; rate out&nbsp;&nbsp;&middot;&nbsp;&nbsp;then check the units</p>
+  <p class="lb" data-s="3">Monday</p>
+  <p class="l" data-s="3">&sect;2.4 &mdash; linear against nonlinear, and the theorem behind Wednesday&#8217;s three checks.</p>
+  <p class="l" data-s="4"><span class="g">HW1</span> is due today. <span class="g">HW2</span> (&sect;2.1 and &sect;2.2) is due Friday the 18th.</p>
+  <p class="e" data-s="5"><span class="bx">Have a good weekend.</span></p>
+</div>
+
+<canvas id="ink"></canvas>
+<canvas id="wet"></canvas>
+<div id="edge"></div>
+
+<div id="hint">
+  <b>Math 2255 &mdash; Lecture 1</b><br><br>
+  <kbd>&#9654;</kbd> buttons (top right and bottom), or arrow keys<br>
+  <kbd>&#9664;</kbd> goes back<br>
+  <kbd>1</kbd>&ndash;<kbd>5</kbd> pen colour &nbsp; <kbd>E</kbd> eraser &nbsp; <kbd>C</kbd> clear ink<br>
+  <kbd>F</kbd> full screen &nbsp; <kbd>T</kbd> hide toolbar &nbsp; <kbd>G</kbd> writing zones<br>
+  <kbd>R</kbd> reset timer&nbsp;&nbsp;&nbsp;<kbd>D</kbd> dark / light<br><br><span style="color:var(--dm)">Pages turn with the arrow buttons only,<br>so nothing you touch by accident moves the board.<br><br>The toolbar hides itself after a few seconds.<br>Tap the very bottom edge to bring it back.</span><br><br>
+  <span style="color:var(--dm)">Only the Apple Pencil draws.<br>
+  Your palm and fingers leave no marks.<br><br>Tap anywhere to begin.</span>
+</div>
+
+<div id="bar">
+  <span class="pen sel" data-i="0" style="background:#F0EFE8"></span>
+  <span class="pen" data-i="1" style="background:#E3E34B"></span>
+  <span class="pen" data-i="2" style="background:#45CFC2"></span>
+  <span class="pen" data-i="3" style="background:#E85CD2"></span>
+  <span class="pen" data-i="4" style="background:#F09A42"></span>
+  <button class="btn" id="th">Pen M</button>
+  <button class="btn" id="hd">HD</button>
+  <button class="btn" id="er">Erase</button>
+  <button class="btn" id="cl">Clear</button>
+  <span class="sp"></span>
+  <button class="btn nav" id="prev">&#9664;</button>
+  <span id="pos">1 / 25</span>
+  <button class="btn nav" id="next">&#9654;</button>
+  <span class="sp"></span>
+  <span id="clk">00:00</span>
+  <button class="btn" id="tm">Light</button>
+  <button class="btn" id="fs">Full</button>
+  <button class="btn" id="hp">?</button>
+</div>
+</div>
+
+<script>
+(function(){
+var pgs=[].slice.call(document.querySelectorAll('.pg'));
+var maxStep=pgs.map(function(p){
+  var m=0;[].forEach.call(p.querySelectorAll('[data-s]'),function(e){
+    m=Math.max(m,+e.getAttribute('data-s'));});return m;});
+var P=0,S=0;
+var cv=document.getElementById('ink');
+var cx=cv.getContext('2d',{desynchronized:true,alpha:true})||cv.getContext('2d');
+var strokes=pgs.map(function(){return [];});
+var DPRCAP=1.5;
+var PAL={dark: ['#F0EFE8','#E3E34B','#45CFC2','#E85CD2','#F09A42'],
+          light:['#16181B','#8F6A05','#0E7A70','#A0198A','#B4530A']};
+var theme='dark', ci=0, wid=4.2, erase=false, drawing=false, cur=null;
+function inks(){return PAL[theme];}
+var WIDS=[3.0,4.2,6.0],wi=1;
+
+function fit(){
+  var r=Math.min(window.devicePixelRatio||1,DPRCAP);
+  cv.width=Math.round(innerWidth*r);cv.height=Math.round(innerHeight*r);
+  cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+  wet.width=cv.width;wet.height=cv.height;
+  wet.style.width=innerWidth+'px';wet.style.height=innerHeight+'px';
+  wx.setTransform(r,0,0,r,0,0);wetBox=null;
+  cx.setTransform(r,0,0,r,0,0);syncRect();redraw();
+}
+function setStyle(st){
+  cx.lineCap='round';cx.lineJoin='round';
+  cx.strokeStyle=inks()[st.ci];cx.lineWidth=st.w;
+  cx.globalCompositeOperation=st.e?'destination-out':'source-over';
+}
+function strokePath(st){
+  if(st.pts.length<2)return;
+  setStyle(st);
+  cx.beginPath();cx.moveTo(st.pts[0].x,st.pts[0].y);
+  for(var i=1;i<st.pts.length;i++){
+    var a=st.pts[i-1],b=st.pts[i];
+    cx.quadraticCurveTo(a.x,a.y,(a.x+b.x)/2,(a.y+b.y)/2);
+  }
+  cx.stroke();
+}
+// full repaint only on page change / clear / resize -- never while drawing
+function redraw(){
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  strokes[P].forEach(strokePath);
+  cx.globalCompositeOperation='source-over';
+}
+function show(){
+  pgs.forEach(function(p,i){p.classList.toggle('on',i===P);});
+  [].forEach.call(pgs[P].querySelectorAll('[data-s]'),function(e){
+    var from=+e.getAttribute('data-s');
+    var u=e.getAttribute('data-until');
+    var until=(u===null||u==='')?1e9:+u;
+    var live=(S>=from && S<=until);
+    e.classList.toggle('vis', live);
+    if(u!==null&&u!=='') e.classList.toggle('gone', S>until);});
+  var pt=(P+1)+' / '+pgs.length;
+  document.getElementById('pos').textContent=pt;
+  var p2=document.getElementById('pos2'); if(p2)p2.textContent=pt;
+  redraw();
+}
+function next(){ if(S<maxStep[P]){S++;} else if(P<pgs.length-1){P++;S=0;} show(); }
+function prev(){ if(S>0){S--;} else if(P>0){P--;S=maxStep[P];} show(); }
+function pgUp(){ if(P>0){P--;S=maxStep[P];show();} }
+function pgDn(){ if(P<pgs.length-1){P++;S=maxStep[P];show();} }
+
+// ---- pencil drawing ----
+var RC={left:0,top:0};
+function syncRect(){RC=cv.getBoundingClientRect();}
+function xy(e){return {x:e.clientX-RC.left,y:e.clientY-RC.top};}
+function isPen(e){
+  if(e.pointerType==='pen')return true;
+  if(e.pointerType==='touch'&&(e.width||99)<=12&&(e.height||99)<=12)return true;
+  return false;
+}
+cv.addEventListener('pointerdown',function(e){
+  if(!isPen(e))return;
+  e.preventDefault();drawing=true;syncRect();
+  var p=xy(e),w=erase?26:wid*(0.55+0.9*(e.pressure||0.5));
+  cur={ci:ci,w:w,e:erase,pts:[p]};strokes[P].push(cur);
+  setStyle(cur);
+  cx.beginPath();cx.arc(p.x,p.y,Math.max(w,1)/2,0,6.2832);
+  cx.fillStyle=inks()[cur.ci];cx.fill();
+  cx.globalCompositeOperation='source-over';
+},{passive:false});
+var pend=[],rafId=0,MINSTEP=1.7;
+var wet=document.getElementById('wet');
+var wx=wet.getContext('2d',{desynchronized:true})||wet.getContext('2d');
+var wetBox=null;
+function clearWet(){
+  if(!wetBox)return;
+  wx.clearRect(wetBox[0]-4,wetBox[1]-4,wetBox[2]-wetBox[0]+8,wetBox[3]-wetBox[1]+8);
+  wetBox=null;
+}
+function drawPredicted(e){
+  clearWet();
+  if(!cur||!e.getPredictedEvents)return;
+  var pr=e.getPredictedEvents(); if(!pr.length)return;
+  var a=cur.pts[cur.pts.length-1];
+  var x0=a.x,y0=a.y,x1=a.x,y1=a.y;
+  wx.lineCap='round';wx.lineJoin='round';
+  wx.strokeStyle=cur.c;wx.lineWidth=cur.w;
+  wx.globalCompositeOperation=cur.e?'destination-out':'source-over';
+  wx.beginPath();wx.moveTo(a.x,a.y);
+  for(var i=0;i<pr.length;i++){
+    var p=xy(pr[i]); wx.lineTo(p.x,p.y);
+    if(p.x<x0)x0=p.x; if(p.y<y0)y0=p.y;
+    if(p.x>x1)x1=p.x; if(p.y>y1)y1=p.y;
+  }
+  wx.stroke();
+  wetBox=[x0-cur.w,y0-cur.w,x1+cur.w,y1+cur.w];
+}
+function flush(){
+  rafId=0;
+  clearWet();
+  if(!cur||!pend.length)return;
+  setStyle(cur);
+  cx.beginPath();
+  var a=cur.pts[cur.pts.length-1];
+  cx.moveTo(a.x,a.y);
+  for(var i=0;i<pend.length;i++){ cx.lineTo(pend[i].x,pend[i].y); cur.pts.push(pend[i]); }
+  cx.stroke();
+  cx.globalCompositeOperation='source-over';
+  pend.length=0;
+}
+cv.addEventListener('pointermove',function(e){
+  if(!drawing||!isPen(e))return;
+  e.preventDefault();
+  var evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];
+  var last=pend.length?pend[pend.length-1]:cur.pts[cur.pts.length-1];
+  for(var i=0;i<evs.length;i++){
+    var p=xy(evs[i]);
+    var dx=p.x-last.x, dy=p.y-last.y;
+    if(dx*dx+dy*dy < MINSTEP) continue;
+    pend.push(p); last=p;
+  }
+  if(pend.length && !rafId) rafId=requestAnimationFrame(flush);
+  drawPredicted(e);
+},{passive:false});
+function end(e){ if(e.pointerType&&!isPen(e))return;
+  if(rafId){cancelAnimationFrame(rafId);rafId=0;} flush();
+  clearWet(); drawing=false;cur=null;pend.length=0; }
+cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+
+// ---- buttons only. no tap-to-advance, no swipe. ----
+cv.addEventListener('pointerup',function(e){
+  if(isPen(e))return;
+  startClk();
+  var h=document.getElementById('hint');
+  if(!h.classList.contains('hide')) h.classList.add('hide');
+  showChrome();
+});
+
+function bindNav(id,fn){
+  var el=document.getElementById(id); if(!el)return;
+  var go=function(e){ e.preventDefault(); e.stopPropagation(); fn(); startClk(); };
+  el.addEventListener('click',go);
+  el.addEventListener('touchend',go,{passive:false});
+}
+bindNav('prev',prev); bindNav('next',next);
+bindNav('prev2',prev); bindNav('next2',next);
+
+
+// ---- toolbar ----
+[].forEach.call(document.querySelectorAll('.pen'),function(b){
+  b.onclick=function(){
+    [].forEach.call(document.querySelectorAll('.pen'),function(x){x.classList.remove('sel');});
+    b.classList.add('sel');ci=+b.getAttribute('data-i');erase=false;
+    document.getElementById('er').style.borderColor='var(--bbd)';
+  };
+});
+document.getElementById('th').onclick=function(){
+  wi=(wi+1)%3; wid=WIDS[wi];
+  this.textContent='Pen '+['S','M','L'][wi];
+};
+document.getElementById('hd').onclick=function(){
+  DPRCAP=(DPRCAP===1.5)?1:1.5;
+  this.textContent=(DPRCAP===1.5)?'HD':'Fast';
+  fit();
+};
+document.getElementById('er').onclick=function(){
+  erase=!erase;this.style.borderColor=erase?'var(--o)':'var(--bbd)';};
+document.getElementById('cl').onclick=function(){strokes[P]=[];redraw();};
+document.getElementById('hp').onclick=function(){
+  document.getElementById('hint').classList.toggle('hide');};
+function isStandalone(){
+  return window.navigator.standalone===true ||
+         (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches);
+}
+function setTheme(t){
+  theme=t;
+  document.body.classList.toggle('light', t==='light');
+  document.getElementById('tm').textContent = (t==='dark')?'Light':'Dark';
+  var sw=document.querySelectorAll('.pen');
+  for(var i=0;i<sw.length;i++) sw[i].style.background=PAL[t][i];
+  var tc=document.querySelector('meta[name="theme-color"]');
+  if(tc)tc.setAttribute('content', t==='light'?'#F2F0EA':'#0D0F10');
+  try{localStorage.setItem('m2255theme',t);}catch(e){}
+  redraw();
+}
+document.getElementById('tm').onclick=function(){ setTheme(theme==='dark'?'light':'dark'); };
+document.getElementById('fs').onclick=function(){
+  var d=document.documentElement;
+  var req=d.requestFullscreen||d.webkitRequestFullscreen;
+  if(document.fullscreenElement||document.webkitFullscreenElement){
+    (document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);
+    return;
+  }
+  if(req){ try{ req.call(d); return; }catch(err){} }
+  if(isStandalone()){ alert('Already running full screen.'); return; }
+  alert('For true full screen on iPad:\n\n'+
+        '1. Tap the Share button in Safari\n'+
+        '2. Choose "Add to Home Screen"\n'+
+        '3. Launch it from the home-screen icon\n\n'+
+        'It then opens with no address bar and no toolbars.');
+};
+if(isStandalone()){ document.getElementById('fs').textContent='FS'; }
+
+// ---- clock ----
+var t0=null,tick=null;
+function fmt(s){var m=Math.floor(s/60);return (m<10?'0':'')+m+':'+((s%60)<10?'0':'')+(s%60);}
+function startClk(){
+  if(tick)return;t0=Date.now();
+  tick=setInterval(function(){
+    var s=Math.floor((Date.now()-t0)/1000);
+    var el=document.getElementById('clk');
+    el.textContent=fmt(s);el.classList.toggle('over',s>55*60);
+  },1000);
+}
+
+// ---- keys ----
+addEventListener('keydown',function(e){
+  var k=e.key;
+  if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();next();}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev();}
+  else if(k==='ArrowDown'){e.preventDefault();pgDn();}
+  else if(k==='ArrowUp'){e.preventDefault();pgUp();}
+  else if(k>='1'&&k<='5'){document.querySelectorAll('.pen')[+k-1].click();}
+  else if(k==='e'||k==='E'){document.getElementById('er').click();}
+  else if(k==='c'||k==='C'){document.getElementById('cl').click();}
+  else if(k==='f'||k==='F'){document.getElementById('fs').click();}
+  else if(k==='t'||k==='T'){document.getElementById('bar').classList.toggle('hide');document.getElementById('topnav').classList.toggle('hide');}
+  else if(k==='g'||k==='G'){document.body.classList.toggle('guides');}
+  else if(k==='d'||k==='D'){document.getElementById('tm').click();}
+  else if(k==='r'||k==='R'){t0=Date.now();}
+  else if(k==='?'||k==='h'){document.getElementById('hp').click();}
+  if(k!=='?'&&k!=='h')startClk();
+});
+document.getElementById('hint').addEventListener('click',function(){
+  this.classList.add('hide');startClk();});
+
+// ---- auto-hiding chrome ----
+var chromeT=null;
+function showChrome(){
+  document.getElementById('bar').classList.remove('hide');
+  document.getElementById('topnav').classList.remove('hide');
+  clearTimeout(chromeT);
+  chromeT=setTimeout(hideChrome,3500);
+}
+function hideChrome(){
+  document.getElementById('bar').classList.add('hide');
+  document.getElementById('topnav').classList.add('hide');
+}
+document.getElementById('edge').addEventListener('pointerdown',function(e){
+  e.stopPropagation(); showChrome();
+});
+document.getElementById('bar').addEventListener('pointerdown',showChrome);
+document.getElementById('topnav').addEventListener('pointerdown',showChrome);
+showChrome();
+
+addEventListener('resize',function(){fit();syncRect();});
+addEventListener('orientationchange',function(){setTimeout(function(){fit();syncRect();},250);});
+addEventListener('scroll',syncRect,true);
+try{var sv=localStorage.getItem('m2255theme');}catch(e){}
+setTheme(sv==='light'?'light':'dark');
+fit();show();
+})();
+</script>
+
+</body>
+</html>
