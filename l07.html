@@ -128,7 +128,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
 <div id="app">
 <div id="topnav">
   <button class="btn nav" id="prev2">&#9664;</button>
-  <span id="pos2">1 / 25</span>
+  <span id="pos2">1 / 26</span>
   <button class="btn nav" id="next2">&#9654;</button>
 </div>
 <div id="stage">
@@ -586,26 +586,54 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
 </div>
 
 <div class="pg" data-n="23">
-  <p class="h" data-s="0">Equilibrium only &mdash; call it out</p>
-  <p class="l" data-s="1">Do not solve anything. <span class="d">Set the derivative to zero.</span></p>
+  <p class="h" data-s="0">Example 6 &mdash; the first one that is not linear</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dh</i></span><span><i>dt</i></span></span> = &minus;0.2&thinsp;<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span>,&nbsp;&nbsp; <i>h</i>(0) = 9 ft</span>&nbsp;&nbsp;<span class="d"><i>h</i> is the depth of water in a draining tank</span></p>
   <div class="two">
     <div>
-      <p class="e t" data-s="2"><span class="g">1.</span>&nbsp; <i>y</i>&#8242; = 10 &minus; 2<i>y</i></p>
-      <p class="e t" data-s="3"><span class="g">2.</span>&nbsp; <i>T</i>&#8242; = &minus;0.2(<i>T</i> &minus; 65)</p>
-      <p class="e t" data-s="4"><span class="g">3.</span>&nbsp; <i>Q</i>&#8242; = 2 &minus; <span class="fr"><span><i>Q</i></span><span>50</span></span></p>
-      <p class="e t" data-s="5"><span class="g">4.</span>&nbsp; <i>Q</i>&#8242; = 4 &minus; <span class="fr"><span><i>Q</i></span><span>100 + <i>t</i></span></span></p>
+      <p class="l" data-s="2">A tank drains through a hole in the bottom. <span class="d">Deep water pushes harder, so it leaves faster.</span></p>
+      <p class="e t" data-s="3">speed out = <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">2<i>gh</i></span></span>&nbsp;&nbsp;<span class="d">Torricelli, 1643</span></p>
+      <p class="lb" data-s="4">Is it linear?</p>
+      <p class="e t" data-s="4">No. <i>h</i> sits inside a square root.</p>
+      <p class="lb" data-s="5">Is it separable?</p>
+      <p class="e t" data-s="5">Yes. Move every <i>h</i> to the left.</p>
+      <p class="e t" data-s="6"><span class="fr"><span><i>dh</i></span><span><span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span></span></span> = &minus;0.2&thinsp;<i>dt</i></p>
     </div>
     <div>
-      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="v"><i>y</i> = 5</span></p>
-      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="v"><i>T</i> = 65</span>&nbsp;&nbsp;<span class="d">read it straight from the bracket</span></p>
-      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="v"><i>Q</i> = 100</span></p>
-      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="v">none</span>&nbsp;&nbsp;<span class="d"><i>t</i> is in the equation, so there is no constant solution</span></p>
-      <p class="e" data-s="10"><span class="bx">Number 4 is the filling tank. It never settles.</span></p>
+      <p class="lb" data-s="7">Integrate both sides</p>
+      <p class="e t" data-s="7">&int;<i>h</i><sup>&minus;1/2</sup>&thinsp;<i>dh</i> = 2<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span>&nbsp;&nbsp;<span class="d">add one to the power, divide by it</span></p>
+      <p class="e t" data-s="8">2<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span> = &minus;0.2<i>t</i> + <i>C</i></p>
+      <p class="lb" data-s="9">Put <i>t</i> = 0 in</p>
+      <p class="e t" data-s="9">2<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">9</span></span> = 6, so <i>C</i> = 6</p>
+      <p class="e t" data-s="10"><span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span> = 3 &minus; 0.1<i>t</i>&nbsp;&nbsp;<span class="d">divide by 2</span></p>
+      <p class="e" data-s="11"><span class="bx"><i>h</i>(<i>t</i>) = (3 &minus; 0.1<i>t</i>)<sup>2</sup> ft</span></p>
+      <p class="a" data-s="12">&#8627; a square, not an exponential. Nothing today has looked like this.</p>
     </div>
   </div>
 </div>
 
 <div class="pg" data-n="24">
+  <p class="h" data-s="0">Example 6 &mdash; this one really empties</p>
+  <p class="e" data-s="1"><span class="bw"><i>h</i>(<i>t</i>) = (3 &minus; 0.1<i>t</i>)<sup>2</sup></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">When is the tank empty?</p>
+      <p class="e t" data-s="2">3 &minus; 0.1<i>t</i> = 0&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v"><i>t</i> = 30 min</span></p>
+      <p class="l" data-s="3">Every other model today only <span class="n">approached</span> its limit.</p>
+      <p class="e t" data-s="4"><i>Q</i> = 25(1 &minus; <b>e</b><sup>&minus;0.03<i>t</i></sup>)&nbsp;&nbsp;<span class="d">at 30 min it is only at 14.8 lb</span></p>
+      <p class="l" data-s="5">This one gets there, and then it is done.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">Now put <i>t</i> = 40 into the formula</p>
+      <p class="e t" data-s="6"><i>h</i>(40) = (3 &minus; 4)<sup>2</sup> = 1 ft</p>
+      <p class="l" data-s="7">The tank refills itself. <span class="d">The formula is a parabola, so it turns around and climbs.</span></p>
+      <p class="e" data-s="8"><span class="bx">Good for 0 &le; <i>t</i> &le; 30. After that <i>h</i> = 0.</span></p>
+      <p class="l" data-s="9">A linear model never ends. <span class="g">A nonlinear one can.</span></p>
+      <p class="a" data-s="10">&#8627; and at <i>h</i> = 0 two different solutions start. Monday says when that is allowed.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="25">
   <p class="h" data-s="0">Four checks before you hand it in</p>
   <div class="two">
     <div>
@@ -625,7 +653,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
   </div>
 </div>
 
-<div class="pg" data-n="25">
+<div class="pg" data-n="26">
   <p class="h" data-s="0">Where we are</p>
   <p class="l" data-s="1">&sect;2.3 is one skill: <span class="g">turning a paragraph into an equation</span>. The solving was revision.</p>
   <p class="e t" data-s="2">rate of change = rate in &minus; rate out&nbsp;&nbsp;&middot;&nbsp;&nbsp;then check the units</p>
@@ -662,7 +690,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
   <button class="btn" id="cl">Clear</button>
   <span class="sp"></span>
   <button class="btn nav" id="prev">&#9664;</button>
-  <span id="pos">1 / 25</span>
+  <span id="pos">1 / 26</span>
   <button class="btn nav" id="next">&#9654;</button>
   <span class="sp"></span>
   <span id="clk">00:00</span>
