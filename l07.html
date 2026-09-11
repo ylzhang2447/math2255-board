@@ -167,34 +167,13 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
       <p class="lb" data-s="5">And step 1 always uses one law</p>
       <p class="e" data-s="5"><span class="bx">rate of change = rate in &minus; rate out</span></p>
       <p class="l" data-s="6">Salt, water, heat, money. <span class="d">Same sentence every time.</span></p>
-      <p class="e t" data-s="7"><span class="fr"><span><i>dQ</i></span><span><i>dt</i></span></span> = (in) &minus; (out)</p>
-      <p class="a" data-s="8">&#8627; the whole difficulty is writing those two brackets correctly.</p>
+      <p class="l" data-s="7">But before you can write it down you have to decide <span class="g">what</span> is changing. <span class="d">That is a real decision, and it is not automatic.</span></p>
+      <p class="a" data-s="8">&#8627; so: choose the quantity, then fill in the two brackets. In that order.</p>
     </div>
   </div>
 </div>
 
 <div class="pg" data-n="3">
-  <p class="h" data-s="0">Three things to name before you write anything</p>
-  <div class="two">
-    <div>
-      <ol class="st">
-        <li data-s="1">What is the <span class="g">unknown</span>, and what are its units? <span class="d">Pounds of salt &mdash; not concentration.</span></li>
-        <li data-s="2">When is <i>t</i> = 0, and what is true then? <span class="d">That is your initial condition.</span></li>
-        <li data-s="3">What is <i>V</i>(<i>t</i>)? <span class="d">A constant, or not?</span></li>
-      </ol>
-      <p class="l" data-s="4">Only then write the two brackets.</p>
-    </div>
-    <div>
-      <p class="l" data-s="5">Most of the wrong answers I have ever graded went wrong at number 1.</p>
-      <p class="e t" data-s="6"><i>Q</i>(<i>t</i>) = pounds of salt&nbsp;&nbsp;<span class="v">good</span></p>
-      <p class="e t" data-s="7"><i>Q</i>(<i>t</i>) = amount of salt&nbsp;&nbsp;<span class="n">no units, so no equation</span></p>
-      <p class="e" data-s="8"><span class="bx">Write the sentence &ldquo;Let <i>Q</i>(<i>t</i>) be &hellip;&rdquo; on your paper. Every time.</span></p>
-      <p class="a" data-s="9">&#8627; it costs you one line, and it decides whether the next ten are right.</p>
-    </div>
-  </div>
-</div>
-
-<div class="pg" data-n="4">
   <p class="h" data-s="0">The stirred tank</p>
   <div class="split">
     <div class="sl" style="flex:0 0 45%">
@@ -211,7 +190,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
   </div>
 </div>
 
-<div class="pg" data-n="5">
+<div class="pg" data-n="4">
   <p class="h" data-s="0">The most common mistake, and how to catch it</p>
   <div class="two">
     <div>
@@ -225,8 +204,31 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
       <p class="e t" data-s="4">3<i>Q</i> is (gal/min)(lb) = <span class="fr"><span>gal &middot; lb</span><span>min</span></span>&nbsp;&nbsp;<span class="n">not lb/min</span></p>
       <p class="l" data-s="5">The second one has correct units, so units will <span class="n">not</span> save you there.</p>
       <p class="l" data-s="6">It fails on meaning: it says the tank never changes, whatever is inside it.</p>
-      <p class="e" data-s="7"><span class="bx">Every term must be lb per minute. Check that first, every time.</span></p>
-      <p class="a" data-s="8">&#8627; units catch about half the setup errors, for free.</p>
+      <p class="e" data-s="7"><span class="bx">Units killed the first one. Only <span class="n">meaning</span> kills the second.</span></p>
+      <p class="a" data-s="8">&#8627; so you need both. Units are the quick one, and they cost nothing.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="5">
+  <p class="h" data-s="0">That was a habit, not a trick</p>
+  <p class="l" data-s="1">Look back at what we did before any calculus at all.</p>
+  <div class="two">
+    <div>
+      <ol class="st">
+        <li data-s="2">We <span class="g">named</span> the quantity. <span class="d"><i>Q</i>(<i>t</i>), the pounds of salt in the tank at time <i>t</i>.</span></li>
+        <li data-s="3">We said when <i>t</i> = 0 and what was true then. <span class="d">Pure water, so <i>Q</i>(0) = 0.</span></li>
+        <li data-s="4">We asked what <i>V</i> was doing. <span class="d">Sitting at 100 gallons this time. It will not always.</span></li>
+      </ol>
+      <p class="l" data-s="5">Only then did we write the two brackets.</p>
+    </div>
+    <div>
+      <p class="l" data-s="6">And the first one is a <span class="g">choice</span>. <span class="d">A different choice gives a different equation for the same tank.</span></p>
+      <p class="lb" data-s="7">Track the concentration instead</p>
+      <p class="e t" data-s="7"><i>c</i> = <span class="fr"><span><i>Q</i></span><span>100</span></span>:&nbsp;&nbsp; <span class="fr"><span><i>dc</i></span><span><i>dt</i></span></span> = <span class="fr"><span>3</span><span>400</span></span> &minus; <span class="fr"><span>3<i>c</i></span><span>100</span></span></p>
+      <p class="l" data-s="8">Neither one is wrong. <span class="d">That one settles at &frac14; lb/gal &mdash; the concentration coming in, which is obviously right.</span></p>
+      <p class="e" data-s="9"><span class="bx">Write &ldquo;Let <i>Q</i>(<i>t</i>) be &hellip;&rdquo; on your paper. One line.</span></p>
+      <p class="a" data-s="10">&#8627; the units arrive with the name. They are not a separate rule to remember.</p>
     </div>
   </div>
 </div>
