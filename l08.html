@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="2255 L2">
+<meta name="theme-color" content="#0D0F10">
+<title>Math 2255 - Lecture 2 Board</title>
+<style>
+:root{
+  --bd:#0D0F10; --gr:#1B1F21;
+  --w:#F0EFE8; --y:#E3E34B; --c:#45CFC2; --m:#E85CD2; --o:#F09A42;
+  --dm:#7C8A8E; --wash-w:rgba(240,239,232,.07); --wash-o:rgba(240,154,66,.10);
+  --chrome:rgba(13,15,16,.86); --line:#23282A; --bfg:#9DACB1; --bbd:#2E3538;
+  --act:#1C2224; --sel:#8FA0A5; --kbd:#1E2426; --kbdb:#333B3E; --kbdf:#C3CFD2;
+  --solid:#12171A;
+  --fm:"Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
+  --fu:system-ui,-apple-system,"PingFang SC",sans-serif;
+}
+body.light{--bd:#FBFAF7; --gr:#E7E4DC;
+  --w:#16181B; --y:#8F6A05; --c:#0E7A70; --m:#A0198A; --o:#B4530A;
+  --dm:#6E787E; --wash-w:rgba(20,24,28,.05); --wash-o:rgba(180,83,10,.09);
+  --chrome:rgba(251,250,247,.92); --line:#DBD6CB; --bfg:#4A5459; --bbd:#CAC4B9;
+  --act:#EDE9E1; --sel:#5A6469; --kbd:#EFEBE3; --kbdb:#D2CCC2; --kbdf:#39434A;
+  --solid:#F2F0EA;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
+  overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+#app{position:relative;width:100%;height:100dvh;height:100svh;min-height:480px;overflow:hidden;background:var(--bd);
+  background-image:linear-gradient(var(--gr) 1px,transparent 1px),
+    linear-gradient(90deg,var(--gr) 1px,transparent 1px);
+  background-size:32px 32px;color:var(--w);font-family:var(--fm)}
+#stage{position:absolute;inset:0;padding:3.0vh 4vw 60px;overflow:hidden}
+.pg{display:none;height:100%}
+.pg.on{display:block}
+[data-s]{opacity:0;transition:opacity .16s ease}
+[data-s].vis{opacity:1}
+[data-until].gone{display:none}
+.pg.rv .h{font-size:clamp(1.3rem,min(3.8vw,5.60vh),2.9rem)}
+.pg.rv .lb{font-size:clamp(1rem,min(2.5vw,3.68vh),1.9rem);margin:.62em 0 .12em}
+.pg.rv .l{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.6;margin:0 0 .1em 1.0em}
+.pg.rv .e{font-size:clamp(1.05rem,min(2.7vw,4.00vh),2.1rem);margin-left:1.0em}
+
+.h{font-size:clamp(1.2rem,min(3.4vw,5.00vh),2.6rem);color:var(--y);display:table;
+  border-bottom:.09em solid var(--y);padding-bottom:.08em;margin:0 0 .55em}
+.lb{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);color:var(--y);display:table;
+  border-bottom:.07em solid var(--y);padding-bottom:.06em;margin:.65em 0 .32em}
+.l{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.62rem);line-height:1.72;margin:0 0 .1em}
+.e{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.95;margin:.3em 0 .3em 1.1em}
+.e.t{margin-top:.16em;margin-bottom:.16em}
+.a{font-size:clamp(.8rem,min(1.8vw,2.65vh),1.4rem);color:var(--m);margin:.12em 0 .3em 2em}
+.i{margin-left:1.5em}
+.n{color:var(--m)} .g{color:var(--c)} .v{color:var(--o)}
+.d{color:var(--dm)}
+.bx{display:inline-block;border:.09em solid var(--o);color:var(--o);
+  background:var(--wash-o);border-radius:.16em;padding:.2em .6em}
+.bw{display:inline-block;border:.09em solid var(--w);color:var(--w);
+  background:var(--wash-w);border-radius:.16em;padding:.2em .6em}
+sup,sub{line-height:0;font-size:.68em}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  line-height:1.18;font-size:.86em;margin:0 .14em}
+.fr>span{padding:0 .28em;display:block}
+.fr>span:first-child{border-bottom:.06em solid currentColor;padding-bottom:.1em}
+.fr>span:last-child{padding-top:.12em}
+ol.st{margin:.25em 0 .25em 1.1em;padding-left:1.1em;font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);line-height:1.65}
+table{border-collapse:collapse;margin:.4em 0 .4em 1.1em;font-size:clamp(.85rem,min(2vw,2.94vh),1.5rem);line-height:2}
+td,th{padding:.16em 1.4em .16em 0;text-align:left;font-weight:400}
+th{color:var(--y);font-size:.82em}
+.cols{display:flex;gap:5vw;align-items:flex-start}
+.two{display:grid;grid-template-columns:1fr 1fr;column-gap:2.4vw;align-items:start;margin:.15em 0 0 .2em}
+.two>div>*:first-child{margin-top:0}
+.two .e{margin:.12em 0 .12em .2em;line-height:1.6}
+.two .l{margin:.1em 0 .1em .2em}
+.two .lb{margin:.5em 0 .14em}
+.two .a{margin:.1em 0 .2em 1em}
+.split{display:flex;gap:1.4vw;align-items:flex-start;margin:.2em 0 0 .4em}
+.split>.sl{flex:0 0 auto}
+.split>.sr{flex:1 1 auto;min-width:0;display:flex;justify-content:center;align-items:flex-start}
+.split .e{margin:.05em 0 .05em .2em;line-height:1.45}
+.split .sl .e{font-size:clamp(.85rem,min(2.1vw,3.02vh),1.65rem)}
+svg.df.sp{width:auto;height:51vh;max-width:100%;margin:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;column-gap:2vw;row-gap:0;margin:.2em 0 .2em 1.1em}
+.g2 .e{margin-left:0;line-height:1.62}
+svg.df{display:block;width:100%;max-width:min(76vw,104vh);height:auto;margin:.5vh 0 .5vh 1vw}
+svg.df.ax{width:auto;height:45vh;max-width:96%;margin:.3vh 0 .3vh 1.6vw}
+svg.df.fx{width:auto;height:46vh;max-width:97%;margin:.3vh 0 .3vh 1.2vw}
+.hw{min-height:1.2em}
+body.guides .hw{outline:1px dashed rgba(69,207,194,.32);border-radius:4px}
+
+#wet{position:absolute;inset:0;pointer-events:none;z-index:6;transform:translateZ(0)}
+#ink{position:absolute;inset:0;touch-action:none;z-index:5;
+  transform:translateZ(0)}
+#topnav{position:absolute;top:0;right:0;z-index:12;display:flex;gap:6px;align-items:center;
+  padding:calc(6px + env(safe-area-inset-top)) 10px 6px;background:var(--solid);border-radius:0 0 0 10px;
+  font-family:var(--fu);font-size:13px;color:var(--bfg)}
+#topnav.hide{opacity:0;pointer-events:none}
+#bar{position:absolute;left:0;right:0;bottom:0;z-index:9;display:flex;gap:.5vw;
+  align-items:center;padding:.7vh 1.2vw;padding-bottom:calc(.7vh + env(safe-area-inset-bottom));background:var(--solid);
+  border-top:1px solid var(--line);font-family:var(--fu);font-size:13px;color:var(--dm);
+  transition:opacity .3s}
+#bar.hide{opacity:0;pointer-events:none}
+#bar,#topnav{transition:opacity .25s}
+#edge{position:absolute;left:0;right:0;bottom:0;height:46px;z-index:8}
+.pen{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;flex:none}
+.pen.sel{border-color:var(--sel);transform:scale(1.12)}
+.btn{padding:5px 11px;border:1px solid var(--bbd);border-radius:5px;background:transparent;
+  color:var(--bfg);font-family:var(--fu);font-size:12px;cursor:pointer}
+.btn:active{background:var(--act)}
+.sp{flex:1}
+.btn.nav{font-size:19px;padding:3px 20px;line-height:1.05;min-width:62px}
+#pos{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+#clk{font-variant-numeric:tabular-nums;font-size:15px;color:var(--w)}
+#clk.over{color:var(--o)}
+#hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;
+  font-family:var(--fu);font-size:15px;line-height:2;color:var(--bfg);text-align:center;
+  background:var(--chrome);border:1px solid var(--bbd);border-radius:10px;padding:26px 34px}
+#hint.hide{display:none}
+#hint b{color:var(--w)}
+kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);border-radius:4px;
+  padding:1px 6px;color:var(--kbdf);font-size:12px}
+</style>
+</head>
+<body>
+
+<div id="app">
+<div id="topnav">
+  <button class="btn nav" id="prev2">&#9664;</button>
+  <span id="pos2">1 / 24</span>
+  <button class="btn nav" id="next2">&#9654;</button>
+</div>
+<div id="stage">
+
+<div class="pg on" data-n="1">
+  <p class="h" data-s="0">Friday, in one page</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">Four models, one law</p>
+      <p class="e t" data-s="1">rate of change = rate in &minus; rate out</p>
+      <p class="e t" data-s="2">tank:&nbsp; <i>Q</i>&#8242; = <span class="fr"><span>3</span><span>4</span></span> &minus; <span class="fr"><span>3<i>Q</i></span><span>100</span></span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;coffee:&nbsp; <i>T</i>&#8242; = &minus;<i>k</i>(<i>T</i> &minus; 70)</p>
+      <p class="l" data-s="3">Three were linear. Each one approached a limit and <span class="g">never arrived</span>.</p>
+      <p class="e t" data-s="4"><span class="fr"><span><i>dh</i></span><span><i>dt</i></span></span> = &minus;0.2<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span>,&nbsp; <i>h</i>(0) = 9&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <i>h</i> = (3 &minus; 0.1<i>t</i>)<sup>2</sup>,&nbsp; empty at <i>t</i> = 30</p>
+      <p class="l" data-s="5">The fourth was <span class="n">not</span> linear. It arrived, and then it stopped.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">And two loose ends</p>
+      <p class="l" data-s="6">Wednesday: for a linear equation the interval comes from <i>p</i> and <i>g</i>, before you solve. <span class="d">Said, not proved.</span></p>
+      <p class="l" data-s="7">Friday: at <i>h</i> = 0 two different solutions meet. <span class="d">Allowed? When?</span></p>
+      <p class="e" data-s="8"><span class="bx">Today: the theorem behind both.</span></p>
+      <p class="a" data-s="9">&#8627; no new method today. A rule for what the methods are allowed to promise.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="2">
+  <p class="h" data-s="0">Three claims &mdash; true or false?</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; Every initial value problem has a solution.</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; If it has a solution, it has only one.</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; For a linear equation you can find the interval before you solve.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="4"><span class="g">1.</span>&nbsp; <span class="v">false</span>&nbsp;&nbsp;<span class="d">Wednesday: <i>y</i>&#8242; = &minus;<i>x</i>/<i>y</i>, <i>y</i>(0) = 0 has none</span></p>
+      <p class="e t" data-s="5"><span class="g">2.</span>&nbsp; <span class="v">false</span>&nbsp;&nbsp;<span class="d">Friday: the empty tank has two</span></p>
+      <p class="e t" data-s="6"><span class="g">3.</span>&nbsp; <span class="v">true</span>&nbsp;&nbsp;<span class="d">and today you see why</span></p>
+      <p class="e" data-s="7"><span class="bx">Two false, one true. All three are &sect;2.4.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="3">
+  <p class="h" data-s="0">Two questions about every initial value problem</p>
+  <div class="two">
+    <div>
+      <ol class="st">
+        <li data-s="1"><span class="g">Existence.</span> Is there a solution at all?</li>
+        <li data-s="2"><span class="g">Uniqueness.</span> Is there only one?</li>
+      </ol>
+      <p class="l" data-s="3">You have already met both answers being <span class="n">no</span>.</p>
+      <p class="e t" data-s="3"><i>y</i>&#8242; = &minus;<i>x</i>/<i>y</i>,&nbsp; <i>y</i>(0) = 0&nbsp;&nbsp;<span class="d">no solution</span></p>
+      <p class="e t" data-s="4"><span class="fr"><span><i>dh</i></span><span><i>dt</i></span></span> = &minus;0.2<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span>,&nbsp; <i>h</i>(30) = 0&nbsp;&nbsp;<span class="d">two solutions</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Why anyone asks</p>
+      <p class="l" data-s="5">Before you solve: an hour of algebra on a problem with no answer is an hour lost.</p>
+      <p class="l" data-s="6">After you solve: if there is only one, you may stop looking.</p>
+      <p class="l" data-s="7">In two weeks a computer will draw one curve for you. <span class="d">If there are two, the picture is meaningless.</span></p>
+      <p class="e" data-s="8"><span class="bx">Linear: yes and yes, always.&nbsp; Nonlinear: it depends.</span></p>
+      <p class="a" data-s="9">&#8627; and the difference is a theorem, not a feeling.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="4">
+  <p class="h" data-s="0">The theorem for linear equations</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8242; + <i>p</i>(<i>t</i>)<i>y</i> = <i>g</i>(<i>t</i>),&nbsp;&nbsp; <i>y</i>(<i>t</i><sub>0</sub>) = <i>y</i><sub>0</sub></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">If</p>
+      <p class="l" data-s="2"><i>p</i> and <i>g</i> are both <span class="g">continuous</span> on an open interval <i>I</i>,</p>
+      <p class="l" data-s="3">and <i>t</i><sub>0</sub> is inside <i>I</i>,</p>
+      <p class="lb" data-s="4">then</p>
+      <p class="l" data-s="4">there <span class="g">is</span> a solution,</p>
+      <p class="l" data-s="5">there is <span class="g">only one</span>,</p>
+      <p class="l" data-s="6">and it lives on <span class="g">all of <i>I</i></span>.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="7">Read it as a contract</p>
+      <p class="l" data-s="7">You check two functions for continuity. <span class="d">That is the entire hypothesis.</span></p>
+      <p class="l" data-s="8">In return you get a solution defined on the whole interval, not just near <i>t</i><sub>0</sub>.</p>
+      <p class="e" data-s="9"><span class="bx">The solution can break only where <i>p</i> or <i>g</i> breaks.</span></p>
+      <p class="a" data-s="10">&#8627; Wednesday&#8217;s preview, with the word &ldquo;theorem&rdquo; on it. Next: why it is true.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="5">
+  <p class="h" data-s="0">Why it is true &mdash; the integrating factor is the proof</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8242; + <i>p</i>(<i>t</i>)<i>y</i> = <i>g</i>(<i>t</i>)</span>&nbsp;&nbsp;<span class="d"><i>p</i>, <i>g</i> continuous on <i>I</i></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">1&nbsp;&nbsp;build &mu; &mdash; this needs <i>p</i> continuous</p>
+      <p class="e t" data-s="2">&mu; = <span style="white-space:nowrap"><b>e</b><sup>&int;<i>p</i>&thinsp;<i>dt</i></sup></span> &gt; 0&nbsp;&nbsp;<span class="d">a continuous <i>p</i> has an antiderivative</span></p>
+      <p class="lb" data-s="3">2&nbsp;&nbsp;multiply every term</p>
+      <p class="e t" data-s="3">&mu;<i>y</i>&#8242; + &mu;<i>p</i>&thinsp;<i>y</i> = &mu;<i>g</i></p>
+      <p class="lb" data-s="4">3&nbsp;&nbsp;the left side is one derivative</p>
+      <p class="e t" data-s="4">(&mu;<i>y</i>)&#8242; = &mu;<i>g</i>&nbsp;&nbsp;<span class="d">because &mu;&#8242; = &mu;<i>p</i></span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">4&nbsp;&nbsp;integrate &mdash; this needs <i>g</i> continuous</p>
+      <p class="e t" data-s="5">&int;(&mu;<i>y</i>)&#8242;&thinsp;<i>dt</i> = &int;&mu;<i>g</i>&thinsp;<i>dt</i></p>
+      <p class="e t" data-s="6">&mu;<i>y</i> = &int;&mu;<i>g</i>&thinsp;<i>dt</i> + <i>c</i>&nbsp;&nbsp;<span class="d"><i>c</i> is born here</span></p>
+      <p class="e t" data-s="7"><span class="d">5&nbsp; divide by &mu;:</span>&nbsp; <i>y</i> = <span class="fr"><span>1</span><span>&mu;</span></span>&int;&mu;<i>g</i>&thinsp;<i>dt</i> + <span class="fr"><span><i>c</i></span><span>&mu;</span></span></p>
+      <p class="e t" data-s="8"><span class="d">6&nbsp; initial condition:</span>&nbsp; <i>y</i>(<i>t</i><sub>0</sub>) = <i>y</i><sub>0</sub>&nbsp; &rArr;&nbsp; <span class="v">exactly one <i>c</i></span></p>
+      <p class="e" data-s="9"><span class="bx">Exists on all of <i>I</i>: the formula.&nbsp; Only one: the <i>c</i>.</span></p>
+      <p class="a" data-s="10">&#8627; the hypothesis was used exactly twice: at &int;<i>p</i> and at &int;&mu;<i>g</i>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="6">
+  <p class="h" data-s="0">The recipe &mdash; the interval before the solution</p>
+  <div class="two">
+    <div>
+      <ol class="st">
+        <li data-s="1"><span class="g">Standard form.</span> Divide so that <i>y</i>&#8242; stands alone.</li>
+        <li data-s="2"><span class="g">Write down <i>p</i> and <i>g</i>.</span></li>
+        <li data-s="3"><span class="g">Mark</span> every <i>t</i> where <i>p</i> or <i>g</i> is undefined or jumps.</li>
+        <li data-s="4"><span class="g">Take</span> the largest open interval around <i>t</i><sub>0</sub> with no mark inside it.</li>
+      </ol>
+      <p class="e" data-s="5"><span class="bx">interval = the piece around <i>t</i><sub>0</sub> where <i>p</i> and <i>g</i> are both continuous</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">And you can always check</p>
+      <p class="l" data-s="6">Solve it. The answer breaks exactly where <i>p</i> or <i>g</i> breaks, and nowhere else.</p>
+      <p class="l" data-s="7">If your answer breaks somewhere else, the algebra is wrong. <span class="d">The theorem is a free error check.</span></p>
+      <p class="l" data-s="8">Nothing here needs the solution. <span class="g">Four steps, no integral.</span></p>
+      <p class="a" data-s="9">&#8627; the first example is one you have already solved. Now watch the interval come out first.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="7">
+  <p class="h" data-s="0">Example 1 &mdash; from week two</p>
+  <p class="e" data-s="1"><span class="bw"><i>t</i>&thinsp;<i>y</i>&#8242; + 2<i>y</i> = <i>t</i><sup>2</sup>,&nbsp;&nbsp; <i>y</i>(1) = 2</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Standard form &mdash; divide by <i>t</i></p>
+      <p class="e t" data-s="2"><i>y</i>&#8242; + <span class="fr"><span>2</span><span><i>t</i></span></span><i>y</i> = <i>t</i></p>
+      <p class="e t" data-s="3"><i>p</i> = 2/<i>t</i>,&nbsp;&nbsp; <i>g</i> = <i>t</i></p>
+      <p class="lb" data-s="4">Where do they break?</p>
+      <p class="e t" data-s="4"><i>p</i>: undefined at <i>t</i> = 0&nbsp;&nbsp;&middot;&nbsp;&nbsp;<i>g</i>: nowhere</p>
+      <p class="lb" data-s="5">Which side of 0 is <i>t</i><sub>0</sub> = 1 on?</p>
+      <p class="e" data-s="5"><span class="bx">exactly one solution, on 0 &lt; <i>t</i> &lt; &infin;</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">We solved it two weeks ago</p>
+      <p class="e t" data-s="6"><i>y</i> = <span class="fr"><span><i>t</i><sup>2</sup></span><span>4</span></span> + <span class="fr"><span>7</span><span>4<i>t</i><sup>2</sup></span></span>,&nbsp;&nbsp; <i>t</i> &gt; 0</p>
+      <p class="e t" data-s="7">breaks at <i>t</i> = 0, and nowhere else&nbsp;&nbsp;<span class="d">as promised</span></p>
+      <p class="lb" data-s="8">Change the initial condition: <i>y</i>(&minus;1) = 2</p>
+      <p class="e t" data-s="8">same <i>p</i>, same <i>g</i>, other side of the mark</p>
+      <p class="e" data-s="9"><span class="bx">exactly one solution, on &minus;&infin; &lt; <i>t</i> &lt; 0</span></p>
+      <p class="e t" data-s="10"><i>y</i> = <span class="fr"><span><i>t</i><sup>2</sup></span><span>4</span></span> + <span class="fr"><span>7</span><span>4<i>t</i><sup>2</sup></span></span> again&nbsp;&nbsp;<span class="d">now on <i>t</i> &lt; 0</span></p>
+      <p class="a" data-s="11">&#8627; the theorem needed no solving. The solving only confirmed it.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="8">
+  <p class="h" data-s="0">Example 1 &mdash; every curve, and the one bad point</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1">Every solution is <i>y</i> = <i>t</i><sup>2</sup>/4 + <i>c</i>/<i>t</i><sup>2</sup>, for one value of <i>c</i>.</p>
+      <p class="l" data-s="2">All of them go vertical at <i>t</i> = 0. <span class="g">Where <i>p</i> breaks.</span> Nowhere else.</p>
+      <p class="e t" data-s="3">except <i>c</i> = 0:&nbsp; <i>y</i> = <i>t</i><sup>2</sup>/4, the one through the origin</p>
+      <p class="lb" data-s="4">And when <i>t</i><sub>0</sub> = 0, the theorem is silent</p>
+      <p class="e t" data-s="4"><i>y</i>(0) = 2:&nbsp; <span class="v">no solution</span>&nbsp;&nbsp;<span class="d">at <i>t</i> = 0 the equation says 2<i>y</i> = 0</span></p>
+      <p class="e t" data-s="5"><i>y</i>(0) = 0:&nbsp; <span class="v">exactly one</span>,&nbsp; <i>y</i> = <i>t</i><sup>2</sup>/4</p>
+      <p class="e" data-s="6"><span class="bx">Silent means silent. It does not mean &ldquo;no&rdquo;.</span></p>
+      <p class="a" data-s="7">&#8627; off the mark: guaranteed. On the mark: anything.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="300" x2="0" y2="300"/><line x1="-7" y1="250" x2="0" y2="250"/><line x1="-7" y1="200" x2="0" y2="200"/><line x1="-7" y1="150" x2="0" y2="150"/><line x1="-7" y1="100" x2="0" y2="100"/><line x1="-7" y1="50" x2="0" y2="50"/><line x1="-7" y1="0" x2="0" y2="0"/><line x1="103.3" y1="350" x2="103.3" y2="357"/><line x1="206.7" y1="350" x2="206.7" y2="357"/><line x1="310" y1="350" x2="310" y2="357"/><line x1="413.3" y1="350" x2="413.3" y2="357"/><line x1="516.7" y1="350" x2="516.7" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">−3</text><text x="-12" y="305" text-anchor="end">−2</text><text x="-12" y="255" text-anchor="end">−1</text><text x="-12" y="205" text-anchor="end">0</text><text x="-12" y="155" text-anchor="end">1</text><text x="-12" y="105" text-anchor="end">2</text><text x="-12" y="55" text-anchor="end">3</text><text x="-12" y="5" text-anchor="end">4</text><text x="0" y="375" text-anchor="middle">−3</text><text x="103.3" y="375" text-anchor="middle">−2</text><text x="206.7" y="375" text-anchor="middle">−1</text><text x="310" y="375" text-anchor="middle">0</text><text x="413.3" y="375" text-anchor="middle">1</text><text x="516.7" y="375" text-anchor="middle">2</text><text x="620" y="375" text-anchor="middle">3</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="2" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"><line x1="-5" y1="338" x2="5" y2="362"/><line x1="98.4" y1="338" x2="108.3" y2="362"/><line x1="203" y1="337.5" x2="210.3" y2="362.5"/><line x1="310" y1="363" x2="310" y2="337"/><line x1="409.7" y1="362.5" x2="417" y2="337.5"/><line x1="511.7" y1="362" x2="521.6" y2="338"/><line x1="615" y1="362" x2="625" y2="338"/><line x1="-5.3" y1="313.1" x2="5.3" y2="336.9"/><line x1="97.9" y1="313.2" x2="108.8" y2="336.8"/><line x1="202.4" y1="312.7" x2="210.9" y2="337.3"/><line x1="310" y1="338" x2="310" y2="312"/><line x1="409.1" y1="337.3" x2="417.6" y2="312.7"/><line x1="511.2" y1="336.8" x2="522.1" y2="313.2"/><line x1="614.7" y1="336.9" x2="625.3" y2="313.1"/><line x1="-5.6" y1="288.3" x2="5.6" y2="311.7"/><line x1="97.4" y1="288.5" x2="109.3" y2="311.5"/><line x1="201.7" y1="288" x2="211.6" y2="312"/><line x1="310" y1="313" x2="310" y2="287"/><line x1="408.4" y1="312" x2="418.3" y2="288"/><line x1="510.7" y1="311.5" x2="522.6" y2="288.5"/><line x1="614.4" y1="311.7" x2="625.6" y2="288.3"/><line x1="-6" y1="263.5" x2="6" y2="286.5"/><line x1="96.7" y1="263.8" x2="109.9" y2="286.2"/><line x1="200.7" y1="263.5" x2="212.6" y2="286.5"/><line x1="310" y1="288" x2="310" y2="262"/><line x1="407.4" y1="286.5" x2="419.3" y2="263.5"/><line x1="510.1" y1="286.2" x2="523.3" y2="263.8"/><line x1="614" y1="286.5" x2="626" y2="263.5"/><line x1="-6.4" y1="238.7" x2="6.4" y2="261.3"/><line x1="96" y1="239.3" x2="110.7" y2="260.7"/><line x1="199.3" y1="239.3" x2="214" y2="260.7"/><line x1="310" y1="263" x2="310" y2="237"/><line x1="406" y1="260.7" x2="420.7" y2="239.3"/><line x1="509.3" y1="260.7" x2="524" y2="239.3"/><line x1="613.6" y1="261.3" x2="626.4" y2="238.7"/><line x1="-6.9" y1="214" x2="6.9" y2="236"/><line x1="95.1" y1="215" x2="111.6" y2="235"/><line x1="197.3" y1="216" x2="216" y2="234"/><line x1="310" y1="238" x2="310" y2="212"/><line x1="404" y1="234" x2="422.7" y2="216"/><line x1="508.4" y1="235" x2="524.9" y2="215"/><line x1="613.1" y1="236" x2="626.9" y2="214"/><line x1="-7.4" y1="189.3" x2="7.4" y2="210.7"/><line x1="94" y1="191" x2="112.7" y2="209"/><line x1="195" y1="194.3" x2="218.4" y2="205.7"/><line x1="297" y1="200" x2="323" y2="200"/><line x1="401.6" y1="205.7" x2="425" y2="194.3"/><line x1="507.3" y1="209" x2="526" y2="191"/><line x1="612.6" y1="210.7" x2="627.4" y2="189.3"/><line x1="-8" y1="164.7" x2="8" y2="185.3"/><line x1="92.8" y1="167.4" x2="113.9" y2="182.6"/><line x1="193.7" y1="175" x2="219.7" y2="175"/><line x1="310" y1="162" x2="310" y2="188"/><line x1="400.3" y1="175" x2="426.3" y2="175"/><line x1="506.1" y1="182.6" x2="527.2" y2="167.4"/><line x1="612" y1="185.3" x2="628" y2="164.7"/><line x1="-8.6" y1="140.3" x2="8.6" y2="159.7"/><line x1="91.6" y1="144.3" x2="115" y2="155.7"/><line x1="195" y1="155.7" x2="218.4" y2="144.3"/><line x1="310" y1="137" x2="310" y2="163"/><line x1="401.6" y1="144.3" x2="425" y2="155.7"/><line x1="505" y1="155.7" x2="528.4" y2="144.3"/><line x1="611.4" y1="159.7" x2="628.6" y2="140.3"/><line x1="-9.3" y1="116" x2="9.3" y2="134"/><line x1="90.7" y1="121.9" x2="116" y2="128.1"/><line x1="197.3" y1="134" x2="216" y2="116"/><line x1="310" y1="112" x2="310" y2="138"/><line x1="404" y1="116" x2="422.7" y2="134"/><line x1="504" y1="128.1" x2="529.3" y2="121.9"/><line x1="610.7" y1="134" x2="629.3" y2="116"/><line x1="-10.1" y1="91.8" x2="10.1" y2="108.2"/><line x1="90.3" y1="100" x2="116.3" y2="100"/><line x1="199.3" y1="110.7" x2="214" y2="89.3"/><line x1="310" y1="87" x2="310" y2="113"/><line x1="406" y1="89.3" x2="420.7" y2="110.7"/><line x1="503.7" y1="100" x2="529.7" y2="100"/><line x1="609.9" y1="108.2" x2="630.1" y2="91.8"/><line x1="-10.9" y1="68" x2="10.9" y2="82"/><line x1="90.7" y1="78.1" x2="116" y2="71.9"/><line x1="200.7" y1="86.5" x2="212.6" y2="63.5"/><line x1="310" y1="62" x2="310" y2="88"/><line x1="407.4" y1="63.5" x2="419.3" y2="86.5"/><line x1="504" y1="71.9" x2="529.3" y2="78.1"/><line x1="609.1" y1="82" x2="630.9" y2="68"/><line x1="-11.7" y1="44.3" x2="11.7" y2="55.7"/><line x1="91.6" y1="55.7" x2="115" y2="44.3"/><line x1="201.7" y1="62" x2="211.6" y2="38"/><line x1="310" y1="37" x2="310" y2="63"/><line x1="408.4" y1="38" x2="418.3" y2="62"/><line x1="505" y1="44.3" x2="528.4" y2="55.7"/><line x1="608.3" y1="55.7" x2="631.7" y2="44.3"/><line x1="-12.4" y1="21" x2="12.4" y2="29"/><line x1="92.8" y1="32.6" x2="113.9" y2="17.4"/><line x1="202.4" y1="37.3" x2="210.9" y2="12.7"/><line x1="310" y1="12" x2="310" y2="38"/><line x1="409.1" y1="12.7" x2="417.6" y2="37.3"/><line x1="506.1" y1="17.4" x2="527.2" y2="32.6"/><line x1="607.6" y1="29" x2="632.4" y2="21"/><line x1="-12.8" y1="-2.1" x2="12.8" y2="2.1"/><line x1="94" y1="9" x2="112.7" y2="-9"/><line x1="203" y1="12.5" x2="210.3" y2="-12.5"/><line x1="310" y1="-13" x2="310" y2="13"/><line x1="409.7" y1="-12.5" x2="417" y2="12.5"/><line x1="507.3" y1="-9" x2="526" y2="9"/><line x1="607.2" y1="2.1" x2="632.8" y2="-2.1"/></g><g data-s="3" stroke="var(--c)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" fill="none"><polyline points="0,77.8 1,78.5 2.1,79.1 3.1,79.8 4.1,80.5 5.1,81.1 6.2,81.8 7.2,82.5 8.2,83.1 9.2,83.8 10.3,84.4 11.3,85.1 12.3,85.7 13.3,86.4 14.4,87 15.4,87.6 16.4,88.3 17.4,88.9 18.5,89.5 19.5,90.1 20.5,90.8 21.6,91.4 22.6,92 23.6,92.6 24.6,93.2 25.7,93.8 26.7,94.4 27.7,95 28.7,95.6 29.8,96.2 30.8,96.8 31.8,97.3 32.8,97.9 33.9,98.5 34.9,99.1 35.9,99.6 37,100.2 38,100.8 39,101.3 40,101.9 41.1,102.4 42.1,103 43.1,103.5 44.1,104 45.2,104.6 46.2,105.1 47.2,105.6 48.2,106.2 49.3,106.7 50.3,107.2 51.3,107.7 52.3,108.2 53.4,108.7 54.4,109.2 55.4,109.7 56.5,110.2 57.5,110.7 58.5,111.2 59.5,111.7 60.6,112.1 61.6,112.6 62.6,113.1 63.6,113.6 64.7,114 65.7,114.5 66.7,114.9 67.7,115.4 68.8,115.8 69.8,116.3 70.8,116.7 71.9,117.1 72.9,117.6 73.9,118 74.9,118.4 76,118.8 77,119.2 78,119.6 79,120 80.1,120.4 81.1,120.8 82.1,121.2 83.1,121.6 84.2,122 85.2,122.4 86.2,122.7 87.2,123.1 88.3,123.4 89.3,123.8 90.3,124.1 91.4,124.5 92.4,124.8 93.4,125.2 94.4,125.5 95.5,125.8 96.5,126.1 97.5,126.5 98.5,126.8 99.6,127.1 100.6,127.4 101.6,127.7 102.6,127.9 103.7,128.2 104.7,128.5 105.7,128.8 106.8,129 107.8,129.3 108.8,129.5 109.8,129.8 110.9,130 111.9,130.2 112.9,130.5 113.9,130.7 115,130.9 116,131.1 117,131.3 118,131.5 119.1,131.7 120.1,131.9 121.1,132 122.1,132.2 123.2,132.4 124.2,132.5 125.2,132.7 126.3,132.8 127.3,132.9 128.3,133.1 129.3,133.2 130.4,133.3 131.4,133.4 132.4,133.5 133.4,133.5 134.5,133.6 135.5,133.7 136.5,133.7 137.5,133.8 138.6,133.8 139.6,133.8 140.6,133.8 141.6,133.9 142.7,133.9 143.7,133.8 144.7,133.8 145.8,133.8 146.8,133.7 147.8,133.7 148.8,133.6 149.9,133.5 150.9,133.5 151.9,133.4 152.9,133.2 154,133.1 155,133 156,132.8 157,132.7 158.1,132.5 159.1,132.3 160.1,132.1 161.2,131.9 162.2,131.7 163.2,131.4 164.2,131.2 165.3,130.9 166.3,130.6 167.3,130.3 168.3,130 169.4,129.6 170.4,129.2 171.4,128.9 172.4,128.5 173.5,128.1 174.5,127.6 175.5,127.2 176.5,126.7 177.6,126.2 178.6,125.7 179.6,125.1 180.7,124.6 181.7,124 182.7,123.4 183.7,122.7 184.8,122.1 185.8,121.4 186.8,120.7 187.8,119.9 188.9,119.1 189.9,118.3 190.9,117.5 191.9,116.6 193,115.7 194,114.8 195,113.8 196.1,112.8 197.1,111.8 198.1,110.7 199.1,109.6 200.2,108.4 201.2,107.2 202.2,106 203.2,104.7 204.3,103.3 205.3,102 206.3,100.5 207.3,99 208.4,97.5 209.4,95.8 210.4,94.2 211.4,92.4 212.5,90.6 213.5,88.8 214.5,86.8 215.6,84.8 216.6,82.7 217.6,80.6 218.6,78.3 219.7,76 220.7,73.5 221.7,71 222.7,68.4 223.8,65.7 224.8,62.8 225.8,59.9 226.8,56.8 227.9,53.6 228.9,50.3 229.9,46.8 230.9,43.2 232,39.4 233,35.5 234,31.4 235.1,27.1 236.1,22.6 237.1,17.9 238.1,13 239.2,7.9 240.2,2.6"/><polyline points="379.8,2.6 380.8,7.9 381.9,13 382.9,17.9 383.9,22.6 384.9,27.1 386,31.4 387,35.5 388,39.4 389.1,43.2 390.1,46.8 391.1,50.3 392.1,53.6 393.2,56.8 394.2,59.9 395.2,62.8 396.2,65.7 397.3,68.4 398.3,71 399.3,73.5 400.3,76 401.4,78.3 402.4,80.6 403.4,82.7 404.4,84.8 405.5,86.8 406.5,88.8 407.5,90.6 408.6,92.4 409.6,94.2 410.6,95.8 411.6,97.5 412.7,99 413.7,100.5 414.7,102 415.7,103.3 416.8,104.7 417.8,106 418.8,107.2 419.8,108.4 420.9,109.6 421.9,110.7 422.9,111.8 423.9,112.8 425,113.8 426,114.8 427,115.7 428.1,116.6 429.1,117.5 430.1,118.3 431.1,119.1 432.2,119.9 433.2,120.7 434.2,121.4 435.2,122.1 436.3,122.7 437.3,123.4 438.3,124 439.3,124.6 440.4,125.1 441.4,125.7 442.4,126.2 443.5,126.7 444.5,127.2 445.5,127.6 446.5,128.1 447.6,128.5 448.6,128.9 449.6,129.2 450.6,129.6 451.7,130 452.7,130.3 453.7,130.6 454.7,130.9 455.8,131.2 456.8,131.4 457.8,131.7 458.8,131.9 459.9,132.1 460.9,132.3 461.9,132.5 463,132.7 464,132.8 465,133 466,133.1 467.1,133.2 468.1,133.4 469.1,133.5 470.1,133.5 471.2,133.6 472.2,133.7 473.2,133.7 474.2,133.8 475.3,133.8 476.3,133.8 477.3,133.9 478.4,133.9 479.4,133.8 480.4,133.8 481.4,133.8 482.5,133.8 483.5,133.7 484.5,133.7 485.5,133.6 486.6,133.5 487.6,133.5 488.6,133.4 489.6,133.3 490.7,133.2 491.7,133.1 492.7,132.9 493.7,132.8 494.8,132.7 495.8,132.5 496.8,132.4 497.9,132.2 498.9,132 499.9,131.9 500.9,131.7 502,131.5 503,131.3 504,131.1 505,130.9 506.1,130.7 507.1,130.5 508.1,130.2 509.1,130 510.2,129.8 511.2,129.5 512.2,129.3 513.2,129 514.3,128.8 515.3,128.5 516.3,128.2 517.4,127.9 518.4,127.7 519.4,127.4 520.4,127.1 521.5,126.8 522.5,126.5 523.5,126.1 524.5,125.8 525.6,125.5 526.6,125.2 527.6,124.8 528.6,124.5 529.7,124.1 530.7,123.8 531.7,123.4 532.8,123.1 533.8,122.7 534.8,122.4 535.8,122 536.9,121.6 537.9,121.2 538.9,120.8 539.9,120.4 541,120 542,119.6 543,119.2 544,118.8 545.1,118.4 546.1,118 547.1,117.6 548.1,117.1 549.2,116.7 550.2,116.3 551.2,115.8 552.3,115.4 553.3,114.9 554.3,114.5 555.3,114 556.4,113.6 557.4,113.1 558.4,112.6 559.4,112.1 560.5,111.7 561.5,111.2 562.5,110.7 563.5,110.2 564.6,109.7 565.6,109.2 566.6,108.7 567.7,108.2 568.7,107.7 569.7,107.2 570.7,106.7 571.8,106.2 572.8,105.6 573.8,105.1 574.8,104.6 575.9,104 576.9,103.5 577.9,103 578.9,102.4 580,101.9 581,101.3 582,100.8 583,100.2 584.1,99.6 585.1,99.1 586.1,98.5 587.2,97.9 588.2,97.3 589.2,96.8 590.2,96.2 591.3,95.6 592.3,95 593.3,94.4 594.3,93.8 595.4,93.2 596.4,92.6 597.4,92 598.4,91.4 599.5,90.8 600.5,90.1 601.5,89.5 602.6,88.9 603.6,88.3 604.6,87.6 605.6,87 606.7,86.4 607.7,85.7 608.7,85.1 609.7,84.4 610.8,83.8 611.8,83.1 612.8,82.5 613.8,81.8 614.9,81.1 615.9,80.5 616.9,79.8 617.9,79.1 619,78.5 620,77.8"/><polyline points="0,93.1 1,93.8 2.1,94.6 3.1,95.4 4.1,96.2 5.1,96.9 6.2,97.7 7.2,98.5 8.2,99.2 9.2,100 10.3,100.8 11.3,101.5 12.3,102.3 13.3,103 14.4,103.8 15.4,104.5 16.4,105.3 17.4,106 18.5,106.8 19.5,107.5 20.5,108.3 21.6,109 22.6,109.8 23.6,110.5 24.6,111.2 25.7,112 26.7,112.7 27.7,113.4 28.7,114.1 29.8,114.9 30.8,115.6 31.8,116.3 32.8,117 33.9,117.7 34.9,118.5 35.9,119.2 37,119.9 38,120.6 39,121.3 40,122 41.1,122.7 42.1,123.4 43.1,124.1 44.1,124.8 45.2,125.5 46.2,126.2 47.2,126.9 48.2,127.6 49.3,128.3 50.3,129 51.3,129.6 52.3,130.3 53.4,131 54.4,131.7 55.4,132.4 56.5,133 57.5,133.7 58.5,134.4 59.5,135.1 60.6,135.7 61.6,136.4 62.6,137.1 63.6,137.7 64.7,138.4 65.7,139.1 66.7,139.7 67.7,140.4 68.8,141.1 69.8,141.7 70.8,142.4 71.9,143 72.9,143.7 73.9,144.3 74.9,145 76,145.6 77,146.3 78,146.9 79,147.6 80.1,148.2 81.1,148.8 82.1,149.5 83.1,150.1 84.2,150.8 85.2,151.4 86.2,152 87.2,152.7 88.3,153.3 89.3,153.9 90.3,154.6 91.4,155.2 92.4,155.8 93.4,156.5 94.4,157.1 95.5,157.7 96.5,158.3 97.5,159 98.5,159.6 99.6,160.2 100.6,160.8 101.6,161.5 102.6,162.1 103.7,162.7 104.7,163.3 105.7,163.9 106.8,164.6 107.8,165.2 108.8,165.8 109.8,166.4 110.9,167 111.9,167.7 112.9,168.3 113.9,168.9 115,169.5 116,170.1 117,170.7 118,171.4 119.1,172 120.1,172.6 121.1,173.2 122.1,173.8 123.2,174.4 124.2,175.1 125.2,175.7 126.3,176.3 127.3,176.9 128.3,177.5 129.3,178.1 130.4,178.8 131.4,179.4 132.4,180 133.4,180.6 134.5,181.3 135.5,181.9 136.5,182.5 137.5,183.1 138.6,183.8 139.6,184.4 140.6,185 141.6,185.7 142.7,186.3 143.7,186.9 144.7,187.6 145.8,188.2 146.8,188.9 147.8,189.5 148.8,190.1 149.9,190.8 150.9,191.5 151.9,192.1 152.9,192.8 154,193.4 155,194.1 156,194.8 157,195.4 158.1,196.1 159.1,196.8 160.1,197.5 161.2,198.2 162.2,198.9 163.2,199.5 164.2,200.3 165.3,201 166.3,201.7 167.3,202.4 168.3,203.1 169.4,203.8 170.4,204.6 171.4,205.3 172.4,206.1 173.5,206.8 174.5,207.6 175.5,208.4 176.5,209.1 177.6,209.9 178.6,210.7 179.6,211.5 180.7,212.3 181.7,213.1 182.7,214 183.7,214.8 184.8,215.7 185.8,216.5 186.8,217.4 187.8,218.3 188.9,219.2 189.9,220.1 190.9,221 191.9,222 193,222.9 194,223.9 195,224.9 196.1,225.9 197.1,226.9 198.1,228 199.1,229 200.2,230.1 201.2,231.2 202.2,232.3 203.2,233.5 204.3,234.7 205.3,235.9 206.3,237.1 207.3,238.3 208.4,239.6 209.4,240.9 210.4,242.2 211.4,243.6 212.5,245 213.5,246.4 214.5,247.9 215.6,249.4 216.6,251 217.6,252.5 218.6,254.2 219.7,255.9 220.7,257.6 221.7,259.4 222.7,261.2 223.8,263.1 224.8,265 225.8,267 226.8,269.1 227.9,271.3 228.9,273.5 229.9,275.8 230.9,278.1 232,280.6 233,283.1 234,285.7 235.1,288.5 236.1,291.3 237.1,294.3 238.1,297.3 239.2,300.5 240.2,303.8 241.2,307.3 242.2,310.9 243.3,314.7 244.3,318.6 245.3,322.7 246.3,327 247.4,331.5 248.4,336.3 249.4,341.2 250.5,346.4"/><polyline points="369.5,346.4 370.6,341.2 371.6,336.3 372.6,331.5 373.7,327 374.7,322.7 375.7,318.6 376.7,314.7 377.8,310.9 378.8,307.3 379.8,303.8 380.8,300.5 381.9,297.3 382.9,294.3 383.9,291.3 384.9,288.5 386,285.7 387,283.1 388,280.6 389.1,278.1 390.1,275.8 391.1,273.5 392.1,271.3 393.2,269.1 394.2,267 395.2,265 396.2,263.1 397.3,261.2 398.3,259.4 399.3,257.6 400.3,255.9 401.4,254.2 402.4,252.5 403.4,251 404.4,249.4 405.5,247.9 406.5,246.4 407.5,245 408.6,243.6 409.6,242.2 410.6,240.9 411.6,239.6 412.7,238.3 413.7,237.1 414.7,235.9 415.7,234.7 416.8,233.5 417.8,232.3 418.8,231.2 419.8,230.1 420.9,229 421.9,228 422.9,226.9 423.9,225.9 425,224.9 426,223.9 427,222.9 428.1,222 429.1,221 430.1,220.1 431.1,219.2 432.2,218.3 433.2,217.4 434.2,216.5 435.2,215.7 436.3,214.8 437.3,214 438.3,213.1 439.3,212.3 440.4,211.5 441.4,210.7 442.4,209.9 443.5,209.1 444.5,208.4 445.5,207.6 446.5,206.8 447.6,206.1 448.6,205.3 449.6,204.6 450.6,203.8 451.7,203.1 452.7,202.4 453.7,201.7 454.7,201 455.8,200.3 456.8,199.5 457.8,198.9 458.8,198.2 459.9,197.5 460.9,196.8 461.9,196.1 463,195.4 464,194.8 465,194.1 466,193.4 467.1,192.8 468.1,192.1 469.1,191.5 470.1,190.8 471.2,190.1 472.2,189.5 473.2,188.9 474.2,188.2 475.3,187.6 476.3,186.9 477.3,186.3 478.4,185.7 479.4,185 480.4,184.4 481.4,183.8 482.5,183.1 483.5,182.5 484.5,181.9 485.5,181.3 486.6,180.6 487.6,180 488.6,179.4 489.6,178.8 490.7,178.1 491.7,177.5 492.7,176.9 493.7,176.3 494.8,175.7 495.8,175.1 496.8,174.4 497.9,173.8 498.9,173.2 499.9,172.6 500.9,172 502,171.4 503,170.7 504,170.1 505,169.5 506.1,168.9 507.1,168.3 508.1,167.7 509.1,167 510.2,166.4 511.2,165.8 512.2,165.2 513.2,164.6 514.3,163.9 515.3,163.3 516.3,162.7 517.4,162.1 518.4,161.5 519.4,160.8 520.4,160.2 521.5,159.6 522.5,159 523.5,158.3 524.5,157.7 525.6,157.1 526.6,156.5 527.6,155.8 528.6,155.2 529.7,154.6 530.7,153.9 531.7,153.3 532.8,152.7 533.8,152 534.8,151.4 535.8,150.8 536.9,150.1 537.9,149.5 538.9,148.8 539.9,148.2 541,147.6 542,146.9 543,146.3 544,145.6 545.1,145 546.1,144.3 547.1,143.7 548.1,143 549.2,142.4 550.2,141.7 551.2,141.1 552.3,140.4 553.3,139.7 554.3,139.1 555.3,138.4 556.4,137.7 557.4,137.1 558.4,136.4 559.4,135.7 560.5,135.1 561.5,134.4 562.5,133.7 563.5,133 564.6,132.4 565.6,131.7 566.6,131 567.7,130.3 568.7,129.6 569.7,129 570.7,128.3 571.8,127.6 572.8,126.9 573.8,126.2 574.8,125.5 575.9,124.8 576.9,124.1 577.9,123.4 578.9,122.7 580,122 581,121.3 582,120.6 583,119.9 584.1,119.2 585.1,118.5 586.1,117.7 587.2,117 588.2,116.3 589.2,115.6 590.2,114.9 591.3,114.1 592.3,113.4 593.3,112.7 594.3,112 595.4,111.2 596.4,110.5 597.4,109.8 598.4,109 599.5,108.3 600.5,107.5 601.5,106.8 602.6,106 603.6,105.3 604.6,104.5 605.6,103.8 606.7,103 607.7,102.3 608.7,101.5 609.7,100.8 610.8,100 611.8,99.2 612.8,98.5 613.8,97.7 614.9,96.9 615.9,96.2 616.9,95.4 617.9,94.6 619,93.8 620,93.1"/><polyline points="0,84.7 1,85.4 2.1,86.2 3.1,86.9 4.1,87.6 5.1,88.3 6.2,89 7.2,89.7 8.2,90.5 9.2,91.2 10.3,91.9 11.3,92.6 12.3,93.2 13.3,93.9 14.4,94.6 15.4,95.3 16.4,96 17.4,96.7 18.5,97.4 19.5,98 20.5,98.7 21.6,99.4 22.6,100.1 23.6,100.7 24.6,101.4 25.7,102.1 26.7,102.7 27.7,103.4 28.7,104 29.8,104.7 30.8,105.3 31.8,106 32.8,106.6 33.9,107.2 34.9,107.9 35.9,108.5 37,109.1 38,109.8 39,110.4 40,111 41.1,111.6 42.1,112.3 43.1,112.9 44.1,113.5 45.2,114.1 46.2,114.7 47.2,115.3 48.2,115.9 49.3,116.5 50.3,117.1 51.3,117.7 52.3,118.3 53.4,118.9 54.4,119.4 55.4,120 56.5,120.6 57.5,121.2 58.5,121.7 59.5,122.3 60.6,122.9 61.6,123.4 62.6,124 63.6,124.6 64.7,125.1 65.7,125.7 66.7,126.2 67.7,126.7 68.8,127.3 69.8,127.8 70.8,128.4 71.9,128.9 72.9,129.4 73.9,130 74.9,130.5 76,131 77,131.5 78,132 79,132.5 80.1,133.1 81.1,133.6 82.1,134.1 83.1,134.6 84.2,135.1 85.2,135.6 86.2,136 87.2,136.5 88.3,137 89.3,137.5 90.3,138 91.4,138.5 92.4,138.9 93.4,139.4 94.4,139.9 95.5,140.3 96.5,140.8 97.5,141.2 98.5,141.7 99.6,142.1 100.6,142.6 101.6,143 102.6,143.5 103.7,143.9 104.7,144.3 105.7,144.8 106.8,145.2 107.8,145.6 108.8,146 109.8,146.4 110.9,146.8 111.9,147.3 112.9,147.7 113.9,148.1 115,148.5 116,148.8 117,149.2 118,149.6 119.1,150 120.1,150.4 121.1,150.8 122.1,151.1 123.2,151.5 124.2,151.9 125.2,152.2 126.3,152.6 127.3,152.9 128.3,153.3 129.3,153.6 130.4,153.9 131.4,154.3 132.4,154.6 133.4,154.9 134.5,155.3 135.5,155.6 136.5,155.9 137.5,156.2 138.6,156.5 139.6,156.8 140.6,157.1 141.6,157.4 142.7,157.7 143.7,158 144.7,158.3 145.8,158.5 146.8,158.8 147.8,159.1 148.8,159.3 149.9,159.6 150.9,159.8 151.9,160.1 152.9,160.3 154,160.5 155,160.8 156,161 157,161.2 158.1,161.4 159.1,161.6 160.1,161.8 161.2,162 162.2,162.2 163.2,162.4 164.2,162.6 165.3,162.7 166.3,162.9 167.3,163.1 168.3,163.2 169.4,163.3 170.4,163.5 171.4,163.6 172.4,163.7 173.5,163.9 174.5,164 175.5,164.1 176.5,164.2 177.6,164.2 178.6,164.3 179.6,164.4 180.7,164.5 181.7,164.5 182.7,164.6 183.7,164.6 184.8,164.6 185.8,164.6 186.8,164.6 187.8,164.6 188.9,164.6 189.9,164.6 190.9,164.6 191.9,164.5 193,164.5 194,164.4 195,164.3 196.1,164.2 197.1,164.1 198.1,164 199.1,163.9 200.2,163.8 201.2,163.6 202.2,163.4 203.2,163.2 204.3,163 205.3,162.8 206.3,162.6 207.3,162.3 208.4,162.1 209.4,161.8 210.4,161.5 211.4,161.1 212.5,160.8 213.5,160.4 214.5,160 215.6,159.6 216.6,159.2 217.6,158.7 218.6,158.3 219.7,157.7 220.7,157.2 221.7,156.6 222.7,156 223.8,155.4 224.8,154.7 225.8,154 226.8,153.3 227.9,152.5 228.9,151.7 229.9,150.9 230.9,150 232,149 233,148 234,147 235.1,145.9 236.1,144.7 237.1,143.5 238.1,142.3 239.2,140.9 240.2,139.5 241.2,138 242.2,136.5 243.3,134.8 244.3,133.1 245.3,131.3 246.3,129.4 247.4,127.3 248.4,125.2 249.4,123 250.5,120.6 251.5,118 252.5,115.4 253.5,112.6 254.6,109.6 255.6,106.4 256.6,103 257.6,99.4 258.7,95.6 259.7,91.6 260.7,87.2 261.7,82.6 262.8,77.7 263.8,72.5 264.8,66.8 265.8,60.8 266.9,54.3 267.9,47.3 268.9,39.8 270,31.7 271,22.9 272,13.4 273,3"/><polyline points="347,3 348,13.4 349,22.9 350,31.7 351.1,39.8 352.1,47.3 353.1,54.3 354.2,60.8 355.2,66.8 356.2,72.5 357.2,77.7 358.3,82.6 359.3,87.2 360.3,91.6 361.3,95.6 362.4,99.4 363.4,103 364.4,106.4 365.4,109.6 366.5,112.6 367.5,115.4 368.5,118 369.5,120.6 370.6,123 371.6,125.2 372.6,127.3 373.7,129.4 374.7,131.3 375.7,133.1 376.7,134.8 377.8,136.5 378.8,138 379.8,139.5 380.8,140.9 381.9,142.3 382.9,143.5 383.9,144.7 384.9,145.9 386,147 387,148 388,149 389.1,150 390.1,150.9 391.1,151.7 392.1,152.5 393.2,153.3 394.2,154 395.2,154.7 396.2,155.4 397.3,156 398.3,156.6 399.3,157.2 400.3,157.7 401.4,158.3 402.4,158.7 403.4,159.2 404.4,159.6 405.5,160 406.5,160.4 407.5,160.8 408.6,161.1 409.6,161.5 410.6,161.8 411.6,162.1 412.7,162.3 413.7,162.6 414.7,162.8 415.7,163 416.8,163.2 417.8,163.4 418.8,163.6 419.8,163.8 420.9,163.9 421.9,164 422.9,164.1 423.9,164.2 425,164.3 426,164.4 427,164.5 428.1,164.5 429.1,164.6 430.1,164.6 431.1,164.6 432.2,164.6 433.2,164.6 434.2,164.6 435.2,164.6 436.3,164.6 437.3,164.6 438.3,164.5 439.3,164.5 440.4,164.4 441.4,164.3 442.4,164.2 443.5,164.2 444.5,164.1 445.5,164 446.5,163.9 447.6,163.7 448.6,163.6 449.6,163.5 450.6,163.3 451.7,163.2 452.7,163.1 453.7,162.9 454.7,162.7 455.8,162.6 456.8,162.4 457.8,162.2 458.8,162 459.9,161.8 460.9,161.6 461.9,161.4 463,161.2 464,161 465,160.8 466,160.5 467.1,160.3 468.1,160.1 469.1,159.8 470.1,159.6 471.2,159.3 472.2,159.1 473.2,158.8 474.2,158.5 475.3,158.3 476.3,158 477.3,157.7 478.4,157.4 479.4,157.1 480.4,156.8 481.4,156.5 482.5,156.2 483.5,155.9 484.5,155.6 485.5,155.3 486.6,154.9 487.6,154.6 488.6,154.3 489.6,153.9 490.7,153.6 491.7,153.3 492.7,152.9 493.7,152.6 494.8,152.2 495.8,151.9 496.8,151.5 497.9,151.1 498.9,150.8 499.9,150.4 500.9,150 502,149.6 503,149.2 504,148.8 505,148.5 506.1,148.1 507.1,147.7 508.1,147.3 509.1,146.8 510.2,146.4 511.2,146 512.2,145.6 513.2,145.2 514.3,144.8 515.3,144.3 516.3,143.9 517.4,143.5 518.4,143 519.4,142.6 520.4,142.1 521.5,141.7 522.5,141.2 523.5,140.8 524.5,140.3 525.6,139.9 526.6,139.4 527.6,138.9 528.6,138.5 529.7,138 530.7,137.5 531.7,137 532.8,136.5 533.8,136 534.8,135.6 535.8,135.1 536.9,134.6 537.9,134.1 538.9,133.6 539.9,133.1 541,132.5 542,132 543,131.5 544,131 545.1,130.5 546.1,130 547.1,129.4 548.1,128.9 549.2,128.4 550.2,127.8 551.2,127.3 552.3,126.7 553.3,126.2 554.3,125.7 555.3,125.1 556.4,124.6 557.4,124 558.4,123.4 559.4,122.9 560.5,122.3 561.5,121.7 562.5,121.2 563.5,120.6 564.6,120 565.6,119.4 566.6,118.9 567.7,118.3 568.7,117.7 569.7,117.1 570.7,116.5 571.8,115.9 572.8,115.3 573.8,114.7 574.8,114.1 575.9,113.5 576.9,112.9 577.9,112.3 578.9,111.6 580,111 581,110.4 582,109.8 583,109.1 584.1,108.5 585.1,107.9 586.1,107.2 587.2,106.6 588.2,106 589.2,105.3 590.2,104.7 591.3,104 592.3,103.4 593.3,102.7 594.3,102.1 595.4,101.4 596.4,100.7 597.4,100.1 598.4,99.4 599.5,98.7 600.5,98 601.5,97.4 602.6,96.7 603.6,96 604.6,95.3 605.6,94.6 606.7,93.9 607.7,93.2 608.7,92.6 609.7,91.9 610.8,91.2 611.8,90.5 612.8,89.7 613.8,89 614.9,88.3 615.9,87.6 616.9,86.9 617.9,86.2 619,85.4 620,84.7"/><polyline points="0,87.5 2.1,89 4.1,90.5 6.2,92 8.3,93.4 10.3,94.9 12.4,96.3 14.5,97.8 16.5,99.2 18.6,100.6 20.7,102 22.7,103.4 24.8,104.8 26.9,106.2 28.9,107.5 31,108.9 33.1,110.2 35.1,111.6 37.2,112.9 39.3,114.2 41.3,115.5 43.4,116.8 45.5,118.1 47.5,119.4 49.6,120.6 51.7,121.9 53.7,123.1 55.8,124.4 57.9,125.6 59.9,126.8 62,128 64.1,129.2 66.1,130.4 68.2,131.6 70.3,132.7 72.3,133.9 74.4,135 76.5,136.2 78.5,137.3 80.6,138.4 82.7,139.5 84.7,140.6 86.8,141.7 88.9,142.8 90.9,143.8 93,144.9 95.1,145.9 97.1,147 99.2,148 101.3,149 103.3,150 105.4,151 107.5,152 109.5,153 111.6,153.9 113.7,154.9 115.7,155.8 117.8,156.8 119.9,157.7 121.9,158.6 124,159.5 126.1,160.4 128.1,161.3 130.2,162.2 132.3,163 134.3,163.9 136.4,164.7 138.5,165.6 140.5,166.4 142.6,167.2 144.7,168 146.7,168.8 148.8,169.6 150.9,170.4 152.9,171.1 155,171.9 157.1,172.6 159.1,173.4 161.2,174.1 163.3,174.8 165.3,175.5 167.4,176.2 169.5,176.9 171.5,177.6 173.6,178.2 175.7,178.9 177.7,179.5 179.8,180.2 181.9,180.8 183.9,181.4 186,182 188.1,182.6 190.1,183.2 192.2,183.8 194.3,184.3 196.3,184.9 198.4,185.4 200.5,186 202.5,186.5 204.6,187 206.7,187.5 208.7,188 210.8,188.5 212.9,189 214.9,189.4 217,189.9 219.1,190.3 221.1,190.8 223.2,191.2 225.3,191.6 227.3,192 229.4,192.4 231.5,192.8 233.5,193.2 235.6,193.5 237.7,193.9 239.7,194.2 241.8,194.6 243.9,194.9 245.9,195.2 248,195.5 250.1,195.8 252.1,196.1 254.2,196.4 256.3,196.6 258.3,196.9 260.4,197.1 262.5,197.4 264.5,197.6 266.6,197.8 268.7,198 270.7,198.2 272.8,198.4 274.9,198.6 276.9,198.7 279,198.9 281.1,199 283.1,199.2 285.2,199.3 287.3,199.4 289.3,199.5 291.4,199.6 293.5,199.7 295.5,199.8 297.6,199.8 299.7,199.9 301.7,199.9 303.8,200 305.9,200 307.9,200 312.1,200 314.1,200 316.2,200 318.3,199.9 320.3,199.9 322.4,199.8 324.5,199.8 326.5,199.7 328.6,199.6 330.7,199.5 332.7,199.4 334.8,199.3 336.9,199.2 338.9,199 341,198.9 343.1,198.7 345.1,198.6 347.2,198.4 349.3,198.2 351.3,198 353.4,197.8 355.5,197.6 357.5,197.4 359.6,197.1 361.7,196.9 363.7,196.6 365.8,196.4 367.9,196.1 369.9,195.8 372,195.5 374.1,195.2 376.1,194.9 378.2,194.6 380.3,194.2 382.3,193.9 384.4,193.5 386.5,193.2 388.5,192.8 390.6,192.4 392.7,192 394.7,191.6 396.8,191.2 398.9,190.8 400.9,190.3 403,189.9 405.1,189.4 407.1,189 409.2,188.5 411.3,188 413.3,187.5 415.4,187 417.5,186.5 419.5,186 421.6,185.4 423.7,184.9 425.7,184.3 427.8,183.8 429.9,183.2 431.9,182.6 434,182 436.1,181.4 438.1,180.8 440.2,180.2 442.3,179.5 444.3,178.9 446.4,178.2 448.5,177.6 450.5,176.9 452.6,176.2 454.7,175.5 456.7,174.8 458.8,174.1 460.9,173.4 462.9,172.6 465,171.9 467.1,171.1 469.1,170.4 471.2,169.6 473.3,168.8 475.3,168 477.4,167.2 479.5,166.4 481.5,165.6 483.6,164.7 485.7,163.9 487.7,163 489.8,162.2 491.9,161.3 493.9,160.4 496,159.5 498.1,158.6 500.1,157.7 502.2,156.8 504.3,155.8 506.3,154.9 508.4,153.9 510.5,153 512.5,152 514.6,151 516.7,150 518.7,149 520.8,148 522.9,147 524.9,145.9 527,144.9 529.1,143.8 531.1,142.8 533.2,141.7 535.3,140.6 537.3,139.5 539.4,138.4 541.5,137.3 543.5,136.2 545.6,135 547.7,133.9 549.7,132.7 551.8,131.6 553.9,130.4 555.9,129.2 558,128 560.1,126.8 562.1,125.6 564.2,124.4 566.3,123.1 568.3,121.9 570.4,120.6 572.5,119.4 574.5,118.1 576.6,116.8 578.7,115.5 580.7,114.2 582.8,112.9 584.9,111.6 586.9,110.2 589,108.9 591.1,107.5 593.1,106.2 595.2,104.8 597.3,103.4 599.3,102 601.4,100.6 603.5,99.2 605.5,97.8 607.6,96.3 609.7,94.9 611.7,93.4 613.8,92 615.9,90.5 617.9,89 620,87.5"/></g></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="9">
+  <p class="h" data-s="0">Friday&#8217;s models, under the theorem</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">The three linear ones</p>
+      <p class="e t" data-s="1"><i>Q</i>&#8242; + 0.03&thinsp;<i>Q</i> = 0.75&nbsp;&nbsp;<span class="d"><i>p</i>, <i>g</i> constants</span>&nbsp; &rArr;&nbsp; <span class="v">every <i>t</i></span></p>
+      <p class="e t" data-s="2"><i>T</i>&#8242; + <i>kT</i> = 70<i>k</i>&nbsp;&nbsp;<span class="d">constants again</span>&nbsp; &rArr;&nbsp; <span class="v">every <i>t</i></span></p>
+      <p class="e t" data-s="3"><i>Q</i>&#8242; + <span class="fr"><span>1</span><span>100 + <i>t</i></span></span><i>Q</i> = 4&nbsp;&nbsp;<span class="d"><i>p</i> breaks at <i>t</i> = &minus;100</span>&nbsp; &rArr;&nbsp; <span class="v"><i>t</i> &gt; &minus;100</span></p>
+      <p class="l" data-s="4">So all three solutions live forever. <span class="g">That is why none of them could end.</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">And the fourth</p>
+      <p class="e t" data-s="5"><span class="fr"><span><i>dh</i></span><span><i>dt</i></span></span> = &minus;0.2<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span>&nbsp;&nbsp;<span class="n">not linear</span></p>
+      <p class="l" data-s="6">The theorem says nothing about it. <span class="d">And it was the one that ended at <i>t</i> = 30.</span></p>
+      <p class="e" data-s="7"><span class="bx">A linear model never ends. Now you know why.</span></p>
+      <p class="a" data-s="8">&#8627; the theorem is not decoration. It told you on Friday, in advance, which tank could run dry.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="10">
+  <p class="h" data-s="0">Example 2 &mdash; an equation we cannot solve by hand</p>
+  <p class="e" data-s="1"><span class="bw">(<i>t</i> &minus; 3)&thinsp;<i>y</i>&#8242; + (ln <i>t</i>)&thinsp;<i>y</i> = 2<i>t</i>,&nbsp;&nbsp; <i>y</i>(1) = 2</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Standard form &mdash; divide by <i>t</i> &minus; 3</p>
+      <p class="e t" data-s="2"><i>y</i>&#8242; + <span class="fr"><span>ln <i>t</i></span><span><i>t</i> &minus; 3</span></span><i>y</i> = <span class="fr"><span>2<i>t</i></span><span><i>t</i> &minus; 3</span></span></p>
+      <p class="e t" data-s="3"><i>p</i> = <span class="fr"><span>ln <i>t</i></span><span><i>t</i> &minus; 3</span></span>,&nbsp;&nbsp; <i>g</i> = <span class="fr"><span>2<i>t</i></span><span><i>t</i> &minus; 3</span></span></p>
+      <p class="lb" data-s="4">Where do they break?</p>
+      <p class="e t" data-s="4">ln <i>t</i>:&nbsp; needs <i>t</i> &gt; 0</p>
+      <p class="e t" data-s="5"><i>t</i> &minus; 3:&nbsp; undefined at <i>t</i> = 3</p>
+      <p class="e t" data-s="6">marks:&nbsp; <span class="v"><i>t</i> &le; 0</span> and <span class="v"><i>t</i> = 3</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="7">Take the piece around <i>t</i><sub>0</sub> = 1</p>
+      <p class="e" data-s="7"><span class="bx">0 &lt; <i>t</i> &lt; 3</span></p>
+      <p class="lb" data-s="8">Same equation, <i>y</i>(4) = 0</p>
+      <p class="e" data-s="8"><span class="bx">3 &lt; <i>t</i> &lt; &infin;</span></p>
+      <p class="lb" data-s="9">Same equation, <i>y</i>(3) = 1</p>
+      <p class="e t" data-s="9">the theorem is silent&nbsp;&nbsp;<span class="d">there is no standard form at <i>t</i> = 3</span></p>
+      <p class="a" data-s="10">&#8627; we never solved it, and we cannot: &int;(ln <i>t</i>)/(<i>t</i> &minus; 3)&thinsp;<i>dt</i> has no formula. The interval came anyway.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="11">
+  <p class="h" data-s="0">Example 3 &mdash; and one we can check</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8242; + (tan <i>t</i>)&thinsp;<i>y</i> = sin <i>t</i>,&nbsp;&nbsp; <i>y</i>(&pi;) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Already standard form</p>
+      <p class="e t" data-s="2"><i>p</i> = tan <i>t</i>,&nbsp;&nbsp; <i>g</i> = sin <i>t</i></p>
+      <p class="lb" data-s="3">Where do they break?</p>
+      <p class="e t" data-s="3">tan <i>t</i>:&nbsp; undefined at &plusmn;<span class="fr"><span>&pi;</span><span>2</span></span>, &plusmn;<span class="fr"><span>3&pi;</span><span>2</span></span>, &hellip;</p>
+      <p class="e t" data-s="4">sin <i>t</i>:&nbsp; nowhere</p>
+      <p class="lb" data-s="5">Take the piece around <i>t</i><sub>0</sub> = &pi;</p>
+      <p class="e" data-s="5"><span class="bx"><span class="fr"><span>&pi;</span><span>2</span></span> &lt; <i>t</i> &lt; <span class="fr"><span>3&pi;</span><span>2</span></span></span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">You can always check &mdash; solve it</p>
+      <p class="e t" data-s="6">&mu; = <span style="white-space:nowrap"><b>e</b><sup>&minus;ln|cos <i>t</i>|</sup></span> = <span class="fr"><span>1</span><span>|cos <i>t</i>|</span></span>&nbsp;&nbsp;<span class="d">so use &mu; = sec <i>t</i></span></p>
+      <p class="e t" data-s="7">sec <i>t</i>&thinsp;<i>y</i>&#8242; + sec <i>t</i> tan <i>t</i>&thinsp;<i>y</i> = sec <i>t</i> sin <i>t</i></p>
+      <p class="e t" data-s="8">(sec <i>t</i>&thinsp;<i>y</i>)&#8242; = tan <i>t</i>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; sec <i>t</i>&thinsp;<i>y</i> = &minus;ln|cos <i>t</i>| + <i>c</i></p>
+      <p class="e t" data-s="9"><i>y</i> = &minus;cos <i>t</i> ln|cos <i>t</i>| + <i>c</i> cos <i>t</i>&nbsp;&nbsp;<span class="d">divide by sec <i>t</i></span></p>
+      <p class="e t" data-s="10"><i>y</i>(&pi;) = 0:&nbsp; 0 + <i>c</i>(&minus;1) = 0&nbsp; &rArr;&nbsp; <span class="v"><i>c</i> = 0</span></p>
+      <p class="e" data-s="11"><span class="bx"><i>y</i> = &minus;cos <i>t</i> &middot; ln|cos <i>t</i>|</span></p>
+      <p class="a" data-s="12">&#8627; undefined where cos <i>t</i> = 0: &pi;/2 and 3&pi;/2. Exactly the two ends.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="12">
+  <p class="h" data-s="0">Call out the interval</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>y</i>&#8242; + <span class="fr"><span>1</span><span><i>t</i> &minus; 2</span></span><i>y</i> = <b>e</b><sup><i>t</i></sup>,&nbsp;&nbsp; <i>y</i>(0) = 1</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; (<i>t</i> + 1)&thinsp;<i>y</i>&#8242; + <i>y</i> = ln <i>t</i>,&nbsp;&nbsp; <i>y</i>(2) = 0</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8242; + <span class="fr"><span><i>t</i></span><span><i>t</i><sup>2</sup> &minus; 4</span></span><i>y</i> = 1,&nbsp;&nbsp; <i>y</i>(&minus;1) = 5</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; (cos <i>t</i>)&thinsp;<i>y</i>&#8242; + <i>y</i> = <i>t</i>,&nbsp;&nbsp; <i>y</i>(0) = 1</p>
+    </div>
+    <div>
+      <p class="e t" data-s="5"><span class="g">1.</span>&nbsp; <span class="v"><i>t</i> &lt; 2</span>&nbsp;&nbsp;<span class="d">one mark, at 2; <i>t</i><sub>0</sub> is on the left</span></p>
+      <p class="e t" data-s="6"><span class="g">2.</span>&nbsp; <span class="v"><i>t</i> &gt; 0</span>&nbsp;&nbsp;<span class="d">divide first: <i>g</i> = ln <i>t</i>/(<i>t</i> + 1). The mark at &minus;1 never matters</span></p>
+      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; <span class="v">&minus;2 &lt; <i>t</i> &lt; 2</span>&nbsp;&nbsp;<span class="d">marks at &plusmn;2</span></p>
+      <p class="e t" data-s="8"><span class="g">4.</span>&nbsp; <span class="v">&minus;&pi;/2 &lt; <i>t</i> &lt; &pi;/2</span>&nbsp;&nbsp;<span class="d">divide by cos <i>t</i>: <i>p</i> = 1/cos <i>t</i></span></p>
+      <p class="a" data-s="9">&#8627; four intervals, no integrals. Number 2 is the one people miss: divide first.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="13">
+  <p class="h" data-s="0">The theorem for nonlinear equations</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8242; = <i>f</i>(<i>t</i>, <i>y</i>),&nbsp;&nbsp; <i>y</i>(<i>t</i><sub>0</sub>) = <i>y</i><sub>0</sub></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">If</p>
+      <p class="l" data-s="2"><i>f</i> and <span class="fr"><span>&part;<i>f</i></span><span>&part;<i>y</i></span></span> are both <span class="g">continuous</span> on a rectangle &alpha; &lt; <i>t</i> &lt; &beta;,&nbsp; &gamma; &lt; <i>y</i> &lt; &delta;,</p>
+      <p class="l" data-s="3">and (<i>t</i><sub>0</sub>, <i>y</i><sub>0</sub>) is inside the rectangle,</p>
+      <p class="lb" data-s="4">then</p>
+      <p class="l" data-s="4">there is <span class="g">exactly one</span> solution,</p>
+      <p class="l" data-s="5">on <span class="g">some</span> interval <i>t</i><sub>0</sub> &minus; <i>h</i> &lt; <i>t</i> &lt; <i>t</i><sub>0</sub> + <i>h</i>.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">Three things got weaker</p>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; two functions to check, and one is a <span class="n">derivative</span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; a rectangle, not an interval: <i>y</i> matters too</p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; &ldquo;some interval&rdquo; &mdash; <i>h</i> is <span class="n">not given</span></p>
+      <p class="l" data-s="9">The linear case is inside this one:</p>
+      <p class="e t" data-s="9"><i>f</i> = <i>g</i> &minus; <i>p</i>&thinsp;<i>y</i>,&nbsp;&nbsp; <span class="fr"><span>&part;<i>f</i></span><span>&part;<i>y</i></span></span> = &minus;<i>p</i></p>
+      <p class="a" data-s="10">&#8627; continuous <i>f</i> and <span class="fr"><span>&part;<i>f</i></span><span>&part;<i>y</i></span></span> is exactly continuous <i>g</i> and <i>p</i>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="14">
+  <p class="h" data-s="0">The recipe &mdash; nonlinear</p>
+  <div class="two">
+    <div>
+      <ol class="st">
+        <li data-s="1"><span class="g">Write <i>f</i>(<i>t</i>, <i>y</i>)</span> with <i>y</i>&#8242; alone on the left.</li>
+        <li data-s="2"><span class="g">Compute <span class="fr"><span>&part;<i>f</i></span><span>&part;<i>y</i></span></span>.</span> <span class="d"><i>t</i> is a constant while you do it.</span></li>
+        <li data-s="3"><span class="g">Find the bad set:</span> every (<i>t</i>, <i>y</i>) where <i>f</i> or <span class="fr"><span>&part;<i>f</i></span><span>&part;<i>y</i></span></span> is undefined.</li>
+        <li data-s="4"><span class="g">Is (<i>t</i><sub>0</sub>, <i>y</i><sub>0</sub>) off the bad set?</span> Yes: exactly one solution near <i>t</i><sub>0</sub>. On it: the theorem says nothing.</li>
+      </ol>
+    </div>
+    <div>
+      <p class="lb" data-s="5">And you can always check</p>
+      <p class="l" data-s="5">Solve it, and run Wednesday&#8217;s three checks.</p>
+      <p class="l" data-s="6">The theorem says a solution <span class="g">exists</span> near <i>t</i><sub>0</sub>. The three checks say <span class="g">how far</span> it goes.</p>
+      <p class="e" data-s="7"><span class="bx">Theorem first, checks second. Never the other way.</span></p>
+      <p class="a" data-s="8">&#8627; the first example is Wednesday&#8217;s Example 2. We already know how far it goes.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="15">
+  <p class="h" data-s="0">Example 4 &mdash; Wednesday&#8217;s Example 2, under the theorem</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dy</i></span><span><i>dx</i></span></span> = <span class="fr"><span>1</span><span><i>x</i>&thinsp;<i>y</i></span></span>,&nbsp;&nbsp; <i>y</i>(1) = 2</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2"><i>f</i> and its <i>y</i>-derivative</p>
+      <p class="e t" data-s="2"><i>f</i> = <span class="fr"><span>1</span><span><i>x</i>&thinsp;<i>y</i></span></span> = <i>x</i><sup>&minus;1</sup><i>y</i><sup>&minus;1</sup></p>
+      <p class="e t" data-s="3"><span class="fr"><span>&part;<i>f</i></span><span>&part;<i>y</i></span></span> = &minus;<i>x</i><sup>&minus;1</sup><i>y</i><sup>&minus;2</sup> = &minus;<span class="fr"><span>1</span><span><i>x</i>&thinsp;<i>y</i><sup>2</sup></span></span></p>
+      <p class="lb" data-s="4">The bad set</p>
+      <p class="e t" data-s="4"><i>x</i> = 0&nbsp; or&nbsp; <i>y</i> = 0&nbsp;&nbsp;<span class="d">two lines</span></p>
+      <p class="lb" data-s="5">Is (1, 2) on it?</p>
+      <p class="e t" data-s="5">No. Take the rectangle 0 &lt; <i>x</i> &lt; 2,&nbsp; 0 &lt; <i>y</i> &lt; 4.</p>
+      <p class="e" data-s="6"><span class="bx">exactly one solution, on some interval around <i>x</i> = 1</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="7">Wednesday&#8217;s answer</p>
+      <p class="e t" data-s="7"><i>y</i> = <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">2&thinsp;ln <i>x</i> + 4</span></span>,&nbsp;&nbsp; <i>x</i> &gt; <b>e</b><sup>&minus;2</sup></p>
+      <p class="l" data-s="8">It walks to <i>y</i> = 0 at <i>x</i> = <b>e</b><sup>&minus;2</sup> and stops. <span class="d">That is the edge of the rectangle.</span></p>
+      <p class="l" data-s="9">The theorem promised some <i>h</i>. It never said how big.</p>
+      <p class="e t" data-s="10">here <i>h</i> = 1 &minus; <b>e</b><sup>&minus;2</sup> &asymp; 0.86 works&nbsp;&nbsp;<span class="d">(1 &minus; <i>h</i>, 1 + <i>h</i>) fits inside <i>x</i> &gt; <b>e</b><sup>&minus;2</sup></span></p>
+      <p class="a" data-s="11">&#8627; theorem: it exists. Checks: where it ends. You need both, in that order.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="16">
+  <p class="h" data-s="0">Example 5 &mdash; no bad set anywhere</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dy</i></span><span><i>dt</i></span></span> = <i>y</i><sup>2</sup>,&nbsp;&nbsp; <i>y</i>(0) = 1</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">The theorem</p>
+      <p class="e t" data-s="2"><i>f</i> = <i>y</i><sup>2</sup>,&nbsp;&nbsp; <span class="fr"><span>&part;<i>f</i></span><span>&part;<i>y</i></span></span> = 2<i>y</i></p>
+      <p class="e t" data-s="3">both continuous everywhere&nbsp;&nbsp;<span class="d">the bad set is empty</span></p>
+      <p class="e" data-s="4"><span class="bx">exactly one solution near <i>t</i> = 0</span></p>
+      <p class="lb" data-s="5">Solve it &mdash; separable</p>
+      <p class="e t" data-s="5"><i>y</i><sup>&minus;2</sup>&thinsp;<i>dy</i> = <i>dt</i></p>
+      <p class="e t" data-s="6">&int;<i>y</i><sup>&minus;2</sup>&thinsp;<i>dy</i> = &int;<i>dt</i>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; &minus;<i>y</i><sup>&minus;1</sup> = <i>t</i> + <i>c</i></p>
+    </div>
+    <div>
+      <p class="e t" data-s="7"><i>y</i> = &minus;<span class="fr"><span>1</span><span><i>t</i> + <i>c</i></span></span></p>
+      <p class="e t" data-s="8"><i>y</i>(0) = 1:&nbsp; 1 = &minus;<span class="fr"><span>1</span><span><i>c</i></span></span>&nbsp; &rArr;&nbsp; <span class="v"><i>c</i> = &minus;1</span></p>
+      <p class="e" data-s="9"><span class="bx"><i>y</i> = <span class="fr"><span>1</span><span>1 &minus; <i>t</i></span></span></span></p>
+      <p class="e t" data-s="10">check:&nbsp; <i>y</i>&#8242; = <span class="fr"><span>1</span><span>(1 &minus; <i>t</i>)<sup>2</sup></span></span> = <i>y</i><sup>2</sup>&nbsp; &#10003;</p>
+      <p class="lb" data-s="11">Where does it live? &mdash; check 3</p>
+      <p class="e t" data-s="11"><i>y</i> &rarr; &infin; as <i>t</i> &rarr; 1&nbsp;&nbsp; &rArr;&nbsp;&nbsp; <span class="v">&minus;&infin; &lt; <i>t</i> &lt; 1</span></p>
+      <p class="a" data-s="12">&#8627; no bad set anywhere, and the solution still ends. Nothing in the equation pointed at <i>t</i> = 1.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="17">
+  <p class="h" data-s="0">Example 5 &mdash; a smooth field, and curves that still end</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1">The field is smooth everywhere. <span class="d">Not one bad point on the whole plane.</span></p>
+      <p class="l" data-s="2">And still every curve above the axis reaches infinity at a finite time.</p>
+      <p class="e t" data-s="3">start at 1: ends at <i>t</i> = 1&nbsp;&nbsp;&middot;&nbsp;&nbsp;start at &frac12;: ends at <i>t</i> = 2</p>
+      <p class="l" data-s="4">Where it ends depends on where it <span class="g">started</span>. The theorem cannot see that. Only the solution can.</p>
+      <p class="l" data-s="5">Below the axis the curve is fine going right, and ends going left.</p>
+      <p class="e" data-s="6"><span class="bx">Existence near <i>t</i><sub>0</sub> is guaranteed. Existence forever is not.</span></p>
+      <p class="a" data-s="7">&#8627; Wednesday: the ending time as a formula in <i>y</i><sub>0</sub>.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="300" x2="0" y2="300"/><line x1="-7" y1="250" x2="0" y2="250"/><line x1="-7" y1="200" x2="0" y2="200"/><line x1="-7" y1="150" x2="0" y2="150"/><line x1="-7" y1="100" x2="0" y2="100"/><line x1="-7" y1="50" x2="0" y2="50"/><line x1="-7" y1="0" x2="0" y2="0"/><line x1="124" y1="350" x2="124" y2="357"/><line x1="248" y1="350" x2="248" y2="357"/><line x1="372" y1="350" x2="372" y2="357"/><line x1="496" y1="350" x2="496" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">−3</text><text x="-12" y="305" text-anchor="end">−2</text><text x="-12" y="255" text-anchor="end">−1</text><text x="-12" y="205" text-anchor="end">0</text><text x="-12" y="155" text-anchor="end">1</text><text x="-12" y="105" text-anchor="end">2</text><text x="-12" y="55" text-anchor="end">3</text><text x="-12" y="5" text-anchor="end">4</text><text x="0" y="375" text-anchor="middle">−2</text><text x="124" y="375" text-anchor="middle">−1</text><text x="248" y="375" text-anchor="middle">0</text><text x="372" y="375" text-anchor="middle">1</text><text x="496" y="375" text-anchor="middle">2</text><text x="620" y="375" text-anchor="middle">3</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="2" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"><line x1="-3.5" y1="362.5" x2="3.5" y2="337.5"/><line x1="120.5" y1="362.5" x2="127.5" y2="337.5"/><line x1="244.5" y1="362.5" x2="251.5" y2="337.5"/><line x1="368.5" y1="362.5" x2="375.5" y2="337.5"/><line x1="492.5" y1="362.5" x2="499.5" y2="337.5"/><line x1="616.5" y1="362.5" x2="623.5" y2="337.5"/><line x1="-4.8" y1="337.1" x2="4.8" y2="312.9"/><line x1="119.2" y1="337.1" x2="128.8" y2="312.9"/><line x1="243.2" y1="337.1" x2="252.8" y2="312.9"/><line x1="367.2" y1="337.1" x2="376.8" y2="312.9"/><line x1="491.2" y1="337.1" x2="500.8" y2="312.9"/><line x1="615.2" y1="337.1" x2="624.8" y2="312.9"/><line x1="-6.9" y1="311" x2="6.9" y2="289"/><line x1="117.1" y1="311" x2="130.9" y2="289"/><line x1="241.1" y1="311" x2="254.9" y2="289"/><line x1="365.1" y1="311" x2="378.9" y2="289"/><line x1="489.1" y1="311" x2="502.9" y2="289"/><line x1="613.1" y1="311" x2="626.9" y2="289"/><line x1="-9.6" y1="283.7" x2="9.6" y2="266.3"/><line x1="114.4" y1="283.7" x2="133.6" y2="266.3"/><line x1="238.4" y1="283.7" x2="257.6" y2="266.3"/><line x1="362.4" y1="283.7" x2="381.6" y2="266.3"/><line x1="486.4" y1="283.7" x2="505.6" y2="266.3"/><line x1="610.4" y1="283.7" x2="629.6" y2="266.3"/><line x1="-12.1" y1="254.9" x2="12.1" y2="245.1"/><line x1="111.9" y1="254.9" x2="136.1" y2="245.1"/><line x1="235.9" y1="254.9" x2="260.1" y2="245.1"/><line x1="359.9" y1="254.9" x2="384.1" y2="245.1"/><line x1="483.9" y1="254.9" x2="508.1" y2="245.1"/><line x1="607.9" y1="254.9" x2="632.1" y2="245.1"/><line x1="-12.9" y1="226.3" x2="12.9" y2="223.7"/><line x1="111.1" y1="226.3" x2="136.9" y2="223.7"/><line x1="235.1" y1="226.3" x2="260.9" y2="223.7"/><line x1="359.1" y1="226.3" x2="384.9" y2="223.7"/><line x1="483.1" y1="226.3" x2="508.9" y2="223.7"/><line x1="607.1" y1="226.3" x2="632.9" y2="223.7"/><line x1="-13" y1="200" x2="13" y2="200"/><line x1="111" y1="200" x2="137" y2="200"/><line x1="235" y1="200" x2="261" y2="200"/><line x1="359" y1="200" x2="385" y2="200"/><line x1="483" y1="200" x2="509" y2="200"/><line x1="607" y1="200" x2="633" y2="200"/><line x1="-12.9" y1="176.3" x2="12.9" y2="173.7"/><line x1="111.1" y1="176.3" x2="136.9" y2="173.7"/><line x1="235.1" y1="176.3" x2="260.9" y2="173.7"/><line x1="359.1" y1="176.3" x2="384.9" y2="173.7"/><line x1="483.1" y1="176.3" x2="508.9" y2="173.7"/><line x1="607.1" y1="176.3" x2="632.9" y2="173.7"/><line x1="-12.1" y1="154.9" x2="12.1" y2="145.1"/><line x1="111.9" y1="154.9" x2="136.1" y2="145.1"/><line x1="235.9" y1="154.9" x2="260.1" y2="145.1"/><line x1="359.9" y1="154.9" x2="384.1" y2="145.1"/><line x1="483.9" y1="154.9" x2="508.1" y2="145.1"/><line x1="607.9" y1="154.9" x2="632.1" y2="145.1"/><line x1="-9.6" y1="133.7" x2="9.6" y2="116.3"/><line x1="114.4" y1="133.7" x2="133.6" y2="116.3"/><line x1="238.4" y1="133.7" x2="257.6" y2="116.3"/><line x1="362.4" y1="133.7" x2="381.6" y2="116.3"/><line x1="486.4" y1="133.7" x2="505.6" y2="116.3"/><line x1="610.4" y1="133.7" x2="629.6" y2="116.3"/><line x1="-6.9" y1="111" x2="6.9" y2="89"/><line x1="117.1" y1="111" x2="130.9" y2="89"/><line x1="241.1" y1="111" x2="254.9" y2="89"/><line x1="365.1" y1="111" x2="378.9" y2="89"/><line x1="489.1" y1="111" x2="502.9" y2="89"/><line x1="613.1" y1="111" x2="626.9" y2="89"/><line x1="-4.8" y1="87.1" x2="4.8" y2="62.9"/><line x1="119.2" y1="87.1" x2="128.8" y2="62.9"/><line x1="243.2" y1="87.1" x2="252.8" y2="62.9"/><line x1="367.2" y1="87.1" x2="376.8" y2="62.9"/><line x1="491.2" y1="87.1" x2="500.8" y2="62.9"/><line x1="615.2" y1="87.1" x2="624.8" y2="62.9"/><line x1="-3.5" y1="62.5" x2="3.5" y2="37.5"/><line x1="120.5" y1="62.5" x2="127.5" y2="37.5"/><line x1="244.5" y1="62.5" x2="251.5" y2="37.5"/><line x1="368.5" y1="62.5" x2="375.5" y2="37.5"/><line x1="492.5" y1="62.5" x2="499.5" y2="37.5"/><line x1="616.5" y1="62.5" x2="623.5" y2="37.5"/><line x1="-2.6" y1="37.7" x2="2.6" y2="12.3"/><line x1="121.4" y1="37.7" x2="126.6" y2="12.3"/><line x1="245.4" y1="37.7" x2="250.6" y2="12.3"/><line x1="369.4" y1="37.7" x2="374.6" y2="12.3"/><line x1="493.4" y1="37.7" x2="498.6" y2="12.3"/><line x1="617.4" y1="37.7" x2="622.6" y2="12.3"/><line x1="-2" y1="12.8" x2="2" y2="-12.8"/><line x1="122" y1="12.8" x2="126" y2="-12.8"/><line x1="246" y1="12.8" x2="250" y2="-12.8"/><line x1="370" y1="12.8" x2="374" y2="-12.8"/><line x1="494" y1="12.8" x2="498" y2="-12.8"/><line x1="618" y1="12.8" x2="622" y2="-12.8"/></g><g data-s="3" stroke="var(--c)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" fill="none"><polyline points="0,183.3 0.9,183.3 1.9,183.2 2.8,183.2 3.7,183.2 4.6,183.1 5.6,183.1 6.5,183 7.4,183 8.4,182.9 9.3,182.9 10.2,182.9 11.2,182.8 12.1,182.8 13,182.7 13.9,182.7 14.9,182.6 15.8,182.6 16.7,182.5 17.7,182.5 18.6,182.5 19.5,182.4 20.5,182.4 21.4,182.3 22.3,182.3 23.2,182.2 24.2,182.2 25.1,182.1 26,182.1 27,182 27.9,182 28.8,181.9 29.8,181.9 30.7,181.8 31.6,181.8 32.5,181.7 33.5,181.7 34.4,181.6 35.3,181.6 36.3,181.5 37.2,181.5 38.1,181.4 39,181.4 40,181.3 40.9,181.3 41.8,181.2 42.8,181.2 43.7,181.1 44.6,181.1 45.6,181 46.5,181 47.4,180.9 48.3,180.8 49.3,180.8 50.2,180.7 51.1,180.7 52.1,180.6 53,180.6 53.9,180.5 54.9,180.5 55.8,180.4 56.7,180.3 57.6,180.3 58.6,180.2 59.5,180.2 60.4,180.1 61.4,180 62.3,180 63.2,179.9 64.1,179.9 65.1,179.8 66,179.7 66.9,179.7 67.9,179.6 68.8,179.6 69.7,179.5 70.7,179.4 71.6,179.4 72.5,179.3 73.4,179.2 74.4,179.2 75.3,179.1 76.2,179 77.2,179 78.1,178.9 79,178.8 80,178.8 80.9,178.7 81.8,178.6 82.7,178.6 83.7,178.5 84.6,178.4 85.5,178.4 86.5,178.3 87.4,178.2 88.3,178.1 89.3,178.1 90.2,178 91.1,177.9 92,177.9 93,177.8 93.9,177.7 94.8,177.6 95.8,177.6 96.7,177.5 97.6,177.4 98.5,177.3 99.5,177.2 100.4,177.2 101.3,177.1 102.3,177 103.2,176.9 104.1,176.9 105.1,176.8 106,176.7 106.9,176.6 107.8,176.5 108.8,176.4 109.7,176.4 110.6,176.3 111.6,176.2 112.5,176.1 113.4,176 114.4,175.9 115.3,175.8 116.2,175.8 117.1,175.7 118.1,175.6 119,175.5 119.9,175.4 120.9,175.3 121.8,175.2 122.7,175.1 123.6,175 124.6,174.9 125.5,174.8 126.4,174.8 127.4,174.7 128.3,174.6 129.2,174.5 130.2,174.4 131.1,174.3 132,174.2 132.9,174.1 133.9,174 134.8,173.9 135.7,173.8 136.7,173.7 137.6,173.6 138.5,173.4 139.5,173.3 140.4,173.2 141.3,173.1 142.2,173 143.2,172.9 144.1,172.8 145,172.7 146,172.6 146.9,172.5 147.8,172.3 148.8,172.2 149.7,172.1 150.6,172 151.5,171.9 152.5,171.8 153.4,171.6 154.3,171.5 155.3,171.4 156.2,171.3 157.1,171.1 158,171 159,170.9 159.9,170.8 160.8,170.6 161.8,170.5 162.7,170.4 163.6,170.2 164.6,170.1 165.5,170 166.4,169.8 167.3,169.7 168.3,169.6 169.2,169.4 170.1,169.3 171.1,169.1 172,169 172.9,168.9 173.9,168.7 174.8,168.6 175.7,168.4 176.6,168.3 177.6,168.1 178.5,168 179.4,167.8 180.4,167.6 181.3,167.5 182.2,167.3 183.1,167.2 184.1,167 185,166.8 185.9,166.7 186.9,166.5 187.8,166.3 188.7,166.2 189.7,166 190.6,165.8 191.5,165.6 192.4,165.5 193.4,165.3 194.3,165.1 195.2,164.9 196.2,164.7 197.1,164.6 198,164.4 199,164.2 199.9,164 200.8,163.8 201.7,163.6 202.7,163.4 203.6,163.2 204.5,163 205.5,162.8 206.4,162.6 207.3,162.4 208.3,162.1 209.2,161.9 210.1,161.7 211,161.5 212,161.3 212.9,161 213.8,160.8 214.8,160.6 215.7,160.3 216.6,160.1 217.5,159.9 218.5,159.6 219.4,159.4 220.3,159.1 221.3,158.9 222.2,158.6 223.1,158.4 224.1,158.1 225,157.8 225.9,157.6 226.8,157.3 227.8,157 228.7,156.7 229.6,156.5 230.6,156.2 231.5,155.9 232.4,155.6 233.4,155.3 234.3,155 235.2,154.7 236.1,154.4 237.1,154 238,153.7 238.9,153.4 239.9,153.1 240.8,152.7 241.7,152.4 242.6,152.1 243.6,151.7 244.5,151.4 245.4,151 246.4,150.6 247.3,150.3 248.2,149.9 249.2,149.5 250.1,149.1 251,148.8 251.9,148.4 252.9,148 253.8,147.5 254.7,147.1 255.7,146.7 256.6,146.3 257.5,145.8 258.5,145.4 259.4,144.9 260.3,144.5 261.2,144 262.2,143.5 263.1,143.1 264,142.6 265,142.1 265.9,141.6 266.8,141.1 267.8,140.5 268.7,140 269.6,139.4 270.5,138.9 271.5,138.3 272.4,137.8 273.3,137.2 274.3,136.6 275.2,136 276.1,135.3 277,134.7 278,134.1 278.9,133.4 279.8,132.7 280.8,132 281.7,131.3 282.6,130.6 283.6,129.9 284.5,129.2 285.4,128.4 286.3,127.6 287.3,126.8 288.2,126 289.1,125.2 290.1,124.3 291,123.5 291.9,122.6 292.9,121.7 293.8,120.7 294.7,119.8 295.6,118.8 296.6,117.8 297.5,116.8 298.4,115.7 299.4,114.6 300.3,113.5 301.2,112.4 302.1,111.2 303.1,110 304,108.8 304.9,107.5 305.9,106.2 306.8,104.9 307.7,103.5 308.7,102.1 309.6,100.7 310.5,99.2 311.4,97.6 312.4,96 313.3,94.4 314.2,92.7 315.2,90.9 316.1,89.1 317,87.2 318,85.3 318.9,83.3 319.8,81.2 320.7,79 321.7,76.8 322.6,74.5 323.5,72.1 324.5,69.6 325.4,67 326.3,64.3 327.3,61.4 328.2,58.5 329.1,55.4 330,52.2 331,48.9 331.9,45.4 332.8,41.7 333.8,37.9 334.7,33.8 335.6,29.6 336.5,25.1 337.5,20.4 338.4,15.4 339.3,10.2 340.3,4.6"/><polyline points="0,187.5 1.2,187.5 2.5,187.4 3.7,187.4 5,187.4 6.2,187.3 7.4,187.3 8.7,187.3 9.9,187.2 11.2,187.2 12.4,187.2 13.6,187.1 14.9,187.1 16.1,187.1 17.4,187 18.6,187 19.8,187 21.1,186.9 22.3,186.9 23.6,186.9 24.8,186.8 26,186.8 27.3,186.8 28.5,186.7 29.8,186.7 31,186.7 32.2,186.6 33.5,186.6 34.7,186.6 36,186.5 37.2,186.5 38.4,186.5 39.7,186.4 40.9,186.4 42.1,186.3 43.4,186.3 44.6,186.3 45.9,186.2 47.1,186.2 48.3,186.1 49.6,186.1 50.8,186.1 52.1,186 53.3,186 54.5,186 55.8,185.9 57,185.9 58.3,185.8 59.5,185.8 60.7,185.8 62,185.7 63.2,185.7 64.5,185.6 65.7,185.6 66.9,185.5 68.2,185.5 69.4,185.5 70.7,185.4 71.9,185.4 73.1,185.3 74.4,185.3 75.6,185.3 76.9,185.2 78.1,185.2 79.3,185.1 80.6,185.1 81.8,185 83.1,185 84.3,184.9 85.5,184.9 86.8,184.8 88,184.8 89.3,184.8 90.5,184.7 91.7,184.7 93,184.6 94.2,184.6 95.5,184.5 96.7,184.5 97.9,184.4 99.2,184.4 100.4,184.3 101.7,184.3 102.9,184.2 104.1,184.2 105.4,184.1 106.6,184.1 107.9,184 109.1,184 110.3,183.9 111.6,183.9 112.8,183.8 114.1,183.8 115.3,183.7 116.5,183.7 117.8,183.6 119,183.6 120.2,183.5 121.5,183.4 122.7,183.4 124,183.3 125.2,183.3 126.4,183.2 127.7,183.2 128.9,183.1 130.2,183.1 131.4,183 132.6,182.9 133.9,182.9 135.1,182.8 136.4,182.8 137.6,182.7 138.8,182.6 140.1,182.6 141.3,182.5 142.6,182.5 143.8,182.4 145,182.3 146.3,182.3 147.5,182.2 148.8,182.1 150,182.1 151.2,182 152.5,182 153.7,181.9 155,181.8 156.2,181.8 157.4,181.7 158.7,181.6 159.9,181.6 161.2,181.5 162.4,181.4 163.6,181.3 164.9,181.3 166.1,181.2 167.4,181.1 168.6,181.1 169.8,181 171.1,180.9 172.3,180.8 173.6,180.8 174.8,180.7 176,180.6 177.3,180.5 178.5,180.5 179.8,180.4 181,180.3 182.2,180.2 183.5,180.2 184.7,180.1 186,180 187.2,179.9 188.4,179.8 189.7,179.8 190.9,179.7 192.2,179.6 193.4,179.5 194.6,179.4 195.9,179.3 197.1,179.3 198.4,179.2 199.6,179.1 200.8,179 202.1,178.9 203.3,178.8 204.5,178.7 205.8,178.6 207,178.5 208.3,178.5 209.5,178.4 210.7,178.3 212,178.2 213.2,178.1 214.5,178 215.7,177.9 216.9,177.8 218.2,177.7 219.4,177.6 220.7,177.5 221.9,177.4 223.1,177.3 224.4,177.2 225.6,177.1 226.9,177 228.1,176.9 229.3,176.7 230.6,176.6 231.8,176.5 233.1,176.4 234.3,176.3 235.5,176.2 236.8,176.1 238,176 239.3,175.9 240.5,175.7 241.7,175.6 243,175.5 244.2,175.4 245.5,175.3 246.7,175.1 247.9,175 249.2,174.9 250.4,174.8 251.7,174.6 252.9,174.5 254.1,174.4 255.4,174.2 256.6,174.1 257.9,174 259.1,173.8 260.3,173.7 261.6,173.6 262.8,173.4 264.1,173.3 265.3,173.1 266.5,173 267.8,172.8 269,172.7 270.3,172.5 271.5,172.4 272.7,172.2 274,172.1 275.2,171.9 276.5,171.8 277.7,171.6 278.9,171.4 280.2,171.3 281.4,171.1 282.6,170.9 283.9,170.8 285.1,170.6 286.4,170.4 287.6,170.2 288.8,170.1 290.1,169.9 291.3,169.7 292.6,169.5 293.8,169.3 295,169.1 296.3,169 297.5,168.8 298.8,168.6 300,168.4 301.2,168.2 302.5,168 303.7,167.8 305,167.5 306.2,167.3 307.4,167.1 308.7,166.9 309.9,166.7 311.2,166.5 312.4,166.2 313.6,166 314.9,165.8 316.1,165.5 317.4,165.3 318.6,165.1 319.8,164.8 321.1,164.6 322.3,164.3 323.6,164 324.8,163.8 326,163.5 327.3,163.3 328.5,163 329.8,162.7 331,162.4 332.2,162.1 333.5,161.9 334.7,161.6 336,161.3 337.2,161 338.4,160.7 339.7,160.3 340.9,160 342.2,159.7 343.4,159.4 344.6,159 345.9,158.7 347.1,158.4 348.4,158 349.6,157.7 350.8,157.3 352.1,156.9 353.3,156.5 354.6,156.2 355.8,155.8 357,155.4 358.3,155 359.5,154.6 360.7,154.2 362,153.7 363.2,153.3 364.5,152.9 365.7,152.4 366.9,152 368.2,151.5 369.4,151 370.7,150.5 371.9,150 373.1,149.5 374.4,149 375.6,148.5 376.9,148 378.1,147.4 379.3,146.9 380.6,146.3 381.8,145.7 383.1,145.1 384.3,144.5 385.5,143.9 386.8,143.2 388,142.6 389.3,141.9 390.5,141.2 391.7,140.5 393,139.8 394.2,139.1 395.5,138.3 396.7,137.6 397.9,136.8 399.2,136 400.4,135.1 401.7,134.3 402.9,133.4 404.1,132.5 405.4,131.6 406.6,130.6 407.9,129.7 409.1,128.7 410.3,127.6 411.6,126.6 412.8,125.5 414.1,124.3 415.3,123.2 416.5,122 417.8,120.7 419,119.5 420.3,118.1 421.5,116.8 422.7,115.4 424,113.9 425.2,112.4 426.5,110.9 427.7,109.2 428.9,107.6 430.2,105.8 431.4,104 432.7,102.1 433.9,100.2 435.1,98.1 436.4,96 437.6,93.8 438.9,91.5 440.1,89.1 441.3,86.6 442.6,84 443.8,81.2 445,78.3 446.3,75.3 447.5,72.1 448.8,68.7 450,65.2 451.2,61.5 452.5,57.5 453.7,53.3 455,48.9 456.2,44.2 457.4,39.2 458.7,33.8 459.9,28.1 461.2,22 462.4,15.5 463.6,8.4 464.9,0.7"/><polyline points="166.3,346.7 167.5,342.5 168.8,338.5 170,334.8 171.2,331.3 172.5,327.9 173.7,324.7 175,321.7 176.2,318.8 177.4,316 178.7,313.4 179.9,310.9 181.1,308.5 182.4,306.2 183.6,304 184.9,301.9 186.1,299.8 187.3,297.9 188.6,296 189.8,294.2 191.1,292.4 192.3,290.8 193.5,289.1 194.8,287.6 196,286.1 197.3,284.6 198.5,283.2 199.7,281.9 201,280.5 202.2,279.3 203.5,278 204.7,276.8 205.9,275.7 207.2,274.5 208.4,273.4 209.7,272.4 210.9,271.3 212.1,270.3 213.4,269.4 214.6,268.4 215.9,267.5 217.1,266.6 218.3,265.7 219.6,264.9 220.8,264 222.1,263.2 223.3,262.4 224.5,261.7 225.8,260.9 227,260.2 228.3,259.5 229.5,258.8 230.7,258.1 232,257.4 233.2,256.8 234.5,256.1 235.7,255.5 236.9,254.9 238.2,254.3 239.4,253.7 240.7,253.1 241.9,252.6 243.1,252 244.4,251.5 245.6,251 246.9,250.5 248.1,250 249.3,249.5 250.6,249 251.8,248.5 253.1,248 254.3,247.6 255.5,247.1 256.8,246.7 258,246.3 259.3,245.8 260.5,245.4 261.7,245 263,244.6 264.2,244.2 265.4,243.8 266.7,243.5 267.9,243.1 269.2,242.7 270.4,242.3 271.6,242 272.9,241.6 274.1,241.3 275.4,241 276.6,240.6 277.8,240.3 279.1,240 280.3,239.7 281.6,239.3 282.8,239 284,238.7 285.3,238.4 286.5,238.1 287.8,237.9 289,237.6 290.2,237.3 291.5,237 292.7,236.7 294,236.5 295.2,236.2 296.4,236 297.7,235.7 298.9,235.4 300.2,235.2 301.4,234.9 302.6,234.7 303.9,234.5 305.1,234.2 306.4,234 307.6,233.8 308.8,233.5 310.1,233.3 311.3,233.1 312.6,232.9 313.8,232.7 315,232.5 316.3,232.2 317.5,232 318.8,231.8 320,231.6 321.2,231.4 322.5,231.2 323.7,231 325,230.9 326.2,230.7 327.4,230.5 328.7,230.3 329.9,230.1 331.2,229.9 332.4,229.8 333.6,229.6 334.9,229.4 336.1,229.2 337.4,229.1 338.6,228.9 339.8,228.7 341.1,228.6 342.3,228.4 343.5,228.2 344.8,228.1 346,227.9 347.3,227.8 348.5,227.6 349.7,227.5 351,227.3 352.2,227.2 353.5,227 354.7,226.9 355.9,226.7 357.2,226.6 358.4,226.4 359.7,226.3 360.9,226.2 362.1,226 363.4,225.9 364.6,225.8 365.9,225.6 367.1,225.5 368.3,225.4 369.6,225.2 370.8,225.1 372.1,225 373.3,224.9 374.5,224.7 375.8,224.6 377,224.5 378.3,224.4 379.5,224.3 380.7,224.1 382,224 383.2,223.9 384.5,223.8 385.7,223.7 386.9,223.6 388.2,223.5 389.4,223.4 390.7,223.3 391.9,223.1 393.1,223 394.4,222.9 395.6,222.8 396.9,222.7 398.1,222.6 399.3,222.5 400.6,222.4 401.8,222.3 403.1,222.2 404.3,222.1 405.5,222 406.8,221.9 408,221.8 409.3,221.7 410.5,221.6 411.7,221.5 413,221.5 414.2,221.4 415.5,221.3 416.7,221.2 417.9,221.1 419.2,221 420.4,220.9 421.6,220.8 422.9,220.7 424.1,220.7 425.4,220.6 426.6,220.5 427.8,220.4 429.1,220.3 430.3,220.2 431.6,220.2 432.8,220.1 434,220 435.3,219.9 436.5,219.8 437.8,219.8 439,219.7 440.2,219.6 441.5,219.5 442.7,219.5 444,219.4 445.2,219.3 446.4,219.2 447.7,219.2 448.9,219.1 450.2,219 451.4,218.9 452.6,218.9 453.9,218.8 455.1,218.7 456.4,218.7 457.6,218.6 458.8,218.5 460.1,218.4 461.3,218.4 462.6,218.3 463.8,218.2 465,218.2 466.3,218.1 467.5,218 468.8,218 470,217.9 471.2,217.9 472.5,217.8 473.7,217.7 475,217.7 476.2,217.6 477.4,217.5 478.7,217.5 479.9,217.4 481.2,217.4 482.4,217.3 483.6,217.2 484.9,217.2 486.1,217.1 487.4,217.1 488.6,217 489.8,216.9 491.1,216.9 492.3,216.8 493.6,216.8 494.8,216.7 496,216.7 497.3,216.6 498.5,216.6 499.8,216.5 501,216.4 502.2,216.4 503.5,216.3 504.7,216.3 505.9,216.2 507.2,216.2 508.4,216.1 509.7,216.1 510.9,216 512.1,216 513.4,215.9 514.6,215.9 515.9,215.8 517.1,215.8 518.3,215.7 519.6,215.7 520.8,215.6 522.1,215.6 523.3,215.5 524.5,215.5 525.8,215.4 527,215.4 528.3,215.3 529.5,215.3 530.7,215.2 532,215.2 533.2,215.2 534.5,215.1 535.7,215.1 536.9,215 538.2,215 539.4,214.9 540.7,214.9 541.9,214.8 543.1,214.8 544.4,214.7 545.6,214.7 546.9,214.7 548.1,214.6 549.3,214.6 550.6,214.5 551.8,214.5 553.1,214.5 554.3,214.4 555.5,214.4 556.8,214.3 558,214.3 559.3,214.2 560.5,214.2 561.7,214.2 563,214.1 564.2,214.1 565.5,214 566.7,214 567.9,214 569.2,213.9 570.4,213.9 571.7,213.9 572.9,213.8 574.1,213.8 575.4,213.7 576.6,213.7 577.9,213.7 579.1,213.6 580.3,213.6 581.6,213.5 582.8,213.5 584,213.5 585.3,213.4 586.5,213.4 587.8,213.4 589,213.3 590.2,213.3 591.5,213.3 592.7,213.2 594,213.2 595.2,213.2 596.4,213.1 597.7,213.1 598.9,213.1 600.2,213 601.4,213 602.6,213 603.9,212.9 605.1,212.9 606.4,212.9 607.6,212.8 608.8,212.8 610.1,212.8 611.3,212.7 612.6,212.7 613.8,212.7 615,212.6 616.3,212.6 617.5,212.6 618.8,212.5 620,212.5"/><polyline points="0,200 620,200"/></g></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="18">
+  <p class="h" data-s="0">Example 6 &mdash; the empty tank, run backward</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dh</i></span><span><i>dt</i></span></span> = &minus;0.2&thinsp;<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span>,&nbsp;&nbsp; <i>h</i>(30) = 0</span>&nbsp;&nbsp;<span class="d">you find the tank empty at <i>t</i> = 30. What happened before?</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">The theorem</p>
+      <p class="e t" data-s="2"><i>f</i> = &minus;0.2&thinsp;<i>h</i><sup>1/2</sup></p>
+      <p class="e t" data-s="3"><span class="fr"><span>&part;<i>f</i></span><span>&part;<i>h</i></span></span> = &minus;0.1&thinsp;<i>h</i><sup>&minus;1/2</sup> = &minus;<span class="fr"><span>0.1</span><span><span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span></span></span></p>
+      <p class="e t" data-s="4">undefined at <i>h</i> = 0.&nbsp; The bad set is the line <i>h</i> = 0.</p>
+      <p class="e t" data-s="5">(30, 0) is <span class="n">on</span> it.</p>
+      <p class="e" data-s="6"><span class="bx">the theorem is silent</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="7">So solve it &mdash; separable, Friday&#8217;s way</p>
+      <p class="e t" data-s="7"><span class="fr"><span><i>dh</i></span><span><span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span></span></span> = &minus;0.2&thinsp;<i>dt</i>&nbsp;&nbsp; &rArr;&nbsp;&nbsp; 2<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span> = &minus;0.2<i>t</i> + <i>C</i></p>
+      <p class="e t" data-s="8"><i>h</i>(30) = 0:&nbsp; 0 = &minus;6 + <i>C</i>&nbsp; &rArr;&nbsp; <span class="v"><i>C</i> = 6</span></p>
+      <p class="e t" data-s="9"><span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span> = 3 &minus; 0.1<i>t</i>&nbsp;&nbsp;<span class="d">a square root is never negative, so <i>t</i> &le; 30</span></p>
+      <p class="e" data-s="10"><span class="bx"><i>h</i><sub>1</sub>(<i>t</i>) = (3 &minus; 0.1<i>t</i>)<sup>2</sup>,&nbsp;&nbsp; <i>t</i> &le; 30</span></p>
+      <p class="l" data-s="11">Friday&#8217;s tank, read backward: 9 ft deep at <i>t</i> = 0, draining, empty at 30.</p>
+      <p class="a" data-s="12">&#8627; that is one solution. Now watch a second one appear.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="19">
+  <p class="h" data-s="0">Example 6 &mdash; the second solution</p>
+  <p class="e" data-s="1"><span class="bw"><span class="fr"><span><i>dh</i></span><span><i>dt</i></span></span> = &minus;0.2&thinsp;<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i></span></span>,&nbsp;&nbsp; <i>h</i>(30) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Solution 2: the tank was always empty</p>
+      <p class="e t" data-s="2"><i>h</i><sub>2</sub>(<i>t</i>) = 0&nbsp; for every <i>t</i></p>
+      <p class="e t" data-s="3"><i>h</i><sub>2</sub>&#8242; = 0&nbsp; and&nbsp; &minus;0.2<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em">0</span></span> = 0&nbsp; &#10003;</p>
+      <p class="e t" data-s="4"><i>h</i><sub>2</sub>(30) = 0&nbsp; &#10003;</p>
+      <p class="lb" data-s="5">And check solution 1 too</p>
+      <p class="e t" data-s="5"><i>h</i><sub>1</sub>&#8242; = 2(3 &minus; 0.1<i>t</i>)(&minus;0.1) = &minus;0.2(3 &minus; 0.1<i>t</i>)</p>
+      <p class="e t" data-s="6">&minus;0.2<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>h</i><sub>1</sub></span></span> = &minus;0.2(3 &minus; 0.1<i>t</i>)&nbsp; for <i>t</i> &le; 30&nbsp; &#10003;</p>
+      <p class="e t" data-s="7"><i>h</i><sub>1</sub>(30) = 0<sup>2</sup> = 0&nbsp; &#10003;</p>
+    </div>
+    <div>
+      <p class="e" data-s="8"><span class="bx">Two solutions through the same point.</span></p>
+      <p class="l" data-s="9">Both satisfy the equation. Both satisfy the initial condition. Neither is wrong.</p>
+      <p class="l" data-s="10">Empty at 12:30. <span class="g">Full at noon, or empty all morning?</span> The equation cannot tell you.</p>
+      <p class="l" data-s="11">It could also have emptied at 12:15, or at 12:01. <span class="d">Infinitely many.</span></p>
+      <p class="e t" data-s="12">why here: <span class="fr"><span>&part;<i>f</i></span><span>&part;<i>h</i></span></span> breaks at <i>h</i> = 0</p>
+      <p class="a" data-s="13">&#8627; this is what Friday&#8217;s last line meant. Allowed, but only on the bad set.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="20">
+  <p class="h" data-s="0">Example 6 &mdash; three solutions through one point</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1">Three solutions, all through (30, 0).</p>
+      <p class="e t" data-s="2">9 ft at <i>t</i> = 0, empty at 30&nbsp;&nbsp;<span class="d">the parabola</span></p>
+      <p class="e t" data-s="3">2.25 ft at <i>t</i> = 0, empty at 15, then empty</p>
+      <p class="e t" data-s="4">empty the whole time&nbsp;&nbsp;<span class="d">the axis</span></p>
+      <p class="l" data-s="5">Forward in time the picture is fine: an empty tank stays empty.</p>
+      <p class="l" data-s="6">Backward, the curves <span class="g">merge</span>. Once they touch <i>h</i> = 0 they cannot be told apart.</p>
+      <p class="e" data-s="7"><span class="bx">Curves may only meet on the bad set.</span></p>
+      <p class="a" data-s="8">&#8627; and off the bad set, never. That is the next page.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="280" x2="0" y2="280"/><line x1="-7" y1="210" x2="0" y2="210"/><line x1="-7" y1="140" x2="0" y2="140"/><line x1="-7" y1="70" x2="0" y2="70"/><line x1="-7" y1="0" x2="0" y2="0"/><line x1="77.5" y1="350" x2="77.5" y2="357"/><line x1="155" y1="350" x2="155" y2="357"/><line x1="232.5" y1="350" x2="232.5" y2="357"/><line x1="310" y1="350" x2="310" y2="357"/><line x1="387.5" y1="350" x2="387.5" y2="357"/><line x1="465" y1="350" x2="465" y2="357"/><line x1="542.5" y1="350" x2="542.5" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">0</text><text x="-12" y="285" text-anchor="end">2</text><text x="-12" y="215" text-anchor="end">4</text><text x="-12" y="145" text-anchor="end">6</text><text x="-12" y="75" text-anchor="end">8</text><text x="-12" y="5" text-anchor="end">10</text><text x="0" y="375" text-anchor="middle">0</text><text x="77.5" y="375" text-anchor="middle">5</text><text x="155" y="375" text-anchor="middle">10</text><text x="232.5" y="375" text-anchor="middle">15</text><text x="310" y="375" text-anchor="middle">20</text><text x="387.5" y="375" text-anchor="middle">25</text><text x="465" y="375" text-anchor="middle">30</text><text x="542.5" y="375" text-anchor="middle">35</text><text x="620" y="375" text-anchor="middle">40</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">h</text><text x="650" y="355">t</text></g></g><g data-s="2" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"><line x1="-12.4" y1="328.5" x2="12.4" y2="336.5"/><line x1="65.1" y1="328.5" x2="89.9" y2="336.5"/><line x1="142.6" y1="328.5" x2="167.4" y2="336.5"/><line x1="220.1" y1="328.5" x2="244.9" y2="336.5"/><line x1="297.6" y1="328.5" x2="322.4" y2="336.5"/><line x1="375.1" y1="328.5" x2="399.9" y2="336.5"/><line x1="452.6" y1="328.5" x2="477.4" y2="336.5"/><line x1="530.1" y1="328.5" x2="554.9" y2="336.5"/><line x1="607.6" y1="328.5" x2="632.4" y2="336.5"/><line x1="-11.4" y1="291.2" x2="11.4" y2="303.8"/><line x1="66.1" y1="291.2" x2="88.9" y2="303.8"/><line x1="143.6" y1="291.2" x2="166.4" y2="303.8"/><line x1="221.1" y1="291.2" x2="243.9" y2="303.8"/><line x1="298.6" y1="291.2" x2="321.4" y2="303.8"/><line x1="376.1" y1="291.2" x2="398.9" y2="303.8"/><line x1="453.6" y1="291.2" x2="476.4" y2="303.8"/><line x1="531.1" y1="291.2" x2="553.9" y2="303.8"/><line x1="608.6" y1="291.2" x2="631.4" y2="303.8"/><line x1="-10.6" y1="254.9" x2="10.6" y2="270.1"/><line x1="66.9" y1="254.9" x2="88.1" y2="270.1"/><line x1="144.4" y1="254.9" x2="165.6" y2="270.1"/><line x1="221.9" y1="254.9" x2="243.1" y2="270.1"/><line x1="299.4" y1="254.9" x2="320.6" y2="270.1"/><line x1="376.9" y1="254.9" x2="398.1" y2="270.1"/><line x1="454.4" y1="254.9" x2="475.6" y2="270.1"/><line x1="531.9" y1="254.9" x2="553.1" y2="270.1"/><line x1="609.4" y1="254.9" x2="630.6" y2="270.1"/><line x1="-9.9" y1="219.1" x2="9.9" y2="235.9"/><line x1="67.6" y1="219.1" x2="87.4" y2="235.9"/><line x1="145.1" y1="219.1" x2="164.9" y2="235.9"/><line x1="222.6" y1="219.1" x2="242.4" y2="235.9"/><line x1="300.1" y1="219.1" x2="319.9" y2="235.9"/><line x1="377.6" y1="219.1" x2="397.4" y2="235.9"/><line x1="455.1" y1="219.1" x2="474.9" y2="235.9"/><line x1="532.6" y1="219.1" x2="552.4" y2="235.9"/><line x1="610.1" y1="219.1" x2="629.9" y2="235.9"/><line x1="-9.4" y1="183.5" x2="9.4" y2="201.5"/><line x1="68.1" y1="183.5" x2="86.9" y2="201.5"/><line x1="145.6" y1="183.5" x2="164.4" y2="201.5"/><line x1="223.1" y1="183.5" x2="241.9" y2="201.5"/><line x1="300.6" y1="183.5" x2="319.4" y2="201.5"/><line x1="378.1" y1="183.5" x2="396.9" y2="201.5"/><line x1="455.6" y1="183.5" x2="474.4" y2="201.5"/><line x1="533.1" y1="183.5" x2="551.9" y2="201.5"/><line x1="610.6" y1="183.5" x2="629.4" y2="201.5"/><line x1="-8.9" y1="148" x2="8.9" y2="167"/><line x1="68.6" y1="148" x2="86.4" y2="167"/><line x1="146.1" y1="148" x2="163.9" y2="167"/><line x1="223.6" y1="148" x2="241.4" y2="167"/><line x1="301.1" y1="148" x2="318.9" y2="167"/><line x1="378.6" y1="148" x2="396.4" y2="167"/><line x1="456.1" y1="148" x2="473.9" y2="167"/><line x1="533.6" y1="148" x2="551.4" y2="167"/><line x1="611.1" y1="148" x2="628.9" y2="167"/><line x1="-8.5" y1="112.7" x2="8.5" y2="132.3"/><line x1="69" y1="112.7" x2="86" y2="132.3"/><line x1="146.5" y1="112.7" x2="163.5" y2="132.3"/><line x1="224" y1="112.7" x2="241" y2="132.3"/><line x1="301.5" y1="112.7" x2="318.5" y2="132.3"/><line x1="379" y1="112.7" x2="396" y2="132.3"/><line x1="456.5" y1="112.7" x2="473.5" y2="132.3"/><line x1="534" y1="112.7" x2="551" y2="132.3"/><line x1="611.5" y1="112.7" x2="628.5" y2="132.3"/><line x1="-8.2" y1="77.4" x2="8.2" y2="97.6"/><line x1="69.3" y1="77.4" x2="85.7" y2="97.6"/><line x1="146.8" y1="77.4" x2="163.2" y2="97.6"/><line x1="224.3" y1="77.4" x2="240.7" y2="97.6"/><line x1="301.8" y1="77.4" x2="318.2" y2="97.6"/><line x1="379.3" y1="77.4" x2="395.7" y2="97.6"/><line x1="456.8" y1="77.4" x2="473.2" y2="97.6"/><line x1="534.3" y1="77.4" x2="550.7" y2="97.6"/><line x1="611.8" y1="77.4" x2="628.2" y2="97.6"/><line x1="-7.9" y1="42.1" x2="7.9" y2="62.9"/><line x1="69.6" y1="42.1" x2="85.4" y2="62.9"/><line x1="147.1" y1="42.1" x2="162.9" y2="62.9"/><line x1="224.6" y1="42.1" x2="240.4" y2="62.9"/><line x1="302.1" y1="42.1" x2="317.9" y2="62.9"/><line x1="379.6" y1="42.1" x2="395.4" y2="62.9"/><line x1="457.1" y1="42.1" x2="472.9" y2="62.9"/><line x1="534.6" y1="42.1" x2="550.4" y2="62.9"/><line x1="612.1" y1="42.1" x2="627.9" y2="62.9"/><line x1="-7.6" y1="6.9" x2="7.6" y2="28.1"/><line x1="69.9" y1="6.9" x2="85.1" y2="28.1"/><line x1="147.4" y1="6.9" x2="162.6" y2="28.1"/><line x1="224.9" y1="6.9" x2="240.1" y2="28.1"/><line x1="302.4" y1="6.9" x2="317.6" y2="28.1"/><line x1="379.9" y1="6.9" x2="395.1" y2="28.1"/><line x1="457.4" y1="6.9" x2="472.6" y2="28.1"/><line x1="534.9" y1="6.9" x2="550.1" y2="28.1"/><line x1="612.4" y1="6.9" x2="627.6" y2="28.1"/></g><g data-s="3" stroke="var(--c)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" fill="none"><polyline points="0,35 1.9,37.6 3.9,40.2 5.8,42.8 7.8,45.4 9.7,48 11.6,50.6 13.6,53.1 15.5,55.6 17.4,58.2 19.4,60.7 21.3,63.2 23.2,65.7 25.2,68.2 27.1,70.7 29.1,73.1 31,75.6 32.9,78 34.9,80.5 36.8,82.9 38.8,85.3 40.7,87.7 42.6,90.1 44.6,92.5 46.5,94.8 48.4,97.2 50.4,99.6 52.3,101.9 54.2,104.2 56.2,106.5 58.1,108.8 60.1,111.1 62,113.4 63.9,115.7 65.9,117.9 67.8,120.2 69.8,122.4 71.7,124.6 73.6,126.9 75.6,129.1 77.5,131.2 79.4,133.4 81.4,135.6 83.3,137.8 85.2,139.9 87.2,142.1 89.1,144.2 91.1,146.3 93,148.4 94.9,150.5 96.9,152.6 98.8,154.7 100.8,156.7 102.7,158.8 104.6,160.8 106.6,162.8 108.5,164.8 110.4,166.9 112.4,168.9 114.3,170.8 116.2,172.8 118.2,174.8 120.1,176.7 122.1,178.7 124,180.6 125.9,182.5 127.9,184.4 129.8,186.3 131.8,188.2 133.7,190.1 135.6,192 137.6,193.8 139.5,195.6 141.4,197.5 143.4,199.3 145.3,201.1 147.2,202.9 149.2,204.7 151.1,206.5 153.1,208.2 155,210 156.9,211.7 158.9,213.5 160.8,215.2 162.8,216.9 164.7,218.6 166.6,220.3 168.6,222 170.5,223.7 172.4,225.3 174.4,227 176.3,228.6 178.2,230.2 180.2,231.8 182.1,233.4 184.1,235 186,236.6 187.9,238.2 189.9,239.7 191.8,241.3 193.8,242.8 195.7,244.3 197.6,245.9 199.6,247.4 201.5,248.8 203.4,250.3 205.4,251.8 207.3,253.3 209.2,254.7 211.2,256.2 213.1,257.6 215.1,259 217,260.4 218.9,261.8 220.9,263.2 222.8,264.6 224.8,265.9 226.7,267.3 228.6,268.6 230.6,269.9 232.5,271.2 234.4,272.6 236.4,273.9 238.3,275.1 240.2,276.4 242.2,277.7 244.1,278.9 246.1,280.2 248,281.4 249.9,282.6 251.9,283.8 253.8,285 255.8,286.2 257.7,287.4 259.6,288.6 261.6,289.7 263.5,290.8 265.4,292 267.4,293.1 269.3,294.2 271.2,295.3 273.2,296.4 275.1,297.5 277.1,298.5 279,299.6 280.9,300.6 282.9,301.7 284.8,302.7 286.8,303.7 288.7,304.7 290.6,305.7 292.6,306.7 294.5,307.6 296.4,308.6 298.4,309.6 300.3,310.5 302.2,311.4 304.2,312.3 306.1,313.2 308.1,314.1 310,315 311.9,315.9 313.9,316.7 315.8,317.6 317.8,318.4 319.7,319.2 321.6,320.1 323.6,320.9 325.5,321.7 327.4,322.4 329.4,323.2 331.3,324 333.2,324.7 335.2,325.5 337.1,326.2 339.1,326.9 341,327.6 342.9,328.3 344.9,329 346.8,329.7 348.8,330.3 350.7,331 352.6,331.6 354.6,332.2 356.5,332.8 358.4,333.5 360.4,334.1 362.3,334.6 364.2,335.2 366.2,335.8 368.1,336.3 370.1,336.9 372,337.4 373.9,337.9 375.9,338.4 377.8,338.9 379.8,339.4 381.7,339.9 383.6,340.4 385.6,340.8 387.5,341.2 389.4,341.7 391.4,342.1 393.3,342.5 395.2,342.9 397.2,343.3 399.1,343.7 401.1,344 403,344.4 404.9,344.7 406.9,345.1 408.8,345.4 410.8,345.7 412.7,346 414.6,346.3 416.6,346.6 418.5,346.9 420.4,347.1 422.4,347.4 424.3,347.6 426.2,347.8 428.2,348 430.1,348.2 432.1,348.4 434,348.6 435.9,348.8 437.9,348.9 439.8,349.1 441.8,349.2 443.7,349.3 445.6,349.5 447.6,349.6 449.5,349.6 451.4,349.7 453.4,349.8 455.3,349.9 457.2,349.9 459.2,350 461.1,350 463.1,350 465,350 466.9,350 468.9,350 470.8,350 472.8,350 474.7,350 476.6,350 478.6,350 480.5,350 482.4,350 484.4,350 486.3,350 488.2,350 490.2,350 492.1,350 494.1,350 496,350 497.9,350 499.9,350 501.8,350 503.8,350 505.7,350 507.6,350 509.6,350 511.5,350 513.4,350 515.4,350 517.3,350 519.2,350 521.2,350 523.1,350 525.1,350 527,350 528.9,350 530.9,350 532.8,350 534.8,350 536.7,350 538.6,350 540.6,350 542.5,350 544.4,350 546.4,350 548.3,350 550.2,350 552.2,350 554.1,350 556.1,350 558,350 559.9,350 561.9,350 563.8,350 565.8,350 567.7,350 569.6,350 571.6,350 573.5,350 575.4,350 577.4,350 579.3,350 581.2,350 583.2,350 585.1,350 587.1,350 589,350 590.9,350 592.9,350 594.8,350 596.8,350 598.7,350 600.6,350 602.6,350 604.5,350 606.4,350 608.4,350 610.3,350 612.2,350 614.2,350 616.1,350 618.1,350 620,350"/><polyline points="0,271.2 1.9,272.6 3.9,273.9 5.8,275.1 7.8,276.4 9.7,277.7 11.6,278.9 13.6,280.2 15.5,281.4 17.4,282.6 19.4,283.8 21.3,285 23.2,286.2 25.2,287.4 27.1,288.6 29.1,289.7 31,290.8 32.9,292 34.9,293.1 36.8,294.2 38.8,295.3 40.7,296.4 42.6,297.5 44.6,298.5 46.5,299.6 48.4,300.6 50.4,301.7 52.3,302.7 54.2,303.7 56.2,304.7 58.1,305.7 60.1,306.7 62,307.6 63.9,308.6 65.9,309.6 67.8,310.5 69.8,311.4 71.7,312.3 73.6,313.2 75.6,314.1 77.5,315 79.4,315.9 81.4,316.7 83.3,317.6 85.2,318.4 87.2,319.2 89.1,320.1 91.1,320.9 93,321.7 94.9,322.4 96.9,323.2 98.8,324 100.8,324.7 102.7,325.5 104.6,326.2 106.6,326.9 108.5,327.6 110.4,328.3 112.4,329 114.3,329.7 116.2,330.3 118.2,331 120.1,331.6 122.1,332.2 124,332.8 125.9,333.5 127.9,334.1 129.8,334.6 131.8,335.2 133.7,335.8 135.6,336.3 137.6,336.9 139.5,337.4 141.4,337.9 143.4,338.4 145.3,338.9 147.2,339.4 149.2,339.9 151.1,340.4 153.1,340.8 155,341.2 156.9,341.7 158.9,342.1 160.8,342.5 162.8,342.9 164.7,343.3 166.6,343.7 168.6,344 170.5,344.4 172.4,344.7 174.4,345.1 176.3,345.4 178.2,345.7 180.2,346 182.1,346.3 184.1,346.6 186,346.9 187.9,347.1 189.9,347.4 191.8,347.6 193.8,347.8 195.7,348 197.6,348.2 199.6,348.4 201.5,348.6 203.4,348.8 205.4,348.9 207.3,349.1 209.2,349.2 211.2,349.3 213.1,349.5 215.1,349.6 217,349.6 218.9,349.7 220.9,349.8 222.8,349.9 224.8,349.9 226.7,350 228.6,350 230.6,350 232.5,350 234.4,350 236.4,350 238.3,350 240.2,350 242.2,350 244.1,350 246.1,350 248,350 249.9,350 251.9,350 253.8,350 255.8,350 257.7,350 259.6,350 261.6,350 263.5,350 265.4,350 267.4,350 269.3,350 271.2,350 273.2,350 275.1,350 277.1,350 279,350 280.9,350 282.9,350 284.8,350 286.8,350 288.7,350 290.6,350 292.6,350 294.5,350 296.4,350 298.4,350 300.3,350 302.2,350 304.2,350 306.1,350 308.1,350 310,350 311.9,350 313.9,350 315.8,350 317.8,350 319.7,350 321.6,350 323.6,350 325.5,350 327.4,350 329.4,350 331.3,350 333.2,350 335.2,350 337.1,350 339.1,350 341,350 342.9,350 344.9,350 346.8,350 348.8,350 350.7,350 352.6,350 354.6,350 356.5,350 358.4,350 360.4,350 362.3,350 364.2,350 366.2,350 368.1,350 370.1,350 372,350 373.9,350 375.9,350 377.8,350 379.8,350 381.7,350 383.6,350 385.6,350 387.5,350 389.4,350 391.4,350 393.3,350 395.2,350 397.2,350 399.1,350 401.1,350 403,350 404.9,350 406.9,350 408.8,350 410.8,350 412.7,350 414.6,350 416.6,350 418.5,350 420.4,350 422.4,350 424.3,350 426.2,350 428.2,350 430.1,350 432.1,350 434,350 435.9,350 437.9,350 439.8,350 441.8,350 443.7,350 445.6,350 447.6,350 449.5,350 451.4,350 453.4,350 455.3,350 457.2,350 459.2,350 461.1,350 463.1,350 465,350 466.9,350 468.9,350 470.8,350 472.8,350 474.7,350 476.6,350 478.6,350 480.5,350 482.4,350 484.4,350 486.3,350 488.2,350 490.2,350 492.1,350 494.1,350 496,350 497.9,350 499.9,350 501.8,350 503.8,350 505.7,350 507.6,350 509.6,350 511.5,350 513.4,350 515.4,350 517.3,350 519.2,350 521.2,350 523.1,350 525.1,350 527,350 528.9,350 530.9,350 532.8,350 534.8,350 536.7,350 538.6,350 540.6,350 542.5,350 544.4,350 546.4,350 548.3,350 550.2,350 552.2,350 554.1,350 556.1,350 558,350 559.9,350 561.9,350 563.8,350 565.8,350 567.7,350 569.6,350 571.6,350 573.5,350 575.4,350 577.4,350 579.3,350 581.2,350 583.2,350 585.1,350 587.1,350 589,350 590.9,350 592.9,350 594.8,350 596.8,350 598.7,350 600.6,350 602.6,350 604.5,350 606.4,350 608.4,350 610.3,350 612.2,350 614.2,350 616.1,350 618.1,350 620,350"/><polyline points="0,350 620,350"/></g></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="21">
+  <p class="h" data-s="0">Solutions never cross</p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="1">Suppose two solution curves crossed at a point (<i>t</i><sub>1</sub>, <i>y</i><sub>1</sub>).</p>
+      <p class="l" data-s="2">Then both solve <i>y</i>&#8242; = <i>f</i>(<i>t</i>, <i>y</i>), <i>y</i>(<i>t</i><sub>1</sub>) = <i>y</i><sub>1</sub>. <span class="d">Two solutions of one initial value problem.</span></p>
+      <p class="l" data-s="3">Where the theorem holds, that is impossible.</p>
+      <p class="e" data-s="4"><span class="bx">Off the bad set, solution curves never touch.</span></p>
+      <p class="l" data-s="5">Linear equations have no bad set inside <i>I</i>. <span class="g">Their curves never touch at all.</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">What that buys you</p>
+      <p class="l" data-s="6">An equilibrium solution is a <span class="g">wall</span>. Start below it, stay below it forever.</p>
+      <p class="e t" data-s="7">tank:&nbsp; <i>Q</i> = 25 is a solution, so <i>Q</i>(0) = 10 never reaches 25</p>
+      <p class="e t" data-s="8"><i>y</i>&#8242; = <i>y</i><sup>2</sup>:&nbsp; <i>y</i> = 0 is a solution, so <i>y</i>(0) = 1 can never come down to 0</p>
+      <p class="l" data-s="9">The draining tank <span class="n">did</span> touch <i>h</i> = 0. Allowed, because <i>h</i> = 0 is the bad set.</p>
+      <p class="a" data-s="10">&#8627; you have used this since week two, every time a curve stayed between two others.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="22">
+  <p class="h" data-s="0">Does the theorem promise exactly one solution?</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>y</i>&#8242; = <i>t</i><sup>2</sup> + <i>y</i><sup>2</sup>,&nbsp;&nbsp; <i>y</i>(0) = 1</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>y</i>&#8242; = <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>y</i></span></span>,&nbsp;&nbsp; <i>y</i>(0) = 0</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8242; = <span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>y</i></span></span>,&nbsp;&nbsp; <i>y</i>(0) = 4</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <i>y</i>&#8242; = <span class="fr"><span><i>t</i> + <i>y</i></span><span><i>t</i> &minus; <i>y</i></span></span>,&nbsp;&nbsp; <i>y</i>(1) = 1</p>
+    </div>
+    <div>
+      <p class="e t" data-s="5"><span class="g">1.</span>&nbsp; <span class="v">yes</span>&nbsp;&nbsp;<span class="d"><span class="fr"><span>&part;<i>f</i></span><span>&part;<i>y</i></span></span> = 2<i>y</i>, continuous everywhere</span></p>
+      <p class="e t" data-s="6"><span class="g">2.</span>&nbsp; <span class="v">silent</span>&nbsp;&nbsp;<span class="d"><span class="fr"><span>&part;<i>f</i></span><span>&part;<i>y</i></span></span> = 1/(2<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>y</i></span></span>), undefined at <i>y</i> = 0, and we start there</span></p>
+      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; <span class="v">yes</span>&nbsp;&nbsp;<span class="d">same <i>f</i>, but (0, 4) is off the bad set</span></p>
+      <p class="e t" data-s="8"><span class="g">4.</span>&nbsp; <span class="v">silent</span>&nbsp;&nbsp;<span class="d"><i>f</i> is undefined on the line <i>y</i> = <i>t</i>, and (1, 1) is on it</span></p>
+      <p class="a" data-s="9">&#8627; 2 and 3 are the same equation. The answer depends on the point, not only on <i>f</i>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="23">
+  <p class="h" data-s="0">The card to photograph</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">Linear&nbsp; <i>y</i>&#8242; + <i>p</i>&thinsp;<i>y</i> = <i>g</i></p>
+      <p class="e t" data-s="1">check:&nbsp; <i>p</i> and <i>g</i> continuous</p>
+      <p class="e t" data-s="2">where:&nbsp; on an interval of <i>t</i></p>
+      <p class="e t" data-s="3">you get:&nbsp; one solution on <span class="g">all of <i>I</i></span></p>
+      <p class="e t" data-s="4">interval before solving?&nbsp; <span class="v">yes, always</span></p>
+      <p class="e t" data-s="5">can two solutions meet?&nbsp; <span class="v">never</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">Nonlinear&nbsp; <i>y</i>&#8242; = <i>f</i>(<i>t</i>, <i>y</i>)</p>
+      <p class="e t" data-s="6">check:&nbsp; <i>f</i> and <span class="fr"><span>&part;<i>f</i></span><span>&part;<i>y</i></span></span> continuous</p>
+      <p class="e t" data-s="7">where:&nbsp; on a rectangle in (<i>t</i>, <i>y</i>)</p>
+      <p class="e t" data-s="8">you get:&nbsp; one solution on <span class="n">some</span> interval, length unknown</p>
+      <p class="e t" data-s="9">interval before solving?&nbsp; <span class="v">no</span> &mdash; solve, then three checks</p>
+      <p class="e t" data-s="10">can two solutions meet?&nbsp; <span class="v">only on the bad set</span></p>
+      <p class="a" data-s="11">&#8627; Wednesday adds two rows: what &ldquo;general solution&rdquo; means, and implicit answers.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="24">
+  <p class="h" data-s="0">Where we are</p>
+  <p class="l" data-s="1">&sect;2.4, first half: two theorems, and one question to ask before every problem.</p>
+  <p class="e t" data-s="2">linear: look at <i>p</i> and <i>g</i>&nbsp;&nbsp;&middot;&nbsp;&nbsp;nonlinear: look at <i>f</i> and <span class="fr"><span>&part;<i>f</i></span><span>&part;<i>y</i></span></span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;then decide what you are promised</p>
+  <p class="lb" data-s="3">Wednesday</p>
+  <p class="l" data-s="3">&sect;2.4, second half &mdash; <i>y</i>&#8242; = <i>y</i><sup>2</sup> for every starting value, an equation with infinitely many solutions through one point, and what &ldquo;general solution&rdquo; really means.</p>
+  <p class="l" data-s="4"><span class="g">HW2</span> (&sect;2.1 and &sect;2.2) is due Friday the 18th. <span class="g">HW3</span> (&sect;2.3 and &sect;2.4) will be posted this week.</p>
+  <p class="e" data-s="5"><span class="bx">See you Wednesday.</span></p>
+</div>
+
+<canvas id="ink"></canvas>
+<canvas id="wet"></canvas>
+<div id="edge"></div>
+
+<div id="hint">
+  <b>Math 2255 &mdash; Lecture 1</b><br><br>
+  <kbd>&#9654;</kbd> buttons (top right and bottom), or arrow keys<br>
+  <kbd>&#9664;</kbd> goes back<br>
+  <kbd>1</kbd>&ndash;<kbd>5</kbd> pen colour &nbsp; <kbd>E</kbd> eraser &nbsp; <kbd>C</kbd> clear ink<br>
+  <kbd>F</kbd> full screen &nbsp; <kbd>T</kbd> hide toolbar &nbsp; <kbd>G</kbd> writing zones<br>
+  <kbd>R</kbd> reset timer&nbsp;&nbsp;&nbsp;<kbd>D</kbd> dark / light<br><br><span style="color:var(--dm)">Pages turn with the arrow buttons only,<br>so nothing you touch by accident moves the board.<br><br>The toolbar hides itself after a few seconds.<br>Tap the very bottom edge to bring it back.</span><br><br>
+  <span style="color:var(--dm)">Only the Apple Pencil draws.<br>
+  Your palm and fingers leave no marks.<br><br>Tap anywhere to begin.</span>
+</div>
+
+<div id="bar">
+  <span class="pen sel" data-i="0" style="background:#F0EFE8"></span>
+  <span class="pen" data-i="1" style="background:#E3E34B"></span>
+  <span class="pen" data-i="2" style="background:#45CFC2"></span>
+  <span class="pen" data-i="3" style="background:#E85CD2"></span>
+  <span class="pen" data-i="4" style="background:#F09A42"></span>
+  <button class="btn" id="th">Pen M</button>
+  <button class="btn" id="hd">HD</button>
+  <button class="btn" id="er">Erase</button>
+  <button class="btn" id="cl">Clear</button>
+  <span class="sp"></span>
+  <button class="btn nav" id="prev">&#9664;</button>
+  <span id="pos">1 / 24</span>
+  <button class="btn nav" id="next">&#9654;</button>
+  <span class="sp"></span>
+  <span id="clk">00:00</span>
+  <button class="btn" id="tm">Light</button>
+  <button class="btn" id="fs">Full</button>
+  <button class="btn" id="hp">?</button>
+</div>
+</div>
+
+<script>
+(function(){
+var pgs=[].slice.call(document.querySelectorAll('.pg'));
+var maxStep=pgs.map(function(p){
+  var m=0;[].forEach.call(p.querySelectorAll('[data-s]'),function(e){
+    m=Math.max(m,+e.getAttribute('data-s'));});return m;});
+var P=0,S=0;
+var cv=document.getElementById('ink');
+var cx=cv.getContext('2d',{desynchronized:true,alpha:true})||cv.getContext('2d');
+var strokes=pgs.map(function(){return [];});
+var DPRCAP=1.5;
+var PAL={dark: ['#F0EFE8','#E3E34B','#45CFC2','#E85CD2','#F09A42'],
+          light:['#16181B','#8F6A05','#0E7A70','#A0198A','#B4530A']};
+var theme='dark', ci=0, wid=4.2, erase=false, drawing=false, cur=null;
+function inks(){return PAL[theme];}
+var WIDS=[3.0,4.2,6.0],wi=1;
+
+function fit(){
+  var r=Math.min(window.devicePixelRatio||1,DPRCAP);
+  cv.width=Math.round(innerWidth*r);cv.height=Math.round(innerHeight*r);
+  cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+  wet.width=cv.width;wet.height=cv.height;
+  wet.style.width=innerWidth+'px';wet.style.height=innerHeight+'px';
+  wx.setTransform(r,0,0,r,0,0);wetBox=null;
+  cx.setTransform(r,0,0,r,0,0);syncRect();redraw();
+}
+function setStyle(st){
+  cx.lineCap='round';cx.lineJoin='round';
+  cx.strokeStyle=inks()[st.ci];cx.lineWidth=st.w;
+  cx.globalCompositeOperation=st.e?'destination-out':'source-over';
+}
+function strokePath(st){
+  if(st.pts.length<2)return;
+  setStyle(st);
+  cx.beginPath();cx.moveTo(st.pts[0].x,st.pts[0].y);
+  for(var i=1;i<st.pts.length;i++){
+    var a=st.pts[i-1],b=st.pts[i];
+    cx.quadraticCurveTo(a.x,a.y,(a.x+b.x)/2,(a.y+b.y)/2);
+  }
+  cx.stroke();
+}
+// full repaint only on page change / clear / resize -- never while drawing
+function redraw(){
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  strokes[P].forEach(strokePath);
+  cx.globalCompositeOperation='source-over';
+}
+function show(){
+  pgs.forEach(function(p,i){p.classList.toggle('on',i===P);});
+  [].forEach.call(pgs[P].querySelectorAll('[data-s]'),function(e){
+    var from=+e.getAttribute('data-s');
+    var u=e.getAttribute('data-until');
+    var until=(u===null||u==='')?1e9:+u;
+    var live=(S>=from && S<=until);
+    e.classList.toggle('vis', live);
+    if(u!==null&&u!=='') e.classList.toggle('gone', S>until);});
+  var pt=(P+1)+' / '+pgs.length;
+  document.getElementById('pos').textContent=pt;
+  var p2=document.getElementById('pos2'); if(p2)p2.textContent=pt;
+  redraw();
+}
+function next(){ if(S<maxStep[P]){S++;} else if(P<pgs.length-1){P++;S=0;} show(); }
+function prev(){ if(S>0){S--;} else if(P>0){P--;S=maxStep[P];} show(); }
+function pgUp(){ if(P>0){P--;S=maxStep[P];show();} }
+function pgDn(){ if(P<pgs.length-1){P++;S=maxStep[P];show();} }
+
+// ---- pencil drawing ----
+var RC={left:0,top:0};
+function syncRect(){RC=cv.getBoundingClientRect();}
+function xy(e){return {x:e.clientX-RC.left,y:e.clientY-RC.top};}
+function isPen(e){
+  if(e.pointerType==='pen')return true;
+  if(e.pointerType==='touch'&&(e.width||99)<=12&&(e.height||99)<=12)return true;
+  return false;
+}
+cv.addEventListener('pointerdown',function(e){
+  if(!isPen(e))return;
+  e.preventDefault();drawing=true;syncRect();
+  var p=xy(e),w=erase?26:wid*(0.55+0.9*(e.pressure||0.5));
+  cur={ci:ci,w:w,e:erase,pts:[p]};strokes[P].push(cur);
+  setStyle(cur);
+  cx.beginPath();cx.arc(p.x,p.y,Math.max(w,1)/2,0,6.2832);
+  cx.fillStyle=inks()[cur.ci];cx.fill();
+  cx.globalCompositeOperation='source-over';
+},{passive:false});
+var pend=[],rafId=0,MINSTEP=1.7;
+var wet=document.getElementById('wet');
+var wx=wet.getContext('2d',{desynchronized:true})||wet.getContext('2d');
+var wetBox=null;
+function clearWet(){
+  if(!wetBox)return;
+  wx.clearRect(wetBox[0]-4,wetBox[1]-4,wetBox[2]-wetBox[0]+8,wetBox[3]-wetBox[1]+8);
+  wetBox=null;
+}
+function drawPredicted(e){
+  clearWet();
+  if(!cur||!e.getPredictedEvents)return;
+  var pr=e.getPredictedEvents(); if(!pr.length)return;
+  var a=cur.pts[cur.pts.length-1];
+  var x0=a.x,y0=a.y,x1=a.x,y1=a.y;
+  wx.lineCap='round';wx.lineJoin='round';
+  wx.strokeStyle=cur.c;wx.lineWidth=cur.w;
+  wx.globalCompositeOperation=cur.e?'destination-out':'source-over';
+  wx.beginPath();wx.moveTo(a.x,a.y);
+  for(var i=0;i<pr.length;i++){
+    var p=xy(pr[i]); wx.lineTo(p.x,p.y);
+    if(p.x<x0)x0=p.x; if(p.y<y0)y0=p.y;
+    if(p.x>x1)x1=p.x; if(p.y>y1)y1=p.y;
+  }
+  wx.stroke();
+  wetBox=[x0-cur.w,y0-cur.w,x1+cur.w,y1+cur.w];
+}
+function flush(){
+  rafId=0;
+  clearWet();
+  if(!cur||!pend.length)return;
+  setStyle(cur);
+  cx.beginPath();
+  var a=cur.pts[cur.pts.length-1];
+  cx.moveTo(a.x,a.y);
+  for(var i=0;i<pend.length;i++){ cx.lineTo(pend[i].x,pend[i].y); cur.pts.push(pend[i]); }
+  cx.stroke();
+  cx.globalCompositeOperation='source-over';
+  pend.length=0;
+}
+cv.addEventListener('pointermove',function(e){
+  if(!drawing||!isPen(e))return;
+  e.preventDefault();
+  var evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];
+  var last=pend.length?pend[pend.length-1]:cur.pts[cur.pts.length-1];
+  for(var i=0;i<evs.length;i++){
+    var p=xy(evs[i]);
+    var dx=p.x-last.x, dy=p.y-last.y;
+    if(dx*dx+dy*dy < MINSTEP) continue;
+    pend.push(p); last=p;
+  }
+  if(pend.length && !rafId) rafId=requestAnimationFrame(flush);
+  drawPredicted(e);
+},{passive:false});
+function end(e){ if(e.pointerType&&!isPen(e))return;
+  if(rafId){cancelAnimationFrame(rafId);rafId=0;} flush();
+  clearWet(); drawing=false;cur=null;pend.length=0; }
+cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+
+// ---- buttons only. no tap-to-advance, no swipe. ----
+cv.addEventListener('pointerup',function(e){
+  if(isPen(e))return;
+  startClk();
+  var h=document.getElementById('hint');
+  if(!h.classList.contains('hide')) h.classList.add('hide');
+  showChrome();
+});
+
+function bindNav(id,fn){
+  var el=document.getElementById(id); if(!el)return;
+  var go=function(e){ e.preventDefault(); e.stopPropagation(); fn(); startClk(); };
+  el.addEventListener('click',go);
+  el.addEventListener('touchend',go,{passive:false});
+}
+bindNav('prev',prev); bindNav('next',next);
+bindNav('prev2',prev); bindNav('next2',next);
+
+
+// ---- toolbar ----
+[].forEach.call(document.querySelectorAll('.pen'),function(b){
+  b.onclick=function(){
+    [].forEach.call(document.querySelectorAll('.pen'),function(x){x.classList.remove('sel');});
+    b.classList.add('sel');ci=+b.getAttribute('data-i');erase=false;
+    document.getElementById('er').style.borderColor='var(--bbd)';
+  };
+});
+document.getElementById('th').onclick=function(){
+  wi=(wi+1)%3; wid=WIDS[wi];
+  this.textContent='Pen '+['S','M','L'][wi];
+};
+document.getElementById('hd').onclick=function(){
+  DPRCAP=(DPRCAP===1.5)?1:1.5;
+  this.textContent=(DPRCAP===1.5)?'HD':'Fast';
+  fit();
+};
+document.getElementById('er').onclick=function(){
+  erase=!erase;this.style.borderColor=erase?'var(--o)':'var(--bbd)';};
+document.getElementById('cl').onclick=function(){strokes[P]=[];redraw();};
+document.getElementById('hp').onclick=function(){
+  document.getElementById('hint').classList.toggle('hide');};
+function isStandalone(){
+  return window.navigator.standalone===true ||
+         (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches);
+}
+function setTheme(t){
+  theme=t;
+  document.body.classList.toggle('light', t==='light');
+  document.getElementById('tm').textContent = (t==='dark')?'Light':'Dark';
+  var sw=document.querySelectorAll('.pen');
+  for(var i=0;i<sw.length;i++) sw[i].style.background=PAL[t][i];
+  var tc=document.querySelector('meta[name="theme-color"]');
+  if(tc)tc.setAttribute('content', t==='light'?'#F2F0EA':'#0D0F10');
+  try{localStorage.setItem('m2255theme',t);}catch(e){}
+  redraw();
+}
+document.getElementById('tm').onclick=function(){ setTheme(theme==='dark'?'light':'dark'); };
+document.getElementById('fs').onclick=function(){
+  var d=document.documentElement;
+  var req=d.requestFullscreen||d.webkitRequestFullscreen;
+  if(document.fullscreenElement||document.webkitFullscreenElement){
+    (document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);
+    return;
+  }
+  if(req){ try{ req.call(d); return; }catch(err){} }
+  if(isStandalone()){ alert('Already running full screen.'); return; }
+  alert('For true full screen on iPad:\n\n'+
+        '1. Tap the Share button in Safari\n'+
+        '2. Choose "Add to Home Screen"\n'+
+        '3. Launch it from the home-screen icon\n\n'+
+        'It then opens with no address bar and no toolbars.');
+};
+if(isStandalone()){ document.getElementById('fs').textContent='FS'; }
+
+// ---- clock ----
+var t0=null,tick=null;
+function fmt(s){var m=Math.floor(s/60);return (m<10?'0':'')+m+':'+((s%60)<10?'0':'')+(s%60);}
+function startClk(){
+  if(tick)return;t0=Date.now();
+  tick=setInterval(function(){
+    var s=Math.floor((Date.now()-t0)/1000);
+    var el=document.getElementById('clk');
+    el.textContent=fmt(s);el.classList.toggle('over',s>55*60);
+  },1000);
+}
+
+// ---- keys ----
+addEventListener('keydown',function(e){
+  var k=e.key;
+  if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();next();}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev();}
+  else if(k==='ArrowDown'){e.preventDefault();pgDn();}
+  else if(k==='ArrowUp'){e.preventDefault();pgUp();}
+  else if(k>='1'&&k<='5'){document.querySelectorAll('.pen')[+k-1].click();}
+  else if(k==='e'||k==='E'){document.getElementById('er').click();}
+  else if(k==='c'||k==='C'){document.getElementById('cl').click();}
+  else if(k==='f'||k==='F'){document.getElementById('fs').click();}
+  else if(k==='t'||k==='T'){document.getElementById('bar').classList.toggle('hide');document.getElementById('topnav').classList.toggle('hide');}
+  else if(k==='g'||k==='G'){document.body.classList.toggle('guides');}
+  else if(k==='d'||k==='D'){document.getElementById('tm').click();}
+  else if(k==='r'||k==='R'){t0=Date.now();}
+  else if(k==='?'||k==='h'){document.getElementById('hp').click();}
+  if(k!=='?'&&k!=='h')startClk();
+});
+document.getElementById('hint').addEventListener('click',function(){
+  this.classList.add('hide');startClk();});
+
+// ---- auto-hiding chrome ----
+var chromeT=null;
+function showChrome(){
+  document.getElementById('bar').classList.remove('hide');
+  document.getElementById('topnav').classList.remove('hide');
+  clearTimeout(chromeT);
+  chromeT=setTimeout(hideChrome,3500);
+}
+function hideChrome(){
+  document.getElementById('bar').classList.add('hide');
+  document.getElementById('topnav').classList.add('hide');
+}
+document.getElementById('edge').addEventListener('pointerdown',function(e){
+  e.stopPropagation(); showChrome();
+});
+document.getElementById('bar').addEventListener('pointerdown',showChrome);
+document.getElementById('topnav').addEventListener('pointerdown',showChrome);
+showChrome();
+
+addEventListener('resize',function(){fit();syncRect();});
+addEventListener('orientationchange',function(){setTimeout(function(){fit();syncRect();},250);});
+addEventListener('scroll',syncRect,true);
+try{var sv=localStorage.getItem('m2255theme');}catch(e){}
+setTheme(sv==='light'?'light':'dark');
+fit();show();
+})();
+</script>
+
+</body>
+</html>
