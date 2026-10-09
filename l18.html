@@ -128,7 +128,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
 <div id="app">
 <div id="topnav">
   <button class="btn nav" id="prev2">&#9664;</button>
-  <span id="pos2">1 / 16</span>
+  <span id="pos2">1 / 20</span>
   <button class="btn nav" id="next2">&#9654;</button>
 </div>
 <div id="stage">
@@ -144,11 +144,11 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
     </div>
     <div>
       <p class="lb" data-s="4">Today&#8217;s question</p>
-      <p class="l" data-s="4">Do two solutions always give <span class="g">every</span> solution?</p>
-      <p class="e t" data-s="5"><i>y</i>&#8243; &minus; <i>y</i> = 0:&nbsp; <b>e</b><sup><i>t</i></sup> and 3<b>e</b><sup><i>t</i></sup> are both solutions</p>
-      <p class="e t" data-s="6"><i>y</i> = <i>c</i><sub>1</sub><b>e</b><sup><i>t</i></sup> + 3<i>c</i><sub>2</sub><b>e</b><sup><i>t</i></sup>,&nbsp; <i>y</i>(0) = 1,&nbsp; <i>y</i>&#8242;(0) = 0</p>
-      <p class="e t" data-s="7"><i>c</i><sub>1</sub> + 3<i>c</i><sub>2</sub> = 1&nbsp; and&nbsp; <i>c</i><sub>1</sub> + 3<i>c</i><sub>2</sub> = 0&nbsp;&nbsp;<span class="n">impossible</span></p>
-      <p class="e" data-s="8"><span class="bx">Not every pair works. &sect;3.2 tells us which pairs do.</span></p>
+      <p class="l" data-s="4">Why is <i>c</i><sub>1</sub><i>y</i><sub>1</sub> + <i>c</i><sub>2</sub><i>y</i><sub>2</sub> <span class="g">every</span> solution?</p>
+      <p class="l" data-s="5">Could there be a solution of another form that we missed?</p>
+      <p class="e t" data-s="6">Every solution has a value <i>y</i>(<i>t</i><sub>0</sub>) and a slope <i>y</i>&#8242;(<i>t</i><sub>0</sub>).</p>
+      <p class="l" data-s="7">So: can <i>c</i><sub>1</sub><i>y</i><sub>1</sub> + <i>c</i><sub>2</sub><i>y</i><sub>2</sub> match any initial values?</p>
+      <p class="e" data-s="8"><span class="bx">&sect;3.2: yes, exactly when the Wronskian of <i>y</i><sub>1</sub>, <i>y</i><sub>2</sub> is not zero.</span></p>
     </div>
   </div>
 </div>
@@ -208,12 +208,31 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
       <p class="e" data-s="5"><span class="bx">The solution exists on 0 &lt; <i>t</i> &lt; 3.</span></p>
       <p class="l" data-s="6">We never solved the equation.</p>
       <p class="l" data-s="7"><span class="d">The initial values 2 and 1 do not matter. Only <i>t</i><sub>0</sub> does.</span></p>
-      <p class="a" data-s="8">&#8627; now: why sums of solutions are solutions.</p>
+      <p class="a" data-s="8">&#8627; four more intervals, out loud.</p>
     </div>
   </div>
 </div>
 
 <div class="pg" data-n="5">
+  <p class="h" data-s="0">Call it out &mdash; where does the solution surely exist?</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <span style="white-space:nowrap"><i>t</i>(<i>t</i> &minus; 4)<i>y</i>&#8243; + 3<i>t</i><i>y</i>&#8242; + 4<i>y</i> = 2,</span> <span style="white-space:nowrap"><i>y</i>(3) = 0, <i>y</i>&#8242;(3) = &minus;1</span></p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <span style="white-space:nowrap">(<i>t</i> &minus; 1)<i>y</i>&#8243; &minus; 3<i>t</i><i>y</i>&#8242; + 4<i>y</i> = sin <i>t</i>,</span> <span style="white-space:nowrap"><i>y</i>(&minus;2) = 2, <i>y</i>&#8242;(&minus;2) = 1</span></p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <span style="white-space:nowrap">(<i>t</i><sup>2</sup> &minus; 4)<i>y</i>&#8243; + <i>y</i> = <b>e</b><sup><i>t</i></sup>,</span> <span style="white-space:nowrap"><i>y</i>(0) = 1, <i>y</i>&#8242;(0) = 0</span></p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <span style="white-space:nowrap">(<i>t</i> &minus; 3)<i>y</i>&#8243; + <i>y</i>&#8242; + (ln <i>t</i>)<i>y</i> = 0,</span> <span style="white-space:nowrap"><i>y</i>(1) = 0, <i>y</i>&#8242;(1) = 1</span></p>
+    </div>
+    <div>
+      <p class="e t" data-s="5"><span class="g">1.</span>&nbsp; breaks at 0 and 4:&nbsp; <span class="v">0 &lt; <i>t</i> &lt; 4</span></p>
+      <p class="e t" data-s="6"><span class="g">2.</span>&nbsp; breaks at 1:&nbsp; <span class="v"><i>t</i> &lt; 1</span></p>
+      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; breaks at &plusmn;2:&nbsp; <span class="v">&minus;2 &lt; <i>t</i> &lt; 2</span></p>
+      <p class="e t" data-s="8"><span class="g">4.</span>&nbsp; ln <i>t</i> needs <i>t</i> &gt; 0; breaks at 3:&nbsp; <span class="v">0 &lt; <i>t</i> &lt; 3</span></p>
+      <p class="a" data-s="9">&#8627; number 4: not only a zero denominator. A function like ln <i>t</i> can break too.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="6">
   <p class="h" data-s="0">Superposition</p>
   <p class="e" data-s="1"><span class="bw"><i>L</i>[<i>y</i>] = <i>y</i>&#8243; + <i>p</i><i>y</i>&#8242; + <i>q</i><i>y</i></span></p>
   <div class="two">
@@ -233,7 +252,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
   </div>
 </div>
 
-<div class="pg" data-n="6">
+<div class="pg" data-n="7">
   <p class="h" data-s="0">Can we match the initial conditions?</p>
   <p class="e" data-s="1"><span class="bw"><i>y</i> = <i>c</i><sub>1</sub><i>y</i><sub>1</sub> + <i>c</i><sub>2</sub><i>y</i><sub>2</sub>,&nbsp;&nbsp; <i>y</i>(<i>t</i><sub>0</sub>) = <i>y</i><sub>0</sub>,&nbsp;&nbsp; <i>y</i>&#8242;(<i>t</i><sub>0</sub>) = <i>y</i><sub>0</sub>&#8242;</span></p>
   <div class="two">
@@ -249,13 +268,13 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
       <p class="e" data-s="5"><span class="bx"><i>W</i> = <span style="display:inline-grid;grid-template-columns:auto auto;column-gap:.9em;row-gap:.1em;border-left:1.5px solid currentColor;border-right:1.5px solid currentColor;padding:.05em .45em;vertical-align:middle;line-height:1.25;text-align:center"><span><i>y</i><sub>1</sub></span><span><i>y</i><sub>2</sub></span><span><i>y</i><sub>1</sub>&#8242;</span><span><i>y</i><sub>2</sub>&#8242;</span></span> = <i>y</i><sub>1</sub><i>y</i><sub>2</sub>&#8242; &minus; <i>y</i><sub>1</sub>&#8242;<i>y</i><sub>2</sub></span></p>
       <p class="l" data-s="6">It is called the <span class="g">Wronskian</span> of <i>y</i><sub>1</sub> and <i>y</i><sub>2</sub>.</p>
       <p class="l" data-s="7"><i>W</i>(<i>t</i><sub>0</sub>) &ne; 0: we can find <i>c</i><sub>1</sub>, <i>c</i><sub>2</sub> for any <i>y</i><sub>0</sub>, <i>y</i><sub>0</sub>&#8242;.</p>
-      <p class="e t" data-s="8"><b>e</b><sup><i>t</i></sup>, 3<b>e</b><sup><i>t</i></sup>:&nbsp; <i>W</i> = <b>e</b><sup><i>t</i></sup>&middot;3<b>e</b><sup><i>t</i></sup> &minus; <b>e</b><sup><i>t</i></sup>&middot;3<b>e</b><sup><i>t</i></sup> = 0</p>
-      <p class="a" data-s="9">&#8627; that is why the opening example failed.</p>
+      <p class="l" data-s="8"><i>W</i>(<i>t</i><sub>0</sub>) = 0: for some <i>y</i><sub>0</sub>, <i>y</i><sub>0</sub>&#8242; there are no <i>c</i><sub>1</sub>, <i>c</i><sub>2</sub>.</p>
+      <p class="a" data-s="9">&#8627; so <i>W</i> &ne; 0 is the condition we check.</p>
     </div>
   </div>
 </div>
 
-<div class="pg" data-n="7">
+<div class="pg" data-n="8">
   <p class="h" data-s="0">Fundamental set of solutions</p>
   <p class="e" data-s="1"><span class="bw"><i>L</i>[<i>y</i>] = <i>y</i>&#8243; + <i>p</i>(<i>t</i>)<i>y</i>&#8242; + <i>q</i>(<i>t</i>)<i>y</i> = 0&nbsp; on an interval <i>I</i></span></p>
   <div class="two">
@@ -275,7 +294,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
   </div>
 </div>
 
-<div class="pg" data-n="8">
+<div class="pg" data-n="9">
   <p class="h" data-s="0">Example 2 &mdash; a fundamental set</p>
   <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + 5<i>y</i>&#8242; + 6<i>y</i> = 0,&nbsp;&nbsp; <i>y</i><sub>1</sub> = <b>e</b><sup>&minus;2<i>t</i></sup>,&nbsp;&nbsp; <i>y</i><sub>2</sub> = <b>e</b><sup>&minus;3<i>t</i></sup></span></p>
   <div class="two">
@@ -296,7 +315,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
   </div>
 </div>
 
-<div class="pg" data-n="9">
+<div class="pg" data-n="10">
   <p class="h" data-s="0">Why &sect;3.1 and &sect;3.3 give every solution</p>
   <p class="e" data-s="1"><span class="bw"><i>a</i><i>y</i>&#8243; + <i>b</i><i>y</i>&#8242; + <i>cy</i> = 0</span></p>
   <div class="two">
@@ -317,27 +336,49 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
   </div>
 </div>
 
-<div class="pg" data-n="10">
-  <p class="h" data-s="0">Your turn &mdash; compute the Wronskian</p>
+<div class="pg" data-n="11">
+  <p class="h" data-s="0">A complex solution gives two real ones</p>
+  <p class="e" data-s="1"><span class="bw"><i>L</i>[<i>y</i>] = <i>y</i>&#8243; + <i>p</i><i>y</i>&#8242; + <i>q</i><i>y</i> = 0,&nbsp; <i>p</i> and <i>q</i> real</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Theorem 3.2.6</p>
+      <p class="l" data-s="2">If <i>y</i> = <i>u</i> + <i>iv</i> is a solution, with <i>u</i> and <i>v</i> real, then <i>u</i> and <i>v</i> are both solutions.</p>
+      <p class="lb" data-s="3">Why</p>
+      <p class="e t" data-s="3"><i>L</i>[<i>u</i> + <i>iv</i>] = <i>L</i>[<i>u</i>] + <i>i</i>&thinsp;<i>L</i>[<i>v</i>] = 0</p>
+      <p class="l" data-s="4">A complex number is zero only when its real part and its imaginary part are both zero.</p>
+      <p class="e t" data-s="5"><i>L</i>[<i>u</i>] = 0&nbsp; and&nbsp; <i>L</i>[<i>v</i>] = 0</p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">Example: <i>y</i>&#8243; + 2<i>y</i>&#8242; + 5<i>y</i> = 0</p>
+      <p class="e t" data-s="6"><i>r</i> = &minus;1 &plusmn; 2<i>i</i>:&nbsp; <b>e</b><sup>(&minus;1 + 2<i>i</i>)<i>t</i></sup> is a solution</p>
+      <p class="e t" data-s="7"><b>e</b><sup>(&minus;1 + 2<i>i</i>)<i>t</i></sup> = <b>e</b><sup>&minus;<i>t</i></sup>(cos 2<i>t</i> + <i>i</i> sin 2<i>t</i>)</p>
+      <p class="e t" data-s="8"><i>u</i> = <b>e</b><sup>&minus;<i>t</i></sup> cos 2<i>t</i>,&nbsp;&nbsp; <i>v</i> = <b>e</b><sup>&minus;<i>t</i></sup> sin 2<i>t</i></p>
+      <p class="e" data-s="9"><span class="bx">This is &sect;3.3 again, in one line.</span></p>
+      <p class="a" data-s="10">&#8627; now you compute some Wronskians, out loud.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="12">
+  <p class="h" data-s="0">Call it out &mdash; the Wronskian</p>
   <div class="two">
     <div>
       <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; cos 3<i>t</i>,&nbsp; sin 3<i>t</i></p>
       <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <b>e</b><sup>2<i>t</i></sup>,&nbsp; <b>e</b><sup>&minus;<i>t</i></sup></p>
       <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>t</i>,&nbsp; <i>t</i><sup>2</sup></p>
-      <p class="e" data-s="3"><span class="bx">6 minutes. <i>W</i> = <i>y</i><sub>1</sub><i>y</i><sub>2</sub>&#8242; &minus; <i>y</i><sub>1</sub>&#8242;<i>y</i><sub>2</sub>. Do 1 first.</span></p>
-      <p class="l" data-s="3"><span class="g">Bonus:</span> <b>e</b><sup><i>t</i></sup>, 2<b>e</b><sup><i>t</i></sup>. Why is the answer no surprise?</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <b>e</b><sup>&minus;<i>t</i></sup> cos 2<i>t</i>,&nbsp; <b>e</b><sup>&minus;<i>t</i></sup> sin 2<i>t</i></p>
     </div>
     <div>
-      <p class="e t" data-s="4"><span class="g">1.</span>&nbsp; cos 3<i>t</i>&middot;3 cos 3<i>t</i> &minus; (&minus;3 sin 3<i>t</i>) sin 3<i>t</i> = <span class="v">3</span></p>
-      <p class="e t" data-s="5"><span class="g">2.</span>&nbsp; <b>e</b><sup>2<i>t</i></sup>(&minus;<b>e</b><sup>&minus;<i>t</i></sup>) &minus; 2<b>e</b><sup>2<i>t</i></sup><b>e</b><sup>&minus;<i>t</i></sup> = <span class="v">&minus;3<b>e</b><sup><i>t</i></sup></span></p>
-      <p class="e t" data-s="6"><span class="g">3.</span>&nbsp; <i>t</i>&middot;2<i>t</i> &minus; 1&middot;<i>t</i><sup>2</sup> = <span class="v"><i>t</i><sup>2</sup></span></p>
-      <p class="e t" data-s="7"><span class="g">bonus.</span>&nbsp; <b>e</b><sup><i>t</i></sup>&middot;2<b>e</b><sup><i>t</i></sup> &minus; <b>e</b><sup><i>t</i></sup>&middot;2<b>e</b><sup><i>t</i></sup> = 0:&nbsp; one is a multiple of the other.</p>
-      <p class="a" data-s="8">&#8627; number 1 is &sect;3.3 with &lambda; = 0, &mu; = 3: <i>W</i> = &mu;<b>e</b><sup>2&lambda;<i>t</i></sup> = 3.</p>
+      <p class="e t" data-s="5"><span class="g">1.</span>&nbsp; cos 3<i>t</i>&middot;3 cos 3<i>t</i> &minus; (&minus;3 sin 3<i>t</i>) sin 3<i>t</i> = <span class="v">3</span></p>
+      <p class="e t" data-s="6"><span class="g">2.</span>&nbsp; <b>e</b><sup>2<i>t</i></sup>(&minus;<b>e</b><sup>&minus;<i>t</i></sup>) &minus; 2<b>e</b><sup>2<i>t</i></sup><b>e</b><sup>&minus;<i>t</i></sup> = <span class="v">&minus;3<b>e</b><sup><i>t</i></sup></span></p>
+      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; <i>t</i>&middot;2<i>t</i> &minus; 1&middot;<i>t</i><sup>2</sup> = <span class="v"><i>t</i><sup>2</sup></span></p>
+      <p class="e t" data-s="8"><span class="g">4.</span>&nbsp; &lambda; = &minus;1, &mu; = 2:&nbsp; &mu;<b>e</b><sup>2&lambda;<i>t</i></sup> = <span class="v">2<b>e</b><sup>&minus;2<i>t</i></sup></span></p>
+      <p class="a" data-s="9">&#8627; numbers 1 and 4: use <i>W</i> = &mu;<b>e</b><sup>2&lambda;<i>t</i></sup> instead of computing.</p>
     </div>
   </div>
 </div>
 
-<div class="pg" data-n="11">
+<div class="pg" data-n="13">
   <p class="h" data-s="0">Example 3 &mdash; not constant coefficients</p>
   <p class="e" data-s="1"><span class="bw">2<i>t</i><sup>2</sup><i>y</i>&#8243; + 3<i>t</i><i>y</i>&#8242; &minus; <i>y</i> = 0,&nbsp; <i>t</i> &gt; 0,&nbsp;&nbsp; <i>y</i><sub>1</sub> = <i>t</i><sup>1/2</sup>,&nbsp;&nbsp; <i>y</i><sub>2</sub> = <i>t</i><sup>&minus;1</sup></span></p>
   <div class="two">
@@ -359,7 +400,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
   </div>
 </div>
 
-<div class="pg" data-n="12">
+<div class="pg" data-n="14">
   <p class="h" data-s="0">A fundamental set always exists</p>
   <p class="e" data-s="1"><span class="bw"><i>L</i>[<i>y</i>] = 0,&nbsp; <i>p</i> and <i>q</i> continuous on <i>I</i>,&nbsp; <i>t</i><sub>0</sub> in <i>I</i></span></p>
   <div class="two">
@@ -376,51 +417,97 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
       <p class="e t" data-s="7"><span style="white-space:nowrap"><i>y</i><sub>1</sub>:&nbsp; <i>c</i><sub>1</sub> = <i>c</i><sub>2</sub> = <span class="fr"><span>1</span><span>2</span></span>&nbsp; &rArr;&nbsp; <i>y</i><sub>1</sub> = <span class="fr"><span>1</span><span>2</span></span>(<b>e</b><sup><i>t</i></sup> + <b>e</b><sup>&minus;<i>t</i></sup>) = cosh <i>t</i></span></p>
       <p class="e t" data-s="8"><span style="white-space:nowrap"><i>y</i><sub>2</sub>:&nbsp; <i>c</i><sub>1</sub> = <span class="fr"><span>1</span><span>2</span></span>, <i>c</i><sub>2</sub> = &minus;<span class="fr"><span>1</span><span>2</span></span>&nbsp; &rArr;&nbsp; <i>y</i><sub>2</sub> = sinh <i>t</i></span></p>
       <p class="l" data-s="9"><b>e</b><sup><i>t</i></sup>, <b>e</b><sup>&minus;<i>t</i></sup> and cosh <i>t</i>, sinh <i>t</i>: two fundamental sets for one equation.</p>
-      <p class="a" data-s="10">&#8627; four quick ones.</p>
-    </div>
-  </div>
-</div>
-
-<div class="pg" data-n="13">
-  <p class="h" data-s="0">Call it out &mdash; a fundamental set for <i>y</i>&#8243; &minus; <i>y</i> = 0?</p>
-  <div class="two">
-    <div>
-      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <b>e</b><sup><i>t</i></sup>,&nbsp; <b>e</b><sup>&minus;<i>t</i></sup></p>
-      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <b>e</b><sup><i>t</i></sup>,&nbsp; &minus;4<b>e</b><sup><i>t</i></sup></p>
-      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; cosh <i>t</i>,&nbsp; sinh <i>t</i></p>
-      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <b>e</b><sup><i>t</i></sup>,&nbsp; <b>e</b><sup><i>t</i></sup> + <b>e</b><sup>&minus;<i>t</i></sup></p>
-    </div>
-    <div>
-      <p class="e t" data-s="5"><span class="g">1.</span>&nbsp; <span class="v">yes</span>&nbsp;&nbsp;<span class="d"><i>W</i> = &minus;2</span></p>
-      <p class="e t" data-s="6"><span class="g">2.</span>&nbsp; <span class="n">no</span>&nbsp;&nbsp;<span class="d"><i>W</i> = 0, a multiple</span></p>
-      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; <span class="v">yes</span>&nbsp;&nbsp;<span class="d"><i>W</i> = cosh<sup>2</sup> <i>t</i> &minus; sinh<sup>2</sup> <i>t</i> = 1</span></p>
-      <p class="e t" data-s="8"><span class="g">4.</span>&nbsp; <span class="v">yes</span>&nbsp;&nbsp;<span class="d"><i>W</i> = &minus;2</span></p>
-      <p class="a" data-s="9">&#8627; number 4: the two share <b>e</b><sup><i>t</i></sup> and still work. Only <i>W</i> decides.</p>
-    </div>
-  </div>
-</div>
-
-<div class="pg" data-n="14">
-  <p class="h" data-s="0">Your turn &mdash; intervals and a fundamental set</p>
-  <div class="two">
-    <div>
-      <p class="l" data-s="1"><span class="g">1.</span>&nbsp; Where does the solution surely exist?<br><span style="white-space:nowrap"><i>t</i>(<i>t</i> &minus; 4)<i>y</i>&#8243; + 3<i>t</i><i>y</i>&#8242; + 4<i>y</i> = 2,</span> <span style="white-space:nowrap"><i>y</i>(3) = 0, <i>y</i>&#8242;(3) = &minus;1</span></p>
-      <p class="l" data-s="2"><span class="g">2.</span>&nbsp; The same question for<br><span style="white-space:nowrap">(<i>t</i> &minus; 1)<i>y</i>&#8243; &minus; 3<i>t</i><i>y</i>&#8242; + 4<i>y</i> = sin <i>t</i>,</span> <span style="white-space:nowrap"><i>y</i>(&minus;2) = 2, <i>y</i>&#8242;(&minus;2) = 1</span></p>
-      <p class="l" data-s="3"><span class="g">3.</span>&nbsp; <b>e</b><sup><i>t</i></sup> and <i>t</i><b>e</b><sup><i>t</i></sup> both solve <span style="white-space:nowrap"><i>y</i>&#8243; &minus; 2<i>y</i>&#8242; + <i>y</i> = 0</span>. Is it a fundamental set?</p>
-      <p class="e" data-s="3"><span class="bx">7 minutes. Do 1 first.</span></p>
-      <p class="l" data-s="3"><span class="g">Bonus:</span> <i>y</i>&#8243; + 4<i>y</i> = 0, <i>t</i><sub>0</sub> = 0. Find <i>y</i><sub>1</sub>, <i>y</i><sub>2</sub> of Theorem 3.2.5.</p>
-    </div>
-    <div>
-      <p class="e t" data-s="4"><span class="g">1.</span>&nbsp; <i>t</i>(<i>t</i> &minus; 4) = 0 at 0, 4.&nbsp; <span class="v">0 &lt; <i>t</i> &lt; 4</span></p>
-      <p class="e t" data-s="5"><span class="g">2.</span>&nbsp; divide by <i>t</i> &minus; 1: break at 1.&nbsp; <span class="v"><i>t</i> &lt; 1</span></p>
-      <p class="e t" data-s="6"><span class="g">3.</span>&nbsp; <i>W</i> = <b>e</b><sup><i>t</i></sup>(1 + <i>t</i>)<b>e</b><sup><i>t</i></sup> &minus; <b>e</b><sup><i>t</i></sup>&middot;<i>t</i><b>e</b><sup><i>t</i></sup> = <span class="v"><b>e</b><sup>2<i>t</i></sup> &ne; 0: yes</span></p>
-      <p class="e t" data-s="7"><span class="g">bonus.</span>&nbsp; <i>y</i><sub>1</sub> = cos 2<i>t</i>,&nbsp; <i>y</i><sub>2</sub> = <span class="fr"><span>1</span><span>2</span></span> sin 2<i>t</i></p>
-      <p class="a" data-s="8">&#8627; number 3: <i>t</i><b>e</b><sup><i>t</i></sup> comes from a repeated root, <i>r</i> = 1. That is &sect;3.4.</p>
+      <p class="a" data-s="10">&#8627; one initial value problem, both ways.</p>
     </div>
   </div>
 </div>
 
 <div class="pg" data-n="15">
+  <p class="h" data-s="0">Example 4 &mdash; one problem, two fundamental sets</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; &minus; <i>y</i> = 0,&nbsp;&nbsp; <i>y</i>(0) = 2,&nbsp;&nbsp; <i>y</i>&#8242;(0) = 4</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">With <b>e</b><sup><i>t</i></sup>, <b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="e t" data-s="2"><i>c</i><sub>1</sub> + <i>c</i><sub>2</sub> = 2,&nbsp;&nbsp; <i>c</i><sub>1</sub> &minus; <i>c</i><sub>2</sub> = 4</p>
+      <p class="e t" data-s="3">add: 2<i>c</i><sub>1</sub> = 6,&nbsp; so <i>c</i><sub>1</sub> = 3,&nbsp; <i>c</i><sub>2</sub> = &minus;1</p>
+      <p class="e" data-s="4"><span class="bx"><i>y</i> = 3<b>e</b><sup><i>t</i></sup> &minus; <b>e</b><sup>&minus;<i>t</i></sup></span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">With cosh <i>t</i>, sinh <i>t</i>&nbsp; <span class="d">(cosh 0 = 1, sinh 0 = 0)</span></p>
+      <p class="e t" data-s="5"><i>y</i>(0) = <i>c</i><sub>1</sub> = 2,&nbsp;&nbsp; <i>y</i>&#8242;(0) = <i>c</i><sub>2</sub> = 4</p>
+      <p class="e t" data-s="6"><i>y</i> = 2 cosh <i>t</i> + 4 sinh <i>t</i></p>
+      <p class="e t" data-s="7">= (<b>e</b><sup><i>t</i></sup> + <b>e</b><sup>&minus;<i>t</i></sup>) + 2(<b>e</b><sup><i>t</i></sup> &minus; <b>e</b><sup>&minus;<i>t</i></sup>) = 3<b>e</b><sup><i>t</i></sup> &minus; <b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="l" data-s="8">The same function. Any fundamental set gives the same solutions.</p>
+      <p class="l" data-s="9"><span class="d">With the pair of Theorem 3.2.5, <i>c</i><sub>1</sub> = <i>y</i><sub>0</sub> and <i>c</i><sub>2</sub> = <i>y</i><sub>0</sub>&#8242; immediately.</span></p>
+      <p class="a" data-s="10">&#8627; four quick ones.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="16">
+  <p class="h" data-s="0">Call it out &mdash; the Wronskian, for <i>y</i>&#8243; &minus; <i>y</i> = 0</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <b>e</b><sup><i>t</i></sup>,&nbsp; <b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <b>e</b><sup><i>t</i></sup> + <b>e</b><sup>&minus;<i>t</i></sup>,&nbsp; <b>e</b><sup><i>t</i></sup> &minus; <b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; cosh <i>t</i>,&nbsp; sinh <i>t</i></p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <b>e</b><sup><i>t</i></sup>,&nbsp; <b>e</b><sup><i>t</i></sup> + <b>e</b><sup>&minus;<i>t</i></sup></p>
+    </div>
+    <div>
+      <p class="e t" data-s="5"><span class="g">1.</span>&nbsp; <span class="v">&minus;2</span></p>
+      <p class="e t" data-s="6"><span class="g">2.</span>&nbsp; <span class="v">4</span>&nbsp;&nbsp;<span class="d">(<b>e</b><sup><i>t</i></sup> + <b>e</b><sup>&minus;<i>t</i></sup>)<sup>2</sup> &minus; (<b>e</b><sup><i>t</i></sup> &minus; <b>e</b><sup>&minus;<i>t</i></sup>)<sup>2</sup></span></p>
+      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; <span class="v">1</span>&nbsp;&nbsp;<span class="d">cosh<sup>2</sup> <i>t</i> &minus; sinh<sup>2</sup> <i>t</i></span></p>
+      <p class="e t" data-s="8"><span class="g">4.</span>&nbsp; <span class="v">&minus;2</span></p>
+      <p class="a" data-s="9">&#8627; none is zero: four different fundamental sets for the same equation.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="17">
+  <p class="h" data-s="0">Example 5 &mdash; a preview of &sect;3.4</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; &minus; 2<i>y</i>&#8242; + <i>y</i> = 0,&nbsp;&nbsp; <i>y</i><sub>1</sub> = <b>e</b><sup><i>t</i></sup>,&nbsp;&nbsp; <i>y</i><sub>2</sub> = <i>t</i><b>e</b><sup><i>t</i></sup></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">The characteristic equation</p>
+      <p class="e t" data-s="2"><i>r</i><sup>2</sup> &minus; 2<i>r</i> + 1 = (<i>r</i> &minus; 1)<sup>2</sup> = 0:&nbsp; <i>r</i> = 1, twice</p>
+      <p class="l" data-s="3">One root gives only <b>e</b><sup><i>t</i></sup>. The book says <i>t</i><b>e</b><sup><i>t</i></sup> is also a solution.</p>
+      <p class="lb" data-s="4">Check <i>y</i><sub>2</sub> = <i>t</i><b>e</b><sup><i>t</i></sup></p>
+      <p class="e t" data-s="4"><i>y</i><sub>2</sub>&#8242; = (1 + <i>t</i>)<b>e</b><sup><i>t</i></sup>,&nbsp;&nbsp; <i>y</i><sub>2</sub>&#8243; = (2 + <i>t</i>)<b>e</b><sup><i>t</i></sup></p>
+      <p class="e t" data-s="5">(2 + <i>t</i>) &minus; 2(1 + <i>t</i>) + <i>t</i> = 0&nbsp; &#10003;&nbsp;&nbsp;<span class="d">times <b>e</b><sup><i>t</i></sup></span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">The Wronskian</p>
+      <p class="e t" data-s="6"><i>W</i> = <span style="display:inline-grid;grid-template-columns:auto auto;column-gap:.9em;row-gap:.1em;border-left:1.5px solid currentColor;border-right:1.5px solid currentColor;padding:.05em .45em;vertical-align:middle;line-height:1.25;text-align:center"><span><b>e</b><sup><i>t</i></sup></span><span><i>t</i><b>e</b><sup><i>t</i></sup></span><span><b>e</b><sup><i>t</i></sup></span><span>(1 + <i>t</i>)<b>e</b><sup><i>t</i></sup></span></span></p>
+      <p class="e t" data-s="7">= (1 + <i>t</i>)<b>e</b><sup>2<i>t</i></sup> &minus; <i>t</i><b>e</b><sup>2<i>t</i></sup> = <b>e</b><sup>2<i>t</i></sup></p>
+      <p class="e" data-s="8"><span class="bx"><i>W</i> &ne; 0: <i>y</i> = <i>c</i><sub>1</sub><b>e</b><sup><i>t</i></sup> + <i>c</i><sub>2</sub><i>t</i><b>e</b><sup><i>t</i></sup> is every solution.</span></p>
+      <p class="l" data-s="9">Where <i>t</i><b>e</b><sup><i>t</i></sup> comes from: &sect;3.4, next Wednesday.</p>
+      <p class="a" data-s="10">&#8627; true or false, five quick ones.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="18">
+  <p class="h" data-s="0">True or false?</p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="1"><span class="g">1.</span>&nbsp; If <i>y</i><sub>1</sub> and <i>y</i><sub>2</sub> solve <i>y</i>&#8243; + <i>p</i><i>y</i>&#8242; + <i>qy</i> = 0, so does <i>y</i><sub>1</sub> + <i>y</i><sub>2</sub>.</p>
+      <p class="l" data-s="2"><span class="g">2.</span>&nbsp; If <i>y</i><sub>1</sub> and <i>y</i><sub>2</sub> solve <i>y</i>&#8243; + <i>p</i><i>y</i>&#8242; + <i>qy</i> = <i>g</i> with <i>g</i> &ne; 0, so does <i>y</i><sub>1</sub> + <i>y</i><sub>2</sub>.</p>
+      <p class="l" data-s="3"><span class="g">3.</span>&nbsp; If <i>W</i>(<i>t</i><sub>0</sub>) &ne; 0, then <i>c</i><sub>1</sub><i>y</i><sub>1</sub> + <i>c</i><sub>2</sub><i>y</i><sub>2</sub> is every solution.</p>
+      <p class="l" data-s="4"><span class="g">4.</span>&nbsp; An equation has only one fundamental set.</p>
+      <p class="l" data-s="5"><span class="g">5.</span>&nbsp; The solution of <span style="white-space:nowrap">(<i>t</i> &minus; 3)<i>y</i>&#8243; + <i>y</i> = 0,</span> <span style="white-space:nowrap"><i>y</i>(5) = 1, <i>y</i>&#8242;(5) = 0</span> exists for all <i>t</i> &gt; 3.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="v">true</span>&nbsp;&nbsp;<span class="d">superposition</span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d"><i>L</i>[<i>y</i><sub>1</sub> + <i>y</i><sub>2</sub>] = 2<i>g</i></span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="v">true</span>&nbsp;&nbsp;<span class="d">Theorem 3.2.4</span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d"><b>e</b><sup><i>t</i></sup>, <b>e</b><sup>&minus;<i>t</i></sup> and cosh <i>t</i>, sinh <i>t</i></span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <span class="v">true</span>&nbsp;&nbsp;<span class="d">it breaks only at <i>t</i> = 3</span></p>
+      <p class="a" data-s="11">&#8627; number 2: superposition needs <i>g</i> = 0.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="19">
   <p class="h" data-s="0">The card &mdash; <i>L</i>[<i>y</i>] = <i>y</i>&#8243; + <i>p</i><i>y</i>&#8242; + <i>q</i><i>y</i></p>
   <div class="two">
     <div>
@@ -438,7 +525,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
   </div>
 </div>
 
-<div class="pg" data-n="16">
+<div class="pg" data-n="20">
   <p class="h" data-s="0">Next week</p>
   <div class="two">
     <div>
@@ -481,7 +568,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
   <button class="btn" id="cl">Clear</button>
   <span class="sp"></span>
   <button class="btn nav" id="prev">&#9664;</button>
-  <span id="pos">1 / 16</span>
+  <span id="pos">1 / 20</span>
   <button class="btn nav" id="next">&#9654;</button>
   <span class="sp"></span>
   <span id="clk">00:00</span>
