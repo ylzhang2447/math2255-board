@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="2255 L2">
+<meta name="theme-color" content="#0D0F10">
+<title>Math 2255 - Lecture 2 Board</title>
+<style>
+:root{
+  --bd:#0D0F10; --gr:#1B1F21;
+  --w:#F0EFE8; --y:#E3E34B; --c:#45CFC2; --m:#E85CD2; --o:#F09A42;
+  --dm:#7C8A8E; --wash-w:rgba(240,239,232,.07); --wash-o:rgba(240,154,66,.10);
+  --chrome:rgba(13,15,16,.86); --line:#23282A; --bfg:#9DACB1; --bbd:#2E3538;
+  --act:#1C2224; --sel:#8FA0A5; --kbd:#1E2426; --kbdb:#333B3E; --kbdf:#C3CFD2;
+  --solid:#12171A;
+  --fm:"Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
+  --fu:system-ui,-apple-system,"PingFang SC",sans-serif;
+}
+body.light{--bd:#FBFAF7; --gr:#E7E4DC;
+  --w:#16181B; --y:#8F6A05; --c:#0E7A70; --m:#A0198A; --o:#B4530A;
+  --dm:#6E787E; --wash-w:rgba(20,24,28,.05); --wash-o:rgba(180,83,10,.09);
+  --chrome:rgba(251,250,247,.92); --line:#DBD6CB; --bfg:#4A5459; --bbd:#CAC4B9;
+  --act:#EDE9E1; --sel:#5A6469; --kbd:#EFEBE3; --kbdb:#D2CCC2; --kbdf:#39434A;
+  --solid:#F2F0EA;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
+  overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+#app{position:relative;width:100%;height:100dvh;height:100svh;min-height:480px;overflow:hidden;background:var(--bd);
+  background-image:linear-gradient(var(--gr) 1px,transparent 1px),
+    linear-gradient(90deg,var(--gr) 1px,transparent 1px);
+  background-size:32px 32px;color:var(--w);font-family:var(--fm)}
+#stage{position:absolute;inset:0;padding:3.0vh 4vw 60px;overflow:hidden}
+.pg{display:none;height:100%}
+.pg.on{display:block}
+[data-s]{opacity:0;transition:opacity .16s ease}
+[data-s].vis{opacity:1}
+[data-until].gone{display:none}
+.pg.rv .h{font-size:clamp(1.3rem,min(3.8vw,5.60vh),2.9rem)}
+.pg.rv .lb{font-size:clamp(1rem,min(2.5vw,3.68vh),1.9rem);margin:.62em 0 .12em}
+.pg.rv .l{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.6;margin:0 0 .1em 1.0em}
+.pg.rv .e{font-size:clamp(1.05rem,min(2.7vw,4.00vh),2.1rem);margin-left:1.0em}
+
+.h{font-size:clamp(1.2rem,min(3.4vw,5.00vh),2.6rem);color:var(--y);display:table;
+  border-bottom:.09em solid var(--y);padding-bottom:.08em;margin:0 0 .55em}
+.lb{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);color:var(--y);display:table;
+  border-bottom:.07em solid var(--y);padding-bottom:.06em;margin:.65em 0 .32em}
+.l{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.62rem);line-height:1.72;margin:0 0 .1em}
+.e{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.95;margin:.3em 0 .3em 1.1em}
+.e.t{margin-top:.16em;margin-bottom:.16em}
+.a{font-size:clamp(.8rem,min(1.8vw,2.65vh),1.4rem);color:var(--m);margin:.12em 0 .3em 2em}
+.i{margin-left:1.5em}
+.n{color:var(--m)} .g{color:var(--c)} .v{color:var(--o)}
+.d{color:var(--dm)}
+.bx{display:inline-block;border:.09em solid var(--o);color:var(--o);
+  background:var(--wash-o);border-radius:.16em;padding:.2em .6em}
+.bw{display:inline-block;border:.09em solid var(--w);color:var(--w);
+  background:var(--wash-w);border-radius:.16em;padding:.2em .6em}
+sup,sub{line-height:0;font-size:.68em}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  line-height:1.18;font-size:.86em;margin:0 .14em}
+.fr>span{padding:0 .28em;display:block}
+.fr>span:first-child{border-bottom:.06em solid currentColor;padding-bottom:.1em}
+.fr>span:last-child{padding-top:.12em}
+ol.st{margin:.25em 0 .25em 1.1em;padding-left:1.1em;font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);line-height:1.65}
+table{border-collapse:collapse;margin:.4em 0 .4em 1.1em;font-size:clamp(.85rem,min(2vw,2.94vh),1.5rem);line-height:2}
+td,th{padding:.16em 1.4em .16em 0;text-align:left;font-weight:400}
+th{color:var(--y);font-size:.82em}
+.cols{display:flex;gap:5vw;align-items:flex-start}
+.two{display:grid;grid-template-columns:1fr 1fr;column-gap:2.4vw;align-items:start;margin:.15em 0 0 .2em}
+.two>div>*:first-child{margin-top:0}
+.two .e{margin:.12em 0 .12em .2em;line-height:1.6}
+.two .l{margin:.1em 0 .1em .2em}
+.two .lb{margin:.5em 0 .14em}
+.two .a{margin:.1em 0 .2em 1em}
+.split{display:flex;gap:1.4vw;align-items:flex-start;margin:.2em 0 0 .4em}
+.split>.sl{flex:0 0 auto}
+.split>.sr{flex:1 1 auto;min-width:0;display:flex;justify-content:center;align-items:flex-start}
+.split .e{margin:.05em 0 .05em .2em;line-height:1.45}
+.split .sl .e{font-size:clamp(.85rem,min(2.1vw,3.02vh),1.65rem)}
+svg.df.sp{width:auto;height:51vh;max-width:100%;margin:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;column-gap:2vw;row-gap:0;margin:.2em 0 .2em 1.1em}
+.g2 .e{margin-left:0;line-height:1.62}
+svg.df{display:block;width:100%;max-width:min(76vw,104vh);height:auto;margin:.5vh 0 .5vh 1vw}
+svg.df.ax{width:auto;height:45vh;max-width:96%;margin:.3vh 0 .3vh 1.6vw}
+svg.df.fx{width:auto;height:46vh;max-width:97%;margin:.3vh 0 .3vh 1.2vw}
+.hw{min-height:1.2em}
+body.guides .hw{outline:1px dashed rgba(69,207,194,.32);border-radius:4px}
+
+#wet{position:absolute;inset:0;pointer-events:none;z-index:6;transform:translateZ(0)}
+#ink{position:absolute;inset:0;touch-action:none;z-index:5;
+  transform:translateZ(0)}
+#topnav{position:absolute;top:0;right:0;z-index:12;display:flex;gap:6px;align-items:center;
+  padding:calc(6px + env(safe-area-inset-top)) 10px 6px;background:var(--solid);border-radius:0 0 0 10px;
+  font-family:var(--fu);font-size:13px;color:var(--bfg)}
+#topnav.hide{opacity:0;pointer-events:none}
+#bar{position:absolute;left:0;right:0;bottom:0;z-index:9;display:flex;gap:.5vw;
+  align-items:center;padding:.7vh 1.2vw;padding-bottom:calc(.7vh + env(safe-area-inset-bottom));background:var(--solid);
+  border-top:1px solid var(--line);font-family:var(--fu);font-size:13px;color:var(--dm);
+  transition:opacity .3s}
+#bar.hide{opacity:0;pointer-events:none}
+#bar,#topnav{transition:opacity .25s}
+#edge{position:absolute;left:0;right:0;bottom:0;height:46px;z-index:8}
+.pen{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;flex:none}
+.pen.sel{border-color:var(--sel);transform:scale(1.12)}
+.btn{padding:5px 11px;border:1px solid var(--bbd);border-radius:5px;background:transparent;
+  color:var(--bfg);font-family:var(--fu);font-size:12px;cursor:pointer}
+.btn:active{background:var(--act)}
+.sp{flex:1}
+.btn.nav{font-size:19px;padding:3px 20px;line-height:1.05;min-width:62px}
+#pos{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+#clk{font-variant-numeric:tabular-nums;font-size:15px;color:var(--w)}
+#clk.over{color:var(--o)}
+#hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;
+  font-family:var(--fu);font-size:15px;line-height:2;color:var(--bfg);text-align:center;
+  background:var(--chrome);border:1px solid var(--bbd);border-radius:10px;padding:26px 34px}
+#hint.hide{display:none}
+#hint b{color:var(--w)}
+kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);border-radius:4px;
+  padding:1px 6px;color:var(--kbdf);font-size:12px}
+</style>
+</head>
+<body>
+
+<div id="app">
+<div id="topnav">
+  <button class="btn nav" id="prev2">&#9664;</button>
+  <span id="pos2">1 / 21</span>
+  <button class="btn nav" id="next2">&#9654;</button>
+</div>
+<div id="stage">
+
+<div class="pg on" data-n="1">
+  <p class="h" data-s="0">Monday, in one page</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1"><i>a</i><i>y</i>&#8243; + <i>b</i><i>y</i>&#8242; + <i>cy</i> = <i>g</i>(<i>t</i>)</p>
+      <p class="e t" data-s="1"><i>y</i> = <i>y</i><sub><i>c</i></sub> + <i>Y</i></p>
+      <p class="l" data-s="2"><i>y</i><sub><i>c</i></sub> carries the constants; <i>Y</i> produces <i>g</i>. Initial conditions go on the whole <i>y</i>, at the end.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="3">The guesses for <i>Y</i></p>
+      <p class="e t" data-s="3"><b>e</b><sup>&alpha;<i>t</i></sup> &rarr; <i>A</i><b>e</b><sup>&alpha;<i>t</i></sup>;&nbsp; polynomial &rarr; all powers;&nbsp; cos, sin &rarr; both</p>
+      <p class="e" data-s="4"><span class="bx">Today: <i>g</i> with several terms, products, and when the guess fails.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="2">
+  <p class="h" data-s="0">Call it out &mdash; the form of <i>Y</i></p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>g</i> = <b>e</b><sup>&minus;2<i>t</i></sup></p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>g</i> = <i>t</i><sup>2</sup> + 1</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>g</i> = 3 sin 5<i>t</i></p>
+    </div>
+    <div>
+      <p class="e t" data-s="4"><span class="g">1.</span>&nbsp; <i>A</i><b>e</b><sup>&minus;2<i>t</i></sup></p>
+      <p class="e t" data-s="5"><span class="g">2.</span>&nbsp; <i>A</i><i>t</i><sup>2</sup> + <i>B</i><i>t</i> + <i>C</i></p>
+      <p class="e t" data-s="6"><span class="g">3.</span>&nbsp; <i>A</i> cos 5<i>t</i> + <i>B</i> sin 5<i>t</i></p>
+      <p class="a" data-s="7">&#8627; now: what if <i>g</i> is a sum of two of these?</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="3">
+  <p class="h" data-s="0">When <i>g</i> is a sum</p>
+  <p class="e" data-s="1"><span class="bw"><i>L</i>[<i>y</i>] = <i>g</i><sub>1</sub>(<i>t</i>) + <i>g</i><sub>2</sub>(<i>t</i>)</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Split the problem</p>
+      <p class="e t" data-s="2"><i>L</i>[<i>Y</i><sub>1</sub>] = <i>g</i><sub>1</sub>,&nbsp;&nbsp; <i>L</i>[<i>Y</i><sub>2</sub>] = <i>g</i><sub>2</sub></p>
+      <p class="e t" data-s="3"><i>L</i>[<i>Y</i><sub>1</sub> + <i>Y</i><sub>2</sub>] = <i>g</i><sub>1</sub> + <i>g</i><sub>2</sub>&nbsp;&nbsp;<span class="d"><i>L</i> is linear</span></p>
+      <p class="e" data-s="4"><span class="bx"><i>Y</i> = <i>Y</i><sub>1</sub> + <i>Y</i><sub>2</sub></span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">In plain words</p>
+      <p class="l" data-s="5">Each piece of <i>g</i> gets its own small problem. Solve them one at a time, then add.</p>
+      <p class="l" data-s="6">This is why we never need a guess with many letters at once.</p>
+      <p class="a" data-s="7">&#8627; Monday&#8217;s two examples, added.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="4">
+  <p class="h" data-s="0">Example 1 &mdash; a sum</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; &minus; 3<i>y</i>&#8242; &minus; 4<i>y</i> = 3<b>e</b><sup>2<i>t</i></sup> + 2 sin <i>t</i></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Piece 1: <i>g</i><sub>1</sub> = 3<b>e</b><sup>2<i>t</i></sup>&nbsp; (Monday, Example 1)</p>
+      <p class="e t" data-s="2"><i>Y</i><sub>1</sub> = &minus;<span class="fr"><span>1</span><span>2</span></span><b>e</b><sup>2<i>t</i></sup></p>
+      <p class="lb" data-s="3">Piece 2: <i>g</i><sub>2</sub> = 2 sin <i>t</i>&nbsp; (Monday, Example 2)</p>
+      <p class="e t" data-s="3"><i>Y</i><sub>2</sub> = <span class="fr"><span>3</span><span>17</span></span> cos <i>t</i> &minus; <span class="fr"><span>5</span><span>17</span></span> sin <i>t</i></p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Add</p>
+      <p class="e" data-s="4"><span class="bx"><i>Y</i> = &minus;<span class="fr"><span>1</span><span>2</span></span><b>e</b><sup>2<i>t</i></sup> + <span class="fr"><span>3</span><span>17</span></span> cos <i>t</i> &minus; <span class="fr"><span>5</span><span>17</span></span> sin <i>t</i></span></p>
+      <p class="l" data-s="5">No new work: two small problems we already solved.</p>
+      <p class="l" data-s="6"><span class="d">One big guess <i>A</i><b>e</b><sup>2<i>t</i></sup> + <i>B</i> cos <i>t</i> + <i>C</i> sin <i>t</i> gives the same answer, with more algebra.</span></p>
+      <p class="a" data-s="7">&#8627; products, like <i>t</i><b>e</b><sup>2<i>t</i></sup>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="5">
+  <p class="h" data-s="0">When <i>g</i> is a product</p>
+  <p class="e" data-s="1"><span class="bw">the exponential factor stays; the other factor follows Monday&#8217;s rules</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">The guesses</p>
+      <p class="e t" data-s="2"><span style="white-space:nowrap"><b>e</b><sup>&alpha;<i>t</i></sup>&middot;(degree <i>n</i> polynomial)&nbsp; &rarr;&nbsp; <b>e</b><sup>&alpha;<i>t</i></sup>&middot;(all powers up to <i>t</i><sup><i>n</i></sup>)</span></p>
+      <p class="e t" data-s="3"><span style="white-space:nowrap"><b>e</b><sup>&alpha;<i>t</i></sup> cos &beta;<i>t</i> or <b>e</b><sup>&alpha;<i>t</i></sup> sin &beta;<i>t</i>&nbsp; &rarr;&nbsp; <b>e</b><sup>&alpha;<i>t</i></sup>(<i>A</i> cos &beta;<i>t</i> + <i>B</i> sin &beta;<i>t</i>)</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">In plain words</p>
+      <p class="l" data-s="4">Differentiating <b>e</b><sup>&alpha;<i>t</i></sup>&middot;(something) gives <b>e</b><sup>&alpha;<i>t</i></sup>&middot;(something of the same kind).</p>
+      <p class="l" data-s="5">So the exponential is a common factor. We match what is left, as on Monday.</p>
+      <p class="a" data-s="6">&#8627; an example.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="6">
+  <p class="h" data-s="0">Example 2 &mdash; a polynomial times an exponential</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; &minus; <i>y</i> = <i>t</i><b>e</b><sup>2<i>t</i></sup></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Guess: degree 1 times <b>e</b><sup>2<i>t</i></sup></p>
+      <p class="e t" data-s="2"><i>Y</i> = (<i>A</i><i>t</i> + <i>B</i>)<b>e</b><sup>2<i>t</i></sup></p>
+      <p class="e t" data-s="3"><i>Y</i>&#8242; = (2<i>A</i><i>t</i> + <i>A</i> + 2<i>B</i>)<b>e</b><sup>2<i>t</i></sup></p>
+      <p class="e t" data-s="4"><i>Y</i>&#8243; = (4<i>A</i><i>t</i> + 4<i>A</i> + 4<i>B</i>)<b>e</b><sup>2<i>t</i></sup></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5"><i>Y</i>&#8243; &minus; <i>Y</i>, divided by <b>e</b><sup>2<i>t</i></sup></p>
+      <p class="e t" data-s="5">3<i>A</i><i>t</i> + 4<i>A</i> + 3<i>B</i> = <i>t</i></p>
+      <p class="e t" data-s="6"><i>t</i>:&nbsp; 3<i>A</i> = 1,&nbsp; <i>A</i> = <span class="fr"><span>1</span><span>3</span></span>;&nbsp;&nbsp; 1:&nbsp; 4<i>A</i> + 3<i>B</i> = 0,&nbsp; <i>B</i> = &minus;<span class="fr"><span>4</span><span>9</span></span></p>
+      <p class="e" data-s="7"><span class="bx"><i>Y</i> = (<span class="fr"><span>1</span><span>3</span></span><i>t</i> &minus; <span class="fr"><span>4</span><span>9</span></span>)<b>e</b><sup>2<i>t</i></sup></span></p>
+      <p class="a" data-s="8">&#8627; an exponential times a cosine.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="7">
+  <p class="h" data-s="0">Example 3 &mdash; an exponential times a cosine</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; &minus; 3<i>y</i>&#8242; &minus; 4<i>y</i> = &minus;8<b>e</b><sup><i>t</i></sup> cos 2<i>t</i></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Write <i>Y</i> = <b>e</b><sup><i>t</i></sup><i>u</i>, with <i>u</i> = <i>A</i> cos 2<i>t</i> + <i>B</i> sin 2<i>t</i></p>
+      <p class="e t" data-s="2"><i>Y</i>&#8242; = <b>e</b><sup><i>t</i></sup>(<i>u</i> + <i>u</i>&#8242;),&nbsp;&nbsp; <i>Y</i>&#8243; = <b>e</b><sup><i>t</i></sup>(<i>u</i> + 2<i>u</i>&#8242; + <i>u</i>&#8243;)</p>
+      <p class="e t" data-s="3">left side = <b>e</b><sup><i>t</i></sup>(<i>u</i>&#8243; &minus; <i>u</i>&#8242; &minus; 6<i>u</i>)&nbsp;&nbsp;<span class="d">divide by <b>e</b><sup><i>t</i></sup></span></p>
+      <p class="e t" data-s="4"><i>u</i>&#8243; = &minus;4<i>u</i>,&nbsp; so&nbsp; <i>u</i>&#8243; &minus; <i>u</i>&#8242; &minus; 6<i>u</i> = &minus;10<i>u</i> &minus; <i>u</i>&#8242; = &minus;8 cos 2<i>t</i></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Collect cos 2<i>t</i> and sin 2<i>t</i></p>
+      <p class="e t" data-s="5">cos:&nbsp; &minus;10<i>A</i> &minus; 2<i>B</i> = &minus;8,&nbsp;&nbsp; sin:&nbsp; &minus;10<i>B</i> + 2<i>A</i> = 0</p>
+      <p class="e t" data-s="6"><i>A</i> = 5<i>B</i>:&nbsp; &minus;52<i>B</i> = &minus;8,&nbsp; <i>B</i> = <span class="fr"><span>2</span><span>13</span></span>,&nbsp; <i>A</i> = <span class="fr"><span>10</span><span>13</span></span></p>
+      <p class="e" data-s="7"><span class="bx"><i>Y</i> = <b>e</b><sup><i>t</i></sup>(<span class="fr"><span>10</span><span>13</span></span> cos 2<i>t</i> + <span class="fr"><span>2</span><span>13</span></span> sin 2<i>t</i>)</span></p>
+      <p class="l" data-s="8">Factor out <b>e</b><sup><i>t</i></sup> first: then it is a cos/sin problem from Monday.</p>
+      <p class="a" data-s="9">&#8627; Monday&#8217;s question: when the guess fails.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="8">
+  <p class="h" data-s="0">When the guess fails</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; &minus; 3<i>y</i>&#8242; &minus; 4<i>y</i> = 2<b>e</b><sup>&minus;<i>t</i></sup></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Try <i>Y</i> = <i>A</i><b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="e t" data-s="2"><i>Y</i>&#8242; = &minus;<i>A</i><b>e</b><sup>&minus;<i>t</i></sup>,&nbsp;&nbsp; <i>Y</i>&#8243; = <i>A</i><b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="e t" data-s="3">(<i>A</i> + 3<i>A</i> &minus; 4<i>A</i>)<b>e</b><sup>&minus;<i>t</i></sup> = 0&nbsp; &ne; 2<b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="l" data-s="4">No value of <i>A</i> works.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Why: look at <i>y</i><sub><i>c</i></sub></p>
+      <p class="e t" data-s="5">(<i>r</i> &minus; 4)(<i>r</i> + 1) = 0:&nbsp; <i>y</i><sub><i>c</i></sub> = <i>c</i><sub>1</sub><b>e</b><sup>4<i>t</i></sup> + <i>c</i><sub>2</sub><b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="l" data-s="6"><b>e</b><sup>&minus;<i>t</i></sup> is already a solution of the homogeneous equation. The left side turns it into 0, so it can never produce 2<b>e</b><sup>&minus;<i>t</i></sup>.</p>
+      <p class="e" data-s="7"><span class="bx">Fix: multiply the guess by <i>t</i>.&nbsp; <i>Y</i> = <i>A</i><i>t</i><b>e</b><sup>&minus;<i>t</i></sup></span></p>
+      <p class="l" data-s="8"><span class="d">The same idea as repeated roots: when <b>e</b><sup><i>rt</i></sup> is used up, the next one is <i>t</i><b>e</b><sup><i>rt</i></sup>.</span></p>
+      <p class="a" data-s="9">&#8627; check that it works.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="9">
+  <p class="h" data-s="0">Example 4 &mdash; the fixed guess</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; &minus; 3<i>y</i>&#8242; &minus; 4<i>y</i> = 2<b>e</b><sup>&minus;<i>t</i></sup>,&nbsp;&nbsp; <i>Y</i> = <i>A</i><i>t</i><b>e</b><sup>&minus;<i>t</i></sup></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Two derivatives, by the product rule</p>
+      <p class="e t" data-s="2"><i>Y</i>&#8242; = <i>A</i>(1 &minus; <i>t</i>)<b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="e t" data-s="3"><i>Y</i>&#8243; = <i>A</i>(<i>t</i> &minus; 2)<b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="lb" data-s="4">Put in, divide by <b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="e t" data-s="4"><i>A</i>[(<i>t</i> &minus; 2) &minus; 3(1 &minus; <i>t</i>) &minus; 4<i>t</i>] = 2</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">The <i>t</i> terms cancel</p>
+      <p class="e t" data-s="5"><i>t</i> + 3<i>t</i> &minus; 4<i>t</i> = 0;&nbsp;&nbsp; &minus;2 &minus; 3 = &minus;5</p>
+      <p class="e t" data-s="6">&minus;5<i>A</i> = 2&nbsp; &rArr;&nbsp; <i>A</i> = &minus;<span class="fr"><span>2</span><span>5</span></span></p>
+      <p class="e" data-s="7"><span class="bx"><i>Y</i> = &minus;<span class="fr"><span>2</span><span>5</span></span><i>t</i><b>e</b><sup>&minus;<i>t</i></sup></span></p>
+      <p class="l" data-s="8">The <i>t</i> terms always cancel here: that is how you know the guess was right.</p>
+      <p class="a" data-s="9">&#8627; why they cancel, for any equation.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="10">
+  <p class="h" data-s="0">Why multiplying by <i>t</i> works</p>
+  <p class="e" data-s="1"><span class="bw"><i>a</i><i>y</i>&#8243; + <i>b</i><i>y</i>&#8242; + <i>cy</i> = <b>e</b><sup>&alpha;<i>t</i></sup>,&nbsp; &alpha; a root of <i>ar</i><sup>2</sup> + <i>br</i> + <i>c</i></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2"><i>Y</i> = <i>A</i><i>t</i><b>e</b><sup>&alpha;<i>t</i></sup></p>
+      <p class="e t" data-s="2"><i>Y</i>&#8242; = <i>A</i>(1 + &alpha;<i>t</i>)<b>e</b><sup>&alpha;<i>t</i></sup>,&nbsp;&nbsp; <i>Y</i>&#8243; = <i>A</i>(2&alpha; + &alpha;<sup>2</sup><i>t</i>)<b>e</b><sup>&alpha;<i>t</i></sup></p>
+      <p class="lb" data-s="3">Put in, divide by <b>e</b><sup>&alpha;<i>t</i></sup>, collect</p>
+      <p class="e t" data-s="3"><i>A</i>[(<i>a</i>&alpha;<sup>2</sup> + <i>b</i>&alpha; + <i>c</i>)<i>t</i> + (2<i>a</i>&alpha; + <i>b</i>)] = 1</p>
+      <p class="e t" data-s="4"><i>a</i>&alpha;<sup>2</sup> + <i>b</i>&alpha; + <i>c</i> = 0&nbsp;&nbsp;<span class="d">&alpha; is a root: the <i>t</i> terms cancel</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">What is left</p>
+      <p class="e" data-s="5"><span class="bx"><i>A</i>(2<i>a</i>&alpha; + <i>b</i>) = 1</span></p>
+      <p class="l" data-s="6">Simple root: 2<i>a</i>&alpha; + <i>b</i> &ne; 0, so <i>A</i> exists. Example 4: 2(&minus;1) &minus; 3 = &minus;5.</p>
+      <p class="l" data-s="7">Double root: &alpha; = &minus;<i>b</i>/(2<i>a</i>), so 2<i>a</i>&alpha; + <i>b</i> = 0 too. Then <i>t</i> is not enough: use <i>t</i><sup>2</sup>.</p>
+      <p class="l" data-s="8"><span class="d">The same two brackets as in &sect;3.4.</span></p>
+      <p class="a" data-s="9">&#8627; the rule, in one page.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="11">
+  <p class="h" data-s="0">The rule: compare with <i>y</i><sub><i>c</i></sub> first</p>
+  <p class="e" data-s="1"><span class="bw">Always find <i>y</i><sub><i>c</i></sub> <span class="g">before</span> you guess <i>Y</i></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">The rule</p>
+      <p class="l" data-s="2">If a term of your guess is already in <i>y</i><sub><i>c</i></sub>, multiply the guess by <i>t</i>.</p>
+      <p class="l" data-s="3">If it is <span class="g">still</span> in <i>y</i><sub><i>c</i></sub> (a repeated root), multiply by <i>t</i><sup>2</sup>.</p>
+      <p class="lb" data-s="4">With the characteristic roots</p>
+      <p class="e t" data-s="4"><b>e</b><sup>&alpha;<i>t</i></sup>:&nbsp; &alpha; not a root &rarr; <i>A</i><b>e</b><sup>&alpha;<i>t</i></sup>;&nbsp; simple root &rarr; <i>A</i><i>t</i><b>e</b><sup>&alpha;<i>t</i></sup>;&nbsp; double &rarr; <i>A</i><i>t</i><sup>2</sup><b>e</b><sup>&alpha;<i>t</i></sup></p>
+      <p class="e t" data-s="5">cos &beta;<i>t</i>, sin &beta;<i>t</i>:&nbsp; <i>i</i>&beta; a root &rarr; <i>t</i>(<i>A</i> cos &beta;<i>t</i> + <i>B</i> sin &beta;<i>t</i>)</p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">In plain words</p>
+      <p class="l" data-s="6">If the guess is a homogeneous solution, the left side gives 0. Multiplying by <i>t</i> makes it different enough.</p>
+      <p class="l" data-s="7">Multiply by <i>t</i> only as many times as needed: never more.</p>
+      <p class="l" data-s="8"><span class="d">A constant <i>g</i> counts as <b>e</b><sup>0<i>t</i></sup>: check whether 0 is a root.</span></p>
+      <p class="a" data-s="9">&#8627; a repeated root.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="12">
+  <p class="h" data-s="0">Example 5 &mdash; multiply by <i>t</i><sup>2</sup></p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; &minus; 4<i>y</i>&#8242; + 4<i>y</i> = <b>e</b><sup>2<i>t</i></sup></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2"><i>y</i><sub><i>c</i></sub> first</p>
+      <p class="e t" data-s="2">(<i>r</i> &minus; 2)<sup>2</sup> = 0:&nbsp; <i>y</i><sub><i>c</i></sub> = (<i>c</i><sub>1</sub> + <i>c</i><sub>2</sub><i>t</i>)<b>e</b><sup>2<i>t</i></sup></p>
+      <p class="l" data-s="3"><i>A</i><b>e</b><sup>2<i>t</i></sup> is in <i>y</i><sub><i>c</i></sub>. So is <i>A</i><i>t</i><b>e</b><sup>2<i>t</i></sup>. So use <i>t</i><sup>2</sup>.</p>
+      <p class="e t" data-s="4"><i>Y</i> = <i>A</i><i>t</i><sup>2</sup><b>e</b><sup>2<i>t</i></sup></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Derivatives, divided by <b>e</b><sup>2<i>t</i></sup></p>
+      <p class="e t" data-s="5"><i>Y</i>&#8242;: <i>A</i>(2<i>t</i><sup>2</sup> + 2<i>t</i>),&nbsp;&nbsp; <i>Y</i>&#8243;: <i>A</i>(4<i>t</i><sup>2</sup> + 8<i>t</i> + 2)</p>
+      <p class="e t" data-s="6"><i>A</i>[(4<i>t</i><sup>2</sup> + 8<i>t</i> + 2) &minus; 4(2<i>t</i><sup>2</sup> + 2<i>t</i>) + 4<i>t</i><sup>2</sup>] = 2<i>A</i> = 1</p>
+      <p class="e" data-s="7"><span class="bx"><i>Y</i> = <span class="fr"><span>1</span><span>2</span></span><i>t</i><sup>2</sup><b>e</b><sup>2<i>t</i></sup></span></p>
+      <p class="a" data-s="8">&#8627; the same problem with cos and sin.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="13">
+  <p class="h" data-s="0">Example 6 &mdash; cos 2<i>t</i> with roots &plusmn;2<i>i</i></p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + 4<i>y</i> = 3 cos 2<i>t</i></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2"><i>y</i><sub><i>c</i></sub> first</p>
+      <p class="e t" data-s="2"><i>r</i> = &plusmn;2<i>i</i>:&nbsp; <i>y</i><sub><i>c</i></sub> = <i>c</i><sub>1</sub> cos 2<i>t</i> + <i>c</i><sub>2</sub> sin 2<i>t</i></p>
+      <p class="l" data-s="3"><i>A</i> cos 2<i>t</i> + <i>B</i> sin 2<i>t</i> is in <i>y</i><sub><i>c</i></sub>, so multiply by <i>t</i>.</p>
+      <p class="e t" data-s="4"><i>Y</i> = <i>t</i>(<i>A</i> cos 2<i>t</i> + <i>B</i> sin 2<i>t</i>)</p>
+      <p class="lb" data-s="5">Put in (the <i>t</i> terms cancel)</p>
+      <p class="e t" data-s="5"><i>Y</i>&#8243; + 4<i>Y</i> = &minus;4<i>A</i> sin 2<i>t</i> + 4<i>B</i> cos 2<i>t</i></p>
+    </div>
+    <div>
+      <p class="e t" data-s="6">4<i>B</i> = 3,&nbsp; &minus;4<i>A</i> = 0</p>
+      <p class="e" data-s="7"><span class="bx"><i>Y</i> = <span class="fr"><span>3</span><span>4</span></span><i>t</i> sin 2<i>t</i></span></p>
+      <p class="l" data-s="8">The push has the same rhythm as the free motion. The size grows like <i>t</i>: <span class="g">resonance</span>.</p>
+      <p class="a" data-s="9">&#8627; the picture.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="14">
+  <p class="h" data-s="0">Example 6 &mdash; resonance</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1"><i>Y</i> = <span class="fr"><span>3</span><span>4</span></span><i>t</i> sin 2<i>t</i> oscillates with period &pi;, like <i>y</i><sub><i>c</i></sub>.</p>
+      <p class="l" data-s="2">Dashed: &plusmn;<span class="fr"><span>3</span><span>4</span></span><i>t</i>. The curve stays between them and keeps growing.</p>
+      <p class="e" data-s="3"><span class="bx">Forcing at the natural frequency makes the oscillation grow without bound.</span></p>
+      <p class="a" data-s="4">&#8627; everything together, with initial conditions.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="262.5" x2="0" y2="262.5"/><line x1="-7" y1="175" x2="0" y2="175"/><line x1="-7" y1="87.5" x2="0" y2="87.5"/><line x1="-7" y1="0" x2="0" y2="0"/><line x1="5" y1="350" x2="5" y2="357"/><line x1="105.9" y1="350" x2="105.9" y2="357"/><line x1="206.7" y1="350" x2="206.7" y2="357"/><line x1="307.5" y1="350" x2="307.5" y2="357"/><line x1="408.3" y1="350" x2="408.3" y2="357"/><line x1="509.1" y1="350" x2="509.1" y2="357"/><line x1="609.9" y1="350" x2="609.9" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">−10</text><text x="-12" y="267.5" text-anchor="end">−5</text><text x="-12" y="180" text-anchor="end">0</text><text x="-12" y="92.5" text-anchor="end">5</text><text x="-12" y="5" text-anchor="end">10</text><text x="5" y="375" text-anchor="middle">0</text><text x="105.9" y="375" text-anchor="middle">2</text><text x="206.7" y="375" text-anchor="middle">4</text><text x="307.5" y="375" text-anchor="middle">6</text><text x="408.3" y="375" text-anchor="middle">8</text><text x="509.1" y="375" text-anchor="middle">10</text><text x="609.9" y="375" text-anchor="middle">12</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--m)" stroke-width="2.8" stroke-linejoin="round" points="5.0,175.0 6.0,175.0 7.1,175.0 8.1,174.9 9.1,174.8 10.1,174.7 11.1,174.6 12.1,174.5 13.1,174.3 14.1,174.2 15.1,174.0 16.1,173.8 17.1,173.5 18.1,173.3 19.2,173.0 20.2,172.8 21.2,172.5 22.2,172.2 23.2,171.9 24.2,171.6 25.2,171.2 26.2,170.9 27.2,170.5 28.2,170.2 29.2,169.8 30.2,169.5 31.3,169.1 32.3,168.7 33.3,168.4 34.3,168.0 35.3,167.7 36.3,167.3 37.3,167.0 38.3,166.6 39.3,166.3 40.3,165.9 41.3,165.6 42.3,165.3 43.3,165.0 44.4,164.8 45.4,164.5 46.4,164.3 47.4,164.0 48.4,163.8 49.4,163.7 50.4,163.5 51.4,163.4 52.4,163.2 53.4,163.2 54.4,163.1 55.4,163.1 56.5,163.1 57.5,163.1 58.5,163.1 59.5,163.2 60.5,163.3 61.5,163.5 62.5,163.6 63.5,163.9 64.5,164.1 65.5,164.4 66.5,164.7 67.5,165.0 68.6,165.4 69.6,165.8 70.6,166.2 71.6,166.7 72.6,167.2 73.6,167.7 74.6,168.3 75.6,168.8 76.6,169.5 77.6,170.1 78.6,170.8 79.6,171.5 80.7,172.2 81.7,173.0 82.7,173.8 83.7,174.6 84.7,175.4 85.7,176.2 86.7,177.1 87.7,178.0 88.7,178.9 89.7,179.8 90.7,180.7 91.7,181.6 92.7,182.6 93.8,183.5 94.8,184.5 95.8,185.5 96.8,186.4 97.8,187.4 98.8,188.3 99.8,189.3 100.8,190.3 101.8,191.2 102.8,192.1 103.8,193.1 104.8,194.0 105.9,194.9 106.9,195.7 107.9,196.6 108.9,197.4 109.9,198.2 110.9,199.0 111.9,199.8 112.9,200.5 113.9,201.2 114.9,201.9 115.9,202.5 116.9,203.1 118.0,203.6 119.0,204.1 120.0,204.6 121.0,205.0 122.0,205.4 123.0,205.7 124.0,206.0 125.0,206.2 126.0,206.4 127.0,206.5 128.0,206.6 129.0,206.6 130.0,206.6 131.1,206.5 132.1,206.3 133.1,206.1 134.1,205.8 135.1,205.5 136.1,205.1 137.1,204.7 138.1,204.2 139.1,203.7 140.1,203.1 141.1,202.4 142.1,201.7 143.2,200.9 144.2,200.0 145.2,199.1 146.2,198.2 147.2,197.2 148.2,196.1 149.2,195.0 150.2,193.9 151.2,192.7 152.2,191.4 153.2,190.1 154.2,188.8 155.3,187.4 156.3,186.0 157.3,184.5 158.3,183.1 159.3,181.5 160.3,180.0 161.3,178.4 162.3,176.8 163.3,175.1 164.3,173.5 165.3,171.8 166.3,170.1 167.3,168.4 168.4,166.7 169.4,165.0 170.4,163.2 171.4,161.5 172.4,159.8 173.4,158.1 174.4,156.3 175.4,154.6 176.4,153.0 177.4,151.3 178.4,149.6 179.4,148.0 180.5,146.4 181.5,144.8 182.5,143.3 183.5,141.8 184.5,140.3 185.5,138.9 186.5,137.5 187.5,136.2 188.5,134.9 189.5,133.6 190.5,132.5 191.5,131.4 192.6,130.3 193.6,129.3 194.6,128.4 195.6,127.5 196.6,126.7 197.6,126.0 198.6,125.4 199.6,124.8 200.6,124.3 201.6,123.9 202.6,123.6 203.6,123.3 204.7,123.1 205.7,123.1 206.7,123.1 207.7,123.1 208.7,123.3 209.7,123.6 210.7,123.9 211.7,124.4 212.7,124.9 213.7,125.5 214.7,126.2 215.7,127.0 216.7,127.9 217.8,128.9 218.8,129.9 219.8,131.0 220.8,132.3 221.8,133.6 222.8,134.9 223.8,136.4 224.8,137.9 225.8,139.5 226.8,141.2 227.8,143.0 228.8,144.8 229.9,146.7 230.9,148.6 231.9,150.7 232.9,152.7 233.9,154.9 234.9,157.0 235.9,159.3 236.9,161.5 237.9,163.9 238.9,166.2 239.9,168.6 240.9,171.0 242.0,173.5 243.0,175.9 244.0,178.4 245.0,180.9 246.0,183.5 247.0,186.0 248.0,188.5 249.0,191.0 250.0,193.6 251.0,196.1 252.0,198.6 253.0,201.0 254.0,203.5 255.1,205.9 256.1,208.3 257.1,210.7 258.1,213.0 259.1,215.3 260.1,217.5 261.1,219.7 262.1,221.8 263.1,223.9 264.1,225.9 265.1,227.8 266.1,229.7 267.2,231.5 268.2,233.2 269.2,234.8 270.2,236.4 271.2,237.8 272.2,239.2 273.2,240.5 274.2,241.6 275.2,242.7 276.2,243.7 277.2,244.5 278.2,245.3 279.3,245.9 280.3,246.5 281.3,246.9 282.3,247.2 283.3,247.4 284.3,247.5 285.3,247.4 286.3,247.2 287.3,247.0 288.3,246.6 289.3,246.1 290.3,245.4 291.3,244.7 292.4,243.8 293.4,242.8 294.4,241.7 295.4,240.4 296.4,239.1 297.4,237.6 298.4,236.1 299.4,234.4 300.4,232.6 301.4,230.7 302.4,228.7 303.4,226.6 304.5,224.4 305.5,222.1 306.5,219.7 307.5,217.3 308.5,214.7 309.5,212.1 310.5,209.3 311.5,206.5 312.5,203.7 313.5,200.8 314.5,197.8 315.5,194.7 316.6,191.6 317.6,188.5 318.6,185.3 319.6,182.1 320.6,178.8 321.6,175.5 322.6,172.2 323.6,168.9 324.6,165.6 325.6,162.2 326.6,158.9 327.6,155.6 328.7,152.2 329.7,148.9 330.7,145.6 331.7,142.4 332.7,139.2 333.7,136.0 334.7,132.8 335.7,129.7 336.7,126.7 337.7,123.7 338.7,120.8 339.7,118.0 340.7,115.2 341.8,112.5 342.8,109.9 343.8,107.4 344.8,105.0 345.8,102.6 346.8,100.4 347.8,98.3 348.8,96.3 349.8,94.4 350.8,92.7 351.8,91.0 352.8,89.5 353.9,88.2 354.9,86.9 355.9,85.8 356.9,84.8 357.9,84.0 358.9,83.3 359.9,82.8 360.9,82.4 361.9,82.1 362.9,82.0 363.9,82.0 364.9,82.2 366.0,82.6 367.0,83.1 368.0,83.7 369.0,84.5 370.0,85.5 371.0,86.6 372.0,87.9 373.0,89.3 374.0,90.8 375.0,92.5 376.0,94.3 377.0,96.3 378.0,98.4 379.1,100.7 380.1,103.1 381.1,105.6 382.1,108.2 383.1,111.0 384.1,113.9 385.1,116.9 386.1,120.0 387.1,123.2 388.1,126.5 389.1,129.9 390.1,133.4 391.2,137.0 392.2,140.6 393.2,144.4 394.2,148.2 395.2,152.0 396.2,156.0 397.2,159.9 398.2,164.0 399.2,168.0 400.2,172.1 401.2,176.2 402.2,180.4 403.3,184.5 404.3,188.7 405.3,192.8 406.3,197.0 407.3,201.1 408.3,205.2 409.3,209.3 410.3,213.4 411.3,217.4 412.3,221.3 413.3,225.2 414.3,229.1 415.3,232.8 416.4,236.5 417.4,240.1 418.4,243.7 419.4,247.1 420.4,250.4 421.4,253.7 422.4,256.8 423.4,259.8 424.4,262.7 425.4,265.4 426.4,268.0 427.4,270.5 428.5,272.9 429.5,275.0 430.5,277.1 431.5,279.0 432.5,280.7 433.5,282.3 434.5,283.7 435.5,284.9 436.5,285.9 437.5,286.8 438.5,287.5 439.5,288.1 440.6,288.4 441.6,288.6 442.6,288.5 443.6,288.3 444.6,288.0 445.6,287.4 446.6,286.6 447.6,285.7 448.6,284.6 449.6,283.3 450.6,281.8 451.6,280.1 452.7,278.3 453.7,276.3 454.7,274.1 455.7,271.8 456.7,269.2 457.7,266.6 458.7,263.7 459.7,260.7 460.7,257.6 461.7,254.3 462.7,250.8 463.7,247.2 464.7,243.5 465.8,239.7 466.8,235.7 467.8,231.7 468.8,227.5 469.8,223.2 470.8,218.8 471.8,214.3 472.8,209.8 473.8,205.1 474.8,200.4 475.8,195.7 476.8,190.9 477.9,186.0 478.9,181.1 479.9,176.2 480.9,171.2 481.9,166.3 482.9,161.3 483.9,156.3 484.9,151.3 485.9,146.4 486.9,141.5 487.9,136.6 488.9,131.7 490.0,126.9 491.0,122.2 492.0,117.5 493.0,112.9 494.0,108.4 495.0,104.0 496.0,99.6 497.0,95.4 498.0,91.3 499.0,87.3 500.0,83.4 501.0,79.7 502.0,76.0 503.1,72.6 504.1,69.3 505.1,66.1 506.1,63.1 507.1,60.3 508.1,57.6 509.1,55.2 510.1,52.9 511.1,50.8 512.1,48.9 513.1,47.2 514.1,45.6 515.2,44.3 516.2,43.2 517.2,42.3 518.2,41.6 519.2,41.2 520.2,40.9 521.2,40.8 522.2,41.0 523.2,41.4 524.2,42.0 525.2,42.8 526.2,43.8 527.3,45.1 528.3,46.5 529.3,48.2 530.3,50.1 531.3,52.2 532.3,54.5 533.3,57.0 534.3,59.7 535.3,62.6 536.3,65.7 537.3,69.0 538.3,72.4 539.3,76.1 540.4,79.9 541.4,83.8 542.4,88.0 543.4,92.3 544.4,96.7 545.4,101.3 546.4,106.0 547.4,110.9 548.4,115.9 549.4,121.0 550.4,126.2 551.4,131.4 552.5,136.8 553.5,142.3 554.5,147.8 555.5,153.4 556.5,159.1 557.5,164.8 558.5,170.5 559.5,176.3 560.5,182.1 561.5,187.9 562.5,193.7 563.5,199.4 564.6,205.2 565.6,210.9 566.6,216.6 567.6,222.3 568.6,227.9 569.6,233.4 570.6,238.9 571.6,244.3 572.6,249.6 573.6,254.7 574.6,259.8 575.6,264.8 576.7,269.6 577.7,274.3 578.7,278.9 579.7,283.3 580.7,287.5 581.7,291.6 582.7,295.5 583.7,299.2 584.7,302.7 585.7,306.1 586.7,309.2 587.7,312.1 588.7,314.9 589.8,317.4 590.8,319.7 591.8,321.7 592.8,323.6 593.8,325.2 594.8,326.6 595.8,327.7 596.8,328.6 597.8,329.2 598.8,329.6 599.8,329.8 600.8,329.7 601.9,329.3 602.9,328.7 603.9,327.9 604.9,326.8 605.9,325.4 606.9,323.9 607.9,322.0 608.9,319.9 609.9,317.6"/><polyline data-s="2" fill="none" stroke="var(--o)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="5.0,175.0 11.1,173.4 17.1,171.8 23.2,170.3 29.2,168.7 35.3,167.1 41.3,165.6 47.4,164.0 53.4,162.4 59.5,160.8 65.5,159.2 71.6,157.7 77.6,156.1 83.7,154.5 89.7,153.0 95.8,151.4 101.8,149.8 107.9,148.2 113.9,146.6 120.0,145.1 126.0,143.5 132.1,141.9 138.1,140.3 144.2,138.8 150.2,137.2 156.3,135.6 162.3,134.1 168.4,132.5 174.4,130.9 180.5,129.3 186.5,127.8 192.6,126.2 198.6,124.6 204.7,123.0 210.7,121.4 216.7,119.9 222.8,118.3 228.8,116.7 234.9,115.1 240.9,113.6 247.0,112.0 253.0,110.4 259.1,108.8 265.1,107.3 271.2,105.7 277.2,104.1 283.3,102.5 289.3,101.0 295.4,99.4 301.4,97.8 307.5,96.3 313.5,94.7 319.6,93.1 325.6,91.5 331.7,90.0 337.7,88.4 343.8,86.8 349.8,85.2 355.9,83.7 361.9,82.1 368.0,80.5 374.0,78.9 380.1,77.3 386.1,75.8 392.2,74.2 398.2,72.6 404.3,71.1 410.3,69.5 416.4,67.9 422.4,66.3 428.5,64.7 434.5,63.2 440.6,61.6 446.6,60.0 452.7,58.5 458.7,56.9 464.7,55.3 470.8,53.7 476.8,52.2 482.9,50.6 488.9,49.0 495.0,47.4 501.0,45.9 507.1,44.3 513.1,42.7 519.2,41.1 525.2,39.5 531.3,38.0 537.3,36.4 543.4,34.8 549.4,33.2 555.5,31.7 561.5,30.1 567.6,28.5 573.6,26.9 579.7,25.4 585.7,23.8 591.8,22.2 597.8,20.6 603.9,19.1 609.9,17.5"/><polyline data-s="2" fill="none" stroke="var(--o)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="5.0,175.0 11.1,176.6 17.1,178.2 23.2,179.7 29.2,181.3 35.3,182.9 41.3,184.4 47.4,186.0 53.4,187.6 59.5,189.2 65.5,190.8 71.6,192.3 77.6,193.9 83.7,195.5 89.7,197.0 95.8,198.6 101.8,200.2 107.9,201.8 113.9,203.4 120.0,204.9 126.0,206.5 132.1,208.1 138.1,209.7 144.2,211.2 150.2,212.8 156.3,214.4 162.3,215.9 168.4,217.5 174.4,219.1 180.5,220.7 186.5,222.2 192.6,223.8 198.6,225.4 204.7,227.0 210.7,228.6 216.7,230.1 222.8,231.7 228.8,233.3 234.9,234.9 240.9,236.4 247.0,238.0 253.0,239.6 259.1,241.2 265.1,242.7 271.2,244.3 277.2,245.9 283.3,247.4 289.3,249.0 295.4,250.6 301.4,252.2 307.5,253.8 313.5,255.3 319.6,256.9 325.6,258.5 331.7,260.1 337.7,261.6 343.8,263.2 349.8,264.8 355.9,266.4 361.9,267.9 368.0,269.5 374.0,271.1 380.1,272.7 386.1,274.2 392.2,275.8 398.2,277.4 404.3,278.9 410.3,280.5 416.4,282.1 422.4,283.7 428.5,285.2 434.5,286.8 440.6,288.4 446.6,290.0 452.7,291.6 458.7,293.1 464.7,294.7 470.8,296.3 476.8,297.8 482.9,299.4 488.9,301.0 495.0,302.6 501.0,304.1 507.1,305.7 513.1,307.3 519.2,308.9 525.2,310.4 531.3,312.0 537.3,313.6 543.4,315.2 549.4,316.8 555.5,318.3 561.5,319.9 567.6,321.5 573.6,323.0 579.7,324.6 585.7,326.2 591.8,327.8 597.8,329.4 603.9,330.9 609.9,332.5"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="15">
+  <p class="h" data-s="0">Example 7 &mdash; the whole problem</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; &minus; 3<i>y</i>&#8242; &minus; 4<i>y</i> = 2<b>e</b><sup>&minus;<i>t</i></sup> + 4,&nbsp;&nbsp; <i>y</i>(0) = 0,&nbsp;&nbsp; <i>y</i>&#8242;(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2"><i>y</i><sub><i>c</i></sub>, then the two pieces</p>
+      <p class="e t" data-s="2"><i>y</i><sub><i>c</i></sub> = <i>c</i><sub>1</sub><b>e</b><sup>4<i>t</i></sup> + <i>c</i><sub>2</sub><b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="e t" data-s="3">2<b>e</b><sup>&minus;<i>t</i></sup>:&nbsp; Example 4,&nbsp; <i>Y</i><sub>1</sub> = &minus;<span class="fr"><span>2</span><span>5</span></span><i>t</i><b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="e t" data-s="4">4:&nbsp; 0 is not a root,&nbsp; <i>Y</i><sub>2</sub> = <i>A</i>,&nbsp; &minus;4<i>A</i> = 4,&nbsp; <i>Y</i><sub>2</sub> = &minus;1</p>
+      <p class="e t" data-s="5"><i>y</i> = <i>c</i><sub>1</sub><b>e</b><sup>4<i>t</i></sup> + <i>c</i><sub>2</sub><b>e</b><sup>&minus;<i>t</i></sup> &minus; <span class="fr"><span>2</span><span>5</span></span><i>t</i><b>e</b><sup>&minus;<i>t</i></sup> &minus; 1</p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">Initial conditions on the whole <i>y</i></p>
+      <p class="e t" data-s="6"><i>y</i>(0) = <i>c</i><sub>1</sub> + <i>c</i><sub>2</sub> &minus; 1 = 0</p>
+      <p class="e t" data-s="7"><i>y</i>&#8242;(0) = 4<i>c</i><sub>1</sub> &minus; <i>c</i><sub>2</sub> &minus; <span class="fr"><span>2</span><span>5</span></span> = 0</p>
+      <p class="e t" data-s="8">add: 5<i>c</i><sub>1</sub> = <span class="fr"><span>7</span><span>5</span></span>,&nbsp; <i>c</i><sub>1</sub> = <span class="fr"><span>7</span><span>25</span></span>,&nbsp; <i>c</i><sub>2</sub> = <span class="fr"><span>18</span><span>25</span></span></p>
+      <p class="e" data-s="9"><span class="bx"><i>y</i> = <span class="fr"><span>7</span><span>25</span></span><b>e</b><sup>4<i>t</i></sup> + <span class="fr"><span>18</span><span>25</span></span><b>e</b><sup>&minus;<i>t</i></sup> &minus; <span class="fr"><span>2</span><span>5</span></span><i>t</i><b>e</b><sup>&minus;<i>t</i></sup> &minus; 1</span></p>
+      <p class="a" data-s="10">&#8627; a mistake that is easy to make.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="16">
+  <p class="h" data-s="0">Find the mistake</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + <i>y</i>&#8242; = 2</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">A student&#8217;s work</p>
+      <p class="e t" data-s="2">guess <i>Y</i> = <i>A</i>:&nbsp; <i>Y</i>&#8242; = 0,&nbsp; <i>Y</i>&#8243; = 0</p>
+      <p class="e t" data-s="3">0 + 0 = 2&nbsp;&nbsp;<span class="n">impossible</span></p>
+      <p class="l" data-s="4">The student concluded: &ldquo;no particular solution.&rdquo;</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">The mistake: <i>y</i><sub><i>c</i></sub> was skipped</p>
+      <p class="e t" data-s="5"><i>r</i>(<i>r</i> + 1) = 0:&nbsp; <i>r</i> = 0, &minus;1;&nbsp; <i>y</i><sub><i>c</i></sub> = <i>c</i><sub>1</sub> + <i>c</i><sub>2</sub><b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="l" data-s="6">A constant is in <i>y</i><sub><i>c</i></sub> (0 is a root), so multiply by <i>t</i>.</p>
+      <p class="e t" data-s="7"><i>Y</i> = <i>A</i><i>t</i>:&nbsp; 0 + <i>A</i> = 2</p>
+      <p class="e" data-s="8"><span class="bx"><i>Y</i> = 2<i>t</i></span></p>
+      <p class="a" data-s="9">&#8627; your turn.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="17">
+  <p class="h" data-s="0">Your turn &mdash; <i>y</i><sub><i>c</i></sub> first, then <i>Y</i></p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>y</i>&#8243; &minus; <i>y</i> = 4<b>e</b><sup><i>t</i></sup></p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>y</i>&#8243; &minus; 2<i>y</i>&#8242; = 6</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8243; + 9<i>y</i> = <b>e</b><sup>3<i>t</i></sup></p>
+      <p class="e" data-s="3"><span class="bx">6 minutes. <i>y</i><sub><i>c</i></sub> first. Do 1 first.</span></p>
+      <p class="l" data-s="3"><span class="g">Bonus:</span> <i>y</i>&#8243; + 9<i>y</i> = cos 3<i>t</i>.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="4"><span class="g">1.</span>&nbsp; <i>r</i> = &plusmn;1, so <i>A</i><i>t</i><b>e</b><sup><i>t</i></sup>:&nbsp; <span class="v"><i>Y</i> = 2<i>t</i><b>e</b><sup><i>t</i></sup></span></p>
+      <p class="e t" data-s="5"><span class="g">2.</span>&nbsp; <i>r</i> = 0, 2; a constant is in <i>y</i><sub><i>c</i></sub>, so <i>A</i><i>t</i>:&nbsp; <span class="v"><i>Y</i> = &minus;3<i>t</i></span></p>
+      <p class="e t" data-s="6"><span class="g">3.</span>&nbsp; <i>r</i> = &plusmn;3<i>i</i>; 3 is not a root:&nbsp; <span class="v"><i>Y</i> = <span class="fr"><span>1</span><span>18</span></span><b>e</b><sup>3<i>t</i></sup></span></p>
+      <p class="e t" data-s="7"><span class="g">bonus.</span>&nbsp; <i>Y</i> = <span class="fr"><span>1</span><span>6</span></span><i>t</i> sin 3<i>t</i></p>
+      <p class="a" data-s="8">&#8627; number 2: the constant 6 is <b>e</b><sup>0<i>t</i></sup>, and 0 is a root.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="18">
+  <p class="h" data-s="0">Call it out &mdash; the form of <i>Y</i> (find <i>y</i><sub><i>c</i></sub> in your head first)</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>y</i>&#8243; &minus; 5<i>y</i>&#8242; + 6<i>y</i> = <b>e</b><sup>2<i>t</i></sup></p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>y</i>&#8243; + 4<i>y</i> = <i>t</i><sup>2</sup> + <b>e</b><sup><i>t</i></sup></p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8243; + 4<i>y</i> = sin 2<i>t</i></p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <i>y</i>&#8243; + 2<i>y</i>&#8242; + <i>y</i> = <b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; <i>y</i>&#8243; &minus; <i>y</i> = <b>e</b><sup><i>t</i></sup> cos <i>t</i></p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; roots 2, 3:&nbsp; <i>A</i><i>t</i><b>e</b><sup>2<i>t</i></sup></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <i>A</i><i>t</i><sup>2</sup> + <i>B</i><i>t</i> + <i>C</i> + <i>D</i><b>e</b><sup><i>t</i></sup>&nbsp;&nbsp;<span class="d">no change</span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; &plusmn;2<i>i</i>:&nbsp; <i>t</i>(<i>A</i> cos 2<i>t</i> + <i>B</i> sin 2<i>t</i>)</p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; &minus;1 twice:&nbsp; <i>A</i><i>t</i><sup>2</sup><b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <b>e</b><sup><i>t</i></sup>(<i>A</i> cos <i>t</i> + <i>B</i> sin <i>t</i>)&nbsp;&nbsp;<span class="d">1 &plusmn; <i>i</i> is not a root</span></p>
+      <p class="a" data-s="11">&#8627; number 2: check each piece of <i>g</i> separately.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="19">
+  <p class="h" data-s="0">True or false?</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; For <i>g</i> = <i>g</i><sub>1</sub> + <i>g</i><sub>2</sub>, we may find <i>Y</i><sub>1</sub> and <i>Y</i><sub>2</sub> separately and add.</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; If <b>e</b><sup>3<i>t</i></sup> is in <i>y</i><sub><i>c</i></sub>, the guess for <i>g</i> = <b>e</b><sup>3<i>t</i></sup> is <i>A</i><i>t</i><b>e</b><sup>3<i>t</i></sup> or <i>A</i><i>t</i><sup>2</sup><b>e</b><sup>3<i>t</i></sup>.</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; For <i>y</i>&#8243; + 9<i>y</i> = <b>e</b><sup>3<i>t</i></sup>, we must multiply by <i>t</i>.</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; It is fine to multiply by <i>t</i><sup>2</sup> &ldquo;to be safe&rdquo;.</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; For <i>y</i>&#8243; + 4<i>y</i> = cos 2<i>t</i>, the solutions grow without bound.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="v">true</span>&nbsp;&nbsp;<span class="d"><i>L</i> is linear</span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="v">true</span>&nbsp;&nbsp;<span class="d"><i>t</i> for a simple root, <i>t</i><sup>2</sup> for a double root</span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d">the roots are &plusmn;3<i>i</i>, not 3</span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d">never more than needed; the letters will not fit</span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <span class="v">true</span>&nbsp;&nbsp;<span class="d">resonance: <i>t</i> sin 2<i>t</i></span></p>
+      <p class="a" data-s="11">&#8627; number 3: compare with the roots, not with the numbers in the equation.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="20">
+  <p class="h" data-s="0">The card &mdash; finding <i>Y</i></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">Sums</p>
+      <p class="l" data-s="1"><i>g</i> = <i>g</i><sub>1</sub> + <i>g</i><sub>2</sub>: find <i>Y</i><sub>1</sub> and <i>Y</i><sub>2</sub> separately, then add.</p>
+      <p class="lb" data-s="2">Products</p>
+      <p class="l" data-s="2">Keep <b>e</b><sup>&alpha;<i>t</i></sup> as a factor; the rest follows the usual guess.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="3">When the guess fails</p>
+      <p class="l" data-s="3">Find <i>y</i><sub><i>c</i></sub> first. If a term of the guess is in <i>y</i><sub><i>c</i></sub>, multiply by <i>t</i>; for a repeated root, by <i>t</i><sup>2</sup>.</p>
+      <p class="e" data-s="4"><span class="bx">Order: <i>y</i><sub><i>c</i></sub>, then the guess, then compare, then solve for the letters, then the initial conditions.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="21">
+  <p class="h" data-s="0">Next</p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="1"><span class="g">HW5</span> is due <span class="v">tonight</span>, 11:59 pm, on Gradescope.</p>
+      <p class="l" data-s="2"><span class="g">Fri Oct 23</span>: &sect;3.5 problem session. Bring your questions.</p>
+      <p class="l" data-s="3"><span class="g">Mon Oct 26</span>: &sect;6.1, the Laplace transform.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Before Friday</p>
+      <p class="l" data-s="4">Try the &sect;3.5 problems in Boyce. Today&#8217;s card has the whole method.</p>
+      <p class="e" data-s="5"><span class="bx">Questions: office hours, the Carmen discussion board, or email.</span></p>
+    </div>
+  </div>
+</div>
+
+<canvas id="ink"></canvas>
+<canvas id="wet"></canvas>
+<div id="edge"></div>
+
+<div id="hint">
+  <b>Math 2255 &mdash; Lecture 1</b><br><br>
+  <kbd>&#9654;</kbd> buttons (top right and bottom), or arrow keys<br>
+  <kbd>&#9664;</kbd> goes back<br>
+  <kbd>1</kbd>&ndash;<kbd>5</kbd> pen colour &nbsp; <kbd>E</kbd> eraser &nbsp; <kbd>C</kbd> clear ink<br>
+  <kbd>F</kbd> full screen &nbsp; <kbd>T</kbd> hide toolbar &nbsp; <kbd>G</kbd> writing zones<br>
+  <kbd>R</kbd> reset timer&nbsp;&nbsp;&nbsp;<kbd>D</kbd> dark / light<br><br><span style="color:var(--dm)">Pages turn with the arrow buttons only,<br>so nothing you touch by accident moves the board.<br><br>The toolbar hides itself after a few seconds.<br>Tap the very bottom edge to bring it back.</span><br><br>
+  <span style="color:var(--dm)">Only the Apple Pencil draws.<br>
+  Your palm and fingers leave no marks.<br><br>Tap anywhere to begin.</span>
+</div>
+
+<div id="bar">
+  <span class="pen sel" data-i="0" style="background:#F0EFE8"></span>
+  <span class="pen" data-i="1" style="background:#E3E34B"></span>
+  <span class="pen" data-i="2" style="background:#45CFC2"></span>
+  <span class="pen" data-i="3" style="background:#E85CD2"></span>
+  <span class="pen" data-i="4" style="background:#F09A42"></span>
+  <button class="btn" id="th">Pen M</button>
+  <button class="btn" id="hd">HD</button>
+  <button class="btn" id="er">Erase</button>
+  <button class="btn" id="cl">Clear</button>
+  <span class="sp"></span>
+  <button class="btn nav" id="prev">&#9664;</button>
+  <span id="pos">1 / 21</span>
+  <button class="btn nav" id="next">&#9654;</button>
+  <span class="sp"></span>
+  <span id="clk">00:00</span>
+  <button class="btn" id="tm">Light</button>
+  <button class="btn" id="fs">Full</button>
+  <button class="btn" id="hp">?</button>
+</div>
+</div>
+
+<script>
+(function(){
+var pgs=[].slice.call(document.querySelectorAll('.pg'));
+var maxStep=pgs.map(function(p){
+  var m=0;[].forEach.call(p.querySelectorAll('[data-s]'),function(e){
+    m=Math.max(m,+e.getAttribute('data-s'));});return m;});
+var P=0,S=0;
+var cv=document.getElementById('ink');
+var cx=cv.getContext('2d',{desynchronized:true,alpha:true})||cv.getContext('2d');
+var strokes=pgs.map(function(){return [];});
+var DPRCAP=1.5;
+var PAL={dark: ['#F0EFE8','#E3E34B','#45CFC2','#E85CD2','#F09A42'],
+          light:['#16181B','#8F6A05','#0E7A70','#A0198A','#B4530A']};
+var theme='dark', ci=0, wid=4.2, erase=false, drawing=false, cur=null;
+function inks(){return PAL[theme];}
+var WIDS=[3.0,4.2,6.0],wi=1;
+
+function fit(){
+  var r=Math.min(window.devicePixelRatio||1,DPRCAP);
+  cv.width=Math.round(innerWidth*r);cv.height=Math.round(innerHeight*r);
+  cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+  wet.width=cv.width;wet.height=cv.height;
+  wet.style.width=innerWidth+'px';wet.style.height=innerHeight+'px';
+  wx.setTransform(r,0,0,r,0,0);wetBox=null;
+  cx.setTransform(r,0,0,r,0,0);syncRect();redraw();
+}
+function setStyle(st){
+  cx.lineCap='round';cx.lineJoin='round';
+  cx.strokeStyle=inks()[st.ci];cx.lineWidth=st.w;
+  cx.globalCompositeOperation=st.e?'destination-out':'source-over';
+}
+function strokePath(st){
+  if(st.pts.length<2)return;
+  setStyle(st);
+  cx.beginPath();cx.moveTo(st.pts[0].x,st.pts[0].y);
+  for(var i=1;i<st.pts.length;i++){
+    var a=st.pts[i-1],b=st.pts[i];
+    cx.quadraticCurveTo(a.x,a.y,(a.x+b.x)/2,(a.y+b.y)/2);
+  }
+  cx.stroke();
+}
+// full repaint only on page change / clear / resize -- never while drawing
+function redraw(){
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  strokes[P].forEach(strokePath);
+  cx.globalCompositeOperation='source-over';
+}
+function show(){
+  pgs.forEach(function(p,i){p.classList.toggle('on',i===P);});
+  [].forEach.call(pgs[P].querySelectorAll('[data-s]'),function(e){
+    var from=+e.getAttribute('data-s');
+    var u=e.getAttribute('data-until');
+    var until=(u===null||u==='')?1e9:+u;
+    var live=(S>=from && S<=until);
+    e.classList.toggle('vis', live);
+    if(u!==null&&u!=='') e.classList.toggle('gone', S>until);});
+  var pt=(P+1)+' / '+pgs.length;
+  document.getElementById('pos').textContent=pt;
+  var p2=document.getElementById('pos2'); if(p2)p2.textContent=pt;
+  redraw();
+}
+function next(){ if(S<maxStep[P]){S++;} else if(P<pgs.length-1){P++;S=0;} show(); }
+function prev(){ if(S>0){S--;} else if(P>0){P--;S=maxStep[P];} show(); }
+function pgUp(){ if(P>0){P--;S=maxStep[P];show();} }
+function pgDn(){ if(P<pgs.length-1){P++;S=maxStep[P];show();} }
+
+// ---- pencil drawing ----
+var RC={left:0,top:0};
+function syncRect(){RC=cv.getBoundingClientRect();}
+function xy(e){return {x:e.clientX-RC.left,y:e.clientY-RC.top};}
+function isPen(e){
+  if(e.pointerType==='pen')return true;
+  if(e.pointerType==='touch'&&(e.width||99)<=12&&(e.height||99)<=12)return true;
+  return false;
+}
+cv.addEventListener('pointerdown',function(e){
+  if(!isPen(e))return;
+  e.preventDefault();drawing=true;syncRect();
+  var p=xy(e),w=erase?26:wid*(0.55+0.9*(e.pressure||0.5));
+  cur={ci:ci,w:w,e:erase,pts:[p]};strokes[P].push(cur);
+  setStyle(cur);
+  cx.beginPath();cx.arc(p.x,p.y,Math.max(w,1)/2,0,6.2832);
+  cx.fillStyle=inks()[cur.ci];cx.fill();
+  cx.globalCompositeOperation='source-over';
+},{passive:false});
+var pend=[],rafId=0,MINSTEP=1.7;
+var wet=document.getElementById('wet');
+var wx=wet.getContext('2d',{desynchronized:true})||wet.getContext('2d');
+var wetBox=null;
+function clearWet(){
+  if(!wetBox)return;
+  wx.clearRect(wetBox[0]-4,wetBox[1]-4,wetBox[2]-wetBox[0]+8,wetBox[3]-wetBox[1]+8);
+  wetBox=null;
+}
+function drawPredicted(e){
+  clearWet();
+  if(!cur||!e.getPredictedEvents)return;
+  var pr=e.getPredictedEvents(); if(!pr.length)return;
+  var a=cur.pts[cur.pts.length-1];
+  var x0=a.x,y0=a.y,x1=a.x,y1=a.y;
+  wx.lineCap='round';wx.lineJoin='round';
+  wx.strokeStyle=cur.c;wx.lineWidth=cur.w;
+  wx.globalCompositeOperation=cur.e?'destination-out':'source-over';
+  wx.beginPath();wx.moveTo(a.x,a.y);
+  for(var i=0;i<pr.length;i++){
+    var p=xy(pr[i]); wx.lineTo(p.x,p.y);
+    if(p.x<x0)x0=p.x; if(p.y<y0)y0=p.y;
+    if(p.x>x1)x1=p.x; if(p.y>y1)y1=p.y;
+  }
+  wx.stroke();
+  wetBox=[x0-cur.w,y0-cur.w,x1+cur.w,y1+cur.w];
+}
+function flush(){
+  rafId=0;
+  clearWet();
+  if(!cur||!pend.length)return;
+  setStyle(cur);
+  cx.beginPath();
+  var a=cur.pts[cur.pts.length-1];
+  cx.moveTo(a.x,a.y);
+  for(var i=0;i<pend.length;i++){ cx.lineTo(pend[i].x,pend[i].y); cur.pts.push(pend[i]); }
+  cx.stroke();
+  cx.globalCompositeOperation='source-over';
+  pend.length=0;
+}
+cv.addEventListener('pointermove',function(e){
+  if(!drawing||!isPen(e))return;
+  e.preventDefault();
+  var evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];
+  var last=pend.length?pend[pend.length-1]:cur.pts[cur.pts.length-1];
+  for(var i=0;i<evs.length;i++){
+    var p=xy(evs[i]);
+    var dx=p.x-last.x, dy=p.y-last.y;
+    if(dx*dx+dy*dy < MINSTEP) continue;
+    pend.push(p); last=p;
+  }
+  if(pend.length && !rafId) rafId=requestAnimationFrame(flush);
+  drawPredicted(e);
+},{passive:false});
+function end(e){ if(e.pointerType&&!isPen(e))return;
+  if(rafId){cancelAnimationFrame(rafId);rafId=0;} flush();
+  clearWet(); drawing=false;cur=null;pend.length=0; }
+cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+
+// ---- buttons only. no tap-to-advance, no swipe. ----
+cv.addEventListener('pointerup',function(e){
+  if(isPen(e))return;
+  startClk();
+  var h=document.getElementById('hint');
+  if(!h.classList.contains('hide')) h.classList.add('hide');
+  showChrome();
+});
+
+function bindNav(id,fn){
+  var el=document.getElementById(id); if(!el)return;
+  var go=function(e){ e.preventDefault(); e.stopPropagation(); fn(); startClk(); };
+  el.addEventListener('click',go);
+  el.addEventListener('touchend',go,{passive:false});
+}
+bindNav('prev',prev); bindNav('next',next);
+bindNav('prev2',prev); bindNav('next2',next);
+
+
+// ---- toolbar ----
+[].forEach.call(document.querySelectorAll('.pen'),function(b){
+  b.onclick=function(){
+    [].forEach.call(document.querySelectorAll('.pen'),function(x){x.classList.remove('sel');});
+    b.classList.add('sel');ci=+b.getAttribute('data-i');erase=false;
+    document.getElementById('er').style.borderColor='var(--bbd)';
+  };
+});
+document.getElementById('th').onclick=function(){
+  wi=(wi+1)%3; wid=WIDS[wi];
+  this.textContent='Pen '+['S','M','L'][wi];
+};
+document.getElementById('hd').onclick=function(){
+  DPRCAP=(DPRCAP===1.5)?1:1.5;
+  this.textContent=(DPRCAP===1.5)?'HD':'Fast';
+  fit();
+};
+document.getElementById('er').onclick=function(){
+  erase=!erase;this.style.borderColor=erase?'var(--o)':'var(--bbd)';};
+document.getElementById('cl').onclick=function(){strokes[P]=[];redraw();};
+document.getElementById('hp').onclick=function(){
+  document.getElementById('hint').classList.toggle('hide');};
+function isStandalone(){
+  return window.navigator.standalone===true ||
+         (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches);
+}
+function setTheme(t){
+  theme=t;
+  document.body.classList.toggle('light', t==='light');
+  document.getElementById('tm').textContent = (t==='dark')?'Light':'Dark';
+  var sw=document.querySelectorAll('.pen');
+  for(var i=0;i<sw.length;i++) sw[i].style.background=PAL[t][i];
+  var tc=document.querySelector('meta[name="theme-color"]');
+  if(tc)tc.setAttribute('content', t==='light'?'#F2F0EA':'#0D0F10');
+  try{localStorage.setItem('m2255theme',t);}catch(e){}
+  redraw();
+}
+document.getElementById('tm').onclick=function(){ setTheme(theme==='dark'?'light':'dark'); };
+document.getElementById('fs').onclick=function(){
+  var d=document.documentElement;
+  var req=d.requestFullscreen||d.webkitRequestFullscreen;
+  if(document.fullscreenElement||document.webkitFullscreenElement){
+    (document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);
+    return;
+  }
+  if(req){ try{ req.call(d); return; }catch(err){} }
+  if(isStandalone()){ alert('Already running full screen.'); return; }
+  alert('For true full screen on iPad:\n\n'+
+        '1. Tap the Share button in Safari\n'+
+        '2. Choose "Add to Home Screen"\n'+
+        '3. Launch it from the home-screen icon\n\n'+
+        'It then opens with no address bar and no toolbars.');
+};
+if(isStandalone()){ document.getElementById('fs').textContent='FS'; }
+
+// ---- clock ----
+var t0=null,tick=null;
+function fmt(s){var m=Math.floor(s/60);return (m<10?'0':'')+m+':'+((s%60)<10?'0':'')+(s%60);}
+function startClk(){
+  if(tick)return;t0=Date.now();
+  tick=setInterval(function(){
+    var s=Math.floor((Date.now()-t0)/1000);
+    var el=document.getElementById('clk');
+    el.textContent=fmt(s);el.classList.toggle('over',s>55*60);
+  },1000);
+}
+
+// ---- keys ----
+addEventListener('keydown',function(e){
+  var k=e.key;
+  if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();next();}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev();}
+  else if(k==='ArrowDown'){e.preventDefault();pgDn();}
+  else if(k==='ArrowUp'){e.preventDefault();pgUp();}
+  else if(k>='1'&&k<='5'){document.querySelectorAll('.pen')[+k-1].click();}
+  else if(k==='e'||k==='E'){document.getElementById('er').click();}
+  else if(k==='c'||k==='C'){document.getElementById('cl').click();}
+  else if(k==='f'||k==='F'){document.getElementById('fs').click();}
+  else if(k==='t'||k==='T'){document.getElementById('bar').classList.toggle('hide');document.getElementById('topnav').classList.toggle('hide');}
+  else if(k==='g'||k==='G'){document.body.classList.toggle('guides');}
+  else if(k==='d'||k==='D'){document.getElementById('tm').click();}
+  else if(k==='r'||k==='R'){t0=Date.now();}
+  else if(k==='?'||k==='h'){document.getElementById('hp').click();}
+  if(k!=='?'&&k!=='h')startClk();
+});
+document.getElementById('hint').addEventListener('click',function(){
+  this.classList.add('hide');startClk();});
+
+// ---- auto-hiding chrome ----
+var chromeT=null;
+function showChrome(){
+  document.getElementById('bar').classList.remove('hide');
+  document.getElementById('topnav').classList.remove('hide');
+  clearTimeout(chromeT);
+  chromeT=setTimeout(hideChrome,3500);
+}
+function hideChrome(){
+  document.getElementById('bar').classList.add('hide');
+  document.getElementById('topnav').classList.add('hide');
+}
+document.getElementById('edge').addEventListener('pointerdown',function(e){
+  e.stopPropagation(); showChrome();
+});
+document.getElementById('bar').addEventListener('pointerdown',showChrome);
+document.getElementById('topnav').addEventListener('pointerdown',showChrome);
+showChrome();
+
+addEventListener('resize',function(){fit();syncRect();});
+addEventListener('orientationchange',function(){setTimeout(function(){fit();syncRect();},250);});
+addEventListener('scroll',syncRect,true);
+try{var sv=localStorage.getItem('m2255theme');}catch(e){}
+setTheme(sv==='light'?'light':'dark');
+fit();show();
+})();
+</script>
+
+</body>
+</html>
