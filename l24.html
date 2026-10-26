@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="2255 L2">
+<meta name="theme-color" content="#0D0F10">
+<title>Math 2255 - Lecture 2 Board</title>
+<style>
+:root{
+  --bd:#0D0F10; --gr:#1B1F21;
+  --w:#F0EFE8; --y:#E3E34B; --c:#45CFC2; --m:#E85CD2; --o:#F09A42;
+  --dm:#7C8A8E; --wash-w:rgba(240,239,232,.07); --wash-o:rgba(240,154,66,.10);
+  --chrome:rgba(13,15,16,.86); --line:#23282A; --bfg:#9DACB1; --bbd:#2E3538;
+  --act:#1C2224; --sel:#8FA0A5; --kbd:#1E2426; --kbdb:#333B3E; --kbdf:#C3CFD2;
+  --solid:#12171A;
+  --fm:"Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
+  --fu:system-ui,-apple-system,"PingFang SC",sans-serif;
+}
+body.light{--bd:#FBFAF7; --gr:#E7E4DC;
+  --w:#16181B; --y:#8F6A05; --c:#0E7A70; --m:#A0198A; --o:#B4530A;
+  --dm:#6E787E; --wash-w:rgba(20,24,28,.05); --wash-o:rgba(180,83,10,.09);
+  --chrome:rgba(251,250,247,.92); --line:#DBD6CB; --bfg:#4A5459; --bbd:#CAC4B9;
+  --act:#EDE9E1; --sel:#5A6469; --kbd:#EFEBE3; --kbdb:#D2CCC2; --kbdf:#39434A;
+  --solid:#F2F0EA;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
+  overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+#app{position:relative;width:100%;height:100dvh;height:100svh;min-height:480px;overflow:hidden;background:var(--bd);
+  background-image:linear-gradient(var(--gr) 1px,transparent 1px),
+    linear-gradient(90deg,var(--gr) 1px,transparent 1px);
+  background-size:32px 32px;color:var(--w);font-family:var(--fm)}
+#stage{position:absolute;inset:0;padding:3.0vh 4vw 60px;overflow:hidden}
+.pg{display:none;height:100%}
+.pg.on{display:block}
+[data-s]{opacity:0;transition:opacity .16s ease}
+[data-s].vis{opacity:1}
+[data-until].gone{display:none}
+.pg.rv .h{font-size:clamp(1.3rem,min(3.8vw,5.60vh),2.9rem)}
+.pg.rv .lb{font-size:clamp(1rem,min(2.5vw,3.68vh),1.9rem);margin:.62em 0 .12em}
+.pg.rv .l{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.6;margin:0 0 .1em 1.0em}
+.pg.rv .e{font-size:clamp(1.05rem,min(2.7vw,4.00vh),2.1rem);margin-left:1.0em}
+
+.h{font-size:clamp(1.2rem,min(3.4vw,5.00vh),2.6rem);color:var(--y);display:table;
+  border-bottom:.09em solid var(--y);padding-bottom:.08em;margin:0 0 .55em}
+.lb{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);color:var(--y);display:table;
+  border-bottom:.07em solid var(--y);padding-bottom:.06em;margin:.65em 0 .32em}
+.l{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.62rem);line-height:1.72;margin:0 0 .1em}
+.e{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.95;margin:.3em 0 .3em 1.1em}
+.e.t{margin-top:.16em;margin-bottom:.16em}
+.a{font-size:clamp(.8rem,min(1.8vw,2.65vh),1.4rem);color:var(--m);margin:.12em 0 .3em 2em}
+.i{margin-left:1.5em}
+.n{color:var(--m)} .g{color:var(--c)} .v{color:var(--o)}
+.d{color:var(--dm)}
+.bx{display:inline-block;border:.09em solid var(--o);color:var(--o);
+  background:var(--wash-o);border-radius:.16em;padding:.2em .6em}
+.bw{display:inline-block;border:.09em solid var(--w);color:var(--w);
+  background:var(--wash-w);border-radius:.16em;padding:.2em .6em}
+sup,sub{line-height:0;font-size:.68em}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  line-height:1.18;font-size:.86em;margin:0 .14em}
+.fr>span{padding:0 .28em;display:block}
+.fr>span:first-child{border-bottom:.06em solid currentColor;padding-bottom:.1em}
+.fr>span:last-child{padding-top:.12em}
+ol.st{margin:.25em 0 .25em 1.1em;padding-left:1.1em;font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);line-height:1.65}
+table{border-collapse:collapse;margin:.4em 0 .4em 1.1em;font-size:clamp(.85rem,min(2vw,2.94vh),1.5rem);line-height:2}
+td,th{padding:.16em 1.4em .16em 0;text-align:left;font-weight:400}
+th{color:var(--y);font-size:.82em}
+.cols{display:flex;gap:5vw;align-items:flex-start}
+.two{display:grid;grid-template-columns:1fr 1fr;column-gap:2.4vw;align-items:start;margin:.15em 0 0 .2em}
+.two>div>*:first-child{margin-top:0}
+.two .e{margin:.12em 0 .12em .2em;line-height:1.6}
+.two .l{margin:.1em 0 .1em .2em}
+.two .lb{margin:.5em 0 .14em}
+.two .a{margin:.1em 0 .2em 1em}
+.split{display:flex;gap:1.4vw;align-items:flex-start;margin:.2em 0 0 .4em}
+.split>.sl{flex:0 0 auto}
+.split>.sr{flex:1 1 auto;min-width:0;display:flex;justify-content:center;align-items:flex-start}
+.split .e{margin:.05em 0 .05em .2em;line-height:1.45}
+.split .sl .e{font-size:clamp(.85rem,min(2.1vw,3.02vh),1.65rem)}
+svg.df.sp{width:auto;height:51vh;max-width:100%;margin:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;column-gap:2vw;row-gap:0;margin:.2em 0 .2em 1.1em}
+.g2 .e{margin-left:0;line-height:1.62}
+svg.df{display:block;width:100%;max-width:min(76vw,104vh);height:auto;margin:.5vh 0 .5vh 1vw}
+svg.df.ax{width:auto;height:45vh;max-width:96%;margin:.3vh 0 .3vh 1.6vw}
+svg.df.fx{width:auto;height:46vh;max-width:97%;margin:.3vh 0 .3vh 1.2vw}
+.hw{min-height:1.2em}
+body.guides .hw{outline:1px dashed rgba(69,207,194,.32);border-radius:4px}
+
+#wet{position:absolute;inset:0;pointer-events:none;z-index:6;transform:translateZ(0)}
+#ink{position:absolute;inset:0;touch-action:none;z-index:5;
+  transform:translateZ(0)}
+#topnav{position:absolute;top:0;right:0;z-index:12;display:flex;gap:6px;align-items:center;
+  padding:calc(6px + env(safe-area-inset-top)) 10px 6px;background:var(--solid);border-radius:0 0 0 10px;
+  font-family:var(--fu);font-size:13px;color:var(--bfg)}
+#topnav.hide{opacity:0;pointer-events:none}
+#bar{position:absolute;left:0;right:0;bottom:0;z-index:9;display:flex;gap:.5vw;
+  align-items:center;padding:.7vh 1.2vw;padding-bottom:calc(.7vh + env(safe-area-inset-bottom));background:var(--solid);
+  border-top:1px solid var(--line);font-family:var(--fu);font-size:13px;color:var(--dm);
+  transition:opacity .3s}
+#bar.hide{opacity:0;pointer-events:none}
+#bar,#topnav{transition:opacity .25s}
+#edge{position:absolute;left:0;right:0;bottom:0;height:46px;z-index:8}
+.pen{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;flex:none}
+.pen.sel{border-color:var(--sel);transform:scale(1.12)}
+.btn{padding:5px 11px;border:1px solid var(--bbd);border-radius:5px;background:transparent;
+  color:var(--bfg);font-family:var(--fu);font-size:12px;cursor:pointer}
+.btn:active{background:var(--act)}
+.sp{flex:1}
+.btn.nav{font-size:19px;padding:3px 20px;line-height:1.05;min-width:62px}
+#pos{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+#clk{font-variant-numeric:tabular-nums;font-size:15px;color:var(--w)}
+#clk.over{color:var(--o)}
+#hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;
+  font-family:var(--fu);font-size:15px;line-height:2;color:var(--bfg);text-align:center;
+  background:var(--chrome);border:1px solid var(--bbd);border-radius:10px;padding:26px 34px}
+#hint.hide{display:none}
+#hint b{color:var(--w)}
+kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);border-radius:4px;
+  padding:1px 6px;color:var(--kbdf);font-size:12px}
+</style>
+</head>
+<body>
+
+<div id="app">
+<div id="topnav">
+  <button class="btn nav" id="prev2">&#9664;</button>
+  <span id="pos2">1 / 22</span>
+  <button class="btn nav" id="next2">&#9654;</button>
+</div>
+<div id="stage">
+
+<div class="pg on" data-n="1">
+  <p class="h" data-s="0">Chapter 6: a new method</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">Chapter 3 had limits</p>
+      <p class="l" data-s="1">Undetermined coefficients works only for exponentials, polynomials, sines and cosines.</p>
+      <p class="l" data-s="2">Real forcing can switch on and off, or be a sudden kick. Guessing does not handle that.</p>
+      <p class="lb" data-s="3">The idea of chapter 6</p>
+      <p class="l" data-s="3">The Laplace transform turns a function of <i>t</i> into a function of <i>s</i>.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">In plain words</p>
+      <p class="l" data-s="4">It turns a derivative into multiplication by <i>s</i>. So a differential equation becomes algebra.</p>
+      <p class="l" data-s="5">We solve the algebra, then transform back.</p>
+      <p class="e" data-s="6"><span class="bx">Today: what the transform is, and the first few transforms.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="2">
+  <p class="h" data-s="0">Call it out &mdash; limits as <i>A</i> &rarr; &infin;</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <b>e</b><sup>&minus;2<i>A</i></sup></p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <b>e</b><sup>3<i>A</i></sup></p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>A</i><b>e</b><sup>&minus;<i>A</i></sup></p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <span class="fr"><span>1</span><span><i>A</i></span></span></p>
+    </div>
+    <div>
+      <p class="e t" data-s="5"><span class="g">1.</span>&nbsp; <span class="v">0</span></p>
+      <p class="e t" data-s="6"><span class="g">2.</span>&nbsp; <span class="v">&infin;</span>&nbsp;&nbsp;<span class="d">no limit</span></p>
+      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; <span class="v">0</span>&nbsp;&nbsp;<span class="d">the exponential wins</span></p>
+      <p class="e t" data-s="8"><span class="g">4.</span>&nbsp; <span class="v">0</span></p>
+      <p class="a" data-s="9">&#8627; the sign in the exponent decides everything today.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="3">
+  <p class="h" data-s="0">Improper integrals</p>
+  <p class="e" data-s="1"><span class="bw">&int;<sub><i>a</i></sub><sup>&infin;</sup><i>f</i>(<i>t</i>)&thinsp;<i>dt</i> = <span style="white-space:nowrap">lim<sub><i>A</i>&rarr;&infin;</sub></span> &int;<sub><i>a</i></sub><sup><i>A</i></sup><i>f</i>(<i>t</i>)&thinsp;<i>dt</i></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">In plain words</p>
+      <p class="l" data-s="2">We cannot integrate all the way to infinity at once.</p>
+      <p class="l" data-s="3">So we integrate up to a large number <i>A</i>, and then let <i>A</i> grow.</p>
+      <p class="lb" data-s="4">Two outcomes</p>
+      <p class="l" data-s="4">The limit is a finite number: the integral <span class="g">converges</span>.</p>
+      <p class="l" data-s="5">The limit is infinite or does not exist: it <span class="g">diverges</span>.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">The steps</p>
+      <p class="l" data-s="6"><span class="g">1.</span> Replace &infin; by <i>A</i>.</p>
+      <p class="l" data-s="7"><span class="g">2.</span> Integrate as usual.</p>
+      <p class="l" data-s="8"><span class="g">3.</span> Take the limit as <i>A</i> &rarr; &infin;.</p>
+      <p class="a" data-s="9">&#8627; the most important example.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="4">
+  <p class="h" data-s="0">Example 1 &mdash; &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup><i>ct</i></sup><i>dt</i></p>
+  <p class="e" data-s="1"><span class="bw">&int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup><i>ct</i></sup>&thinsp;<i>dt</i>,&nbsp;&nbsp; <i>c</i> a constant</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Steps 1 and 2 (<i>c</i> &ne; 0)</p>
+      <p class="e t" data-s="2">&int;<sub>0</sub><sup><i>A</i></sup><b>e</b><sup><i>ct</i></sup><i>dt</i> = <span class="fr"><span>1</span><span><i>c</i></span></span><b>e</b><sup><i>ct</i></sup>|<sub>0</sub><sup><i>A</i></sup> = <span class="fr"><span>1</span><span><i>c</i></span></span>(<b>e</b><sup><i>cA</i></sup> &minus; 1)</p>
+      <p class="lb" data-s="3">Step 3</p>
+      <p class="e t" data-s="3"><i>c</i> &lt; 0:&nbsp; <b>e</b><sup><i>cA</i></sup> &rarr; 0,&nbsp; so the integral is <span class="fr"><span>1</span><span><i>c</i></span></span>(0 &minus; 1) = &minus;<span class="fr"><span>1</span><span><i>c</i></span></span></p>
+      <p class="e t" data-s="4"><i>c</i> &gt; 0:&nbsp; <b>e</b><sup><i>cA</i></sup> &rarr; &infin;:&nbsp; diverges</p>
+      <p class="e t" data-s="5"><i>c</i> = 0:&nbsp; &int;<sub>0</sub><sup><i>A</i></sup>1&thinsp;<i>dt</i> = <i>A</i> &rarr; &infin;:&nbsp; diverges</p>
+    </div>
+    <div>
+      <p class="e" data-s="6"><span class="bx">&int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup><i>ct</i></sup><i>dt</i> = &minus;<span class="fr"><span>1</span><span><i>c</i></span></span>&nbsp; only when <i>c</i> &lt; 0</span></p>
+      <p class="e t" data-s="7">for example&nbsp; &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;2<i>t</i></sup><i>dt</i> = <span class="fr"><span>1</span><span>2</span></span></p>
+      <p class="l" data-s="8">In plain words: a decaying exponential has finite area under it; a growing one does not.</p>
+      <p class="a" data-s="9">&#8627; a function that decays too slowly.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="5">
+  <p class="h" data-s="0">Example 2 &mdash; decaying is not always enough</p>
+  <p class="e" data-s="1"><span class="bw">&int;<sub>1</sub><sup>&infin;</sup><span class="fr"><span><i>dt</i></span><span><i>t</i><sup>2</sup></span></span>&nbsp;&nbsp; and &nbsp;&nbsp;&int;<sub>1</sub><sup>&infin;</sup><span class="fr"><span><i>dt</i></span><span><span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>t</i></span></span></span></span></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2"><span class="fr"><span>1</span><span><i>t</i><sup>2</sup></span></span></p>
+      <p class="e t" data-s="2">&int;<sub>1</sub><sup><i>A</i></sup><i>t</i><sup>&minus;2</sup><i>dt</i> = &minus;<span class="fr"><span>1</span><span><i>t</i></span></span>|<sub>1</sub><sup><i>A</i></sup> = 1 &minus; <span class="fr"><span>1</span><span><i>A</i></span></span> &rarr; 1</p>
+      <p class="e" data-s="3"><span class="bx">converges, to 1</span></p>
+      <p class="lb" data-s="4"><span class="fr"><span>1</span><span><span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>t</i></span></span></span></span></p>
+      <p class="e t" data-s="4">&int;<sub>1</sub><sup><i>A</i></sup><i>t</i><sup>&minus;1/2</sup><i>dt</i> = 2<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>t</i></span></span>|<sub>1</sub><sup><i>A</i></sup> = 2<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>A</i></span></span> &minus; 2 &rarr; &infin;</p>
+      <p class="e" data-s="5"><span class="bx">diverges</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">In plain words</p>
+      <p class="l" data-s="6">Both functions go to 0. But 1/<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>t</i></span></span> goes to 0 too slowly: the area keeps growing.</p>
+      <p class="l" data-s="7">The fast decay of <b>e</b><sup>&minus;<i>st</i></sup> is what will make the Laplace transform work.</p>
+      <p class="a" data-s="8">&#8627; now the transform itself.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="6">
+  <p class="h" data-s="0">The Laplace transform</p>
+  <p class="e" data-s="1"><span class="bw">&#8466;{<i>f</i>} = <i>F</i>(<i>s</i>) = &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup><i>f</i>(<i>t</i>)&thinsp;<i>dt</i></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Reading the formula</p>
+      <p class="l" data-s="2">Input: a function <i>f</i>(<i>t</i>), for <i>t</i> &ge; 0.</p>
+      <p class="l" data-s="3">Multiply by <b>e</b><sup>&minus;<i>st</i></sup> and integrate in <i>t</i>. The <i>t</i> disappears.</p>
+      <p class="l" data-s="4">Output: a function <i>F</i>(<i>s</i>) of a new variable <i>s</i>.</p>
+      <p class="l" data-s="5"><span class="d">We use a capital letter for the transform: <i>f</i> &rarr; <i>F</i>, <i>y</i> &rarr; <i>Y</i>.</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">In plain words</p>
+      <p class="l" data-s="6">It is a machine: a function of <i>t</i> goes in, a function of <i>s</i> comes out.</p>
+      <p class="l" data-s="7">The factor <b>e</b><sup>&minus;<i>st</i></sup> decays when <i>s</i> &gt; 0. It makes the improper integral converge.</p>
+      <p class="e" data-s="8"><span class="bx">The transform exists only for the <i>s</i> where the integral converges.</span></p>
+      <p class="a" data-s="9">&#8627; a picture of the definition.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="7">
+  <p class="h" data-s="0">The definition, as a picture</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1">Take <i>f</i> = 1. Then &#8466;{1}(<i>s</i>) is the area under <b>e</b><sup>&minus;<i>st</i></sup>.</p>
+      <p class="l" data-s="2"><span class="g">teal</span>, <i>s</i> = 1: area 1.&nbsp; <span class="g">magenta</span>, <i>s</i> = 2: area <span class="fr"><span>1</span><span>2</span></span>.</p>
+      <p class="l" data-s="3"><span class="d">dashed</span>, <i>s</i> = <span class="fr"><span>1</span><span>2</span></span>: area 2.</p>
+      <p class="e" data-s="4"><span class="bx">Each <i>s</i> gives one number. Together they form the function 1/<i>s</i>.</span></p>
+      <p class="a" data-s="5">&#8627; which functions have a transform?</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="183.3" x2="0" y2="183.3"/><line x1="-7" y1="16.7" x2="0" y2="16.7"/><line x1="6" y1="350" x2="6" y2="357"/><line x1="126.4" y1="350" x2="126.4" y2="357"/><line x1="246.8" y1="350" x2="246.8" y2="357"/><line x1="367.2" y1="350" x2="367.2" y2="357"/><line x1="487.6" y1="350" x2="487.6" y2="357"/><line x1="608" y1="350" x2="608" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">0</text><text x="-12" y="188.3" text-anchor="end">0.5</text><text x="-12" y="21.7" text-anchor="end">1</text><text x="6" y="375" text-anchor="middle">0</text><text x="126.4" y="375" text-anchor="middle">1</text><text x="246.8" y="375" text-anchor="middle">2</text><text x="367.2" y="375" text-anchor="middle">3</text><text x="487.6" y="375" text-anchor="middle">4</text><text x="608" y="375" text-anchor="middle">5</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="6.0,16.7 8.0,22.2 10.0,27.6 12.0,32.9 14.0,38.2 16.1,43.3 18.1,48.4 20.1,53.4 22.1,58.3 24.1,63.1 26.1,67.8 28.1,72.5 30.1,77.1 32.1,81.6 34.1,86.0 36.1,90.4 38.1,94.7 40.1,98.9 42.1,103.1 44.1,107.1 46.1,111.2 48.2,115.1 50.2,119.0 52.2,122.8 54.2,126.6 56.2,130.3 58.2,133.9 60.2,137.5 62.2,141.0 64.2,144.4 66.2,147.8 68.2,151.2 70.2,154.5 72.2,157.7 74.2,160.9 76.2,164.0 78.3,167.1 80.3,170.1 82.3,173.1 84.3,176.0 86.3,178.9 88.3,181.7 90.3,184.5 92.3,187.2 94.3,189.9 96.3,192.5 98.3,195.1 100.3,197.7 102.3,200.2 104.3,202.7 106.3,205.1 108.3,207.5 110.4,209.9 112.4,212.2 114.4,214.5 116.4,216.7 118.4,218.9 120.4,221.1 122.4,223.2 124.4,225.3 126.4,227.4 128.4,229.4 130.4,231.4 132.4,233.4 134.4,235.3 136.4,237.2 138.4,239.0 140.5,240.9 142.5,242.7 144.5,244.5 146.5,246.2 148.5,247.9 150.5,249.6 152.5,251.3 154.5,252.9 156.5,254.5 158.5,256.1 160.5,257.6 162.5,259.2 164.5,260.7 166.5,262.1 168.5,263.6 170.6,265.0 172.6,266.4 174.6,267.8 176.6,269.2 178.6,270.5 180.6,271.8 182.6,273.1 184.6,274.4 186.6,275.6 188.6,276.9 190.6,278.1 192.6,279.3 194.6,280.4 196.6,281.6 198.6,282.7 200.6,283.8 202.7,284.9 204.7,286.0 206.7,287.0 208.7,288.1 210.7,289.1 212.7,290.1 214.7,291.1 216.7,292.1 218.7,293.0 220.7,294.0 222.7,294.9 224.7,295.8 226.7,296.7 228.7,297.6 230.7,298.5 232.8,299.3 234.8,300.1 236.8,301.0 238.8,301.8 240.8,302.6 242.8,303.4 244.8,304.1 246.8,304.9 248.8,305.6 250.8,306.4 252.8,307.1 254.8,307.8 256.8,308.5 258.8,309.2 260.8,309.9 262.8,310.5 264.9,311.2 266.9,311.8 268.9,312.4 270.9,313.1 272.9,313.7 274.9,314.3 276.9,314.9 278.9,315.4 280.9,316.0 282.9,316.6 284.9,317.1 286.9,317.7 288.9,318.2 290.9,318.7 292.9,319.3 295.0,319.8 297.0,320.3 299.0,320.8 301.0,321.2 303.0,321.7 305.0,322.2 307.0,322.6 309.0,323.1 311.0,323.5 313.0,324.0 315.0,324.4 317.0,324.8 319.0,325.2 321.0,325.7 323.0,326.1 325.0,326.4 327.1,326.8 329.1,327.2 331.1,327.6 333.1,328.0 335.1,328.3 337.1,328.7 339.1,329.0 341.1,329.4 343.1,329.7 345.1,330.1 347.1,330.4 349.1,330.7 351.1,331.0 353.1,331.4 355.1,331.7 357.2,332.0 359.2,332.3 361.2,332.6 363.2,332.8 365.2,333.1 367.2,333.4 369.2,333.7 371.2,333.9 373.2,334.2 375.2,334.5 377.2,334.7 379.2,335.0 381.2,335.2 383.2,335.5 385.2,335.7 387.2,336.0 389.3,336.2 391.3,336.4 393.3,336.6 395.3,336.9 397.3,337.1 399.3,337.3 401.3,337.5 403.3,337.7 405.3,337.9 407.3,338.1 409.3,338.3 411.3,338.5 413.3,338.7 415.3,338.9 417.3,339.1 419.4,339.2 421.4,339.4 423.4,339.6 425.4,339.8 427.4,339.9 429.4,340.1 431.4,340.3 433.4,340.4 435.4,340.6 437.4,340.7 439.4,340.9 441.4,341.0 443.4,341.2 445.4,341.3 447.4,341.5 449.4,341.6 451.5,341.8 453.5,341.9 455.5,342.0 457.5,342.2 459.5,342.3 461.5,342.4 463.5,342.5 465.5,342.7 467.5,342.8 469.5,342.9 471.5,343.0 473.5,343.1 475.5,343.3 477.5,343.4 479.5,343.5 481.6,343.6 483.6,343.7 485.6,343.8 487.6,343.9 489.6,344.0 491.6,344.1 493.6,344.2 495.6,344.3 497.6,344.4 499.6,344.5 501.6,344.6 503.6,344.7 505.6,344.7 507.6,344.8 509.6,344.9 511.7,345.0 513.7,345.1 515.7,345.2 517.7,345.2 519.7,345.3 521.7,345.4 523.7,345.5 525.7,345.6 527.7,345.6 529.7,345.7 531.7,345.8 533.7,345.8 535.7,345.9 537.7,346.0 539.7,346.0 541.7,346.1 543.8,346.2 545.8,346.2 547.8,346.3 549.8,346.4 551.8,346.4 553.8,346.5 555.8,346.5 557.8,346.6 559.8,346.6 561.8,346.7 563.8,346.8 565.8,346.8 567.8,346.9 569.8,346.9 571.8,347.0 573.9,347.0 575.9,347.1 577.9,347.1 579.9,347.2 581.9,347.2 583.9,347.3 585.9,347.3 587.9,347.3 589.9,347.4 591.9,347.4 593.9,347.5 595.9,347.5 597.9,347.6 599.9,347.6 601.9,347.6 603.9,347.7 606.0,347.7 608.0,347.8"/><polyline data-s="2" fill="none" stroke="var(--m)" stroke-width="2.8" stroke-linejoin="round" points="6.0,16.7 8.0,27.6 10.0,38.2 12.0,48.4 14.0,58.3 16.1,67.8 18.1,77.1 20.1,86.0 22.1,94.7 24.1,103.1 26.1,111.2 28.1,119.0 30.1,126.6 32.1,133.9 34.1,141.0 36.1,147.8 38.1,154.5 40.1,160.9 42.1,167.1 44.1,173.1 46.1,178.9 48.2,184.5 50.2,189.9 52.2,195.1 54.2,200.2 56.2,205.1 58.2,209.9 60.2,214.5 62.2,218.9 64.2,223.2 66.2,227.4 68.2,231.4 70.2,235.3 72.2,239.0 74.2,242.7 76.2,246.2 78.3,249.6 80.3,252.9 82.3,256.1 84.3,259.2 86.3,262.1 88.3,265.0 90.3,267.8 92.3,270.5 94.3,273.1 96.3,275.6 98.3,278.1 100.3,280.4 102.3,282.7 104.3,284.9 106.3,287.0 108.3,289.1 110.4,291.1 112.4,293.0 114.4,294.9 116.4,296.7 118.4,298.5 120.4,300.1 122.4,301.8 124.4,303.4 126.4,304.9 128.4,306.4 130.4,307.8 132.4,309.2 134.4,310.5 136.4,311.8 138.4,313.1 140.5,314.3 142.5,315.4 144.5,316.6 146.5,317.7 148.5,318.7 150.5,319.8 152.5,320.8 154.5,321.7 156.5,322.6 158.5,323.5 160.5,324.4 162.5,325.2 164.5,326.1 166.5,326.8 168.5,327.6 170.6,328.3 172.6,329.0 174.6,329.7 176.6,330.4 178.6,331.0 180.6,331.7 182.6,332.3 184.6,332.8 186.6,333.4 188.6,333.9 190.6,334.5 192.6,335.0 194.6,335.5 196.6,336.0 198.6,336.4 200.6,336.9 202.7,337.3 204.7,337.7 206.7,338.1 208.7,338.5 210.7,338.9 212.7,339.2 214.7,339.6 216.7,339.9 218.7,340.3 220.7,340.6 222.7,340.9 224.7,341.2 226.7,341.5 228.7,341.8 230.7,342.0 232.8,342.3 234.8,342.5 236.8,342.8 238.8,343.0 240.8,343.3 242.8,343.5 244.8,343.7 246.8,343.9 248.8,344.1 250.8,344.3 252.8,344.5 254.8,344.7 256.8,344.8 258.8,345.0 260.8,345.2 262.8,345.3 264.9,345.5 266.9,345.6 268.9,345.8 270.9,345.9 272.9,346.0 274.9,346.2 276.9,346.3 278.9,346.4 280.9,346.5 282.9,346.6 284.9,346.8 286.9,346.9 288.9,347.0 290.9,347.1 292.9,347.2 295.0,347.3 297.0,347.3 299.0,347.4 301.0,347.5 303.0,347.6 305.0,347.7 307.0,347.8 309.0,347.8 311.0,347.9 313.0,348.0 315.0,348.0 317.0,348.1 319.0,348.2 321.0,348.2 323.0,348.3 325.0,348.3 327.1,348.4 329.1,348.4 331.1,348.5 333.1,348.5 335.1,348.6 337.1,348.6 339.1,348.7 341.1,348.7 343.1,348.8 345.1,348.8 347.1,348.8 349.1,348.9 351.1,348.9 353.1,349.0 355.1,349.0 357.2,349.0 359.2,349.1 361.2,349.1 363.2,349.1 365.2,349.1 367.2,349.2 369.2,349.2 371.2,349.2 373.2,349.3 375.2,349.3 377.2,349.3 379.2,349.3 381.2,349.3 383.2,349.4 385.2,349.4 387.2,349.4 389.3,349.4 391.3,349.4 393.3,349.5 395.3,349.5 397.3,349.5 399.3,349.5 401.3,349.5 403.3,349.5 405.3,349.6 407.3,349.6 409.3,349.6 411.3,349.6 413.3,349.6 415.3,349.6 417.3,349.6 419.4,349.7 421.4,349.7 423.4,349.7 425.4,349.7 427.4,349.7 429.4,349.7 431.4,349.7 433.4,349.7 435.4,349.7 437.4,349.7 439.4,349.8 441.4,349.8 443.4,349.8 445.4,349.8 447.4,349.8 449.4,349.8 451.5,349.8 453.5,349.8 455.5,349.8 457.5,349.8 459.5,349.8 461.5,349.8 463.5,349.8 465.5,349.8 467.5,349.8 469.5,349.8 471.5,349.9 473.5,349.9 475.5,349.9 477.5,349.9 479.5,349.9 481.6,349.9 483.6,349.9 485.6,349.9 487.6,349.9 489.6,349.9 491.6,349.9 493.6,349.9 495.6,349.9 497.6,349.9 499.6,349.9 501.6,349.9 503.6,349.9 505.6,349.9 507.6,349.9 509.6,349.9 511.7,349.9 513.7,349.9 515.7,349.9 517.7,349.9 519.7,349.9 521.7,349.9 523.7,349.9 525.7,349.9 527.7,349.9 529.7,349.9 531.7,349.9 533.7,349.9 535.7,349.9 537.7,350.0 539.7,350.0 541.7,350.0 543.8,350.0 545.8,350.0 547.8,350.0 549.8,350.0 551.8,350.0 553.8,350.0 555.8,350.0 557.8,350.0 559.8,350.0 561.8,350.0 563.8,350.0 565.8,350.0 567.8,350.0 569.8,350.0 571.8,350.0 573.9,350.0 575.9,350.0 577.9,350.0 579.9,350.0 581.9,350.0 583.9,350.0 585.9,350.0 587.9,350.0 589.9,350.0 591.9,350.0 593.9,350.0 595.9,350.0 597.9,350.0 599.9,350.0 601.9,350.0 603.9,350.0 606.0,350.0 608.0,350.0"/><polyline data-s="3" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="6.0,16.7 8.0,19.4 10.0,22.2 12.0,24.9 14.0,27.6 16.1,30.3 18.1,32.9 20.1,35.6 22.1,38.2 24.1,40.8 26.1,43.3 28.1,45.9 30.1,48.4 32.1,50.9 34.1,53.4 36.1,55.8 38.1,58.3 40.1,60.7 42.1,63.1 44.1,65.5 46.1,67.8 48.2,70.2 50.2,72.5 52.2,74.8 54.2,77.1 56.2,79.4 58.2,81.6 60.2,83.8 62.2,86.0 64.2,88.2 66.2,90.4 68.2,92.6 70.2,94.7 72.2,96.8 74.2,98.9 76.2,101.0 78.3,103.1 80.3,105.1 82.3,107.1 84.3,109.2 86.3,111.2 88.3,113.1 90.3,115.1 92.3,117.1 94.3,119.0 96.3,120.9 98.3,122.8 100.3,124.7 102.3,126.6 104.3,128.4 106.3,130.3 108.3,132.1 110.4,133.9 112.4,135.7 114.4,137.5 116.4,139.2 118.4,141.0 120.4,142.7 122.4,144.4 124.4,146.1 126.4,147.8 128.4,149.5 130.4,151.2 132.4,152.8 134.4,154.5 136.4,156.1 138.4,157.7 140.5,159.3 142.5,160.9 144.5,162.4 146.5,164.0 148.5,165.5 150.5,167.1 152.5,168.6 154.5,170.1 156.5,171.6 158.5,173.1 160.5,174.5 162.5,176.0 164.5,177.4 166.5,178.9 168.5,180.3 170.6,181.7 172.6,183.1 174.6,184.5 176.6,185.8 178.6,187.2 180.6,188.6 182.6,189.9 184.6,191.2 186.6,192.5 188.6,193.9 190.6,195.1 192.6,196.4 194.6,197.7 196.6,199.0 198.6,200.2 200.6,201.5 202.7,202.7 204.7,203.9 206.7,205.1 208.7,206.3 210.7,207.5 212.7,208.7 214.7,209.9 216.7,211.0 218.7,212.2 220.7,213.3 222.7,214.5 224.7,215.6 226.7,216.7 228.7,217.8 230.7,218.9 232.8,220.0 234.8,221.1 236.8,222.2 238.8,223.2 240.8,224.3 242.8,225.3 244.8,226.3 246.8,227.4 248.8,228.4 250.8,229.4 252.8,230.4 254.8,231.4 256.8,232.4 258.8,233.4 260.8,234.3 262.8,235.3 264.9,236.2 266.9,237.2 268.9,238.1 270.9,239.0 272.9,240.0 274.9,240.9 276.9,241.8 278.9,242.7 280.9,243.6 282.9,244.5 284.9,245.3 286.9,246.2 288.9,247.1 290.9,247.9 292.9,248.8 295.0,249.6 297.0,250.4 299.0,251.3 301.0,252.1 303.0,252.9 305.0,253.7 307.0,254.5 309.0,255.3 311.0,256.1 313.0,256.9 315.0,257.6 317.0,258.4 319.0,259.2 321.0,259.9 323.0,260.7 325.0,261.4 327.1,262.1 329.1,262.9 331.1,263.6 333.1,264.3 335.1,265.0 337.1,265.7 339.1,266.4 341.1,267.1 343.1,267.8 345.1,268.5 347.1,269.2 349.1,269.8 351.1,270.5 353.1,271.2 355.1,271.8 357.2,272.5 359.2,273.1 361.2,273.7 363.2,274.4 365.2,275.0 367.2,275.6 369.2,276.2 371.2,276.9 373.2,277.5 375.2,278.1 377.2,278.7 379.2,279.3 381.2,279.8 383.2,280.4 385.2,281.0 387.2,281.6 389.3,282.1 391.3,282.7 393.3,283.3 395.3,283.8 397.3,284.4 399.3,284.9 401.3,285.4 403.3,286.0 405.3,286.5 407.3,287.0 409.3,287.6 411.3,288.1 413.3,288.6 415.3,289.1 417.3,289.6 419.4,290.1 421.4,290.6 423.4,291.1 425.4,291.6 427.4,292.1 429.4,292.6 431.4,293.0 433.4,293.5 435.4,294.0 437.4,294.4 439.4,294.9 441.4,295.4 443.4,295.8 445.4,296.3 447.4,296.7 449.4,297.1 451.5,297.6 453.5,298.0 455.5,298.5 457.5,298.9 459.5,299.3 461.5,299.7 463.5,300.1 465.5,300.6 467.5,301.0 469.5,301.4 471.5,301.8 473.5,302.2 475.5,302.6 477.5,303.0 479.5,303.4 481.6,303.7 483.6,304.1 485.6,304.5 487.6,304.9 489.6,305.3 491.6,305.6 493.6,306.0 495.6,306.4 497.6,306.7 499.6,307.1 501.6,307.4 503.6,307.8 505.6,308.1 507.6,308.5 509.6,308.8 511.7,309.2 513.7,309.5 515.7,309.9 517.7,310.2 519.7,310.5 521.7,310.8 523.7,311.2 525.7,311.5 527.7,311.8 529.7,312.1 531.7,312.4 533.7,312.8 535.7,313.1 537.7,313.4 539.7,313.7 541.7,314.0 543.8,314.3 545.8,314.6 547.8,314.9 549.8,315.2 551.8,315.4 553.8,315.7 555.8,316.0 557.8,316.3 559.8,316.6 561.8,316.9 563.8,317.1 565.8,317.4 567.8,317.7 569.8,317.9 571.8,318.2 573.9,318.5 575.9,318.7 577.9,319.0 579.9,319.3 581.9,319.5 583.9,319.8 585.9,320.0 587.9,320.3 589.9,320.5 591.9,320.8 593.9,321.0 595.9,321.2 597.9,321.5 599.9,321.7 601.9,321.9 603.9,322.2 606.0,322.4 608.0,322.6"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="8">
+  <p class="h" data-s="0">When does &#8466;{<i>f</i>} exist?</p>
+  <p class="e" data-s="1"><span class="bw">Theorem 6.1.2</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Two conditions on <i>f</i></p>
+      <p class="l" data-s="2"><span class="g">Piecewise continuous</span>: only finitely many jumps on any finite interval.</p>
+      <p class="l" data-s="3"><span class="g">Exponential order</span>: |<i>f</i>(<i>t</i>)| &le; <i>K</i><b>e</b><sup><i>at</i></sup> for large <i>t</i>.</p>
+      <p class="e" data-s="4"><span class="bx">Then &#8466;{<i>f</i>} exists for <i>s</i> &gt; <i>a</i>.</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">In plain words</p>
+      <p class="l" data-s="5"><i>f</i> may jump, but it may not grow faster than some exponential.</p>
+      <p class="l" data-s="6">Then <b>e</b><sup>&minus;<i>st</i></sup> with <i>s</i> &gt; <i>a</i> wins, and the area is finite.</p>
+      <p class="e t" data-s="7">1, <i>t</i><sup>5</sup>, <b>e</b><sup>4<i>t</i></sup>, sin <i>t</i>:&nbsp; all fine</p>
+      <p class="e t" data-s="8"><b>e</b><sup><i>t</i><sup>2</sup></sup>:&nbsp; grows too fast, no transform</p>
+      <p class="a" data-s="9">&#8627; the first transforms, straight from the definition.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="9">
+  <p class="h" data-s="0">Example 3 &mdash; &#8466;{1} and &#8466;{<b>e</b><sup><i>at</i></sup>}</p>
+  <p class="e" data-s="1"><span class="bw"><i>F</i>(<i>s</i>) = &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup><i>f</i>(<i>t</i>)&thinsp;<i>dt</i></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2"><i>f</i> = 1</p>
+      <p class="e t" data-s="2">&#8466;{1} = &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup><i>dt</i></p>
+      <p class="e t" data-s="3">Example 1 with <i>c</i> = &minus;<i>s</i>:&nbsp; converges when &minus;<i>s</i> &lt; 0</p>
+      <p class="e" data-s="4"><span class="bx">&#8466;{1} = <span class="fr"><span>1</span><span><i>s</i></span></span>,&nbsp;&nbsp; <i>s</i> &gt; 0</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5"><i>f</i> = <b>e</b><sup><i>at</i></sup></p>
+      <p class="e t" data-s="5">&#8466;{<b>e</b><sup><i>at</i></sup>} = &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup><b>e</b><sup><i>at</i></sup><i>dt</i> = &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>(<i>a</i> &minus; <i>s</i>)<i>t</i></sup><i>dt</i></p>
+      <p class="e t" data-s="6">Example 1 with <i>c</i> = <i>a</i> &minus; <i>s</i>:&nbsp; converges when <i>a</i> &minus; <i>s</i> &lt; 0</p>
+      <p class="e" data-s="7"><span class="bx">&#8466;{<b>e</b><sup><i>at</i></sup>} = <span class="fr"><span>1</span><span><i>s</i> &minus; <i>a</i></span></span>,&nbsp;&nbsp; <i>s</i> &gt; <i>a</i></span></p>
+      <p class="l" data-s="8">Check: <i>a</i> = 0 gives &#8466;{1} = 1/<i>s</i> again.</p>
+      <p class="a" data-s="9">&#8627; a function that switches off.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="10">
+  <p class="h" data-s="0">Example 4 &mdash; a function that switches off</p>
+  <p class="e" data-s="1"><span class="bw"><i>f</i>(<i>t</i>) = 1 for 0 &le; <i>t</i> &lt; 2,&nbsp;&nbsp; <i>f</i>(<i>t</i>) = 0 for <i>t</i> &ge; 2</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Split the integral</p>
+      <p class="e t" data-s="2">&#8466;{<i>f</i>} = &int;<sub>0</sub><sup>2</sup><b>e</b><sup>&minus;<i>st</i></sup>&middot;1&thinsp;<i>dt</i> + &int;<sub>2</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup>&middot;0&thinsp;<i>dt</i></p>
+      <p class="e t" data-s="3">= &minus;<span class="fr"><span>1</span><span><i>s</i></span></span><b>e</b><sup>&minus;<i>st</i></sup>|<sub>0</sub><sup>2</sup> = &minus;<span class="fr"><span>1</span><span><i>s</i></span></span>(<b>e</b><sup>&minus;2<i>s</i></sup> &minus; 1)</p>
+      <p class="e" data-s="4"><span class="bx">&#8466;{<i>f</i>} = <span class="fr"><span>1 &minus; <b>e</b><sup>&minus;2<i>s</i></sup></span><span><i>s</i></span></span>,&nbsp;&nbsp; <i>s</i> &gt; 0</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">In plain words</p>
+      <p class="l" data-s="5">Where <i>f</i> is 0, it adds nothing. We only integrate where <i>f</i> is on.</p>
+      <p class="l" data-s="6">This is a forcing that switches off at <i>t</i> = 2. Chapter 3 could not handle it; the transform can.</p>
+      <p class="l" data-s="7"><span class="d">The value of <i>f</i> at the single point <i>t</i> = 2 does not change the integral.</span></p>
+      <p class="a" data-s="8">&#8627; your turn.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="11">
+  <p class="h" data-s="0">Your turn &mdash; from the definition</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;3<i>t</i></sup><i>dt</i></p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; &#8466;{<b>e</b><sup>&minus;3<i>t</i></sup>}, and for which <i>s</i>?</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; &#8466;{<i>f</i>},&nbsp; <i>f</i> = 3 for 0 &le; <i>t</i> &lt; 5,&nbsp; <i>f</i> = 0 for <i>t</i> &ge; 5</p>
+      <p class="e" data-s="3"><span class="bx">6 minutes. Replace &infin; by <i>A</i> first. Do 1 first.</span></p>
+      <p class="l" data-s="3"><span class="g">Bonus:</span> &#8466;{4} from the definition.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="4"><span class="g">1.</span>&nbsp; <span style="white-space:nowrap">lim<sub><i>A</i>&rarr;&infin;</sub></span> <span class="fr"><span>1</span><span>3</span></span>(1 &minus; <b>e</b><sup>&minus;3<i>A</i></sup>) = <span class="v"><span class="fr"><span>1</span><span>3</span></span></span></p>
+      <p class="e t" data-s="5"><span class="g">2.</span>&nbsp; &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;(<i>s</i> + 3)<i>t</i></sup><i>dt</i> = <span class="v"><span class="fr"><span>1</span><span><i>s</i> + 3</span></span>, <i>s</i> &gt; &minus;3</span></p>
+      <p class="e t" data-s="6"><span class="g">3.</span>&nbsp; 3&int;<sub>0</sub><sup>5</sup><b>e</b><sup>&minus;<i>st</i></sup><i>dt</i> = <span class="v"><span class="fr"><span>3(1 &minus; <b>e</b><sup>&minus;5<i>s</i></sup>)</span><span><i>s</i></span></span></span></p>
+      <p class="e t" data-s="7"><span class="g">bonus.</span>&nbsp; &#8466;{4} = <span class="fr"><span>4</span><span><i>s</i></span></span>,&nbsp; <i>s</i> &gt; 0</p>
+      <p class="a" data-s="8">&#8627; number 2: <i>a</i> = &minus;3, so the condition is <i>s</i> &gt; &minus;3.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="12">
+  <p class="h" data-s="0">Example 5 &mdash; &#8466;{<i>t</i>}, by parts</p>
+  <p class="e" data-s="1"><span class="bw">&#8466;{<i>t</i>} = &int;<sub>0</sub><sup>&infin;</sup><i>t</i><b>e</b><sup>&minus;<i>st</i></sup><i>dt</i>,&nbsp;&nbsp; <i>s</i> &gt; 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">By parts: <i>u</i> = <i>t</i>, <i>dv</i> = <b>e</b><sup>&minus;<i>st</i></sup><i>dt</i></p>
+      <p class="e t" data-s="2"><i>du</i> = <i>dt</i>,&nbsp;&nbsp; <i>v</i> = &minus;<span class="fr"><span>1</span><span><i>s</i></span></span><b>e</b><sup>&minus;<i>st</i></sup></p>
+      <p class="e t" data-s="3">&int;<sub>0</sub><sup><i>A</i></sup><i>t</i><b>e</b><sup>&minus;<i>st</i></sup><i>dt</i> = &minus;<span class="fr"><span><i>t</i></span><span><i>s</i></span></span><b>e</b><sup>&minus;<i>st</i></sup>|<sub>0</sub><sup><i>A</i></sup> + <span class="fr"><span>1</span><span><i>s</i></span></span>&int;<sub>0</sub><sup><i>A</i></sup><b>e</b><sup>&minus;<i>st</i></sup><i>dt</i></p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Let <i>A</i> &rarr; &infin;</p>
+      <p class="e t" data-s="4">&minus;<span class="fr"><span><i>A</i></span><span><i>s</i></span></span><b>e</b><sup>&minus;<i>sA</i></sup> &rarr; 0&nbsp;&nbsp;<span class="d">the opening, number 3</span></p>
+      <p class="e t" data-s="5"><span class="fr"><span>1</span><span><i>s</i></span></span>&int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup><i>dt</i> = <span class="fr"><span>1</span><span><i>s</i></span></span>&middot;<span class="fr"><span>1</span><span><i>s</i></span></span></p>
+      <p class="e" data-s="6"><span class="bx">&#8466;{<i>t</i>} = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span>,&nbsp;&nbsp; <i>s</i> &gt; 0</span></p>
+      <p class="a" data-s="7">&#8627; the same idea once more: <i>t</i><sup>2</sup>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="13">
+  <p class="h" data-s="0">Example 6 &mdash; &#8466;{<i>t</i><sup>2</sup>}</p>
+  <p class="e" data-s="1"><span class="bw">&#8466;{<i>t</i><sup>2</sup>} = &int;<sub>0</sub><sup>&infin;</sup><i>t</i><sup>2</sup><b>e</b><sup>&minus;<i>st</i></sup><i>dt</i>,&nbsp;&nbsp; <i>s</i> &gt; 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">By parts: <i>u</i> = <i>t</i><sup>2</sup>, <i>dv</i> = <b>e</b><sup>&minus;<i>st</i></sup><i>dt</i></p>
+      <p class="e t" data-s="2">= [&minus;<span class="fr"><span><i>t</i><sup>2</sup></span><span><i>s</i></span></span><b>e</b><sup>&minus;<i>st</i></sup>]<sub>0</sub><sup>&infin;</sup> + <span class="fr"><span>2</span><span><i>s</i></span></span>&int;<sub>0</sub><sup>&infin;</sup><i>t</i><b>e</b><sup>&minus;<i>st</i></sup><i>dt</i></p>
+      <p class="e t" data-s="3">the bracket is 0 &minus; 0;&nbsp; the integral is &#8466;{<i>t</i>} = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span></p>
+    </div>
+    <div>
+      <p class="e" data-s="4"><span class="bx">&#8466;{<i>t</i><sup>2</sup>} = <span class="fr"><span>2</span><span><i>s</i></span></span>&middot;<span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span> = <span class="fr"><span>2</span><span><i>s</i><sup>3</sup></span></span></span></p>
+      <p class="l" data-s="5">In plain words: each power of <i>t</i> costs one more integration by parts, and reuses the one before.</p>
+      <p class="l" data-s="6"><span class="d">The pattern: &#8466;{<i>t</i><sup><i>n</i></sup>} = <i>n</i>!/<i>s</i><sup><i>n</i>+1</sup>. It is in the table on Wednesday.</span></p>
+      <p class="a" data-s="7">&#8627; a sine: by parts twice.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="14">
+  <p class="h" data-s="0">Example 7 &mdash; &#8466;{sin <i>at</i>}</p>
+  <p class="e" data-s="1"><span class="bw"><i>F</i>(<i>s</i>) = &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup> sin <i>at</i>&thinsp;<i>dt</i>,&nbsp;&nbsp; <i>s</i> &gt; 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">By parts: <i>u</i> = sin <i>at</i>, <i>dv</i> = <b>e</b><sup>&minus;<i>st</i></sup><i>dt</i></p>
+      <p class="e t" data-s="2"><i>F</i> = [&minus;<span class="fr"><span>1</span><span><i>s</i></span></span><b>e</b><sup>&minus;<i>st</i></sup> sin <i>at</i>]<sub>0</sub><sup>&infin;</sup> + <span class="fr"><span><i>a</i></span><span><i>s</i></span></span>&int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup> cos <i>at</i>&thinsp;<i>dt</i></p>
+      <p class="e t" data-s="3">the bracket is 0 &minus; 0 = 0</p>
+      <p class="lb" data-s="4">By parts again: <i>u</i> = cos <i>at</i></p>
+      <p class="e t" data-s="4">&int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup> cos <i>at</i>&thinsp;<i>dt</i> = <span class="fr"><span>1</span><span><i>s</i></span></span> &minus; <span class="fr"><span><i>a</i></span><span><i>s</i></span></span><i>F</i></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">So <i>F</i> appears on both sides</p>
+      <p class="e t" data-s="5"><i>F</i> = <span class="fr"><span><i>a</i></span><span><i>s</i></span></span>(<span class="fr"><span>1</span><span><i>s</i></span></span> &minus; <span class="fr"><span><i>a</i></span><span><i>s</i></span></span><i>F</i>) = <span class="fr"><span><i>a</i></span><span><i>s</i><sup>2</sup></span></span> &minus; <span class="fr"><span><i>a</i><sup>2</sup></span><span><i>s</i><sup>2</sup></span></span><i>F</i></p>
+      <p class="e t" data-s="6">(1 + <span class="fr"><span><i>a</i><sup>2</sup></span><span><i>s</i><sup>2</sup></span></span>)<i>F</i> = <span class="fr"><span><i>a</i></span><span><i>s</i><sup>2</sup></span></span>&nbsp; &rArr;&nbsp; (<i>s</i><sup>2</sup> + <i>a</i><sup>2</sup>)<i>F</i> = <i>a</i></p>
+      <p class="e" data-s="7"><span class="bx">&#8466;{sin <i>at</i>} = <span class="fr"><span><i>a</i></span><span><i>s</i><sup>2</sup> + <i>a</i><sup>2</sup></span></span>,&nbsp;&nbsp; <i>s</i> &gt; 0</span></p>
+      <p class="l" data-s="8">In plain words: integrating by parts twice brings <i>F</i> back, and we solve for it like an equation.</p>
+      <p class="a" data-s="9">&#8627; cosine, using what we just found.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="15">
+  <p class="h" data-s="0">Example 8 &mdash; &#8466;{cos <i>at</i>}</p>
+  <p class="e" data-s="1"><span class="bw">&#8466;{cos <i>at</i>} = &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup> cos <i>at</i>&thinsp;<i>dt</i>,&nbsp;&nbsp; <i>s</i> &gt; 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">By parts: <i>u</i> = cos <i>at</i></p>
+      <p class="e t" data-s="2">= [&minus;<span class="fr"><span>1</span><span><i>s</i></span></span><b>e</b><sup>&minus;<i>st</i></sup> cos <i>at</i>]<sub>0</sub><sup>&infin;</sup> &minus; <span class="fr"><span><i>a</i></span><span><i>s</i></span></span>&int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup> sin <i>at</i>&thinsp;<i>dt</i></p>
+      <p class="e t" data-s="3">the bracket is 0 &minus; (&minus;<span class="fr"><span>1</span><span><i>s</i></span></span>) = <span class="fr"><span>1</span><span><i>s</i></span></span>;&nbsp;&nbsp; cos 0 = 1</p>
+    </div>
+    <div>
+      <p class="e t" data-s="4">= <span class="fr"><span>1</span><span><i>s</i></span></span> &minus; <span class="fr"><span><i>a</i></span><span><i>s</i></span></span>&middot;<span class="fr"><span><i>a</i></span><span><i>s</i><sup>2</sup> + <i>a</i><sup>2</sup></span></span> = <span class="fr"><span><i>s</i><sup>2</sup> + <i>a</i><sup>2</sup> &minus; <i>a</i><sup>2</sup></span><span><i>s</i>(<i>s</i><sup>2</sup> + <i>a</i><sup>2</sup>)</span></span></p>
+      <p class="e" data-s="5"><span class="bx">&#8466;{cos <i>at</i>} = <span class="fr"><span><i>s</i></span><span><i>s</i><sup>2</sup> + <i>a</i><sup>2</sup></span></span></span></p>
+      <p class="l" data-s="6">Sine has <i>a</i> on top; cosine has <i>s</i> on top. The bottom is the same.</p>
+      <p class="a" data-s="7">&#8627; adding transforms.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="16">
+  <p class="h" data-s="0">Linearity</p>
+  <p class="e" data-s="1"><span class="bw">&#8466;{<i>c</i><sub>1</sub><i>f</i><sub>1</sub> + <i>c</i><sub>2</sub><i>f</i><sub>2</sub>} = <i>c</i><sub>1</sub>&#8466;{<i>f</i><sub>1</sub>} + <i>c</i><sub>2</sub>&#8466;{<i>f</i><sub>2</sub>}</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Why</p>
+      <p class="e t" data-s="2">&int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup>(<i>c</i><sub>1</sub><i>f</i><sub>1</sub> + <i>c</i><sub>2</sub><i>f</i><sub>2</sub>)<i>dt</i> = <i>c</i><sub>1</sub>&int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup><i>f</i><sub>1</sub><i>dt</i> + <i>c</i><sub>2</sub>&int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup><i>f</i><sub>2</sub><i>dt</i></p>
+      <p class="l" data-s="3">The integral of a sum is the sum of the integrals; constants come out.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">In plain words</p>
+      <p class="l" data-s="4">Split a sum into pieces, transform each piece, and keep the constants in front.</p>
+      <p class="e" data-s="5"><span class="bx">But &#8466;{<i>f</i><i>g</i>} is <span class="n">not</span> &#8466;{<i>f</i>}&#8466;{<i>g</i>}.</span></p>
+      <p class="e t" data-s="6">&#8466;{1&middot;1} = <span class="fr"><span>1</span><span><i>s</i></span></span>,&nbsp; but&nbsp; &#8466;{1}&#8466;{1} = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span></p>
+      <p class="a" data-s="7">&#8627; an example.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="17">
+  <p class="h" data-s="0">Example 9 &mdash; a combination</p>
+  <p class="e" data-s="1"><span class="bw">&#8466;{5<b>e</b><sup>&minus;2<i>t</i></sup> &minus; 3 sin 4<i>t</i>}</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Linearity</p>
+      <p class="e t" data-s="2">= 5&#8466;{<b>e</b><sup>&minus;2<i>t</i></sup>} &minus; 3&#8466;{sin 4<i>t</i>}</p>
+      <p class="lb" data-s="3">Example 3 with <i>a</i> = &minus;2; Example 7 with <i>a</i> = 4</p>
+      <p class="e t" data-s="3">= 5&middot;<span class="fr"><span>1</span><span><i>s</i> + 2</span></span> &minus; 3&middot;<span class="fr"><span>4</span><span><i>s</i><sup>2</sup> + 16</span></span></p>
+    </div>
+    <div>
+      <p class="e" data-s="4"><span class="bx">= <span class="fr"><span>5</span><span><i>s</i> + 2</span></span> &minus; <span class="fr"><span>12</span><span><i>s</i><sup>2</sup> + 16</span></span>,&nbsp;&nbsp; <i>s</i> &gt; 0</span></p>
+      <p class="l" data-s="5">Why <i>s</i> &gt; 0: the first piece needs <i>s</i> &gt; &minus;2, the second <i>s</i> &gt; 0. Both must hold.</p>
+      <p class="l" data-s="6">No new integrals: the table and linearity did all the work.</p>
+      <p class="a" data-s="7">&#8627; a mistake that is easy to make.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="18">
+  <p class="h" data-s="0">Find the mistake</p>
+  <p class="e" data-s="1"><span class="bw">&#8466;{3<b>e</b><sup>&minus;4<i>t</i></sup>}</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">A student&#8217;s work</p>
+      <p class="e t" data-s="2">&#8466;{3<b>e</b><sup>&minus;4<i>t</i></sup>} = <span class="fr"><span>3</span><span><i>s</i> &minus; 4</span></span>,&nbsp;&nbsp; <i>s</i> &gt; 4</p>
+      <p class="l" data-s="3">&ldquo;The table says 1/(<i>s</i> &minus; <i>a</i>), and I see a 4.&rdquo;</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">The mistake</p>
+      <p class="l" data-s="4">Here <i>a</i> = &minus;4, so <i>s</i> &minus; <i>a</i> = <i>s</i> + 4.</p>
+      <p class="e" data-s="5"><span class="bx">&#8466;{3<b>e</b><sup>&minus;4<i>t</i></sup>} = <span class="fr"><span>3</span><span><i>s</i> + 4</span></span>,&nbsp;&nbsp; <i>s</i> &gt; &minus;4</span></p>
+      <p class="l" data-s="6">In plain words: read <i>a</i> with its sign, from the exponent <b>e</b><sup><i>at</i></sup>.</p>
+      <p class="a" data-s="7">&#8627; quick ones from the table.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="19">
+  <p class="h" data-s="0">Call it out &mdash; the transform</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; &#8466;{<b>e</b><sup>5<i>t</i></sup>}</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; &#8466;{7}</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; &#8466;{sin 3<i>t</i>}</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; &#8466;{2<i>t</i>}</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; &#8466;{<b>e</b><sup>&minus;<i>t</i></sup> + 4}</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="fr"><span>1</span><span><i>s</i> &minus; 5</span></span>,&nbsp; <i>s</i> &gt; 5</p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="fr"><span>7</span><span><i>s</i></span></span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="fr"><span>3</span><span><i>s</i><sup>2</sup> + 9</span></span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="fr"><span>2</span><span><i>s</i><sup>2</sup></span></span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <span class="fr"><span>1</span><span><i>s</i> + 1</span></span> + <span class="fr"><span>4</span><span><i>s</i></span></span></p>
+      <p class="a" data-s="11">&#8627; number 5: linearity, piece by piece.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="20">
+  <p class="h" data-s="0">True or false?</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>2<i>t</i></sup><i>dt</i> converges.</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; &#8466;{<b>e</b><sup><i>at</i></sup>} exists for every <i>s</i>.</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; &#8466;{<i>f</i> + <i>g</i>} = &#8466;{<i>f</i>} + &#8466;{<i>g</i>}.</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; &#8466;{<i>f</i><i>g</i>} = &#8466;{<i>f</i>}&middot;&#8466;{<i>g</i>}.</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; Changing <i>f</i> at one point does not change &#8466;{<i>f</i>}.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d"><i>c</i> = 2 &gt; 0</span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d">only for <i>s</i> &gt; <i>a</i></span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="v">true</span>&nbsp;&nbsp;<span class="d">linearity</span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d"><i>f</i> = <i>g</i> = 1</span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <span class="v">true</span>&nbsp;&nbsp;<span class="d">one point has no area</span></p>
+      <p class="a" data-s="11">&#8627; number 4: the transform of a product is not the product of transforms.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="21">
+  <p class="h" data-s="0">The card &mdash; the Laplace transform</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1">&#8466;{<i>f</i>} = <i>F</i>(<i>s</i>) = &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup><i>f</i>(<i>t</i>)&thinsp;<i>dt</i></p>
+      <p class="l" data-s="2">Improper integral: replace &infin; by <i>A</i>, integrate, let <i>A</i> &rarr; &infin;.</p>
+      <p class="l" data-s="3">Exists for <i>s</i> &gt; <i>a</i> when <i>f</i> is piecewise continuous and of exponential order <i>a</i>.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">The table so far</p>
+      <p class="e t" data-s="4">&#8466;{1} = <span class="fr"><span>1</span><span><i>s</i></span></span>,&nbsp;&nbsp; &#8466;{<b>e</b><sup><i>at</i></sup>} = <span class="fr"><span>1</span><span><i>s</i> &minus; <i>a</i></span></span></p>
+      <p class="e t" data-s="5">&#8466;{<i>t</i>} = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span>,&nbsp;&nbsp; &#8466;{<i>t</i><sup>2</sup>} = <span class="fr"><span>2</span><span><i>s</i><sup>3</sup></span></span></p>
+      <p class="e t" data-s="5">&#8466;{sin <i>at</i>} = <span class="fr"><span><i>a</i></span><span><i>s</i><sup>2</sup> + <i>a</i><sup>2</sup></span></span>,&nbsp;&nbsp; &#8466;{cos <i>at</i>} = <span class="fr"><span><i>s</i></span><span><i>s</i><sup>2</sup> + <i>a</i><sup>2</sup></span></span></p>
+      <p class="e" data-s="6"><span class="bx">Linear: split sums, keep constants. Never split products.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="22">
+  <p class="h" data-s="0">This week</p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="1"><span class="v">Quiz 2</span>: <span class="v">Wed Oct 28</span>, first 15 minutes. &sect;3.2, 3.4, 3.5.</p>
+      <p class="l" data-s="2">After the quiz, &sect;6.1 continued: more of the table, and the transform of a derivative.</p>
+      <p class="l" data-s="3"><span class="g">HW6</span> (&sect;3.4, &sect;3.5) is due <span class="v">Fri Oct 30</span>, 11:59 pm.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Before Wednesday</p>
+      <p class="l" data-s="4">Review for Quiz 2: the Oct 23 notes and HW6.</p>
+      <p class="e" data-s="5"><span class="bx">Questions: office hours, the Carmen discussion board, or email.</span></p>
+    </div>
+  </div>
+</div>
+
+<canvas id="ink"></canvas>
+<canvas id="wet"></canvas>
+<div id="edge"></div>
+
+<div id="hint">
+  <b>Math 2255 &mdash; Lecture 1</b><br><br>
+  <kbd>&#9654;</kbd> buttons (top right and bottom), or arrow keys<br>
+  <kbd>&#9664;</kbd> goes back<br>
+  <kbd>1</kbd>&ndash;<kbd>5</kbd> pen colour &nbsp; <kbd>E</kbd> eraser &nbsp; <kbd>C</kbd> clear ink<br>
+  <kbd>F</kbd> full screen &nbsp; <kbd>T</kbd> hide toolbar &nbsp; <kbd>G</kbd> writing zones<br>
+  <kbd>R</kbd> reset timer&nbsp;&nbsp;&nbsp;<kbd>D</kbd> dark / light<br><br><span style="color:var(--dm)">Pages turn with the arrow buttons only,<br>so nothing you touch by accident moves the board.<br><br>The toolbar hides itself after a few seconds.<br>Tap the very bottom edge to bring it back.</span><br><br>
+  <span style="color:var(--dm)">Only the Apple Pencil draws.<br>
+  Your palm and fingers leave no marks.<br><br>Tap anywhere to begin.</span>
+</div>
+
+<div id="bar">
+  <span class="pen sel" data-i="0" style="background:#F0EFE8"></span>
+  <span class="pen" data-i="1" style="background:#E3E34B"></span>
+  <span class="pen" data-i="2" style="background:#45CFC2"></span>
+  <span class="pen" data-i="3" style="background:#E85CD2"></span>
+  <span class="pen" data-i="4" style="background:#F09A42"></span>
+  <button class="btn" id="th">Pen M</button>
+  <button class="btn" id="hd">HD</button>
+  <button class="btn" id="er">Erase</button>
+  <button class="btn" id="cl">Clear</button>
+  <span class="sp"></span>
+  <button class="btn nav" id="prev">&#9664;</button>
+  <span id="pos">1 / 22</span>
+  <button class="btn nav" id="next">&#9654;</button>
+  <span class="sp"></span>
+  <span id="clk">00:00</span>
+  <button class="btn" id="tm">Light</button>
+  <button class="btn" id="fs">Full</button>
+  <button class="btn" id="hp">?</button>
+</div>
+</div>
+
+<script>
+(function(){
+var pgs=[].slice.call(document.querySelectorAll('.pg'));
+var maxStep=pgs.map(function(p){
+  var m=0;[].forEach.call(p.querySelectorAll('[data-s]'),function(e){
+    m=Math.max(m,+e.getAttribute('data-s'));});return m;});
+var P=0,S=0;
+var cv=document.getElementById('ink');
+var cx=cv.getContext('2d',{desynchronized:true,alpha:true})||cv.getContext('2d');
+var strokes=pgs.map(function(){return [];});
+var DPRCAP=1.5;
+var PAL={dark: ['#F0EFE8','#E3E34B','#45CFC2','#E85CD2','#F09A42'],
+          light:['#16181B','#8F6A05','#0E7A70','#A0198A','#B4530A']};
+var theme='dark', ci=0, wid=4.2, erase=false, drawing=false, cur=null;
+function inks(){return PAL[theme];}
+var WIDS=[3.0,4.2,6.0],wi=1;
+
+function fit(){
+  var r=Math.min(window.devicePixelRatio||1,DPRCAP);
+  cv.width=Math.round(innerWidth*r);cv.height=Math.round(innerHeight*r);
+  cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+  wet.width=cv.width;wet.height=cv.height;
+  wet.style.width=innerWidth+'px';wet.style.height=innerHeight+'px';
+  wx.setTransform(r,0,0,r,0,0);wetBox=null;
+  cx.setTransform(r,0,0,r,0,0);syncRect();redraw();
+}
+function setStyle(st){
+  cx.lineCap='round';cx.lineJoin='round';
+  cx.strokeStyle=inks()[st.ci];cx.lineWidth=st.w;
+  cx.globalCompositeOperation=st.e?'destination-out':'source-over';
+}
+function strokePath(st){
+  if(st.pts.length<2)return;
+  setStyle(st);
+  cx.beginPath();cx.moveTo(st.pts[0].x,st.pts[0].y);
+  for(var i=1;i<st.pts.length;i++){
+    var a=st.pts[i-1],b=st.pts[i];
+    cx.quadraticCurveTo(a.x,a.y,(a.x+b.x)/2,(a.y+b.y)/2);
+  }
+  cx.stroke();
+}
+// full repaint only on page change / clear / resize -- never while drawing
+function redraw(){
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  strokes[P].forEach(strokePath);
+  cx.globalCompositeOperation='source-over';
+}
+function show(){
+  pgs.forEach(function(p,i){p.classList.toggle('on',i===P);});
+  [].forEach.call(pgs[P].querySelectorAll('[data-s]'),function(e){
+    var from=+e.getAttribute('data-s');
+    var u=e.getAttribute('data-until');
+    var until=(u===null||u==='')?1e9:+u;
+    var live=(S>=from && S<=until);
+    e.classList.toggle('vis', live);
+    if(u!==null&&u!=='') e.classList.toggle('gone', S>until);});
+  var pt=(P+1)+' / '+pgs.length;
+  document.getElementById('pos').textContent=pt;
+  var p2=document.getElementById('pos2'); if(p2)p2.textContent=pt;
+  redraw();
+}
+function next(){ if(S<maxStep[P]){S++;} else if(P<pgs.length-1){P++;S=0;} show(); }
+function prev(){ if(S>0){S--;} else if(P>0){P--;S=maxStep[P];} show(); }
+function pgUp(){ if(P>0){P--;S=maxStep[P];show();} }
+function pgDn(){ if(P<pgs.length-1){P++;S=maxStep[P];show();} }
+
+// ---- pencil drawing ----
+var RC={left:0,top:0};
+function syncRect(){RC=cv.getBoundingClientRect();}
+function xy(e){return {x:e.clientX-RC.left,y:e.clientY-RC.top};}
+function isPen(e){
+  if(e.pointerType==='pen')return true;
+  if(e.pointerType==='touch'&&(e.width||99)<=12&&(e.height||99)<=12)return true;
+  return false;
+}
+cv.addEventListener('pointerdown',function(e){
+  if(!isPen(e))return;
+  e.preventDefault();drawing=true;syncRect();
+  var p=xy(e),w=erase?26:wid*(0.55+0.9*(e.pressure||0.5));
+  cur={ci:ci,w:w,e:erase,pts:[p]};strokes[P].push(cur);
+  setStyle(cur);
+  cx.beginPath();cx.arc(p.x,p.y,Math.max(w,1)/2,0,6.2832);
+  cx.fillStyle=inks()[cur.ci];cx.fill();
+  cx.globalCompositeOperation='source-over';
+},{passive:false});
+var pend=[],rafId=0,MINSTEP=1.7;
+var wet=document.getElementById('wet');
+var wx=wet.getContext('2d',{desynchronized:true})||wet.getContext('2d');
+var wetBox=null;
+function clearWet(){
+  if(!wetBox)return;
+  wx.clearRect(wetBox[0]-4,wetBox[1]-4,wetBox[2]-wetBox[0]+8,wetBox[3]-wetBox[1]+8);
+  wetBox=null;
+}
+function drawPredicted(e){
+  clearWet();
+  if(!cur||!e.getPredictedEvents)return;
+  var pr=e.getPredictedEvents(); if(!pr.length)return;
+  var a=cur.pts[cur.pts.length-1];
+  var x0=a.x,y0=a.y,x1=a.x,y1=a.y;
+  wx.lineCap='round';wx.lineJoin='round';
+  wx.strokeStyle=cur.c;wx.lineWidth=cur.w;
+  wx.globalCompositeOperation=cur.e?'destination-out':'source-over';
+  wx.beginPath();wx.moveTo(a.x,a.y);
+  for(var i=0;i<pr.length;i++){
+    var p=xy(pr[i]); wx.lineTo(p.x,p.y);
+    if(p.x<x0)x0=p.x; if(p.y<y0)y0=p.y;
+    if(p.x>x1)x1=p.x; if(p.y>y1)y1=p.y;
+  }
+  wx.stroke();
+  wetBox=[x0-cur.w,y0-cur.w,x1+cur.w,y1+cur.w];
+}
+function flush(){
+  rafId=0;
+  clearWet();
+  if(!cur||!pend.length)return;
+  setStyle(cur);
+  cx.beginPath();
+  var a=cur.pts[cur.pts.length-1];
+  cx.moveTo(a.x,a.y);
+  for(var i=0;i<pend.length;i++){ cx.lineTo(pend[i].x,pend[i].y); cur.pts.push(pend[i]); }
+  cx.stroke();
+  cx.globalCompositeOperation='source-over';
+  pend.length=0;
+}
+cv.addEventListener('pointermove',function(e){
+  if(!drawing||!isPen(e))return;
+  e.preventDefault();
+  var evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];
+  var last=pend.length?pend[pend.length-1]:cur.pts[cur.pts.length-1];
+  for(var i=0;i<evs.length;i++){
+    var p=xy(evs[i]);
+    var dx=p.x-last.x, dy=p.y-last.y;
+    if(dx*dx+dy*dy < MINSTEP) continue;
+    pend.push(p); last=p;
+  }
+  if(pend.length && !rafId) rafId=requestAnimationFrame(flush);
+  drawPredicted(e);
+},{passive:false});
+function end(e){ if(e.pointerType&&!isPen(e))return;
+  if(rafId){cancelAnimationFrame(rafId);rafId=0;} flush();
+  clearWet(); drawing=false;cur=null;pend.length=0; }
+cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+
+// ---- buttons only. no tap-to-advance, no swipe. ----
+cv.addEventListener('pointerup',function(e){
+  if(isPen(e))return;
+  startClk();
+  var h=document.getElementById('hint');
+  if(!h.classList.contains('hide')) h.classList.add('hide');
+  showChrome();
+});
+
+function bindNav(id,fn){
+  var el=document.getElementById(id); if(!el)return;
+  var go=function(e){ e.preventDefault(); e.stopPropagation(); fn(); startClk(); };
+  el.addEventListener('click',go);
+  el.addEventListener('touchend',go,{passive:false});
+}
+bindNav('prev',prev); bindNav('next',next);
+bindNav('prev2',prev); bindNav('next2',next);
+
+
+// ---- toolbar ----
+[].forEach.call(document.querySelectorAll('.pen'),function(b){
+  b.onclick=function(){
+    [].forEach.call(document.querySelectorAll('.pen'),function(x){x.classList.remove('sel');});
+    b.classList.add('sel');ci=+b.getAttribute('data-i');erase=false;
+    document.getElementById('er').style.borderColor='var(--bbd)';
+  };
+});
+document.getElementById('th').onclick=function(){
+  wi=(wi+1)%3; wid=WIDS[wi];
+  this.textContent='Pen '+['S','M','L'][wi];
+};
+document.getElementById('hd').onclick=function(){
+  DPRCAP=(DPRCAP===1.5)?1:1.5;
+  this.textContent=(DPRCAP===1.5)?'HD':'Fast';
+  fit();
+};
+document.getElementById('er').onclick=function(){
+  erase=!erase;this.style.borderColor=erase?'var(--o)':'var(--bbd)';};
+document.getElementById('cl').onclick=function(){strokes[P]=[];redraw();};
+document.getElementById('hp').onclick=function(){
+  document.getElementById('hint').classList.toggle('hide');};
+function isStandalone(){
+  return window.navigator.standalone===true ||
+         (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches);
+}
+function setTheme(t){
+  theme=t;
+  document.body.classList.toggle('light', t==='light');
+  document.getElementById('tm').textContent = (t==='dark')?'Light':'Dark';
+  var sw=document.querySelectorAll('.pen');
+  for(var i=0;i<sw.length;i++) sw[i].style.background=PAL[t][i];
+  var tc=document.querySelector('meta[name="theme-color"]');
+  if(tc)tc.setAttribute('content', t==='light'?'#F2F0EA':'#0D0F10');
+  try{localStorage.setItem('m2255theme',t);}catch(e){}
+  redraw();
+}
+document.getElementById('tm').onclick=function(){ setTheme(theme==='dark'?'light':'dark'); };
+document.getElementById('fs').onclick=function(){
+  var d=document.documentElement;
+  var req=d.requestFullscreen||d.webkitRequestFullscreen;
+  if(document.fullscreenElement||document.webkitFullscreenElement){
+    (document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);
+    return;
+  }
+  if(req){ try{ req.call(d); return; }catch(err){} }
+  if(isStandalone()){ alert('Already running full screen.'); return; }
+  alert('For true full screen on iPad:\n\n'+
+        '1. Tap the Share button in Safari\n'+
+        '2. Choose "Add to Home Screen"\n'+
+        '3. Launch it from the home-screen icon\n\n'+
+        'It then opens with no address bar and no toolbars.');
+};
+if(isStandalone()){ document.getElementById('fs').textContent='FS'; }
+
+// ---- clock ----
+var t0=null,tick=null;
+function fmt(s){var m=Math.floor(s/60);return (m<10?'0':'')+m+':'+((s%60)<10?'0':'')+(s%60);}
+function startClk(){
+  if(tick)return;t0=Date.now();
+  tick=setInterval(function(){
+    var s=Math.floor((Date.now()-t0)/1000);
+    var el=document.getElementById('clk');
+    el.textContent=fmt(s);el.classList.toggle('over',s>55*60);
+  },1000);
+}
+
+// ---- keys ----
+addEventListener('keydown',function(e){
+  var k=e.key;
+  if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();next();}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev();}
+  else if(k==='ArrowDown'){e.preventDefault();pgDn();}
+  else if(k==='ArrowUp'){e.preventDefault();pgUp();}
+  else if(k>='1'&&k<='5'){document.querySelectorAll('.pen')[+k-1].click();}
+  else if(k==='e'||k==='E'){document.getElementById('er').click();}
+  else if(k==='c'||k==='C'){document.getElementById('cl').click();}
+  else if(k==='f'||k==='F'){document.getElementById('fs').click();}
+  else if(k==='t'||k==='T'){document.getElementById('bar').classList.toggle('hide');document.getElementById('topnav').classList.toggle('hide');}
+  else if(k==='g'||k==='G'){document.body.classList.toggle('guides');}
+  else if(k==='d'||k==='D'){document.getElementById('tm').click();}
+  else if(k==='r'||k==='R'){t0=Date.now();}
+  else if(k==='?'||k==='h'){document.getElementById('hp').click();}
+  if(k!=='?'&&k!=='h')startClk();
+});
+document.getElementById('hint').addEventListener('click',function(){
+  this.classList.add('hide');startClk();});
+
+// ---- auto-hiding chrome ----
+var chromeT=null;
+function showChrome(){
+  document.getElementById('bar').classList.remove('hide');
+  document.getElementById('topnav').classList.remove('hide');
+  clearTimeout(chromeT);
+  chromeT=setTimeout(hideChrome,3500);
+}
+function hideChrome(){
+  document.getElementById('bar').classList.add('hide');
+  document.getElementById('topnav').classList.add('hide');
+}
+document.getElementById('edge').addEventListener('pointerdown',function(e){
+  e.stopPropagation(); showChrome();
+});
+document.getElementById('bar').addEventListener('pointerdown',showChrome);
+document.getElementById('topnav').addEventListener('pointerdown',showChrome);
+showChrome();
+
+addEventListener('resize',function(){fit();syncRect();});
+addEventListener('orientationchange',function(){setTimeout(function(){fit();syncRect();},250);});
+addEventListener('scroll',syncRect,true);
+try{var sv=localStorage.getItem('m2255theme');}catch(e){}
+setTheme(sv==='light'?'light':'dark');
+fit();show();
+})();
+</script>
+
+</body>
+</html>
