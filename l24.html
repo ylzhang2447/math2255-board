@@ -139,12 +139,12 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
     <div>
       <p class="lb" data-s="1">Chapter 3 had limits</p>
       <p class="l" data-s="1">Undetermined coefficients works only for exponentials, polynomials, sines and cosines.</p>
-      <p class="l" data-s="2">Real forcing can switch on and off, or be a sudden kick. Guessing does not handle that.</p>
+      <p class="l" data-s="2">In applications the forcing can switch on and off, or act only for a short time. Guessing does not handle that.</p>
       <p class="lb" data-s="3">The idea of chapter 6</p>
       <p class="l" data-s="3">The Laplace transform turns a function of <i>t</i> into a function of <i>s</i>.</p>
     </div>
     <div>
-      <p class="lb" data-s="4">In plain words</p>
+      <p class="lb" data-s="4">Why it helps</p>
       <p class="l" data-s="4">It turns a derivative into multiplication by <i>s</i>. So a differential equation becomes algebra.</p>
       <p class="l" data-s="5">We solve the algebra, then transform back.</p>
       <p class="e" data-s="6"><span class="bx">Today: what the transform is, and the first few transforms.</span></p>
@@ -153,6 +153,48 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
 </div>
 
 <div class="pg" data-n="2">
+  <p class="h" data-s="0">The Laplace transform</p>
+  <p class="e" data-s="1"><span class="bw">&#8466;{<i>f</i>} = <i>F</i>(<i>s</i>) = &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup><i>f</i>(<i>t</i>)&thinsp;<i>dt</i></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Reading the formula</p>
+      <p class="l" data-s="2">Input: a function <i>f</i>(<i>t</i>), for <i>t</i> &ge; 0.</p>
+      <p class="l" data-s="3">Multiply by <b>e</b><sup>&minus;<i>st</i></sup> and integrate in <i>t</i>. The <i>t</i> disappears.</p>
+      <p class="l" data-s="4">Output: a function <i>F</i>(<i>s</i>) of a new variable <i>s</i>.</p>
+      <p class="l" data-s="5"><span class="d">We use a capital letter for the transform: <i>f</i> &rarr; <i>F</i>, <i>y</i> &rarr; <i>Y</i>.</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">The upper limit is &infin;</p>
+      <p class="l" data-s="6">This is an improper integral. To compute transforms we first need its precise definition.</p>
+      <p class="l" data-s="7">The factor <b>e</b><sup>&minus;<i>st</i></sup> decays when <i>s</i> &gt; 0. It makes the improper integral converge.</p>
+      <p class="e" data-s="8"><span class="bx">The transform exists only for the <i>s</i> where the integral converges.</span></p>
+      <p class="a" data-s="9">&#8627; what an integral up to &infin; means.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="3">
+  <p class="h" data-s="0">Improper integrals</p>
+  <p class="e" data-s="1"><span class="bw">&int;<sub><i>a</i></sub><sup>&infin;</sup><i>f</i>(<i>t</i>)&thinsp;<i>dt</i> = <span style="white-space:nowrap">lim<sub><i>A</i>&rarr;&infin;</sub></span> &int;<sub><i>a</i></sub><sup><i>A</i></sup><i>f</i>(<i>t</i>)&thinsp;<i>dt</i></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Definition</p>
+      <p class="l" data-s="2">Let <i>f</i> be integrable on [<i>a</i>, <i>A</i>] for every <i>A</i> &gt; <i>a</i> (for example, piecewise continuous).</p>
+      <p class="l" data-s="3">If the limit exists and is a finite number, the improper integral <span class="g">converges</span>, and its value is the limit.</p>
+      <p class="l" data-s="4">If the limit is &plusmn;&infin; or does not exist, the integral <span class="g">diverges</span>.</p>
+      <p class="l" data-s="5"><span class="d">An integral up to &infin; is not an ordinary integral. It is defined as this limit.</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">To compute it</p>
+      <p class="l" data-s="6"><span class="g">1.</span> Replace &infin; by <i>A</i>.</p>
+      <p class="l" data-s="7"><span class="g">2.</span> Compute the ordinary integral from <i>a</i> to <i>A</i>.</p>
+      <p class="l" data-s="8"><span class="g">3.</span> Take the limit as <i>A</i> &rarr; &infin;.</p>
+      <p class="a" data-s="9">&#8627; step 3 needs limits like these.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="4">
   <p class="h" data-s="0">Call it out &mdash; limits as <i>A</i> &rarr; &infin;</p>
   <div class="two">
     <div>
@@ -164,36 +206,14 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
     <div>
       <p class="e t" data-s="5"><span class="g">1.</span>&nbsp; <span class="v">0</span></p>
       <p class="e t" data-s="6"><span class="g">2.</span>&nbsp; <span class="v">&infin;</span>&nbsp;&nbsp;<span class="d">no limit</span></p>
-      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; <span class="v">0</span>&nbsp;&nbsp;<span class="d">the exponential wins</span></p>
+      <p class="e t" data-s="7"><span class="g">3.</span>&nbsp; <span class="v">0</span>&nbsp;&nbsp;<span class="d"><b>e</b><sup>&minus;<i>A</i></sup> decays faster than <i>A</i> grows</span></p>
       <p class="e t" data-s="8"><span class="g">4.</span>&nbsp; <span class="v">0</span></p>
-      <p class="a" data-s="9">&#8627; the sign in the exponent decides everything today.</p>
+      <p class="a" data-s="9">&#8627; now the most important improper integral.</p>
     </div>
   </div>
 </div>
 
-<div class="pg" data-n="3">
-  <p class="h" data-s="0">Improper integrals</p>
-  <p class="e" data-s="1"><span class="bw">&int;<sub><i>a</i></sub><sup>&infin;</sup><i>f</i>(<i>t</i>)&thinsp;<i>dt</i> = <span style="white-space:nowrap">lim<sub><i>A</i>&rarr;&infin;</sub></span> &int;<sub><i>a</i></sub><sup><i>A</i></sup><i>f</i>(<i>t</i>)&thinsp;<i>dt</i></span></p>
-  <div class="two">
-    <div>
-      <p class="lb" data-s="2">In plain words</p>
-      <p class="l" data-s="2">We cannot integrate all the way to infinity at once.</p>
-      <p class="l" data-s="3">So we integrate up to a large number <i>A</i>, and then let <i>A</i> grow.</p>
-      <p class="lb" data-s="4">Two outcomes</p>
-      <p class="l" data-s="4">The limit is a finite number: the integral <span class="g">converges</span>.</p>
-      <p class="l" data-s="5">The limit is infinite or does not exist: it <span class="g">diverges</span>.</p>
-    </div>
-    <div>
-      <p class="lb" data-s="6">The steps</p>
-      <p class="l" data-s="6"><span class="g">1.</span> Replace &infin; by <i>A</i>.</p>
-      <p class="l" data-s="7"><span class="g">2.</span> Integrate as usual.</p>
-      <p class="l" data-s="8"><span class="g">3.</span> Take the limit as <i>A</i> &rarr; &infin;.</p>
-      <p class="a" data-s="9">&#8627; the most important example.</p>
-    </div>
-  </div>
-</div>
-
-<div class="pg" data-n="4">
+<div class="pg" data-n="5">
   <p class="h" data-s="0">Example 1 &mdash; &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup><i>ct</i></sup><i>dt</i></p>
   <p class="e" data-s="1"><span class="bw">&int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup><i>ct</i></sup>&thinsp;<i>dt</i>,&nbsp;&nbsp; <i>c</i> a constant</span></p>
   <div class="two">
@@ -208,13 +228,13 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
     <div>
       <p class="e" data-s="6"><span class="bx">&int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup><i>ct</i></sup><i>dt</i> = &minus;<span class="fr"><span>1</span><span><i>c</i></span></span>&nbsp; only when <i>c</i> &lt; 0</span></p>
       <p class="e t" data-s="7">for example&nbsp; &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;2<i>t</i></sup><i>dt</i> = <span class="fr"><span>1</span><span>2</span></span></p>
-      <p class="l" data-s="8">In plain words: a decaying exponential has finite area under it; a growing one does not.</p>
+      <p class="l" data-s="8">A decaying exponential has finite area under it; a growing one does not.</p>
       <p class="a" data-s="9">&#8627; a function that decays too slowly.</p>
     </div>
   </div>
 </div>
 
-<div class="pg" data-n="5">
+<div class="pg" data-n="6">
   <p class="h" data-s="0">Example 2 &mdash; decaying is not always enough</p>
   <p class="e" data-s="1"><span class="bw">&int;<sub>1</sub><sup>&infin;</sup><span class="fr"><span><i>dt</i></span><span><i>t</i><sup>2</sup></span></span>&nbsp;&nbsp; and &nbsp;&nbsp;&int;<sub>1</sub><sup>&infin;</sup><span class="fr"><span><i>dt</i></span><span><span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>t</i></span></span></span></span></span></p>
   <div class="two">
@@ -227,31 +247,10 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
       <p class="e" data-s="5"><span class="bx">diverges</span></p>
     </div>
     <div>
-      <p class="lb" data-s="6">In plain words</p>
-      <p class="l" data-s="6">Both functions go to 0. But 1/<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>t</i></span></span> goes to 0 too slowly: the area keeps growing.</p>
+      <p class="lb" data-s="6">Both go to 0</p>
+      <p class="l" data-s="6">But 1/<span style="white-space:nowrap">&radic;<span style="border-top:1.5px solid currentColor;padding:0 .1em"><i>t</i></span></span> goes to 0 too slowly: the area keeps growing.</p>
       <p class="l" data-s="7">The fast decay of <b>e</b><sup>&minus;<i>st</i></sup> is what will make the Laplace transform work.</p>
-      <p class="a" data-s="8">&#8627; now the transform itself.</p>
-    </div>
-  </div>
-</div>
-
-<div class="pg" data-n="6">
-  <p class="h" data-s="0">The Laplace transform</p>
-  <p class="e" data-s="1"><span class="bw">&#8466;{<i>f</i>} = <i>F</i>(<i>s</i>) = &int;<sub>0</sub><sup>&infin;</sup><b>e</b><sup>&minus;<i>st</i></sup><i>f</i>(<i>t</i>)&thinsp;<i>dt</i></span></p>
-  <div class="two">
-    <div>
-      <p class="lb" data-s="2">Reading the formula</p>
-      <p class="l" data-s="2">Input: a function <i>f</i>(<i>t</i>), for <i>t</i> &ge; 0.</p>
-      <p class="l" data-s="3">Multiply by <b>e</b><sup>&minus;<i>st</i></sup> and integrate in <i>t</i>. The <i>t</i> disappears.</p>
-      <p class="l" data-s="4">Output: a function <i>F</i>(<i>s</i>) of a new variable <i>s</i>.</p>
-      <p class="l" data-s="5"><span class="d">We use a capital letter for the transform: <i>f</i> &rarr; <i>F</i>, <i>y</i> &rarr; <i>Y</i>.</span></p>
-    </div>
-    <div>
-      <p class="lb" data-s="6">In plain words</p>
-      <p class="l" data-s="6">It is a machine: a function of <i>t</i> goes in, a function of <i>s</i> comes out.</p>
-      <p class="l" data-s="7">The factor <b>e</b><sup>&minus;<i>st</i></sup> decays when <i>s</i> &gt; 0. It makes the improper integral converge.</p>
-      <p class="e" data-s="8"><span class="bx">The transform exists only for the <i>s</i> where the integral converges.</span></p>
-      <p class="a" data-s="9">&#8627; a picture of the definition.</p>
+      <p class="a" data-s="8">&#8627; back to the transform: a picture.</p>
     </div>
   </div>
 </div>
@@ -281,9 +280,9 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
       <p class="e" data-s="4"><span class="bx">Then &#8466;{<i>f</i>} exists for <i>s</i> &gt; <i>a</i>.</span></p>
     </div>
     <div>
-      <p class="lb" data-s="5">In plain words</p>
+      <p class="lb" data-s="5">What this means</p>
       <p class="l" data-s="5"><i>f</i> may jump, but it may not grow faster than some exponential.</p>
-      <p class="l" data-s="6">Then <b>e</b><sup>&minus;<i>st</i></sup> with <i>s</i> &gt; <i>a</i> wins, and the area is finite.</p>
+      <p class="l" data-s="6">Then <b>e</b><sup>&minus;<i>st</i></sup><i>f</i>(<i>t</i>) decays when <i>s</i> &gt; <i>a</i>, and the integral converges.</p>
       <p class="e t" data-s="7">1, <i>t</i><sup>5</sup>, <b>e</b><sup>4<i>t</i></sup>, sin <i>t</i>:&nbsp; all fine</p>
       <p class="e t" data-s="8"><b>e</b><sup><i>t</i><sup>2</sup></sup>:&nbsp; grows too fast, no transform</p>
       <p class="a" data-s="9">&#8627; the first transforms, straight from the definition.</p>
@@ -323,9 +322,9 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
       <p class="e" data-s="4"><span class="bx">&#8466;{<i>f</i>} = <span class="fr"><span>1 &minus; <b>e</b><sup>&minus;2<i>s</i></sup></span><span><i>s</i></span></span>,&nbsp;&nbsp; <i>s</i> &gt; 0</span></p>
     </div>
     <div>
-      <p class="lb" data-s="5">In plain words</p>
-      <p class="l" data-s="5">Where <i>f</i> is 0, it adds nothing. We only integrate where <i>f</i> is on.</p>
-      <p class="l" data-s="6">This is a forcing that switches off at <i>t</i> = 2. Chapter 3 could not handle it; the transform can.</p>
+      <p class="lb" data-s="5">Where <i>f</i> = 0</p>
+      <p class="l" data-s="5">That part of the integral is 0. We only integrate where <i>f</i> &ne; 0.</p>
+      <p class="l" data-s="6">As a forcing, it switches off at <i>t</i> = 2. Chapter 3 could not handle it.</p>
       <p class="l" data-s="7"><span class="d">The value of <i>f</i> at the single point <i>t</i> = 2 does not change the integral.</span></p>
       <p class="a" data-s="8">&#8627; your turn.</p>
     </div>
@@ -382,7 +381,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
     </div>
     <div>
       <p class="e" data-s="4"><span class="bx">&#8466;{<i>t</i><sup>2</sup>} = <span class="fr"><span>2</span><span><i>s</i></span></span>&middot;<span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span> = <span class="fr"><span>2</span><span><i>s</i><sup>3</sup></span></span></span></p>
-      <p class="l" data-s="5">In plain words: each power of <i>t</i> costs one more integration by parts, and reuses the one before.</p>
+      <p class="l" data-s="5">Each power of <i>t</i> costs one more integration by parts, and reuses the one before.</p>
       <p class="l" data-s="6"><span class="d">The pattern: &#8466;{<i>t</i><sup><i>n</i></sup>} = <i>n</i>!/<i>s</i><sup><i>n</i>+1</sup>. It is in the table on Wednesday.</span></p>
       <p class="a" data-s="7">&#8627; a sine: by parts twice.</p>
     </div>
@@ -405,7 +404,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
       <p class="e t" data-s="5"><i>F</i> = <span class="fr"><span><i>a</i></span><span><i>s</i></span></span>(<span class="fr"><span>1</span><span><i>s</i></span></span> &minus; <span class="fr"><span><i>a</i></span><span><i>s</i></span></span><i>F</i>) = <span class="fr"><span><i>a</i></span><span><i>s</i><sup>2</sup></span></span> &minus; <span class="fr"><span><i>a</i><sup>2</sup></span><span><i>s</i><sup>2</sup></span></span><i>F</i></p>
       <p class="e t" data-s="6">(1 + <span class="fr"><span><i>a</i><sup>2</sup></span><span><i>s</i><sup>2</sup></span></span>)<i>F</i> = <span class="fr"><span><i>a</i></span><span><i>s</i><sup>2</sup></span></span>&nbsp; &rArr;&nbsp; (<i>s</i><sup>2</sup> + <i>a</i><sup>2</sup>)<i>F</i> = <i>a</i></p>
       <p class="e" data-s="7"><span class="bx">&#8466;{sin <i>at</i>} = <span class="fr"><span><i>a</i></span><span><i>s</i><sup>2</sup> + <i>a</i><sup>2</sup></span></span>,&nbsp;&nbsp; <i>s</i> &gt; 0</span></p>
-      <p class="l" data-s="8">In plain words: integrating by parts twice brings <i>F</i> back, and we solve for it like an equation.</p>
+      <p class="l" data-s="8">Integrating by parts twice brings <i>F</i> back; then we solve for <i>F</i>.</p>
       <p class="a" data-s="9">&#8627; cosine, using what we just found.</p>
     </div>
   </div>
@@ -439,7 +438,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
       <p class="l" data-s="3">The integral of a sum is the sum of the integrals; constants come out.</p>
     </div>
     <div>
-      <p class="lb" data-s="4">In plain words</p>
+      <p class="lb" data-s="4">In practice</p>
       <p class="l" data-s="4">Split a sum into pieces, transform each piece, and keep the constants in front.</p>
       <p class="e" data-s="5"><span class="bx">But &#8466;{<i>f</i><i>g</i>} is <span class="n">not</span> &#8466;{<i>f</i>}&#8466;{<i>g</i>}.</span></p>
       <p class="e t" data-s="6">&#8466;{1&middot;1} = <span class="fr"><span>1</span><span><i>s</i></span></span>,&nbsp; but&nbsp; &#8466;{1}&#8466;{1} = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span></p>
@@ -480,7 +479,7 @@ kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);bor
       <p class="lb" data-s="4">The mistake</p>
       <p class="l" data-s="4">Here <i>a</i> = &minus;4, so <i>s</i> &minus; <i>a</i> = <i>s</i> + 4.</p>
       <p class="e" data-s="5"><span class="bx">&#8466;{3<b>e</b><sup>&minus;4<i>t</i></sup>} = <span class="fr"><span>3</span><span><i>s</i> + 4</span></span>,&nbsp;&nbsp; <i>s</i> &gt; &minus;4</span></p>
-      <p class="l" data-s="6">In plain words: read <i>a</i> with its sign, from the exponent <b>e</b><sup><i>at</i></sup>.</p>
+      <p class="l" data-s="6">Read <i>a</i> with its sign, from the exponent <b>e</b><sup><i>at</i></sup>.</p>
       <p class="a" data-s="7">&#8627; quick ones from the table.</p>
     </div>
   </div>
