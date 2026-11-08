@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="2255 L2">
+<meta name="theme-color" content="#0D0F10">
+<title>Math 2255 - Lecture 2 Board</title>
+<style>
+:root{
+  --bd:#0D0F10; --gr:#1B1F21;
+  --w:#F0EFE8; --y:#E3E34B; --c:#45CFC2; --m:#E85CD2; --o:#F09A42;
+  --dm:#7C8A8E; --wash-w:rgba(240,239,232,.07); --wash-o:rgba(240,154,66,.10);
+  --chrome:rgba(13,15,16,.86); --line:#23282A; --bfg:#9DACB1; --bbd:#2E3538;
+  --act:#1C2224; --sel:#8FA0A5; --kbd:#1E2426; --kbdb:#333B3E; --kbdf:#C3CFD2;
+  --solid:#12171A;
+  --fm:"Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
+  --fu:system-ui,-apple-system,"PingFang SC",sans-serif;
+}
+body.light{--bd:#FBFAF7; --gr:#E7E4DC;
+  --w:#16181B; --y:#8F6A05; --c:#0E7A70; --m:#A0198A; --o:#B4530A;
+  --dm:#6E787E; --wash-w:rgba(20,24,28,.05); --wash-o:rgba(180,83,10,.09);
+  --chrome:rgba(251,250,247,.92); --line:#DBD6CB; --bfg:#4A5459; --bbd:#CAC4B9;
+  --act:#EDE9E1; --sel:#5A6469; --kbd:#EFEBE3; --kbdb:#D2CCC2; --kbdf:#39434A;
+  --solid:#F2F0EA;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
+  overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+#app{position:relative;width:100%;height:100dvh;height:100svh;min-height:480px;overflow:hidden;background:var(--bd);
+  background-image:linear-gradient(var(--gr) 1px,transparent 1px),
+    linear-gradient(90deg,var(--gr) 1px,transparent 1px);
+  background-size:32px 32px;color:var(--w);font-family:var(--fm)}
+#stage{position:absolute;inset:0;padding:3.0vh 4vw 60px;overflow:hidden}
+.pg{display:none;height:100%}
+.pg.on{display:block}
+[data-s]{opacity:0;transition:opacity .16s ease}
+[data-s].vis{opacity:1}
+[data-until].gone{display:none}
+.pg.rv .h{font-size:clamp(1.3rem,min(3.8vw,5.60vh),2.9rem)}
+.pg.rv .lb{font-size:clamp(1rem,min(2.5vw,3.68vh),1.9rem);margin:.62em 0 .12em}
+.pg.rv .l{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.6;margin:0 0 .1em 1.0em}
+.pg.rv .e{font-size:clamp(1.05rem,min(2.7vw,4.00vh),2.1rem);margin-left:1.0em}
+
+.h{font-size:clamp(1.2rem,min(3.4vw,5.00vh),2.6rem);color:var(--y);display:table;
+  border-bottom:.09em solid var(--y);padding-bottom:.08em;margin:0 0 .55em}
+.lb{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);color:var(--y);display:table;
+  border-bottom:.07em solid var(--y);padding-bottom:.06em;margin:.65em 0 .32em}
+.l{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.62rem);line-height:1.72;margin:0 0 .1em}
+.e{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.95;margin:.3em 0 .3em 1.1em}
+.e.t{margin-top:.16em;margin-bottom:.16em}
+.a{font-size:clamp(.8rem,min(1.8vw,2.65vh),1.4rem);color:var(--m);margin:.12em 0 .3em 2em}
+.i{margin-left:1.5em}
+.n{color:var(--m)} .g{color:var(--c)} .v{color:var(--o)}
+.d{color:var(--dm)}
+.bx{display:inline-block;border:.09em solid var(--o);color:var(--o);
+  background:var(--wash-o);border-radius:.16em;padding:.2em .6em}
+.bw{display:inline-block;border:.09em solid var(--w);color:var(--w);
+  background:var(--wash-w);border-radius:.16em;padding:.2em .6em}
+sup,sub{line-height:0;font-size:.68em}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  line-height:1.18;font-size:.86em;margin:0 .14em}
+.fr>span{padding:0 .28em;display:block}
+.fr>span:first-child{border-bottom:.06em solid currentColor;padding-bottom:.1em}
+.fr>span:last-child{padding-top:.12em}
+ol.st{margin:.25em 0 .25em 1.1em;padding-left:1.1em;font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);line-height:1.65}
+table{border-collapse:collapse;margin:.4em 0 .4em 1.1em;font-size:clamp(.85rem,min(2vw,2.94vh),1.5rem);line-height:2}
+td,th{padding:.16em 1.4em .16em 0;text-align:left;font-weight:400}
+th{color:var(--y);font-size:.82em}
+.cols{display:flex;gap:5vw;align-items:flex-start}
+.two{display:grid;grid-template-columns:1fr 1fr;column-gap:2.4vw;align-items:start;margin:.15em 0 0 .2em}
+.two>div>*:first-child{margin-top:0}
+.two .e{margin:.12em 0 .12em .2em;line-height:1.6}
+.two .l{margin:.1em 0 .1em .2em}
+.two .lb{margin:.5em 0 .14em}
+.two .a{margin:.1em 0 .2em 1em}
+.split{display:flex;gap:1.4vw;align-items:flex-start;margin:.2em 0 0 .4em}
+.split>.sl{flex:0 0 auto}
+.split>.sr{flex:1 1 auto;min-width:0;display:flex;justify-content:center;align-items:flex-start}
+.split .e{margin:.05em 0 .05em .2em;line-height:1.45}
+.split .sl .e{font-size:clamp(.85rem,min(2.1vw,3.02vh),1.65rem)}
+svg.df.sp{width:auto;height:51vh;max-width:100%;margin:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;column-gap:2vw;row-gap:0;margin:.2em 0 .2em 1.1em}
+.g2 .e{margin-left:0;line-height:1.62}
+svg.df{display:block;width:100%;max-width:min(76vw,104vh);height:auto;margin:.5vh 0 .5vh 1vw}
+svg.df.ax{width:auto;height:45vh;max-width:96%;margin:.3vh 0 .3vh 1.6vw}
+svg.df.fx{width:auto;height:46vh;max-width:97%;margin:.3vh 0 .3vh 1.2vw}
+.hw{min-height:1.2em}
+body.guides .hw{outline:1px dashed rgba(69,207,194,.32);border-radius:4px}
+
+#wet{position:absolute;inset:0;pointer-events:none;z-index:6;transform:translateZ(0)}
+#ink{position:absolute;inset:0;touch-action:none;z-index:5;
+  transform:translateZ(0)}
+#topnav{position:absolute;top:0;right:0;z-index:12;display:flex;gap:6px;align-items:center;
+  padding:calc(6px + env(safe-area-inset-top)) 10px 6px;background:var(--solid);border-radius:0 0 0 10px;
+  font-family:var(--fu);font-size:13px;color:var(--bfg)}
+#topnav.hide{opacity:0;pointer-events:none}
+#bar{position:absolute;left:0;right:0;bottom:0;z-index:9;display:flex;gap:.5vw;
+  align-items:center;padding:.7vh 1.2vw;padding-bottom:calc(.7vh + env(safe-area-inset-bottom));background:var(--solid);
+  border-top:1px solid var(--line);font-family:var(--fu);font-size:13px;color:var(--dm);
+  transition:opacity .3s}
+#bar.hide{opacity:0;pointer-events:none}
+#bar,#topnav{transition:opacity .25s}
+#edge{position:absolute;left:0;right:0;bottom:0;height:46px;z-index:8}
+.pen{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;flex:none}
+.pen.sel{border-color:var(--sel);transform:scale(1.12)}
+.btn{padding:5px 11px;border:1px solid var(--bbd);border-radius:5px;background:transparent;
+  color:var(--bfg);font-family:var(--fu);font-size:12px;cursor:pointer}
+.btn:active{background:var(--act)}
+.sp{flex:1}
+.btn.nav{font-size:19px;padding:3px 20px;line-height:1.05;min-width:62px}
+#pos{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+#clk{font-variant-numeric:tabular-nums;font-size:15px;color:var(--w)}
+#clk.over{color:var(--o)}
+#hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;
+  font-family:var(--fu);font-size:15px;line-height:2;color:var(--bfg);text-align:center;
+  background:var(--chrome);border:1px solid var(--bbd);border-radius:10px;padding:26px 34px}
+#hint.hide{display:none}
+#hint b{color:var(--w)}
+kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);border-radius:4px;
+  padding:1px 6px;color:var(--kbdf);font-size:12px}
+</style>
+</head>
+<body>
+
+<div id="app">
+<div id="topnav">
+  <button class="btn nav" id="prev2">&#9664;</button>
+  <span id="pos2">1 / 22</span>
+  <button class="btn nav" id="next2">&#9654;</button>
+</div>
+<div id="stage">
+
+<div class="pg on" data-n="1">
+  <p class="h" data-s="0">Friday, in one page</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">Forward</p>
+      <p class="e t" data-s="1">&#8466;{<i>u</i><sub><i>c</i></sub>(<i>t</i>)<i>f</i>(<i>t</i> &minus; <i>c</i>)} = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup><i>F</i>(<i>s</i>)</p>
+      <p class="e t" data-s="2">&#8466;{<i>u</i><sub><i>c</i></sub>(<i>t</i>)<i>g</i>(<i>t</i>)} = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>&#8466;{<i>g</i>(<i>t</i> + <i>c</i>)}</p>
+      <p class="lb" data-s="3">Backward</p>
+      <p class="e t" data-s="3">&#8466;<sup>&minus;1</sup>{<b>e</b><sup>&minus;<i>c</i><i>s</i></sup><i>F</i>(<i>s</i>)} = <i>u</i><sub><i>c</i></sub>(<i>t</i>)<i>f</i>(<i>t</i> &minus; <i>c</i>)</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Today: &sect;6.4</p>
+      <p class="l" data-s="4">Equations whose right side switches on or off at some time <i>c</i>.</p>
+      <p class="l" data-s="5">We use the method of &sect;6.2, together with both directions from Friday.</p>
+      <p class="e" data-s="6"><span class="bx">No new formula today: only a new kind of problem.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="2">
+  <p class="h" data-s="0">The problem: a force that switches on or off</p>
+  <p class="e" data-s="1"><span class="bw"><i>a</i><i>y</i>&#8243; + <i>b</i><i>y</i>&#8242; + <i>cy</i> = <i>g</i>(<i>t</i>),&nbsp;&nbsp; <i>g</i> has jumps</span></p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="2"><span class="g">teal</span>: a force switched on at <i>t</i> = 2, <i>u</i><sub>2</sub>(<i>t</i>).</p>
+      <p class="l" data-s="3"><span class="n">magenta</span>: a force of 2 that is on from <i>t</i> = 1 to <i>t</i> = 4, 2(<i>u</i><sub>1</sub>(<i>t</i>) &minus; <i>u</i><sub>4</sub>(<i>t</i>)).</p>
+      <p class="l" data-s="4">Undetermined coefficients works on one formula at a time. Here we would solve on each piece, and match <i>y</i> and <i>y</i>&#8242; at every switch.</p>
+      <p class="e" data-s="5"><span class="bx">The Laplace transform handles all the pieces at once.</span></p>
+      <p class="a" data-s="6">&#8627; the method.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="210" x2="0" y2="210"/><line x1="-7" y1="70" x2="0" y2="70"/><line x1="103.3" y1="350" x2="103.3" y2="357"/><line x1="206.7" y1="350" x2="206.7" y2="357"/><line x1="310" y1="350" x2="310" y2="357"/><line x1="413.3" y1="350" x2="413.3" y2="357"/><line x1="516.7" y1="350" x2="516.7" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">0</text><text x="-12" y="215" text-anchor="end">1</text><text x="-12" y="75" text-anchor="end">2</text><text x="0" y="375" text-anchor="middle">0</text><text x="103.3" y="375" text-anchor="middle">1</text><text x="206.7" y="375" text-anchor="middle">2</text><text x="310" y="375" text-anchor="middle">3</text><text x="413.3" y="375" text-anchor="middle">4</text><text x="516.7" y="375" text-anchor="middle">5</text><text x="620" y="375" text-anchor="middle">6</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="2" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,350.0 1.7,350.0 3.4,350.0 5.2,350.0 6.9,350.0 8.6,350.0 10.3,350.0 12.1,350.0 13.8,350.0 15.5,350.0 17.2,350.0 18.9,350.0 20.7,350.0 22.4,350.0 24.1,350.0 25.8,350.0 27.6,350.0 29.3,350.0 31.0,350.0 32.7,350.0 34.4,350.0 36.2,350.0 37.9,350.0 39.6,350.0 41.3,350.0 43.1,350.0 44.8,350.0 46.5,350.0 48.2,350.0 49.9,350.0 51.7,350.0 53.4,350.0 55.1,350.0 56.8,350.0 58.6,350.0 60.3,350.0 62.0,350.0 63.7,350.0 65.4,350.0 67.2,350.0 68.9,350.0 70.6,350.0 72.3,350.0 74.1,350.0 75.8,350.0 77.5,350.0 79.2,350.0 80.9,350.0 82.7,350.0 84.4,350.0 86.1,350.0 87.8,350.0 89.6,350.0 91.3,350.0 93.0,350.0 94.7,350.0 96.4,350.0 98.2,350.0 99.9,350.0 101.6,350.0 103.3,350.0 105.1,350.0 106.8,350.0 108.5,350.0 110.2,350.0 111.9,350.0 113.7,350.0 115.4,350.0 117.1,350.0 118.8,350.0 120.6,350.0 122.3,350.0 124.0,350.0 125.7,350.0 127.4,350.0 129.2,350.0 130.9,350.0 132.6,350.0 134.3,350.0 136.1,350.0 137.8,350.0 139.5,350.0 141.2,350.0 142.9,350.0 144.7,350.0 146.4,350.0 148.1,350.0 149.8,350.0 151.6,350.0 153.3,350.0 155.0,350.0 156.7,350.0 158.4,350.0 160.2,350.0 161.9,350.0 163.6,350.0 165.3,350.0 167.1,350.0 168.8,350.0 170.5,350.0 172.2,350.0 173.9,350.0 175.7,350.0 177.4,350.0 179.1,350.0 180.8,350.0 182.6,350.0 184.3,350.0 186.0,350.0 187.7,350.0 189.4,350.0 191.2,350.0 192.9,350.0 194.6,350.0 196.3,350.0 198.1,350.0 199.8,350.0 201.5,350.0 203.2,350.0 204.9,350.0 206.7,350.0"/><polyline data-s="2" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="206.7,210.0 210.1,210.0 213.6,210.0 217.0,210.0 220.4,210.0 223.9,210.0 227.3,210.0 230.8,210.0 234.2,210.0 237.7,210.0 241.1,210.0 244.6,210.0 248.0,210.0 251.4,210.0 254.9,210.0 258.3,210.0 261.8,210.0 265.2,210.0 268.7,210.0 272.1,210.0 275.6,210.0 279.0,210.0 282.4,210.0 285.9,210.0 289.3,210.0 292.8,210.0 296.2,210.0 299.7,210.0 303.1,210.0 306.6,210.0 310.0,210.0 313.4,210.0 316.9,210.0 320.3,210.0 323.8,210.0 327.2,210.0 330.7,210.0 334.1,210.0 337.6,210.0 341.0,210.0 344.4,210.0 347.9,210.0 351.3,210.0 354.8,210.0 358.2,210.0 361.7,210.0 365.1,210.0 368.6,210.0 372.0,210.0 375.4,210.0 378.9,210.0 382.3,210.0 385.8,210.0 389.2,210.0 392.7,210.0 396.1,210.0 399.6,210.0 403.0,210.0 406.4,210.0 409.9,210.0 413.3,210.0 416.8,210.0 420.2,210.0 423.7,210.0 427.1,210.0 430.6,210.0 434.0,210.0 437.4,210.0 440.9,210.0 444.3,210.0 447.8,210.0 451.2,210.0 454.7,210.0 458.1,210.0 461.6,210.0 465.0,210.0 468.4,210.0 471.9,210.0 475.3,210.0 478.8,210.0 482.2,210.0 485.7,210.0 489.1,210.0 492.6,210.0 496.0,210.0 499.4,210.0 502.9,210.0 506.3,210.0 509.8,210.0 513.2,210.0 516.7,210.0 520.1,210.0 523.6,210.0 527.0,210.0 530.4,210.0 533.9,210.0 537.3,210.0 540.8,210.0 544.2,210.0 547.7,210.0 551.1,210.0 554.6,210.0 558.0,210.0 561.4,210.0 564.9,210.0 568.3,210.0 571.8,210.0 575.2,210.0 578.7,210.0 582.1,210.0 585.6,210.0 589.0,210.0 592.4,210.0 595.9,210.0 599.3,210.0 602.8,210.0 606.2,210.0 609.7,210.0 613.1,210.0 616.6,210.0 620.0,210.0"/><polyline data-s="3" fill="none" stroke="var(--m)" stroke-width="2.8" stroke-linejoin="round" points="0.0,350.0 0.9,350.0 1.7,350.0 2.6,350.0 3.4,350.0 4.3,350.0 5.2,350.0 6.0,350.0 6.9,350.0 7.8,350.0 8.6,350.0 9.5,350.0 10.3,350.0 11.2,350.0 12.1,350.0 12.9,350.0 13.8,350.0 14.6,350.0 15.5,350.0 16.4,350.0 17.2,350.0 18.1,350.0 18.9,350.0 19.8,350.0 20.7,350.0 21.5,350.0 22.4,350.0 23.2,350.0 24.1,350.0 25.0,350.0 25.8,350.0 26.7,350.0 27.6,350.0 28.4,350.0 29.3,350.0 30.1,350.0 31.0,350.0 31.9,350.0 32.7,350.0 33.6,350.0 34.4,350.0 35.3,350.0 36.2,350.0 37.0,350.0 37.9,350.0 38.8,350.0 39.6,350.0 40.5,350.0 41.3,350.0 42.2,350.0 43.1,350.0 43.9,350.0 44.8,350.0 45.6,350.0 46.5,350.0 47.4,350.0 48.2,350.0 49.1,350.0 49.9,350.0 50.8,350.0 51.7,350.0 52.5,350.0 53.4,350.0 54.2,350.0 55.1,350.0 56.0,350.0 56.8,350.0 57.7,350.0 58.6,350.0 59.4,350.0 60.3,350.0 61.1,350.0 62.0,350.0 62.9,350.0 63.7,350.0 64.6,350.0 65.4,350.0 66.3,350.0 67.2,350.0 68.0,350.0 68.9,350.0 69.8,350.0 70.6,350.0 71.5,350.0 72.3,350.0 73.2,350.0 74.1,350.0 74.9,350.0 75.8,350.0 76.6,350.0 77.5,350.0 78.4,350.0 79.2,350.0 80.1,350.0 80.9,350.0 81.8,350.0 82.7,350.0 83.5,350.0 84.4,350.0 85.2,350.0 86.1,350.0 87.0,350.0 87.8,350.0 88.7,350.0 89.6,350.0 90.4,350.0 91.3,350.0 92.1,350.0 93.0,350.0 93.9,350.0 94.7,350.0 95.6,350.0 96.4,350.0 97.3,350.0 98.2,350.0 99.0,350.0 99.9,350.0 100.8,350.0 101.6,350.0 102.5,350.0 103.3,350.0"/><polyline data-s="3" fill="none" stroke="var(--m)" stroke-width="2.8" stroke-linejoin="round" points="103.3,70.0 105.9,70.0 108.5,70.0 111.1,70.0 113.7,70.0 116.2,70.0 118.8,70.0 121.4,70.0 124.0,70.0 126.6,70.0 129.2,70.0 131.8,70.0 134.3,70.0 136.9,70.0 139.5,70.0 142.1,70.0 144.7,70.0 147.2,70.0 149.8,70.0 152.4,70.0 155.0,70.0 157.6,70.0 160.2,70.0 162.8,70.0 165.3,70.0 167.9,70.0 170.5,70.0 173.1,70.0 175.7,70.0 178.2,70.0 180.8,70.0 183.4,70.0 186.0,70.0 188.6,70.0 191.2,70.0 193.8,70.0 196.3,70.0 198.9,70.0 201.5,70.0 204.1,70.0 206.7,70.0 209.2,70.0 211.8,70.0 214.4,70.0 217.0,70.0 219.6,70.0 222.2,70.0 224.8,70.0 227.3,70.0 229.9,70.0 232.5,70.0 235.1,70.0 237.7,70.0 240.2,70.0 242.8,70.0 245.4,70.0 248.0,70.0 250.6,70.0 253.2,70.0 255.8,70.0 258.3,70.0 260.9,70.0 263.5,70.0 266.1,70.0 268.7,70.0 271.2,70.0 273.8,70.0 276.4,70.0 279.0,70.0 281.6,70.0 284.2,70.0 286.8,70.0 289.3,70.0 291.9,70.0 294.5,70.0 297.1,70.0 299.7,70.0 302.2,70.0 304.8,70.0 307.4,70.0 310.0,70.0 312.6,70.0 315.2,70.0 317.8,70.0 320.3,70.0 322.9,70.0 325.5,70.0 328.1,70.0 330.7,70.0 333.2,70.0 335.8,70.0 338.4,70.0 341.0,70.0 343.6,70.0 346.2,70.0 348.8,70.0 351.3,70.0 353.9,70.0 356.5,70.0 359.1,70.0 361.7,70.0 364.2,70.0 366.8,70.0 369.4,70.0 372.0,70.0 374.6,70.0 377.2,70.0 379.8,70.0 382.3,70.0 384.9,70.0 387.5,70.0 390.1,70.0 392.7,70.0 395.2,70.0 397.8,70.0 400.4,70.0 403.0,70.0 405.6,70.0 408.2,70.0 410.8,70.0 413.3,70.0"/><polyline data-s="3" fill="none" stroke="var(--m)" stroke-width="2.8" stroke-linejoin="round" points="413.3,350.0 415.1,350.0 416.8,350.0 418.5,350.0 420.2,350.0 421.9,350.0 423.7,350.0 425.4,350.0 427.1,350.0 428.8,350.0 430.6,350.0 432.3,350.0 434.0,350.0 435.7,350.0 437.4,350.0 439.2,350.0 440.9,350.0 442.6,350.0 444.3,350.0 446.1,350.0 447.8,350.0 449.5,350.0 451.2,350.0 452.9,350.0 454.7,350.0 456.4,350.0 458.1,350.0 459.8,350.0 461.6,350.0 463.3,350.0 465.0,350.0 466.7,350.0 468.4,350.0 470.2,350.0 471.9,350.0 473.6,350.0 475.3,350.0 477.1,350.0 478.8,350.0 480.5,350.0 482.2,350.0 483.9,350.0 485.7,350.0 487.4,350.0 489.1,350.0 490.8,350.0 492.6,350.0 494.3,350.0 496.0,350.0 497.7,350.0 499.4,350.0 501.2,350.0 502.9,350.0 504.6,350.0 506.3,350.0 508.1,350.0 509.8,350.0 511.5,350.0 513.2,350.0 514.9,350.0 516.7,350.0 518.4,350.0 520.1,350.0 521.8,350.0 523.6,350.0 525.3,350.0 527.0,350.0 528.7,350.0 530.4,350.0 532.2,350.0 533.9,350.0 535.6,350.0 537.3,350.0 539.1,350.0 540.8,350.0 542.5,350.0 544.2,350.0 545.9,350.0 547.7,350.0 549.4,350.0 551.1,350.0 552.8,350.0 554.6,350.0 556.3,350.0 558.0,350.0 559.7,350.0 561.4,350.0 563.2,350.0 564.9,350.0 566.6,350.0 568.3,350.0 570.1,350.0 571.8,350.0 573.5,350.0 575.2,350.0 576.9,350.0 578.7,350.0 580.4,350.0 582.1,350.0 583.8,350.0 585.6,350.0 587.3,350.0 589.0,350.0 590.7,350.0 592.4,350.0 594.2,350.0 595.9,350.0 597.6,350.0 599.3,350.0 601.1,350.0 602.8,350.0 604.5,350.0 606.2,350.0 607.9,350.0 609.7,350.0 611.4,350.0 613.1,350.0 614.8,350.0 616.6,350.0 618.3,350.0 620.0,350.0"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="3">
+  <p class="h" data-s="0">The method</p>
+  <p class="e" data-s="1"><span class="bw">&#8466;{<i>y</i>&#8242;} = <i>sY</i> &minus; <i>y</i>(0),&nbsp;&nbsp; &#8466;{<i>y</i>&#8243;} = <i>s</i><sup>2</sup><i>Y</i> &minus; <i>sy</i>(0) &minus; <i>y</i>&#8242;(0)</span></p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="2"><span class="g">1.</span> Write <i>g</i>(<i>t</i>) with step functions.</p>
+      <p class="l" data-s="3"><span class="g">2.</span> Transform both sides. Each step in <i>g</i> gives a factor <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>.</p>
+      <p class="l" data-s="4"><span class="g">3.</span> Solve for <i>Y</i>(<i>s</i>). Group the terms by their factor <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>.</p>
+    </div>
+    <div>
+      <p class="l" data-s="5"><span class="g">4.</span> Partial fractions on each fraction, <span class="v">without</span> the factor <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>.</p>
+      <p class="l" data-s="6"><span class="g">5.</span> Invert each fraction. Then shift: replace <i>t</i> by <i>t</i> &minus; <i>c</i>, multiply by <i>u</i><sub><i>c</i></sub>(<i>t</i>).</p>
+      <p class="e" data-s="7"><span class="bx">You can always check: on each piece, <i>y</i> solves the equation, and <i>y</i>, <i>y</i>&#8242; do not jump.</span></p>
+      <p class="a" data-s="8">&#8627; step 2 alone: a quick round.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="4">
+  <p class="h" data-s="0">Call it out &mdash; the transform of the right side</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; 3<i>u</i><sub>2</sub>(<i>t</i>)</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>u</i><sub>1</sub>(<i>t</i>) &minus; <i>u</i><sub>4</sub>(<i>t</i>)</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; 2 &minus; 2<i>u</i><sub>5</sub>(<i>t</i>)</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; (<i>t</i> &minus; 3)<i>u</i><sub>3</sub>(<i>t</i>)</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; <i>t</i><i>u</i><sub>2</sub>(<i>t</i>)</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="fr"><span>3<b>e</b><sup>&minus;2<i>s</i></sup></span><span><i>s</i></span></span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="fr"><span><b>e</b><sup>&minus;<i>s</i></sup> &minus; <b>e</b><sup>&minus;4<i>s</i></sup></span><span><i>s</i></span></span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="fr"><span>2</span><span><i>s</i></span></span> &minus; <span class="fr"><span>2<b>e</b><sup>&minus;5<i>s</i></sup></span><span><i>s</i></span></span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="fr"><span><b>e</b><sup>&minus;3<i>s</i></sup></span><span><i>s</i><sup>2</sup></span></span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <b>e</b><sup>&minus;2<i>s</i></sup>(<span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span> + <span class="fr"><span>2</span><span><i>s</i></span></span>)</p>
+      <p class="a" data-s="11">&#8627; number 5 is not written in <i>t</i> &minus; 2: rewrite first, <i>g</i>(<i>t</i> + 2) = <i>t</i> + 2.</p>
+    </div>
+  </div>
+  <p class="l" data-s="1" style="margin-top:.8em;border-top:1px solid var(--line, #555);padding-top:.4em"><span class="d">Backwards:&nbsp; <span class="fr"><span>1</span><span><i>s</i> &minus; <i>a</i></span></span> &rarr; <b>e</b><sup><i>at</i></sup>,&nbsp; <span class="fr"><span><i>n</i>!</span><span><i>s</i><sup><i>n</i>+1</sup></span></span> &rarr; <i>t</i><sup><i>n</i></sup>,&nbsp; <span class="fr"><span><i>b</i></span><span><i>s</i><sup>2</sup> + <i>b</i><sup>2</sup></span></span> &rarr; sin <i>bt</i>,&nbsp; <span class="fr"><span><i>s</i></span><span><i>s</i><sup>2</sup> + <i>b</i><sup>2</sup></span></span> &rarr; cos <i>bt</i>,&nbsp; <span class="fr"><span>1</span><span>(<i>s</i> &minus; <i>a</i>)<sup>2</sup></span></span> &rarr; <i>t</i><b>e</b><sup><i>at</i></sup>,&nbsp; <i>F</i>(<i>s</i> &minus; <i>a</i>) &rarr; <b>e</b><sup><i>at</i></sup><i>f</i>(<i>t</i>),&nbsp; &#8466;{<i>u</i><sub><i>c</i></sub>(<i>t</i>)} = <span class="fr"><span><b>e</b><sup>&minus;<i>c</i><i>s</i></sup></span><span><i>s</i></span></span>,&nbsp; &#8466;{<i>u</i><sub><i>c</i></sub>(<i>t</i>)<i>f</i>(<i>t</i> &minus; <i>c</i>)} = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup><i>F</i>(<i>s</i>)</span></p>
+</div>
+
+<div class="pg" data-n="5">
+  <p class="h" data-s="0">Example 1 &mdash; a first order equation</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8242; + 2<i>y</i> = 4<i>u</i><sub>3</sub>(<i>t</i>),&nbsp;&nbsp; <i>y</i>(0) = 1</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">2. Transform both sides</p>
+      <p class="e t" data-s="2"><i>sY</i> &minus; 1 + 2<i>Y</i> = <span class="fr"><span>4<b>e</b><sup>&minus;3<i>s</i></sup></span><span><i>s</i></span></span></p>
+      <p class="lb" data-s="3">3. Solve for <i>Y</i></p>
+      <p class="e t" data-s="3">(<i>s</i> + 2)<i>Y</i> = 1 + <span class="fr"><span>4<b>e</b><sup>&minus;3<i>s</i></sup></span><span><i>s</i></span></span></p>
+      <p class="e t" data-s="4"><i>Y</i> = <span class="fr"><span>1</span><span><i>s</i> + 2</span></span> + <b>e</b><sup>&minus;3<i>s</i></sup><span class="fr"><span>4</span><span><i>s</i>(<i>s</i> + 2)</span></span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">4. Partial fractions, without <b>e</b><sup>&minus;3<i>s</i></sup></p>
+      <p class="e t" data-s="5"><span class="fr"><span>4</span><span><i>s</i>(<i>s</i> + 2)</span></span> = <span class="fr"><span>2</span><span><i>s</i></span></span> &minus; <span class="fr"><span>2</span><span><i>s</i> + 2</span></span>&nbsp; &rarr;&nbsp; 2 &minus; 2<b>e</b><sup>&minus;2<i>t</i></sup></p>
+      <p class="lb" data-s="6">5. Invert, then shift by 3</p>
+      <p class="e" data-s="6"><span class="bx"><i>y</i> = <b>e</b><sup>&minus;2<i>t</i></sup> + <i>u</i><sub>3</sub>(<i>t</i>)(2 &minus; 2<b>e</b><sup>&minus;2(<i>t</i> &minus; 3)</sup>)</span></p>
+      <p class="l" data-s="7">The first term comes from <i>y</i>(0). The second term comes from the force, and it starts at <i>t</i> = 3.</p>
+      <p class="a" data-s="8">&#8627; the picture.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="6">
+  <p class="h" data-s="0">Example 1, the picture</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1"><span class="d">dashed</span>: the level 2 that the force pushes toward after <i>t</i> = 3.</p>
+      <p class="l" data-s="2"><span class="g">teal</span>: <i>y</i>(<i>t</i>).</p>
+      <p class="e t" data-s="3">0 &le; <i>t</i> &lt; 3:&nbsp; <i>y</i> = <b>e</b><sup>&minus;2<i>t</i></sup></p>
+      <p class="e t" data-s="4"><i>t</i> &ge; 3:&nbsp; <i>y</i> &rarr; 2</p>
+      <p class="l" data-s="5">The graph has a corner at <i>t</i> = 3, but no jump: <i>y</i> is continuous, <i>y</i>&#8242; jumps.</p>
+      <p class="a" data-s="6">&#8627; a second order equation.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="210" x2="0" y2="210"/><line x1="-7" y1="70" x2="0" y2="70"/><line x1="88.6" y1="350" x2="88.6" y2="357"/><line x1="177.1" y1="350" x2="177.1" y2="357"/><line x1="265.7" y1="350" x2="265.7" y2="357"/><line x1="354.3" y1="350" x2="354.3" y2="357"/><line x1="442.9" y1="350" x2="442.9" y2="357"/><line x1="531.4" y1="350" x2="531.4" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">0</text><text x="-12" y="215" text-anchor="end">1</text><text x="-12" y="75" text-anchor="end">2</text><text x="0" y="375" text-anchor="middle">0</text><text x="88.6" y="375" text-anchor="middle">1</text><text x="177.1" y="375" text-anchor="middle">2</text><text x="265.7" y="375" text-anchor="middle">3</text><text x="354.3" y="375" text-anchor="middle">4</text><text x="442.9" y="375" text-anchor="middle">5</text><text x="531.4" y="375" text-anchor="middle">6</text><text x="620" y="375" text-anchor="middle">7</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="0.0,350.0 2.2,350.0 4.4,350.0 6.6,350.0 8.9,350.0 11.1,350.0 13.3,350.0 15.5,350.0 17.7,350.0 19.9,350.0 22.1,350.0 24.4,350.0 26.6,350.0 28.8,350.0 31.0,350.0 33.2,350.0 35.4,350.0 37.6,350.0 39.9,350.0 42.1,350.0 44.3,350.0 46.5,350.0 48.7,350.0 50.9,350.0 53.1,350.0 55.4,350.0 57.6,350.0 59.8,350.0 62.0,350.0 64.2,350.0 66.4,350.0 68.6,350.0 70.9,350.0 73.1,350.0 75.3,350.0 77.5,350.0 79.7,350.0 81.9,350.0 84.1,350.0 86.4,350.0 88.6,350.0 90.8,350.0 93.0,350.0 95.2,350.0 97.4,350.0 99.6,350.0 101.9,350.0 104.1,350.0 106.3,350.0 108.5,350.0 110.7,350.0 112.9,350.0 115.1,350.0 117.4,350.0 119.6,350.0 121.8,350.0 124.0,350.0 126.2,350.0 128.4,350.0 130.6,350.0 132.9,350.0 135.1,350.0 137.3,350.0 139.5,350.0 141.7,350.0 143.9,350.0 146.1,350.0 148.4,350.0 150.6,350.0 152.8,350.0 155.0,350.0 157.2,350.0 159.4,350.0 161.6,350.0 163.9,350.0 166.1,350.0 168.3,350.0 170.5,350.0 172.7,350.0 174.9,350.0 177.1,350.0 179.4,350.0 181.6,350.0 183.8,350.0 186.0,350.0 188.2,350.0 190.4,350.0 192.6,350.0 194.9,350.0 197.1,350.0 199.3,350.0 201.5,350.0 203.7,350.0 205.9,350.0 208.1,350.0 210.4,350.0 212.6,350.0 214.8,350.0 217.0,350.0 219.2,350.0 221.4,350.0 223.6,350.0 225.9,350.0 228.1,350.0 230.3,350.0 232.5,350.0 234.7,350.0 236.9,350.0 239.1,350.0 241.4,350.0 243.6,350.0 245.8,350.0 248.0,350.0 250.2,350.0 252.4,350.0 254.6,350.0 256.9,350.0 259.1,350.0 261.3,350.0 263.5,350.0 265.7,350.0"/><polyline data-s="1" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="265.7,70.0 268.7,70.0 271.6,70.0 274.6,70.0 277.5,70.0 280.5,70.0 283.4,70.0 286.4,70.0 289.3,70.0 292.3,70.0 295.2,70.0 298.2,70.0 301.1,70.0 304.1,70.0 307.0,70.0 310.0,70.0 313.0,70.0 315.9,70.0 318.9,70.0 321.8,70.0 324.8,70.0 327.7,70.0 330.7,70.0 333.6,70.0 336.6,70.0 339.5,70.0 342.5,70.0 345.4,70.0 348.4,70.0 351.3,70.0 354.3,70.0 357.2,70.0 360.2,70.0 363.1,70.0 366.1,70.0 369.0,70.0 372.0,70.0 375.0,70.0 377.9,70.0 380.9,70.0 383.8,70.0 386.8,70.0 389.7,70.0 392.7,70.0 395.6,70.0 398.6,70.0 401.5,70.0 404.5,70.0 407.4,70.0 410.4,70.0 413.3,70.0 416.3,70.0 419.2,70.0 422.2,70.0 425.1,70.0 428.1,70.0 431.0,70.0 434.0,70.0 437.0,70.0 439.9,70.0 442.9,70.0 445.8,70.0 448.8,70.0 451.7,70.0 454.7,70.0 457.6,70.0 460.6,70.0 463.5,70.0 466.5,70.0 469.4,70.0 472.4,70.0 475.3,70.0 478.3,70.0 481.2,70.0 484.2,70.0 487.1,70.0 490.1,70.0 493.0,70.0 496.0,70.0 499.0,70.0 501.9,70.0 504.9,70.0 507.8,70.0 510.8,70.0 513.7,70.0 516.7,70.0 519.6,70.0 522.6,70.0 525.5,70.0 528.5,70.0 531.4,70.0 534.4,70.0 537.3,70.0 540.3,70.0 543.2,70.0 546.2,70.0 549.1,70.0 552.1,70.0 555.0,70.0 558.0,70.0 561.0,70.0 563.9,70.0 566.9,70.0 569.8,70.0 572.8,70.0 575.7,70.0 578.7,70.0 581.6,70.0 584.6,70.0 587.5,70.0 590.5,70.0 593.4,70.0 596.4,70.0 599.3,70.0 602.3,70.0 605.2,70.0 608.2,70.0 611.1,70.0 614.1,70.0 617.0,70.0 620.0,70.0"/><polyline data-s="2" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,210.0 2.1,216.4 4.1,222.5 6.2,228.3 8.3,233.8 10.3,239.1 12.4,244.2 14.5,249.0 16.5,253.6 18.6,258.0 20.7,262.2 22.7,266.2 24.8,270.0 26.9,273.7 28.9,277.2 31.0,280.5 33.1,283.6 35.1,286.7 37.2,289.6 39.3,292.3 41.3,294.9 43.4,297.5 45.5,299.9 47.5,302.1 49.6,304.3 51.7,306.4 53.7,308.4 55.8,310.3 57.9,312.1 59.9,313.8 62.0,315.5 64.1,317.1 66.1,318.6 68.2,320.0 70.3,321.4 72.3,322.7 74.4,323.9 76.5,325.1 78.5,326.2 80.6,327.3 82.7,328.4 84.7,329.3 86.8,330.3 88.9,331.2 90.9,332.0 93.0,332.9 95.1,333.6 97.1,334.4 99.2,335.1 101.3,335.8 103.3,336.4 105.4,337.0 107.5,337.6 109.5,338.2 111.6,338.7 113.7,339.2 115.7,339.7 117.8,340.2 119.9,340.7 121.9,341.1 124.0,341.5 126.1,341.9 128.1,342.2 130.2,342.6 132.3,342.9 134.3,343.3 136.4,343.6 138.5,343.9 140.5,344.1 142.6,344.4 144.7,344.7 146.7,344.9 148.8,345.1 150.9,345.4 152.9,345.6 155.0,345.8 157.1,346.0 159.1,346.1 161.2,346.3 163.3,346.5 165.3,346.7 167.4,346.8 169.5,347.0 171.5,347.1 173.6,347.2 175.7,347.3 177.7,347.5 179.8,347.6 181.9,347.7 183.9,347.8 186.0,347.9 188.1,348.0 190.1,348.1 192.2,348.2 194.3,348.3 196.3,348.3 198.4,348.4 200.5,348.5 202.5,348.6 204.6,348.6 206.7,348.7 208.7,348.7 210.8,348.8 212.9,348.9 214.9,348.9 217.0,349.0 219.1,349.0 221.1,349.1 223.2,349.1 225.3,349.1 227.3,349.2 229.4,349.2 231.5,349.2 233.5,349.3 235.6,349.3 237.7,349.3 239.7,349.4 241.8,349.4 243.9,349.4 245.9,349.5 248.0,349.5 250.1,349.5 252.1,349.5 254.2,349.5 256.3,349.6 258.3,349.6 260.4,349.6 262.5,349.6 264.5,349.6 266.6,344.1 268.7,331.6 270.7,319.7 272.8,308.3 274.9,297.4 276.9,287.1 279.0,277.2 281.1,267.7 283.1,258.7 285.2,250.1 287.3,241.9 289.3,234.1 291.4,226.6 293.5,219.4 295.5,212.6 297.6,206.1 299.7,199.9 301.7,194.0 303.8,188.3 305.9,182.9 307.9,177.8 310.0,172.9 312.1,168.2 314.1,163.7 316.2,159.4 318.3,155.4 320.3,151.5 322.4,147.8 324.5,144.2 326.5,140.8 328.6,137.6 330.7,134.5 332.7,131.6 334.8,128.8 336.9,126.1 338.9,123.5 341.0,121.1 343.1,118.8 345.1,116.5 347.2,114.4 349.3,112.4 351.3,110.5 353.4,108.6 355.5,106.9 357.5,105.2 359.6,103.6 361.7,102.0 363.7,100.6 365.8,99.2 367.9,97.9 369.9,96.6 372.0,95.4 374.1,94.2 376.1,93.1 378.2,92.1 380.3,91.0 382.3,90.1 384.4,89.2 386.5,88.3 388.5,87.5 390.6,86.7 392.7,85.9 394.7,85.2 396.8,84.5 398.9,83.8 400.9,83.2 403.0,82.6 405.1,82.0 407.1,81.5 409.2,81.0 411.3,80.5 413.3,80.0 415.4,79.5 417.5,79.1 419.5,78.7 421.6,78.3 423.7,77.9 425.7,77.5 427.8,77.2 429.9,76.9 431.9,76.6 434.0,76.3 436.1,76.0 438.1,75.7 440.2,75.4 442.3,75.2 444.3,75.0 446.4,74.7 448.5,74.5 450.5,74.3 452.6,74.1 454.7,73.9 456.7,73.7 458.8,73.6 460.9,73.4 462.9,73.3 465.0,73.1 467.1,73.0 469.1,72.8 471.2,72.7 473.3,72.6 475.3,72.5 477.4,72.3 479.5,72.2 481.5,72.1 483.6,72.0 485.7,71.9 487.7,71.9 489.8,71.8 491.9,71.7 493.9,71.6 496.0,71.5 498.1,71.5 500.1,71.4 502.2,71.3 504.3,71.3 506.3,71.2 508.4,71.2 510.5,71.1 512.5,71.1 514.6,71.0 516.7,71.0 518.7,70.9 520.8,70.9 522.9,70.8 524.9,70.8 527.0,70.8 529.1,70.7 531.1,70.7 533.2,70.7 535.3,70.6 537.3,70.6 539.4,70.6 541.5,70.6 543.5,70.5 545.6,70.5 547.7,70.5 549.7,70.5 551.8,70.4 553.9,70.4 555.9,70.4 558.0,70.4 560.1,70.4 562.1,70.3 564.2,70.3 566.3,70.3 568.3,70.3 570.4,70.3 572.5,70.3 574.5,70.3 576.6,70.2 578.7,70.2 580.7,70.2 582.8,70.2 584.9,70.2 586.9,70.2 589.0,70.2 591.1,70.2 593.1,70.2 595.2,70.2 597.3,70.2 599.3,70.1 601.4,70.1 603.5,70.1 605.5,70.1 607.6,70.1 609.7,70.1 611.7,70.1 613.8,70.1 615.9,70.1 617.9,70.1 620.0,70.1"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="7">
+  <p class="h" data-s="0">Example 2 &mdash; a spring, with a force switched on at <i>t</i> = 1</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + 4<i>y</i> = 4<i>u</i><sub>1</sub>(<i>t</i>),&nbsp;&nbsp; <i>y</i>(0) = 0,&nbsp; <i>y</i>&#8242;(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">2. Transform both sides</p>
+      <p class="e t" data-s="2"><i>s</i><sup>2</sup><i>Y</i> + 4<i>Y</i> = <span class="fr"><span>4<b>e</b><sup>&minus;<i>s</i></sup></span><span><i>s</i></span></span></p>
+      <p class="lb" data-s="3">3. Solve for <i>Y</i></p>
+      <p class="e t" data-s="3"><i>Y</i> = <b>e</b><sup>&minus;<i>s</i></sup><span class="fr"><span>4</span><span><i>s</i>(<i>s</i><sup>2</sup> + 4)</span></span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">4. Partial fractions, without <b>e</b><sup>&minus;<i>s</i></sup></p>
+      <p class="e t" data-s="4"><span class="fr"><span>4</span><span><i>s</i>(<i>s</i><sup>2</sup> + 4)</span></span> = <span class="fr"><span>1</span><span><i>s</i></span></span> &minus; <span class="fr"><span><i>s</i></span><span><i>s</i><sup>2</sup> + 4</span></span>&nbsp; &rarr;&nbsp; 1 &minus; cos 2<i>t</i></p>
+      <p class="lb" data-s="5">5. Invert, then shift by 1</p>
+      <p class="e" data-s="5"><span class="bx"><i>y</i> = <i>u</i><sub>1</sub>(<i>t</i>)(1 &minus; cos 2(<i>t</i> &minus; 1))</span></p>
+      <p class="l" data-s="6">This is Friday&rsquo;s Example 8. Today we see where such a <i>Y</i>(<i>s</i>) comes from.</p>
+      <p class="a" data-s="7">&#8627; the picture.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="8">
+  <p class="h" data-s="0">Example 2, the picture</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1"><span class="d">dashed</span>: <i>y</i> = 1, the new rest position.</p>
+      <p class="l" data-s="2"><span class="g">teal</span>: <i>y</i>(<i>t</i>).</p>
+      <p class="e t" data-s="3"><i>t</i> &lt; 1:&nbsp; <i>y</i> = 0, nothing happens yet</p>
+      <p class="e t" data-s="4"><i>t</i> &ge; 1:&nbsp; between 0 and 2, centered at 1</p>
+      <p class="l" data-s="5">The constant force 4 moves the rest position from 0 to 4/4 = 1. With no damping, the spring keeps swinging around it.</p>
+      <p class="a" data-s="6">&#8627; how to check this answer.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="210" x2="0" y2="210"/><line x1="-7" y1="70" x2="0" y2="70"/><line x1="77.5" y1="350" x2="77.5" y2="357"/><line x1="155" y1="350" x2="155" y2="357"/><line x1="232.5" y1="350" x2="232.5" y2="357"/><line x1="310" y1="350" x2="310" y2="357"/><line x1="387.5" y1="350" x2="387.5" y2="357"/><line x1="465" y1="350" x2="465" y2="357"/><line x1="542.5" y1="350" x2="542.5" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">0</text><text x="-12" y="215" text-anchor="end">1</text><text x="-12" y="75" text-anchor="end">2</text><text x="0" y="375" text-anchor="middle">0</text><text x="77.5" y="375" text-anchor="middle">1</text><text x="155" y="375" text-anchor="middle">2</text><text x="232.5" y="375" text-anchor="middle">3</text><text x="310" y="375" text-anchor="middle">4</text><text x="387.5" y="375" text-anchor="middle">5</text><text x="465" y="375" text-anchor="middle">6</text><text x="542.5" y="375" text-anchor="middle">7</text><text x="620" y="375" text-anchor="middle">8</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="77.5,210.0 82.0,210.0 86.5,210.0 91.1,210.0 95.6,210.0 100.1,210.0 104.6,210.0 109.1,210.0 113.7,210.0 118.2,210.0 122.7,210.0 127.2,210.0 131.8,210.0 136.3,210.0 140.8,210.0 145.3,210.0 149.8,210.0 154.4,210.0 158.9,210.0 163.4,210.0 167.9,210.0 172.4,210.0 177.0,210.0 181.5,210.0 186.0,210.0 190.5,210.0 195.0,210.0 199.6,210.0 204.1,210.0 208.6,210.0 213.1,210.0 217.6,210.0 222.2,210.0 226.7,210.0 231.2,210.0 235.7,210.0 240.2,210.0 244.8,210.0 249.3,210.0 253.8,210.0 258.3,210.0 262.9,210.0 267.4,210.0 271.9,210.0 276.4,210.0 280.9,210.0 285.5,210.0 290.0,210.0 294.5,210.0 299.0,210.0 303.5,210.0 308.1,210.0 312.6,210.0 317.1,210.0 321.6,210.0 326.1,210.0 330.7,210.0 335.2,210.0 339.7,210.0 344.2,210.0 348.8,210.0 353.3,210.0 357.8,210.0 362.3,210.0 366.8,210.0 371.4,210.0 375.9,210.0 380.4,210.0 384.9,210.0 389.4,210.0 394.0,210.0 398.5,210.0 403.0,210.0 407.5,210.0 412.0,210.0 416.6,210.0 421.1,210.0 425.6,210.0 430.1,210.0 434.6,210.0 439.2,210.0 443.7,210.0 448.2,210.0 452.7,210.0 457.2,210.0 461.8,210.0 466.3,210.0 470.8,210.0 475.3,210.0 479.9,210.0 484.4,210.0 488.9,210.0 493.4,210.0 497.9,210.0 502.5,210.0 507.0,210.0 511.5,210.0 516.0,210.0 520.5,210.0 525.1,210.0 529.6,210.0 534.1,210.0 538.6,210.0 543.1,210.0 547.7,210.0 552.2,210.0 556.7,210.0 561.2,210.0 565.8,210.0 570.3,210.0 574.8,210.0 579.3,210.0 583.8,210.0 588.4,210.0 592.9,210.0 597.4,210.0 601.9,210.0 606.4,210.0 611.0,210.0 615.5,210.0 620.0,210.0"/><polyline data-s="2" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,350.0 1.6,350.0 3.1,350.0 4.6,350.0 6.2,350.0 7.8,350.0 9.3,350.0 10.9,350.0 12.4,350.0 13.9,350.0 15.5,350.0 17.1,350.0 18.6,350.0 20.2,350.0 21.7,350.0 23.2,350.0 24.8,350.0 26.4,350.0 27.9,350.0 29.4,350.0 31.0,350.0 32.5,350.0 34.1,350.0 35.6,350.0 37.2,350.0 38.8,350.0 40.3,350.0 41.9,350.0 43.4,350.0 44.9,350.0 46.5,350.0 48.0,350.0 49.6,350.0 51.2,350.0 52.7,350.0 54.2,350.0 55.8,350.0 57.4,350.0 58.9,350.0 60.5,350.0 62.0,350.0 63.5,350.0 65.1,350.0 66.7,350.0 68.2,350.0 69.8,350.0 71.3,350.0 72.8,350.0 74.4,350.0 76.0,350.0 77.5,350.0 79.0,349.9 80.6,349.6 82.2,349.0 83.7,348.2 85.2,347.2 86.8,346.0 88.3,344.5 89.9,342.9 91.4,341.0 93.0,338.9 94.5,336.7 96.1,334.2 97.7,331.5 99.2,328.6 100.8,325.5 102.3,322.3 103.9,318.9 105.4,315.3 106.9,311.5 108.5,307.5 110.0,303.4 111.6,299.2 113.1,294.8 114.7,290.3 116.2,285.6 117.8,280.9 119.4,276.0 120.9,271.0 122.5,265.9 124.0,260.7 125.6,255.5 127.1,250.1 128.7,244.7 130.2,239.3 131.8,233.8 133.3,228.3 134.8,222.7 136.4,217.1 137.9,211.5 139.5,205.9 141.1,200.3 142.6,194.7 144.2,189.2 145.7,183.7 147.2,178.2 148.8,172.8 150.3,167.4 151.9,162.1 153.4,156.9 155.0,151.7 156.6,146.7 158.1,141.8 159.7,136.9 161.2,132.2 162.8,127.6 164.3,123.1 165.9,118.8 167.4,114.7 169.0,110.6 170.5,106.8 172.1,103.1 173.6,99.5 175.1,96.2 176.7,93.0 178.2,90.0 179.8,87.2 181.3,84.7 182.9,82.3 184.4,80.1 186.0,78.1 187.5,76.3 189.1,74.8 190.7,73.4 192.2,72.3 193.8,71.4 195.3,70.7 196.8,70.3 198.4,70.0 200.0,70.0 201.5,70.2 203.1,70.7 204.6,71.3 206.2,72.2 207.7,73.3 209.2,74.6 210.8,76.2 212.4,77.9 213.9,79.9 215.4,82.1 217.0,84.5 218.5,87.0 220.1,89.8 221.6,92.8 223.2,95.9 224.8,99.3 226.3,102.8 227.8,106.5 229.4,110.3 230.9,114.3 232.5,118.5 234.1,122.8 235.6,127.2 237.2,131.8 238.7,136.5 240.2,141.4 241.8,146.3 243.4,151.3 244.9,156.5 246.5,161.7 248.0,167.0 249.6,172.3 251.1,177.8 252.6,183.2 254.2,188.7 255.8,194.3 257.3,199.9 258.8,205.5 260.4,211.1 261.9,216.7 263.5,222.2 265.1,227.8 266.6,233.4 268.1,238.9 269.7,244.3 271.2,249.7 272.8,255.0 274.4,260.3 275.9,265.5 277.4,270.6 279.0,275.6 280.6,280.5 282.1,285.3 283.7,289.9 285.2,294.5 286.8,298.9 288.3,303.1 289.9,307.2 291.4,311.2 292.9,315.0 294.5,318.6 296.1,322.0 297.6,325.3 299.1,328.4 300.7,331.3 302.2,334.0 303.8,336.5 305.4,338.8 306.9,340.9 308.4,342.8 310.0,344.4 311.5,345.9 313.1,347.1 314.6,348.1 316.2,348.9 317.8,349.5 319.3,349.9 320.8,350.0 322.4,349.9 323.9,349.6 325.5,349.0 327.0,348.3 328.6,347.3 330.1,346.1 331.7,344.7 333.2,343.0 334.8,341.2 336.3,339.1 337.9,336.9 339.4,334.4 341.0,331.7 342.6,328.9 344.1,325.8 345.6,322.6 347.2,319.1 348.8,315.5 350.3,311.8 351.9,307.9 353.4,303.8 354.9,299.5 356.5,295.2 358.1,290.7 359.6,286.0 361.2,281.3 362.7,276.4 364.2,271.4 365.8,266.3 367.4,261.1 368.9,255.9 370.5,250.6 372.0,245.2 373.6,239.7 375.1,234.2 376.7,228.7 378.2,223.1 379.8,217.6 381.3,212.0 382.9,206.4 384.4,200.8 386.0,195.2 387.5,189.6 389.0,184.1 390.6,178.6 392.1,173.2 393.7,167.8 395.2,162.5 396.8,157.3 398.3,152.1 399.9,147.1 401.4,142.1 403.0,137.3 404.5,132.6 406.1,128.0 407.6,123.5 409.2,119.2 410.8,115.0 412.3,110.9 413.8,107.1 415.4,103.4 416.9,99.8 418.5,96.4 420.1,93.3 421.6,90.3 423.1,87.5 424.7,84.9 426.2,82.4 427.8,80.2 429.4,78.2 430.9,76.5 432.4,74.9 434.0,73.5 435.6,72.4 437.1,71.5 438.7,70.8 440.2,70.3 441.8,70.0 443.3,70.0 444.9,70.2 446.4,70.6 448.0,71.3 449.5,72.1 451.1,73.2 452.6,74.5 454.2,76.1 455.7,77.8 457.2,79.7 458.8,81.9 460.4,84.3 461.9,86.8 463.5,89.6 465.0,92.5 466.5,95.7 468.1,99.0 469.6,102.5 471.2,106.2 472.8,110.0 474.3,114.0 475.8,118.2 477.4,122.5 478.9,126.9 480.5,131.5 482.0,136.2 483.6,141.0 485.1,145.9 486.7,150.9 488.2,156.1 489.8,161.3 491.3,166.5 492.9,171.9 494.4,177.3 496.0,182.8 497.6,188.3 499.1,193.9 500.6,199.4 502.2,205.0 503.8,210.6 505.3,216.2 506.9,221.8 508.4,227.4 509.9,232.9 511.5,238.4 513.0,243.9 514.6,249.3 516.1,254.6 517.7,259.9 519.2,265.1 520.8,270.2 522.4,275.2 523.9,280.1 525.5,284.9 527.0,289.6 528.6,294.1 530.1,298.5 531.6,302.8 533.2,306.9 534.8,310.9 536.3,314.7 537.9,318.3 539.4,321.8 541.0,325.0 542.5,328.1 544.0,331.0 545.6,333.8 547.1,336.3 548.7,338.6 550.2,340.7 551.8,342.6 553.4,344.3 554.9,345.8 556.4,347.0 558.0,348.1 559.5,348.9 561.1,349.5 562.6,349.8 564.2,350.0 565.8,349.9 567.3,349.6 568.9,349.1 570.4,348.4 572.0,347.4 573.5,346.2 575.0,344.8 576.6,343.2 578.1,341.3 579.7,339.3 581.2,337.0 582.8,334.6 584.4,331.9 585.9,329.1 587.5,326.0 589.0,322.8 590.5,319.4 592.1,315.8 593.6,312.1 595.2,308.2 596.8,304.1 598.3,299.9 599.9,295.5 601.4,291.0 603.0,286.4 604.5,281.6 606.1,276.8 607.6,271.8 609.1,266.7 610.7,261.6 612.2,256.3 613.8,251.0 615.4,245.6 616.9,240.2 618.5,234.7 620.0,229.1"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="9">
+  <p class="h" data-s="0">Checking Example 2, piece by piece</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i> = 0 for <i>t</i> &lt; 1,&nbsp;&nbsp; <i>y</i> = 1 &minus; cos 2(<i>t</i> &minus; 1) for <i>t</i> &ge; 1</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">On each piece</p>
+      <p class="e t" data-s="2"><i>t</i> &lt; 1:&nbsp; 0 + 0 = 0 &#10003;</p>
+      <p class="e t" data-s="3"><i>t</i> &ge; 1:&nbsp; <i>y</i>&#8243; = 4 cos 2(<i>t</i> &minus; 1)</p>
+      <p class="e t" data-s="4"><i>y</i>&#8243; + 4<i>y</i> = 4 cos 2(<i>t</i> &minus; 1) + 4 &minus; 4 cos 2(<i>t</i> &minus; 1) = 4 &#10003;</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">At the switch <i>t</i> = 1</p>
+      <p class="e t" data-s="5"><i>y</i>: 0 and 1 &minus; cos 0 = 0 &#10003;</p>
+      <p class="e t" data-s="6"><i>y</i>&#8242;: 0 and 2 sin 0 = 0 &#10003;</p>
+      <p class="e t" data-s="7"><i>y</i>&#8243;: 0 and 4, a jump of 4</p>
+      <p class="l" data-s="8">Since <i>y</i>&#8243; = <i>g</i> &minus; 4<i>y</i>, <i>y</i>&#8243; jumps exactly as much as <i>g</i> jumps. <i>y</i> and <i>y</i>&#8242; stay continuous.</p>
+      <p class="a" data-s="9">&#8627; the same spring, not starting at rest.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="10">
+  <p class="h" data-s="0">Example 3 &mdash; the same spring, with <i>y</i>(0) = 1</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + 4<i>y</i> = 4<i>u</i><sub>1</sub>(<i>t</i>),&nbsp;&nbsp; <i>y</i>(0) = 1,&nbsp; <i>y</i>&#8242;(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">2. Transform both sides</p>
+      <p class="e t" data-s="2"><i>s</i><sup>2</sup><i>Y</i> &minus; <i>s</i> + 4<i>Y</i> = <span class="fr"><span>4<b>e</b><sup>&minus;<i>s</i></sup></span><span><i>s</i></span></span></p>
+      <p class="lb" data-s="3">3. Solve for <i>Y</i>, group by the factor</p>
+      <p class="e t" data-s="3"><i>Y</i> = <span class="fr"><span><i>s</i></span><span><i>s</i><sup>2</sup> + 4</span></span> + <b>e</b><sup>&minus;<i>s</i></sup><span class="fr"><span>4</span><span><i>s</i>(<i>s</i><sup>2</sup> + 4)</span></span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">4&ndash;5. Invert each group</p>
+      <p class="e t" data-s="4"><span class="fr"><span><i>s</i></span><span><i>s</i><sup>2</sup> + 4</span></span> &rarr; cos 2<i>t</i>&nbsp;&nbsp; <span class="d">no factor <b>e</b><sup>&minus;<i>s</i></sup>: no shift</span></p>
+      <p class="e t" data-s="5">the second group is Example 2</p>
+      <p class="e" data-s="6"><span class="bx"><i>y</i> = cos 2<i>t</i> + <i>u</i><sub>1</sub>(<i>t</i>)(1 &minus; cos 2(<i>t</i> &minus; 1))</span></p>
+      <p class="l" data-s="7">The initial values give the terms without <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>. The force gives the terms with <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>. Keep the two groups apart.</p>
+      <p class="a" data-s="8">&#8627; a quick round: <i>Y</i>(<i>s</i>).</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="11">
+  <p class="h" data-s="0">Call it out &mdash; <i>Y</i>(<i>s</i>) only, do not invert</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>y</i>&#8243; + <i>y</i> = <i>u</i><sub>2</sub>(<i>t</i>),&nbsp; zero initial values</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>y</i>&#8242; + 3<i>y</i> = <i>u</i><sub>1</sub>(<i>t</i>),&nbsp; <i>y</i>(0) = 0</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8243; &minus; <i>y</i> = 2<i>u</i><sub>3</sub>(<i>t</i>),&nbsp; zero initial values</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <i>y</i>&#8243; + 9<i>y</i> = <i>u</i><sub>1</sub>(<i>t</i>),&nbsp; <i>y</i>(0) = 1,&nbsp; <i>y</i>&#8242;(0) = 0</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; <i>y</i>&#8243; + 2<i>y</i>&#8242; + 5<i>y</i> = <i>u</i><sub>&pi;</sub>(<i>t</i>),&nbsp; zero initial values</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="fr"><span><b>e</b><sup>&minus;2<i>s</i></sup></span><span><i>s</i>(<i>s</i><sup>2</sup> + 1)</span></span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="fr"><span><b>e</b><sup>&minus;<i>s</i></sup></span><span><i>s</i>(<i>s</i> + 3)</span></span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="fr"><span>2<b>e</b><sup>&minus;3<i>s</i></sup></span><span><i>s</i>(<i>s</i><sup>2</sup> &minus; 1)</span></span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="fr"><span><i>s</i></span><span><i>s</i><sup>2</sup> + 9</span></span> + <span class="fr"><span><b>e</b><sup>&minus;<i>s</i></sup></span><span><i>s</i>(<i>s</i><sup>2</sup> + 9)</span></span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <span class="fr"><span><b>e</b><sup>&minus;&pi;<i>s</i></sup></span><span><i>s</i>(<i>s</i><sup>2</sup> + 2<i>s</i> + 5)</span></span></p>
+      <p class="a" data-s="11">&#8627; the denominator is always the characteristic polynomial, times <i>s</i> from the step.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="12">
+  <p class="h" data-s="0">Example 4 &mdash; a force that switches off</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + <i>y</i> = 1 &minus; <i>u</i><sub>&pi;</sub>(<i>t</i>),&nbsp;&nbsp; <i>y</i>(0) = 0,&nbsp; <i>y</i>&#8242;(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">2&ndash;3. Transform, solve for <i>Y</i></p>
+      <p class="e t" data-s="2">(<i>s</i><sup>2</sup> + 1)<i>Y</i> = <span class="fr"><span>1</span><span><i>s</i></span></span> &minus; <span class="fr"><span><b>e</b><sup>&minus;&pi;<i>s</i></sup></span><span><i>s</i></span></span></p>
+      <p class="e t" data-s="3"><i>Y</i> = <span class="fr"><span>1</span><span><i>s</i>(<i>s</i><sup>2</sup> + 1)</span></span> &minus; <b>e</b><sup>&minus;&pi;<i>s</i></sup><span class="fr"><span>1</span><span><i>s</i>(<i>s</i><sup>2</sup> + 1)</span></span></p>
+      <p class="lb" data-s="4">4. One fraction, used twice</p>
+      <p class="e t" data-s="4"><span class="fr"><span>1</span><span><i>s</i>(<i>s</i><sup>2</sup> + 1)</span></span> = <span class="fr"><span>1</span><span><i>s</i></span></span> &minus; <span class="fr"><span><i>s</i></span><span><i>s</i><sup>2</sup> + 1</span></span>&nbsp; &rarr;&nbsp; 1 &minus; cos <i>t</i></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">5. Invert, shift the second term by &pi;</p>
+      <p class="e" data-s="5"><span class="bx"><i>y</i> = 1 &minus; cos <i>t</i> &minus; <i>u</i><sub>&pi;</sub>(<i>t</i>)(1 &minus; cos(<i>t</i> &minus; &pi;))</span></p>
+      <p class="lb" data-s="6">For <i>t</i> &ge; &pi;</p>
+      <p class="e t" data-s="6">cos(<i>t</i> &minus; &pi;) = &minus;cos <i>t</i>,&nbsp; so&nbsp; <i>y</i> = 1 &minus; cos <i>t</i> &minus; 1 &minus; cos <i>t</i> = &minus;2 cos <i>t</i></p>
+      <p class="a" data-s="7">&#8627; the picture.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="13">
+  <p class="h" data-s="0">Example 4, the picture</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1"><span class="d">dashed</span>: the force, 1 until <i>t</i> = &pi;, then 0.</p>
+      <p class="l" data-s="2"><span class="g">teal</span>: <i>y</i>(<i>t</i>).</p>
+      <p class="e t" data-s="3">0 &le; <i>t</i> &lt; &pi;:&nbsp; <i>y</i> = 1 &minus; cos <i>t</i>, rises from 0 to 2</p>
+      <p class="e t" data-s="4"><i>t</i> &ge; &pi;:&nbsp; <i>y</i> = &minus;2 cos <i>t</i></p>
+      <p class="l" data-s="5">At <i>t</i> = &pi; the mass is at <i>y</i> = 2 with <i>y</i>&#8242; = 0. The force stops, and it swings between 2 and &minus;2 from there.</p>
+      <p class="a" data-s="6">&#8627; damping, and three fractions.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="315" x2="0" y2="315"/><line x1="-7" y1="245" x2="0" y2="245"/><line x1="-7" y1="175" x2="0" y2="175"/><line x1="-7" y1="105" x2="0" y2="105"/><line x1="-7" y1="35" x2="0" y2="35"/><line x1="124" y1="350" x2="124" y2="357"/><line x1="248" y1="350" x2="248" y2="357"/><line x1="372" y1="350" x2="372" y2="357"/><line x1="496" y1="350" x2="496" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="320" text-anchor="end">−2</text><text x="-12" y="250" text-anchor="end">−1</text><text x="-12" y="180" text-anchor="end">0</text><text x="-12" y="110" text-anchor="end">1</text><text x="-12" y="40" text-anchor="end">2</text><text x="0" y="375" text-anchor="middle">0</text><text x="124" y="375" text-anchor="middle">2</text><text x="248" y="375" text-anchor="middle">4</text><text x="372" y="375" text-anchor="middle">6</text><text x="496" y="375" text-anchor="middle">8</text><text x="620" y="375" text-anchor="middle">10</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="0.0,105.0 1.6,105.0 3.2,105.0 4.9,105.0 6.5,105.0 8.1,105.0 9.7,105.0 11.4,105.0 13.0,105.0 14.6,105.0 16.2,105.0 17.9,105.0 19.5,105.0 21.1,105.0 22.7,105.0 24.3,105.0 26.0,105.0 27.6,105.0 29.2,105.0 30.8,105.0 32.5,105.0 34.1,105.0 35.7,105.0 37.3,105.0 39.0,105.0 40.6,105.0 42.2,105.0 43.8,105.0 45.4,105.0 47.1,105.0 48.7,105.0 50.3,105.0 51.9,105.0 53.6,105.0 55.2,105.0 56.8,105.0 58.4,105.0 60.1,105.0 61.7,105.0 63.3,105.0 64.9,105.0 66.5,105.0 68.2,105.0 69.8,105.0 71.4,105.0 73.0,105.0 74.7,105.0 76.3,105.0 77.9,105.0 79.5,105.0 81.2,105.0 82.8,105.0 84.4,105.0 86.0,105.0 87.7,105.0 89.3,105.0 90.9,105.0 92.5,105.0 94.1,105.0 95.8,105.0 97.4,105.0 99.0,105.0 100.6,105.0 102.3,105.0 103.9,105.0 105.5,105.0 107.1,105.0 108.8,105.0 110.4,105.0 112.0,105.0 113.6,105.0 115.2,105.0 116.9,105.0 118.5,105.0 120.1,105.0 121.7,105.0 123.4,105.0 125.0,105.0 126.6,105.0 128.2,105.0 129.9,105.0 131.5,105.0 133.1,105.0 134.7,105.0 136.3,105.0 138.0,105.0 139.6,105.0 141.2,105.0 142.8,105.0 144.5,105.0 146.1,105.0 147.7,105.0 149.3,105.0 151.0,105.0 152.6,105.0 154.2,105.0 155.8,105.0 157.4,105.0 159.1,105.0 160.7,105.0 162.3,105.0 163.9,105.0 165.6,105.0 167.2,105.0 168.8,105.0 170.4,105.0 172.1,105.0 173.7,105.0 175.3,105.0 176.9,105.0 178.5,105.0 180.2,105.0 181.8,105.0 183.4,105.0 185.0,105.0 186.7,105.0 188.3,105.0 189.9,105.0 191.5,105.0 193.2,105.0 194.8,105.0"/><polyline data-s="1" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="194.8,175.0 198.3,175.0 201.9,175.0 205.4,175.0 209.0,175.0 212.5,175.0 216.0,175.0 219.6,175.0 223.1,175.0 226.7,175.0 230.2,175.0 233.8,175.0 237.3,175.0 240.8,175.0 244.4,175.0 247.9,175.0 251.5,175.0 255.0,175.0 258.6,175.0 262.1,175.0 265.6,175.0 269.2,175.0 272.7,175.0 276.3,175.0 279.8,175.0 283.4,175.0 286.9,175.0 290.5,175.0 294.0,175.0 297.5,175.0 301.1,175.0 304.6,175.0 308.2,175.0 311.7,175.0 315.3,175.0 318.8,175.0 322.3,175.0 325.9,175.0 329.4,175.0 333.0,175.0 336.5,175.0 340.1,175.0 343.6,175.0 347.1,175.0 350.7,175.0 354.2,175.0 357.8,175.0 361.3,175.0 364.9,175.0 368.4,175.0 372.0,175.0 375.5,175.0 379.0,175.0 382.6,175.0 386.1,175.0 389.7,175.0 393.2,175.0 396.8,175.0 400.3,175.0 403.8,175.0 407.4,175.0 410.9,175.0 414.5,175.0 418.0,175.0 421.6,175.0 425.1,175.0 428.7,175.0 432.2,175.0 435.7,175.0 439.3,175.0 442.8,175.0 446.4,175.0 449.9,175.0 453.5,175.0 457.0,175.0 460.5,175.0 464.1,175.0 467.6,175.0 471.2,175.0 474.7,175.0 478.3,175.0 481.8,175.0 485.3,175.0 488.9,175.0 492.4,175.0 496.0,175.0 499.5,175.0 503.1,175.0 506.6,175.0 510.2,175.0 513.7,175.0 517.2,175.0 520.8,175.0 524.3,175.0 527.9,175.0 531.4,175.0 535.0,175.0 538.5,175.0 542.0,175.0 545.6,175.0 549.1,175.0 552.7,175.0 556.2,175.0 559.8,175.0 563.3,175.0 566.8,175.0 570.4,175.0 573.9,175.0 577.5,175.0 581.0,175.0 584.6,175.0 588.1,175.0 591.7,175.0 595.2,175.0 598.7,175.0 602.3,175.0 605.8,175.0 609.4,175.0 612.9,175.0 616.5,175.0 620.0,175.0"/><polyline data-s="2" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,175.0 1.6,175.0 3.1,174.9 4.7,174.8 6.2,174.7 7.8,174.5 9.3,174.2 10.8,173.9 12.4,173.6 13.9,173.2 15.5,172.8 17.1,172.4 18.6,171.9 20.1,171.3 21.7,170.8 23.2,170.1 24.8,169.5 26.4,168.8 27.9,168.0 29.4,167.3 31.0,166.4 32.5,165.6 34.1,164.7 35.6,163.7 37.2,162.8 38.8,161.8 40.3,160.7 41.9,159.6 43.4,158.5 45.0,157.4 46.5,156.2 48.0,155.0 49.6,153.8 51.1,152.5 52.7,151.2 54.2,149.9 55.8,148.5 57.4,147.1 58.9,145.7 60.5,144.3 62.0,142.8 63.5,141.3 65.1,139.8 66.7,138.3 68.2,136.8 69.8,135.2 71.3,133.6 72.8,132.0 74.4,130.4 76.0,128.7 77.5,127.1 79.0,125.4 80.6,123.7 82.2,122.0 83.7,120.3 85.2,118.6 86.8,116.9 88.3,115.2 89.9,113.4 91.5,111.7 93.0,110.0 94.5,108.2 96.1,106.5 97.7,104.7 99.2,103.0 100.8,101.2 102.3,99.5 103.8,97.7 105.4,96.0 107.0,94.2 108.5,92.5 110.0,90.8 111.6,89.1 113.2,87.4 114.7,85.7 116.2,84.0 117.8,82.4 119.3,80.7 120.9,79.1 122.5,77.5 124.0,75.9 125.5,74.3 127.1,72.7 128.7,71.2 130.2,69.7 131.8,68.2 133.3,66.7 134.8,65.2 136.4,63.8 137.9,62.4 139.5,61.0 141.1,59.7 142.6,58.4 144.2,57.1 145.7,55.8 147.2,54.6 148.8,53.4 150.3,52.2 151.9,51.1 153.4,50.0 155.0,48.9 156.6,47.9 158.1,46.9 159.7,45.9 161.2,45.0 162.8,44.1 164.3,43.3 165.8,42.5 167.4,41.7 168.9,41.0 170.5,40.3 172.1,39.7 173.6,39.0 175.2,38.5 176.7,38.0 178.2,37.5 179.8,37.0 181.3,36.6 182.9,36.3 184.4,36.0 186.0,35.7 187.6,35.5 189.1,35.3 190.7,35.2 192.2,35.1 193.8,35.0 195.3,35.0 196.8,35.1 198.4,35.2 199.9,35.5 201.5,35.8 203.1,36.2 204.6,36.8 206.2,37.3 207.7,38.0 209.2,38.8 210.8,39.6 212.3,40.6 213.9,41.6 215.4,42.7 217.0,43.9 218.6,45.2 220.1,46.5 221.7,47.9 223.2,49.5 224.8,51.0 226.3,52.7 227.8,54.4 229.4,56.3 230.9,58.2 232.5,60.1 234.1,62.2 235.6,64.3 237.2,66.4 238.7,68.7 240.2,71.0 241.8,73.4 243.3,75.8 244.9,78.3 246.4,80.9 248.0,83.5 249.6,86.2 251.1,88.9 252.7,91.7 254.2,94.5 255.8,97.4 257.3,100.4 258.9,103.3 260.4,106.4 261.9,109.4 263.5,112.5 265.1,115.7 266.6,118.9 268.1,122.1 269.7,125.4 271.2,128.7 272.8,132.0 274.4,135.3 275.9,138.7 277.4,142.1 279.0,145.5 280.6,148.9 282.1,152.4 283.6,155.8 285.2,159.3 286.8,162.8 288.3,166.3 289.9,169.8 291.4,173.3 292.9,176.8 294.5,180.3 296.1,183.8 297.6,187.2 299.1,190.7 300.7,194.2 302.2,197.7 303.8,201.1 305.4,204.5 306.9,208.0 308.4,211.3 310.0,214.7 311.6,218.1 313.1,221.4 314.6,224.7 316.2,227.9 317.8,231.1 319.3,234.3 320.9,237.5 322.4,240.6 323.9,243.7 325.5,246.7 327.1,249.7 328.6,252.6 330.1,255.5 331.7,258.3 333.2,261.1 334.8,263.9 336.4,266.5 337.9,269.2 339.4,271.7 341.0,274.2 342.6,276.7 344.1,279.0 345.6,281.3 347.2,283.6 348.8,285.8 350.3,287.9 351.9,289.9 353.4,291.9 354.9,293.8 356.5,295.6 358.1,297.3 359.6,299.0 361.1,300.6 362.7,302.1 364.2,303.5 365.8,304.8 367.4,306.1 368.9,307.3 370.4,308.4 372.0,309.4 373.6,310.4 375.1,311.2 376.6,312.0 378.2,312.7 379.8,313.3 381.3,313.8 382.9,314.2 384.4,314.5 385.9,314.8 387.5,314.9 389.1,315.0 390.6,315.0 392.1,314.9 393.7,314.7 395.2,314.4 396.8,314.0 398.4,313.6 399.9,313.1 401.4,312.4 403.0,311.7 404.6,310.9 406.1,310.0 407.6,309.1 409.2,308.0 410.8,306.9 412.3,305.7 413.9,304.4 415.4,303.0 416.9,301.6 418.5,300.0 420.1,298.4 421.6,296.7 423.1,294.9 424.7,293.1 426.2,291.2 427.8,289.2 429.4,287.1 430.9,285.0 432.4,282.8 434.0,280.5 435.6,278.2 437.1,275.8 438.6,273.4 440.2,270.8 441.8,268.3 443.3,265.6 444.9,262.9 446.4,260.2 447.9,257.4 449.5,254.5 451.1,251.6 452.6,248.7 454.1,245.7 455.7,242.6 457.2,239.5 458.8,236.4 460.4,233.2 461.9,230.0 463.4,226.8 465.0,223.5 466.6,220.2 468.1,216.9 469.6,213.6 471.2,210.2 472.8,206.8 474.3,203.4 475.9,199.9 477.4,196.5 478.9,193.0 480.5,189.5 482.1,186.0 483.6,182.6 485.1,179.1 486.7,175.6 488.2,172.1 489.8,168.6 491.4,165.1 492.9,161.6 494.4,158.1 496.0,154.6 497.6,151.2 499.1,147.7 500.6,144.3 502.2,140.9 503.8,137.5 505.3,134.2 506.9,130.8 508.4,127.5 509.9,124.2 511.5,121.0 513.0,117.8 514.6,114.6 516.1,111.5 517.7,108.4 519.2,105.3 520.8,102.3 522.4,99.3 523.9,96.4 525.5,93.5 527.0,90.7 528.5,88.0 530.1,85.2 531.6,82.6 533.2,80.0 534.8,77.4 536.3,75.0 537.9,72.5 539.4,70.2 541.0,67.9 542.5,65.7 544.0,63.5 545.6,61.4 547.1,59.4 548.7,57.5 550.2,55.6 551.8,53.8 553.4,52.1 554.9,50.5 556.5,48.9 558.0,47.4 559.5,46.0 561.1,44.7 562.6,43.5 564.2,42.3 565.8,41.2 567.3,40.3 568.9,39.3 570.4,38.5 572.0,37.8 573.5,37.1 575.0,36.6 576.6,36.1 578.1,35.7 579.7,35.4 581.2,35.2 582.8,35.0 584.4,35.0 585.9,35.0 587.5,35.2 589.0,35.4 590.5,35.7 592.1,36.1 593.6,36.6 595.2,37.1 596.8,37.8 598.3,38.5 599.9,39.4 601.4,40.3 603.0,41.3 604.5,42.3 606.0,43.5 607.6,44.7 609.1,46.1 610.7,47.5 612.2,49.0 613.8,50.5 615.4,52.2 616.9,53.9 618.5,55.7 620.0,57.5"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="14">
+  <p class="h" data-s="0">Example 5 &mdash; with damping</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + 3<i>y</i>&#8242; + 2<i>y</i> = <i>u</i><sub>2</sub>(<i>t</i>),&nbsp;&nbsp; <i>y</i>(0) = 0,&nbsp; <i>y</i>&#8242;(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">2&ndash;3. Transform, solve for <i>Y</i></p>
+      <p class="e t" data-s="2">(<i>s</i><sup>2</sup> + 3<i>s</i> + 2)<i>Y</i> = <span class="fr"><span><b>e</b><sup>&minus;2<i>s</i></sup></span><span><i>s</i></span></span></p>
+      <p class="e t" data-s="3"><i>Y</i> = <b>e</b><sup>&minus;2<i>s</i></sup><span class="fr"><span>1</span><span><i>s</i>(<i>s</i> + 1)(<i>s</i> + 2)</span></span></p>
+      <p class="lb" data-s="4">4. Partial fractions, without <b>e</b><sup>&minus;2<i>s</i></sup></p>
+      <p class="e t" data-s="4"><span class="fr"><span>1</span><span><i>s</i>(<i>s</i> + 1)(<i>s</i> + 2)</span></span> = <span class="fr"><span>1/2</span><span><i>s</i></span></span> &minus; <span class="fr"><span>1</span><span><i>s</i> + 1</span></span> + <span class="fr"><span>1/2</span><span><i>s</i> + 2</span></span></p>
+    </div>
+    <div>
+      <p class="l" data-s="5"><span class="d"><i>s</i> = 0: <i>A</i> = 1/2;&nbsp; <i>s</i> = &minus;1: <i>B</i> = &minus;1;&nbsp; <i>s</i> = &minus;2: <i>C</i> = 1/2</span></p>
+      <p class="e t" data-s="6">&rarr;&nbsp; <span class="fr"><span>1</span><span>2</span></span> &minus; <b>e</b><sup>&minus;<i>t</i></sup> + <span class="fr"><span>1</span><span>2</span></span><b>e</b><sup>&minus;2<i>t</i></sup></p>
+      <p class="lb" data-s="7">5. Shift by 2</p>
+      <p class="e" data-s="7"><span class="bx"><i>y</i> = <i>u</i><sub>2</sub>(<i>t</i>)(<span class="fr"><span>1</span><span>2</span></span> &minus; <b>e</b><sup>&minus;(<i>t</i> &minus; 2)</sup> + <span class="fr"><span>1</span><span>2</span></span><b>e</b><sup>&minus;2(<i>t</i> &minus; 2)</sup>)</span></p>
+      <p class="a" data-s="8">&#8627; the picture.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="15">
+  <p class="h" data-s="0">Example 5, the picture</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1"><span class="d">dashed</span>: <i>y</i> = 1/2.</p>
+      <p class="l" data-s="2"><span class="g">teal</span>: <i>y</i>(<i>t</i>).</p>
+      <p class="e t" data-s="3"><i>t</i> &rarr; &infin;:&nbsp; both exponentials die, <i>y</i> &rarr; <span class="fr"><span>1</span><span>2</span></span></p>
+      <p class="l" data-s="4">The new rest position is the constant solution: set <i>y</i>&#8242; = <i>y</i>&#8243; = 0, then 2<i>y</i> = 1.</p>
+      <p class="l" data-s="5">With damping there is no swinging: the mass moves to 1/2 and stays there.</p>
+      <p class="a" data-s="6">&#8627; a quick round on rest positions.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="233.3" x2="0" y2="233.3"/><line x1="-7" y1="116.7" x2="0" y2="116.7"/><line x1="-7" y1="0" x2="0" y2="0"/><line x1="68.9" y1="350" x2="68.9" y2="357"/><line x1="137.8" y1="350" x2="137.8" y2="357"/><line x1="206.7" y1="350" x2="206.7" y2="357"/><line x1="275.6" y1="350" x2="275.6" y2="357"/><line x1="344.4" y1="350" x2="344.4" y2="357"/><line x1="413.3" y1="350" x2="413.3" y2="357"/><line x1="482.2" y1="350" x2="482.2" y2="357"/><line x1="551.1" y1="350" x2="551.1" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">0</text><text x="-12" y="238.3" text-anchor="end">0.25</text><text x="-12" y="121.7" text-anchor="end">0.5</text><text x="-12" y="5" text-anchor="end">0.75</text><text x="0" y="375" text-anchor="middle">0</text><text x="68.9" y="375" text-anchor="middle">1</text><text x="137.8" y="375" text-anchor="middle">2</text><text x="206.7" y="375" text-anchor="middle">3</text><text x="275.6" y="375" text-anchor="middle">4</text><text x="344.4" y="375" text-anchor="middle">5</text><text x="413.3" y="375" text-anchor="middle">6</text><text x="482.2" y="375" text-anchor="middle">7</text><text x="551.1" y="375" text-anchor="middle">8</text><text x="620" y="375" text-anchor="middle">9</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="137.8,116.7 141.8,116.7 145.8,116.7 149.8,116.7 153.9,116.7 157.9,116.7 161.9,116.7 165.9,116.7 169.9,116.7 173.9,116.7 178.0,116.7 182.0,116.7 186.0,116.7 190.0,116.7 194.0,116.7 198.1,116.7 202.1,116.7 206.1,116.7 210.1,116.7 214.1,116.7 218.1,116.7 222.2,116.7 226.2,116.7 230.2,116.7 234.2,116.7 238.2,116.7 242.3,116.7 246.3,116.7 250.3,116.7 254.3,116.7 258.3,116.7 262.4,116.7 266.4,116.7 270.4,116.7 274.4,116.7 278.4,116.7 282.4,116.7 286.5,116.7 290.5,116.7 294.5,116.7 298.5,116.7 302.5,116.7 306.6,116.7 310.6,116.7 314.6,116.7 318.6,116.7 322.6,116.7 326.6,116.7 330.7,116.7 334.7,116.7 338.7,116.7 342.7,116.7 346.7,116.7 350.8,116.7 354.8,116.7 358.8,116.7 362.8,116.7 366.8,116.7 370.9,116.7 374.9,116.7 378.9,116.7 382.9,116.7 386.9,116.7 390.9,116.7 395.0,116.7 399.0,116.7 403.0,116.7 407.0,116.7 411.0,116.7 415.1,116.7 419.1,116.7 423.1,116.7 427.1,116.7 431.1,116.7 435.1,116.7 439.2,116.7 443.2,116.7 447.2,116.7 451.2,116.7 455.2,116.7 459.3,116.7 463.3,116.7 467.3,116.7 471.3,116.7 475.3,116.7 479.4,116.7 483.4,116.7 487.4,116.7 491.4,116.7 495.4,116.7 499.4,116.7 503.5,116.7 507.5,116.7 511.5,116.7 515.5,116.7 519.5,116.7 523.6,116.7 527.6,116.7 531.6,116.7 535.6,116.7 539.6,116.7 543.6,116.7 547.7,116.7 551.7,116.7 555.7,116.7 559.7,116.7 563.7,116.7 567.8,116.7 571.8,116.7 575.8,116.7 579.8,116.7 583.8,116.7 587.9,116.7 591.9,116.7 595.9,116.7 599.9,116.7 603.9,116.7 607.9,116.7 612.0,116.7 616.0,116.7 620.0,116.7"/><polyline data-s="2" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,350.0 2.1,350.0 4.1,350.0 6.2,350.0 8.3,350.0 10.3,350.0 12.4,350.0 14.5,350.0 16.5,350.0 18.6,350.0 20.7,350.0 22.7,350.0 24.8,350.0 26.9,350.0 28.9,350.0 31.0,350.0 33.1,350.0 35.1,350.0 37.2,350.0 39.3,350.0 41.3,350.0 43.4,350.0 45.5,350.0 47.5,350.0 49.6,350.0 51.7,350.0 53.7,350.0 55.8,350.0 57.9,350.0 59.9,350.0 62.0,350.0 64.1,350.0 66.1,350.0 68.2,350.0 70.3,350.0 72.3,350.0 74.4,350.0 76.5,350.0 78.5,350.0 80.6,350.0 82.7,350.0 84.7,350.0 86.8,350.0 88.9,350.0 90.9,350.0 93.0,350.0 95.1,350.0 97.1,350.0 99.2,350.0 101.3,350.0 103.3,350.0 105.4,350.0 107.5,350.0 109.5,350.0 111.6,350.0 113.7,350.0 115.7,350.0 117.8,350.0 119.9,350.0 121.9,350.0 124.0,350.0 126.1,350.0 128.1,350.0 130.2,350.0 132.3,350.0 134.3,350.0 136.4,350.0 138.5,350.0 140.5,349.6 142.6,348.9 144.7,347.9 146.7,346.5 148.8,344.9 150.9,343.0 152.9,340.9 155.0,338.6 157.1,336.1 159.1,333.4 161.2,330.6 163.3,327.7 165.3,324.6 167.4,321.5 169.5,318.3 171.5,315.0 173.6,311.6 175.7,308.2 177.7,304.8 179.8,301.3 181.9,297.9 183.9,294.4 186.0,290.9 188.1,287.4 190.1,283.9 192.2,280.4 194.3,276.9 196.3,273.5 198.4,270.1 200.5,266.7 202.5,263.4 204.6,260.0 206.7,256.8 208.7,253.5 210.8,250.3 212.9,247.2 214.9,244.1 217.0,241.0 219.1,238.0 221.1,235.1 223.2,232.2 225.3,229.3 227.3,226.5 229.4,223.8 231.5,221.1 233.5,218.4 235.6,215.8 237.7,213.3 239.7,210.8 241.8,208.4 243.9,206.0 245.9,203.7 248.0,201.4 250.1,199.1 252.1,197.0 254.2,194.8 256.3,192.7 258.3,190.7 260.4,188.7 262.5,186.8 264.5,184.9 266.6,183.0 268.7,181.2 270.7,179.5 272.8,177.8 274.9,176.1 276.9,174.5 279.0,172.9 281.1,171.3 283.1,169.8 285.2,168.3 287.3,166.9 289.3,165.5 291.4,164.1 293.5,162.8 295.5,161.5 297.6,160.3 299.7,159.1 301.7,157.9 303.8,156.7 305.9,155.6 307.9,154.5 310.0,153.4 312.1,152.4 314.1,151.3 316.2,150.4 318.3,149.4 320.3,148.5 322.4,147.6 324.5,146.7 326.5,145.8 328.6,145.0 330.7,144.2 332.7,143.4 334.8,142.6 336.9,141.9 338.9,141.2 341.0,140.5 343.1,139.8 345.1,139.1 347.2,138.5 349.3,137.8 351.3,137.2 353.4,136.6 355.5,136.0 357.5,135.5 359.6,134.9 361.7,134.4 363.7,133.9 365.8,133.4 367.9,132.9 369.9,132.4 372.0,132.0 374.1,131.5 376.1,131.1 378.2,130.7 380.3,130.3 382.3,129.9 384.4,129.5 386.5,129.1 388.5,128.8 390.6,128.4 392.7,128.1 394.7,127.7 396.8,127.4 398.9,127.1 400.9,126.8 403.0,126.5 405.1,126.2 407.1,125.9 409.2,125.7 411.3,125.4 413.3,125.1 415.4,124.9 417.5,124.6 419.5,124.4 421.6,124.2 423.7,124.0 425.7,123.8 427.8,123.5 429.9,123.3 431.9,123.1 434.0,123.0 436.1,122.8 438.1,122.6 440.2,122.4 442.3,122.2 444.3,122.1 446.4,121.9 448.5,121.8 450.5,121.6 452.6,121.5 454.7,121.3 456.7,121.2 458.8,121.1 460.9,120.9 462.9,120.8 465.0,120.7 467.1,120.6 469.1,120.5 471.2,120.3 473.3,120.2 475.3,120.1 477.4,120.0 479.5,119.9 481.5,119.8 483.6,119.7 485.7,119.6 487.7,119.6 489.8,119.5 491.9,119.4 493.9,119.3 496.0,119.2 498.1,119.2 500.1,119.1 502.2,119.0 504.3,118.9 506.3,118.9 508.4,118.8 510.5,118.7 512.5,118.7 514.6,118.6 516.7,118.6 518.7,118.5 520.8,118.5 522.9,118.4 524.9,118.4 527.0,118.3 529.1,118.3 531.1,118.2 533.2,118.2 535.3,118.1 537.3,118.1 539.4,118.0 541.5,118.0 543.5,118.0 545.6,117.9 547.7,117.9 549.7,117.8 551.8,117.8 553.9,117.8 555.9,117.7 558.0,117.7 560.1,117.7 562.1,117.7 564.2,117.6 566.3,117.6 568.3,117.6 570.4,117.5 572.5,117.5 574.5,117.5 576.6,117.5 578.7,117.4 580.7,117.4 582.8,117.4 584.9,117.4 586.9,117.4 589.0,117.3 591.1,117.3 593.1,117.3 595.2,117.3 597.3,117.3 599.3,117.2 601.4,117.2 603.5,117.2 605.5,117.2 607.6,117.2 609.7,117.2 611.7,117.1 613.8,117.1 615.9,117.1 617.9,117.1 620.0,117.1"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="16">
+  <p class="h" data-s="0">Call it out &mdash; after the last switch, what level is <i>y</i> centered at?</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>y</i>&#8243; + 4<i>y</i> = 8<i>u</i><sub>1</sub>(<i>t</i>)</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>y</i>&#8243; + 9<i>y</i> = 9<i>u</i><sub>2</sub>(<i>t</i>)</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8242; + 2<i>y</i> = 4<i>u</i><sub>3</sub>(<i>t</i>)</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <i>y</i>&#8243; + 3<i>y</i>&#8242; + 2<i>y</i> = 6<i>u</i><sub>1</sub>(<i>t</i>)</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; <i>y</i>&#8243; + <i>y</i> = 1 &minus; <i>u</i><sub>&pi;</sub>(<i>t</i>)</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; 2,&nbsp; swings around it</p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; 1,&nbsp; swings around it</p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; 2,&nbsp; settles there</p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; 3,&nbsp; settles there</p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; 0,&nbsp; swings around it (Example 4)</p>
+      <p class="a" data-s="11">&#8627; the level is the constant solution: drop the derivatives and divide the final force by the coefficient of <i>y</i>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="17">
+  <p class="h" data-s="0">Example 6 &mdash; the force must be rewritten first</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + <i>y</i> = <i>t</i><i>u</i><sub>2</sub>(<i>t</i>),&nbsp;&nbsp; <i>y</i>(0) = 0,&nbsp; <i>y</i>&#8242;(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">1. Rewrite (Friday): <i>g</i>(<i>t</i> + 2) = <i>t</i> + 2</p>
+      <p class="e t" data-s="2">&#8466;{<i>t</i><i>u</i><sub>2</sub>(<i>t</i>)} = <b>e</b><sup>&minus;2<i>s</i></sup>(<span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span> + <span class="fr"><span>2</span><span><i>s</i></span></span>)</p>
+      <p class="lb" data-s="3">3. Solve for <i>Y</i></p>
+      <p class="e t" data-s="3"><i>Y</i> = <b>e</b><sup>&minus;2<i>s</i></sup>(<span class="fr"><span>1</span><span><i>s</i><sup>2</sup>(<i>s</i><sup>2</sup> + 1)</span></span> + <span class="fr"><span>2</span><span><i>s</i>(<i>s</i><sup>2</sup> + 1)</span></span>)</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">4. Partial fractions, one at a time</p>
+      <p class="e t" data-s="4"><span class="fr"><span>1</span><span><i>s</i><sup>2</sup>(<i>s</i><sup>2</sup> + 1)</span></span> = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span> &minus; <span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 1</span></span>&nbsp; &rarr;&nbsp; <i>t</i> &minus; sin <i>t</i></p>
+      <p class="e t" data-s="5"><span class="fr"><span>2</span><span><i>s</i>(<i>s</i><sup>2</sup> + 1)</span></span> = <span class="fr"><span>2</span><span><i>s</i></span></span> &minus; <span class="fr"><span>2<i>s</i></span><span><i>s</i><sup>2</sup> + 1</span></span>&nbsp; &rarr;&nbsp; 2 &minus; 2 cos <i>t</i></p>
+      <p class="lb" data-s="6">5. Add, then shift by 2</p>
+      <p class="e" data-s="6"><span class="bx"><i>y</i> = <i>u</i><sub>2</sub>(<i>t</i>)((<i>t</i> &minus; 2) &minus; sin(<i>t</i> &minus; 2) + 2 &minus; 2 cos(<i>t</i> &minus; 2))</span></p>
+      <p class="l" data-s="7"><span class="d">= <i>u</i><sub>2</sub>(<i>t</i>)(<i>t</i> &minus; sin(<i>t</i> &minus; 2) &minus; 2 cos(<i>t</i> &minus; 2));&nbsp; at <i>t</i> = 2: 2 &minus; 0 &minus; 2 = 0 &#10003;</span></p>
+      <p class="a" data-s="8">&#8627; a force that is on for a while.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="18">
+  <p class="h" data-s="0">Example 7 &mdash; on from &pi; to 2&pi;</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + 4<i>y</i> = 4(<i>u</i><sub>&pi;</sub>(<i>t</i>) &minus; <i>u</i><sub>2&pi;</sub>(<i>t</i>)),&nbsp;&nbsp; <i>y</i>(0) = 0,&nbsp; <i>y</i>&#8242;(0) = 0</span></p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="e t" data-s="2"><i>Y</i> = (<b>e</b><sup>&minus;&pi;<i>s</i></sup> &minus; <b>e</b><sup>&minus;2&pi;<i>s</i></sup>)<span class="fr"><span>4</span><span><i>s</i>(<i>s</i><sup>2</sup> + 4)</span></span></p>
+      <p class="e t" data-s="3"><i>y</i> = <i>u</i><sub>&pi;</sub>(<i>t</i>)(1 &minus; cos 2<i>t</i>) &minus; <i>u</i><sub>2&pi;</sub>(<i>t</i>)(1 &minus; cos 2<i>t</i>)</p>
+      <p class="l" data-s="4"><span class="d">cos 2(<i>t</i> &minus; &pi;) = cos 2(<i>t</i> &minus; 2&pi;) = cos 2<i>t</i>; the fraction is from Example 2.</span></p>
+      <p class="e" data-s="5"><span class="bx"><i>t</i> &ge; 2&pi;:&nbsp; <i>y</i> = 0</span></p>
+      <p class="l" data-s="6">At <i>t</i> = 2&pi; the mass is back at 0 with <i>y</i>&#8242; = 0, exactly when the force stops. So it stays at rest.</p>
+      <p class="a" data-s="7">&#8627; your turn.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="210" x2="0" y2="210"/><line x1="-7" y1="70" x2="0" y2="70"/><line x1="68.9" y1="350" x2="68.9" y2="357"/><line x1="137.8" y1="350" x2="137.8" y2="357"/><line x1="206.7" y1="350" x2="206.7" y2="357"/><line x1="275.6" y1="350" x2="275.6" y2="357"/><line x1="344.4" y1="350" x2="344.4" y2="357"/><line x1="413.3" y1="350" x2="413.3" y2="357"/><line x1="482.2" y1="350" x2="482.2" y2="357"/><line x1="551.1" y1="350" x2="551.1" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">0</text><text x="-12" y="215" text-anchor="end">1</text><text x="-12" y="75" text-anchor="end">2</text><text x="0" y="375" text-anchor="middle">0</text><text x="68.9" y="375" text-anchor="middle">1</text><text x="137.8" y="375" text-anchor="middle">2</text><text x="206.7" y="375" text-anchor="middle">3</text><text x="275.6" y="375" text-anchor="middle">4</text><text x="344.4" y="375" text-anchor="middle">5</text><text x="413.3" y="375" text-anchor="middle">6</text><text x="482.2" y="375" text-anchor="middle">7</text><text x="551.1" y="375" text-anchor="middle">8</text><text x="620" y="375" text-anchor="middle">9</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="0.0,350.0 1.8,350.0 3.6,350.0 5.4,350.0 7.2,350.0 9.0,350.0 10.8,350.0 12.6,350.0 14.4,350.0 16.2,350.0 18.0,350.0 19.8,350.0 21.6,350.0 23.4,350.0 25.2,350.0 27.1,350.0 28.9,350.0 30.7,350.0 32.5,350.0 34.3,350.0 36.1,350.0 37.9,350.0 39.7,350.0 41.5,350.0 43.3,350.0 45.1,350.0 46.9,350.0 48.7,350.0 50.5,350.0 52.3,350.0 54.1,350.0 55.9,350.0 57.7,350.0 59.5,350.0 61.3,350.0 63.1,350.0 64.9,350.0 66.7,350.0 68.5,350.0 70.3,350.0 72.1,350.0 73.9,350.0 75.7,350.0 77.6,350.0 79.4,350.0 81.2,350.0 83.0,350.0 84.8,350.0 86.6,350.0 88.4,350.0 90.2,350.0 92.0,350.0 93.8,350.0 95.6,350.0 97.4,350.0 99.2,350.0 101.0,350.0 102.8,350.0 104.6,350.0 106.4,350.0 108.2,350.0 110.0,350.0 111.8,350.0 113.6,350.0 115.4,350.0 117.2,350.0 119.0,350.0 120.8,350.0 122.6,350.0 124.4,350.0 126.2,350.0 128.0,350.0 129.9,350.0 131.7,350.0 133.5,350.0 135.3,350.0 137.1,350.0 138.9,350.0 140.7,350.0 142.5,350.0 144.3,350.0 146.1,350.0 147.9,350.0 149.7,350.0 151.5,350.0 153.3,350.0 155.1,350.0 156.9,350.0 158.7,350.0 160.5,350.0 162.3,350.0 164.1,350.0 165.9,350.0 167.7,350.0 169.5,350.0 171.3,350.0 173.1,350.0 174.9,350.0 176.7,350.0 178.5,350.0 180.4,350.0 182.2,350.0 184.0,350.0 185.8,350.0 187.6,350.0 189.4,350.0 191.2,350.0 193.0,350.0 194.8,350.0 196.6,350.0 198.4,350.0 200.2,350.0 202.0,350.0 203.8,350.0 205.6,350.0 207.4,350.0 209.2,350.0 211.0,350.0 212.8,350.0 214.6,350.0 216.4,350.0"/><polyline data-s="1" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="216.4,210.0 218.2,210.0 220.0,210.0 221.8,210.0 223.6,210.0 225.4,210.0 227.2,210.0 229.0,210.0 230.8,210.0 232.7,210.0 234.5,210.0 236.3,210.0 238.1,210.0 239.9,210.0 241.7,210.0 243.5,210.0 245.3,210.0 247.1,210.0 248.9,210.0 250.7,210.0 252.5,210.0 254.3,210.0 256.1,210.0 257.9,210.0 259.7,210.0 261.5,210.0 263.3,210.0 265.1,210.0 266.9,210.0 268.7,210.0 270.5,210.0 272.3,210.0 274.1,210.0 275.9,210.0 277.7,210.0 279.5,210.0 281.3,210.0 283.2,210.0 285.0,210.0 286.8,210.0 288.6,210.0 290.4,210.0 292.2,210.0 294.0,210.0 295.8,210.0 297.6,210.0 299.4,210.0 301.2,210.0 303.0,210.0 304.8,210.0 306.6,210.0 308.4,210.0 310.2,210.0 312.0,210.0 313.8,210.0 315.6,210.0 317.4,210.0 319.2,210.0 321.0,210.0 322.8,210.0 324.6,210.0 326.4,210.0 328.2,210.0 330.0,210.0 331.8,210.0 333.6,210.0 335.5,210.0 337.3,210.0 339.1,210.0 340.9,210.0 342.7,210.0 344.5,210.0 346.3,210.0 348.1,210.0 349.9,210.0 351.7,210.0 353.5,210.0 355.3,210.0 357.1,210.0 358.9,210.0 360.7,210.0 362.5,210.0 364.3,210.0 366.1,210.0 367.9,210.0 369.7,210.0 371.5,210.0 373.3,210.0 375.1,210.0 376.9,210.0 378.7,210.0 380.5,210.0 382.3,210.0 384.1,210.0 386.0,210.0 387.8,210.0 389.6,210.0 391.4,210.0 393.2,210.0 395.0,210.0 396.8,210.0 398.6,210.0 400.4,210.0 402.2,210.0 404.0,210.0 405.8,210.0 407.6,210.0 409.4,210.0 411.2,210.0 413.0,210.0 414.8,210.0 416.6,210.0 418.4,210.0 420.2,210.0 422.0,210.0 423.8,210.0 425.6,210.0 427.4,210.0 429.2,210.0 431.0,210.0 432.8,210.0"/><polyline data-s="1" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="432.8,350.0 434.4,350.0 436.0,350.0 437.5,350.0 439.1,350.0 440.6,350.0 442.2,350.0 443.8,350.0 445.3,350.0 446.9,350.0 448.4,350.0 450.0,350.0 451.6,350.0 453.1,350.0 454.7,350.0 456.2,350.0 457.8,350.0 459.4,350.0 460.9,350.0 462.5,350.0 464.0,350.0 465.6,350.0 467.2,350.0 468.7,350.0 470.3,350.0 471.8,350.0 473.4,350.0 475.0,350.0 476.5,350.0 478.1,350.0 479.6,350.0 481.2,350.0 482.8,350.0 484.3,350.0 485.9,350.0 487.4,350.0 489.0,350.0 490.5,350.0 492.1,350.0 493.7,350.0 495.2,350.0 496.8,350.0 498.3,350.0 499.9,350.0 501.5,350.0 503.0,350.0 504.6,350.0 506.1,350.0 507.7,350.0 509.3,350.0 510.8,350.0 512.4,350.0 513.9,350.0 515.5,350.0 517.1,350.0 518.6,350.0 520.2,350.0 521.7,350.0 523.3,350.0 524.9,350.0 526.4,350.0 528.0,350.0 529.5,350.0 531.1,350.0 532.7,350.0 534.2,350.0 535.8,350.0 537.3,350.0 538.9,350.0 540.5,350.0 542.0,350.0 543.6,350.0 545.1,350.0 546.7,350.0 548.3,350.0 549.8,350.0 551.4,350.0 552.9,350.0 554.5,350.0 556.1,350.0 557.6,350.0 559.2,350.0 560.7,350.0 562.3,350.0 563.9,350.0 565.4,350.0 567.0,350.0 568.5,350.0 570.1,350.0 571.7,350.0 573.2,350.0 574.8,350.0 576.3,350.0 577.9,350.0 579.4,350.0 581.0,350.0 582.6,350.0 584.1,350.0 585.7,350.0 587.2,350.0 588.8,350.0 590.4,350.0 591.9,350.0 593.5,350.0 595.0,350.0 596.6,350.0 598.2,350.0 599.7,350.0 601.3,350.0 602.8,350.0 604.4,350.0 606.0,350.0 607.5,350.0 609.1,350.0 610.6,350.0 612.2,350.0 613.8,350.0 615.3,350.0 616.9,350.0 618.4,350.0 620.0,350.0"/><polyline data-s="3" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,350.0 1.5,350.0 3.1,350.0 4.7,350.0 6.2,350.0 7.8,350.0 9.3,350.0 10.9,350.0 12.4,350.0 14.0,350.0 15.5,350.0 17.0,350.0 18.6,350.0 20.1,350.0 21.7,350.0 23.2,350.0 24.8,350.0 26.4,350.0 27.9,350.0 29.5,350.0 31.0,350.0 32.5,350.0 34.1,350.0 35.6,350.0 37.2,350.0 38.8,350.0 40.3,350.0 41.9,350.0 43.4,350.0 44.9,350.0 46.5,350.0 48.0,350.0 49.6,350.0 51.2,350.0 52.7,350.0 54.2,350.0 55.8,350.0 57.3,350.0 58.9,350.0 60.4,350.0 62.0,350.0 63.6,350.0 65.1,350.0 66.7,350.0 68.2,350.0 69.8,350.0 71.3,350.0 72.9,350.0 74.4,350.0 76.0,350.0 77.5,350.0 79.0,350.0 80.6,350.0 82.1,350.0 83.7,350.0 85.2,350.0 86.8,350.0 88.3,350.0 89.9,350.0 91.4,350.0 93.0,350.0 94.6,350.0 96.1,350.0 97.7,350.0 99.2,350.0 100.8,350.0 102.3,350.0 103.9,350.0 105.4,350.0 106.9,350.0 108.5,350.0 110.0,350.0 111.6,350.0 113.2,350.0 114.7,350.0 116.2,350.0 117.8,350.0 119.3,350.0 120.9,350.0 122.4,350.0 124.0,350.0 125.6,350.0 127.1,350.0 128.6,350.0 130.2,350.0 131.8,350.0 133.3,350.0 134.9,350.0 136.4,350.0 137.9,350.0 139.5,350.0 141.0,350.0 142.6,350.0 144.1,350.0 145.7,350.0 147.2,350.0 148.8,350.0 150.4,350.0 151.9,350.0 153.4,350.0 155.0,350.0 156.6,350.0 158.1,350.0 159.6,350.0 161.2,350.0 162.8,350.0 164.3,350.0 165.9,350.0 167.4,350.0 169.0,350.0 170.5,350.0 172.1,350.0 173.6,350.0 175.1,350.0 176.7,350.0 178.2,350.0 179.8,350.0 181.3,350.0 182.9,350.0 184.5,350.0 186.0,350.0 187.6,350.0 189.1,350.0 190.7,350.0 192.2,350.0 193.8,350.0 195.3,350.0 196.8,350.0 198.4,350.0 199.9,350.0 201.5,350.0 203.0,350.0 204.6,350.0 206.2,350.0 207.7,350.0 209.2,350.0 210.8,350.0 212.4,350.0 213.9,350.0 215.4,350.0 217.0,350.0 218.5,349.7 220.1,349.2 221.6,348.4 223.2,347.3 224.8,345.9 226.3,344.3 227.9,342.4 229.4,340.2 231.0,337.7 232.5,335.0 234.0,332.1 235.6,328.9 237.1,325.4 238.7,321.7 240.2,317.8 241.8,313.7 243.4,309.3 244.9,304.8 246.5,300.1 248.0,295.2 249.5,290.1 251.1,284.8 252.6,279.4 254.2,273.9 255.8,268.2 257.3,262.4 258.9,256.6 260.4,250.6 262.0,244.5 263.5,238.4 265.1,232.2 266.6,225.9 268.1,219.6 269.7,213.4 271.2,207.1 272.8,200.8 274.4,194.5 275.9,188.2 277.4,182.0 279.0,175.9 280.5,169.8 282.1,163.8 283.6,157.9 285.2,152.1 286.8,146.5 288.3,140.9 289.8,135.5 291.4,130.3 293.0,125.2 294.5,120.2 296.1,115.5 297.6,110.9 299.2,106.6 300.7,102.5 302.2,98.5 303.8,94.8 305.4,91.4 306.9,88.1 308.5,85.2 310.0,82.4 311.5,80.0 313.1,77.8 314.6,75.8 316.2,74.2 317.8,72.8 319.3,71.7 320.8,70.8 322.4,70.3 323.9,70.0 325.5,70.0 327.0,70.3 328.6,70.9 330.2,71.8 331.7,72.9 333.2,74.4 334.8,76.1 336.4,78.0 337.9,80.3 339.5,82.8 341.0,85.5 342.6,88.5 344.1,91.8 345.6,95.3 347.2,99.0 348.8,102.9 350.3,107.1 351.9,111.5 353.4,116.1 354.9,120.8 356.5,125.8 358.0,130.9 359.6,136.2 361.1,141.6 362.7,147.1 364.2,152.8 365.8,158.6 367.3,164.6 368.9,170.6 370.5,176.6 372.0,182.8 373.6,189.0 375.1,195.2 376.7,201.5 378.2,207.8 379.8,214.1 381.3,220.4 382.9,226.7 384.4,232.9 386.0,239.1 387.5,245.2 389.0,251.3 390.6,257.3 392.1,263.2 393.7,268.9 395.2,274.6 396.8,280.1 398.3,285.5 399.9,290.7 401.4,295.8 403.0,300.7 404.5,305.4 406.1,309.9 407.7,314.2 409.2,318.3 410.8,322.2 412.3,325.8 413.9,329.3 415.4,332.4 417.0,335.4 418.5,338.0 420.1,340.5 421.6,342.6 423.1,344.5 424.7,346.1 426.2,347.4 427.8,348.5 429.4,349.3 430.9,349.8 432.4,350.0 434.0,350.0 435.5,350.0 437.1,350.0 438.6,350.0 440.2,350.0 441.8,350.0 443.3,350.0 444.8,350.0 446.4,350.0 448.0,350.0 449.5,350.0 451.1,350.0 452.6,350.0 454.2,350.0 455.7,350.0 457.2,350.0 458.8,350.0 460.3,350.0 461.9,350.0 463.5,350.0 465.0,350.0 466.5,350.0 468.1,350.0 469.7,350.0 471.2,350.0 472.8,350.0 474.3,350.0 475.8,350.0 477.4,350.0 479.0,350.0 480.5,350.0 482.0,350.0 483.6,350.0 485.2,350.0 486.7,350.0 488.2,350.0 489.8,350.0 491.4,350.0 492.9,350.0 494.5,350.0 496.0,350.0 497.5,350.0 499.1,350.0 500.7,350.0 502.2,350.0 503.8,350.0 505.3,350.0 506.8,350.0 508.4,350.0 510.0,350.0 511.5,350.0 513.0,350.0 514.6,350.0 516.1,350.0 517.7,350.0 519.2,350.0 520.8,350.0 522.3,350.0 523.9,350.0 525.5,350.0 527.0,350.0 528.5,350.0 530.1,350.0 531.7,350.0 533.2,350.0 534.8,350.0 536.3,350.0 537.8,350.0 539.4,350.0 541.0,350.0 542.5,350.0 544.0,350.0 545.6,350.0 547.2,350.0 548.7,350.0 550.2,350.0 551.8,350.0 553.4,350.0 554.9,350.0 556.5,350.0 558.0,350.0 559.6,350.0 561.1,350.0 562.7,350.0 564.2,350.0 565.8,350.0 567.3,350.0 568.9,350.0 570.4,350.0 572.0,350.0 573.5,350.0 575.0,350.0 576.6,350.0 578.2,350.0 579.7,350.0 581.2,350.0 582.8,350.0 584.3,350.0 585.9,350.0 587.5,350.0 589.0,350.0 590.5,350.0 592.1,350.0 593.6,350.0 595.2,350.0 596.8,350.0 598.3,350.0 599.8,350.0 601.4,350.0 602.9,350.0 604.5,350.0 606.0,350.0 607.6,350.0 609.1,350.0 610.7,350.0 612.2,350.0 613.8,350.0 615.3,350.0 616.9,350.0 618.4,350.0 620.0,350.0"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="19">
+  <p class="h" data-s="0">Your turn</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>y</i>&#8242; + 3<i>y</i> = 3<i>u</i><sub>2</sub>(<i>t</i>),&nbsp; <i>y</i>(0) = 0</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>y</i>&#8243; + <i>y</i> = 2<i>u</i><sub>&pi;</sub>(<i>t</i>),&nbsp; zero initial values</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8243; + 3<i>y</i>&#8242; + 2<i>y</i> = 2<i>u</i><sub>1</sub>(<i>t</i>),&nbsp; zero initial values</p>
+      <p class="e" data-s="3"><span class="bx">7 minutes. Do 1 first.</span></p>
+      <p class="l" data-s="3"><span class="g">Bonus:</span> number 1 again, with <i>y</i>(0) = 2.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="4"><span class="g">1.</span>&nbsp; <span class="v"><i>u</i><sub>2</sub>(<i>t</i>)(1 &minus; <b>e</b><sup>&minus;3(<i>t</i> &minus; 2)</sup>)</span>&nbsp;&nbsp;<span class="d"><span class="fr"><span>1</span><span><i>s</i></span></span> &minus; <span class="fr"><span>1</span><span><i>s</i> + 3</span></span></span></p>
+      <p class="e t" data-s="5"><span class="g">2.</span>&nbsp; <span class="v">2<i>u</i><sub>&pi;</sub>(<i>t</i>)(1 &minus; cos(<i>t</i> &minus; &pi;))</span>&nbsp;&nbsp;<span class="d">= 2<i>u</i><sub>&pi;</sub>(<i>t</i>)(1 + cos <i>t</i>)</span></p>
+      <p class="e t" data-s="6"><span class="g">3.</span>&nbsp; <span class="v"><i>u</i><sub>1</sub>(<i>t</i>)(1 &minus; 2<b>e</b><sup>&minus;(<i>t</i> &minus; 1)</sup> + <b>e</b><sup>&minus;2(<i>t</i> &minus; 1)</sup>)</span></p>
+      <p class="e t" data-s="7"><span class="g">bonus.</span>&nbsp; 2<b>e</b><sup>&minus;3<i>t</i></sup> + <i>u</i><sub>2</sub>(<i>t</i>)(1 &minus; <b>e</b><sup>&minus;3(<i>t</i> &minus; 2)</sup>)</p>
+      <p class="a" data-s="8">&#8627; number 3 is Example 5 times 2: the same three fractions.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="20">
+  <p class="h" data-s="0">True or false?</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; In <i>Y</i> = <b>e</b><sup>&minus;2<i>s</i></sup><span class="fr"><span>1</span><span><i>s</i>(<i>s</i> + 1)</span></span>, we do partial fractions on <span class="fr"><span>1</span><span><i>s</i>(<i>s</i> + 1)</span></span> only.</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>y</i> is continuous at the time the force jumps.</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8243; is continuous at the time the force jumps.</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; &#8466;{<i>u</i><sub>2</sub>(<i>t</i>)} = <b>e</b><sup>&minus;2<i>s</i></sup>.</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; With zero initial values and the force <i>u</i><sub><i>c</i></sub>(<i>t</i>), <i>y</i> = 0 for <i>t</i> &lt; <i>c</i>.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="v">true</span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="v">true</span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d">it jumps as much as <i>g</i> jumps</span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d"><span class="fr"><span><b>e</b><sup>&minus;2<i>s</i></sup></span><span><i>s</i></span></span></span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <span class="v">true</span></p>
+      <p class="a" data-s="11">&#8627; number 5: before the force switches on, the equation is homogeneous with zero initial values.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="21">
+  <p class="h" data-s="0">The card &mdash; equations with a switching force</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">Method</p>
+      <p class="e t" data-s="1">write <i>g</i> with steps, transform, solve for <i>Y</i></p>
+      <p class="e t" data-s="2">group <i>Y</i> by the factors <b>e</b><sup>&minus;<i>c</i><i>s</i></sup></p>
+      <p class="e t" data-s="3">partial fractions without <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>, invert, shift</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">What to expect</p>
+      <p class="e t" data-s="4">initial values &rarr; terms with no shift</p>
+      <p class="e t" data-s="5">each switch at <i>c</i> &rarr; a term <i>u</i><sub><i>c</i></sub>(<i>t</i>)(&hellip;)</p>
+      <p class="e" data-s="6"><span class="bx"><i>y</i> and <i>y</i>&#8242; are continuous; <i>y</i>&#8243; jumps with <i>g</i>.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="22">
+  <p class="h" data-s="0">Next</p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="1"><span class="g">Wed Nov 11</span>: no class (Veterans Day).</p>
+      <p class="l" data-s="2"><span class="g">Fri Nov 13</span>: &sect;6.5 &mdash; a force that acts in one instant.</p>
+      <p class="l" data-s="3"><span class="g">HW8</span> (&sect;6.2, &sect;6.3) is due <span class="v">Fri Nov 13</span>, 11:59 pm, on Gradescope.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Before Friday</p>
+      <p class="l" data-s="4">Read Boyce &sect;6.4 and &sect;6.5.</p>
+      <p class="e" data-s="5"><span class="bx">Questions: office hours, the Carmen discussion board, or email.</span></p>
+    </div>
+  </div>
+</div>
+
+<canvas id="ink"></canvas>
+<canvas id="wet"></canvas>
+<div id="edge"></div>
+
+<div id="hint">
+  <b>Math 2255 &mdash; Lecture 1</b><br><br>
+  <kbd>&#9654;</kbd> buttons (top right and bottom), or arrow keys<br>
+  <kbd>&#9664;</kbd> goes back<br>
+  <kbd>1</kbd>&ndash;<kbd>5</kbd> pen colour &nbsp; <kbd>E</kbd> eraser &nbsp; <kbd>C</kbd> clear ink<br>
+  <kbd>F</kbd> full screen &nbsp; <kbd>T</kbd> hide toolbar &nbsp; <kbd>G</kbd> writing zones<br>
+  <kbd>R</kbd> reset timer&nbsp;&nbsp;&nbsp;<kbd>D</kbd> dark / light<br><br><span style="color:var(--dm)">Pages turn with the arrow buttons only,<br>so nothing you touch by accident moves the board.<br><br>The toolbar hides itself after a few seconds.<br>Tap the very bottom edge to bring it back.</span><br><br>
+  <span style="color:var(--dm)">Only the Apple Pencil draws.<br>
+  Your palm and fingers leave no marks.<br><br>Tap anywhere to begin.</span>
+</div>
+
+<div id="bar">
+  <span class="pen sel" data-i="0" style="background:#F0EFE8"></span>
+  <span class="pen" data-i="1" style="background:#E3E34B"></span>
+  <span class="pen" data-i="2" style="background:#45CFC2"></span>
+  <span class="pen" data-i="3" style="background:#E85CD2"></span>
+  <span class="pen" data-i="4" style="background:#F09A42"></span>
+  <button class="btn" id="th">Pen M</button>
+  <button class="btn" id="hd">HD</button>
+  <button class="btn" id="er">Erase</button>
+  <button class="btn" id="cl">Clear</button>
+  <span class="sp"></span>
+  <button class="btn nav" id="prev">&#9664;</button>
+  <span id="pos">1 / 22</span>
+  <button class="btn nav" id="next">&#9654;</button>
+  <span class="sp"></span>
+  <span id="clk">00:00</span>
+  <button class="btn" id="tm">Light</button>
+  <button class="btn" id="fs">Full</button>
+  <button class="btn" id="hp">?</button>
+</div>
+</div>
+
+<script>
+(function(){
+var pgs=[].slice.call(document.querySelectorAll('.pg'));
+var maxStep=pgs.map(function(p){
+  var m=0;[].forEach.call(p.querySelectorAll('[data-s]'),function(e){
+    m=Math.max(m,+e.getAttribute('data-s'));});return m;});
+var P=0,S=0;
+var cv=document.getElementById('ink');
+var cx=cv.getContext('2d',{desynchronized:true,alpha:true})||cv.getContext('2d');
+var strokes=pgs.map(function(){return [];});
+var DPRCAP=1.5;
+var PAL={dark: ['#F0EFE8','#E3E34B','#45CFC2','#E85CD2','#F09A42'],
+          light:['#16181B','#8F6A05','#0E7A70','#A0198A','#B4530A']};
+var theme='dark', ci=0, wid=4.2, erase=false, drawing=false, cur=null;
+function inks(){return PAL[theme];}
+var WIDS=[3.0,4.2,6.0],wi=1;
+
+function fit(){
+  var r=Math.min(window.devicePixelRatio||1,DPRCAP);
+  cv.width=Math.round(innerWidth*r);cv.height=Math.round(innerHeight*r);
+  cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+  wet.width=cv.width;wet.height=cv.height;
+  wet.style.width=innerWidth+'px';wet.style.height=innerHeight+'px';
+  wx.setTransform(r,0,0,r,0,0);wetBox=null;
+  cx.setTransform(r,0,0,r,0,0);syncRect();redraw();
+}
+function setStyle(st){
+  cx.lineCap='round';cx.lineJoin='round';
+  cx.strokeStyle=inks()[st.ci];cx.lineWidth=st.w;
+  cx.globalCompositeOperation=st.e?'destination-out':'source-over';
+}
+function strokePath(st){
+  if(st.pts.length<2)return;
+  setStyle(st);
+  cx.beginPath();cx.moveTo(st.pts[0].x,st.pts[0].y);
+  for(var i=1;i<st.pts.length;i++){
+    var a=st.pts[i-1],b=st.pts[i];
+    cx.quadraticCurveTo(a.x,a.y,(a.x+b.x)/2,(a.y+b.y)/2);
+  }
+  cx.stroke();
+}
+// full repaint only on page change / clear / resize -- never while drawing
+function redraw(){
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  strokes[P].forEach(strokePath);
+  cx.globalCompositeOperation='source-over';
+}
+function show(){
+  pgs.forEach(function(p,i){p.classList.toggle('on',i===P);});
+  [].forEach.call(pgs[P].querySelectorAll('[data-s]'),function(e){
+    var from=+e.getAttribute('data-s');
+    var u=e.getAttribute('data-until');
+    var until=(u===null||u==='')?1e9:+u;
+    var live=(S>=from && S<=until);
+    e.classList.toggle('vis', live);
+    if(u!==null&&u!=='') e.classList.toggle('gone', S>until);});
+  var pt=(P+1)+' / '+pgs.length;
+  document.getElementById('pos').textContent=pt;
+  var p2=document.getElementById('pos2'); if(p2)p2.textContent=pt;
+  redraw();
+}
+function next(){ if(S<maxStep[P]){S++;} else if(P<pgs.length-1){P++;S=0;} show(); }
+function prev(){ if(S>0){S--;} else if(P>0){P--;S=maxStep[P];} show(); }
+function pgUp(){ if(P>0){P--;S=maxStep[P];show();} }
+function pgDn(){ if(P<pgs.length-1){P++;S=maxStep[P];show();} }
+
+// ---- pencil drawing ----
+var RC={left:0,top:0};
+function syncRect(){RC=cv.getBoundingClientRect();}
+function xy(e){return {x:e.clientX-RC.left,y:e.clientY-RC.top};}
+function isPen(e){
+  if(e.pointerType==='pen')return true;
+  if(e.pointerType==='touch'&&(e.width||99)<=12&&(e.height||99)<=12)return true;
+  return false;
+}
+cv.addEventListener('pointerdown',function(e){
+  if(!isPen(e))return;
+  e.preventDefault();drawing=true;syncRect();
+  var p=xy(e),w=erase?26:wid*(0.55+0.9*(e.pressure||0.5));
+  cur={ci:ci,w:w,e:erase,pts:[p]};strokes[P].push(cur);
+  setStyle(cur);
+  cx.beginPath();cx.arc(p.x,p.y,Math.max(w,1)/2,0,6.2832);
+  cx.fillStyle=inks()[cur.ci];cx.fill();
+  cx.globalCompositeOperation='source-over';
+},{passive:false});
+var pend=[],rafId=0,MINSTEP=1.7;
+var wet=document.getElementById('wet');
+var wx=wet.getContext('2d',{desynchronized:true})||wet.getContext('2d');
+var wetBox=null;
+function clearWet(){
+  if(!wetBox)return;
+  wx.clearRect(wetBox[0]-4,wetBox[1]-4,wetBox[2]-wetBox[0]+8,wetBox[3]-wetBox[1]+8);
+  wetBox=null;
+}
+function drawPredicted(e){
+  clearWet();
+  if(!cur||!e.getPredictedEvents)return;
+  var pr=e.getPredictedEvents(); if(!pr.length)return;
+  var a=cur.pts[cur.pts.length-1];
+  var x0=a.x,y0=a.y,x1=a.x,y1=a.y;
+  wx.lineCap='round';wx.lineJoin='round';
+  wx.strokeStyle=cur.c;wx.lineWidth=cur.w;
+  wx.globalCompositeOperation=cur.e?'destination-out':'source-over';
+  wx.beginPath();wx.moveTo(a.x,a.y);
+  for(var i=0;i<pr.length;i++){
+    var p=xy(pr[i]); wx.lineTo(p.x,p.y);
+    if(p.x<x0)x0=p.x; if(p.y<y0)y0=p.y;
+    if(p.x>x1)x1=p.x; if(p.y>y1)y1=p.y;
+  }
+  wx.stroke();
+  wetBox=[x0-cur.w,y0-cur.w,x1+cur.w,y1+cur.w];
+}
+function flush(){
+  rafId=0;
+  clearWet();
+  if(!cur||!pend.length)return;
+  setStyle(cur);
+  cx.beginPath();
+  var a=cur.pts[cur.pts.length-1];
+  cx.moveTo(a.x,a.y);
+  for(var i=0;i<pend.length;i++){ cx.lineTo(pend[i].x,pend[i].y); cur.pts.push(pend[i]); }
+  cx.stroke();
+  cx.globalCompositeOperation='source-over';
+  pend.length=0;
+}
+cv.addEventListener('pointermove',function(e){
+  if(!drawing||!isPen(e))return;
+  e.preventDefault();
+  var evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];
+  var last=pend.length?pend[pend.length-1]:cur.pts[cur.pts.length-1];
+  for(var i=0;i<evs.length;i++){
+    var p=xy(evs[i]);
+    var dx=p.x-last.x, dy=p.y-last.y;
+    if(dx*dx+dy*dy < MINSTEP) continue;
+    pend.push(p); last=p;
+  }
+  if(pend.length && !rafId) rafId=requestAnimationFrame(flush);
+  drawPredicted(e);
+},{passive:false});
+function end(e){ if(e.pointerType&&!isPen(e))return;
+  if(rafId){cancelAnimationFrame(rafId);rafId=0;} flush();
+  clearWet(); drawing=false;cur=null;pend.length=0; }
+cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+
+// ---- buttons only. no tap-to-advance, no swipe. ----
+cv.addEventListener('pointerup',function(e){
+  if(isPen(e))return;
+  startClk();
+  var h=document.getElementById('hint');
+  if(!h.classList.contains('hide')) h.classList.add('hide');
+  showChrome();
+});
+
+function bindNav(id,fn){
+  var el=document.getElementById(id); if(!el)return;
+  var go=function(e){ e.preventDefault(); e.stopPropagation(); fn(); startClk(); };
+  el.addEventListener('click',go);
+  el.addEventListener('touchend',go,{passive:false});
+}
+bindNav('prev',prev); bindNav('next',next);
+bindNav('prev2',prev); bindNav('next2',next);
+
+
+// ---- toolbar ----
+[].forEach.call(document.querySelectorAll('.pen'),function(b){
+  b.onclick=function(){
+    [].forEach.call(document.querySelectorAll('.pen'),function(x){x.classList.remove('sel');});
+    b.classList.add('sel');ci=+b.getAttribute('data-i');erase=false;
+    document.getElementById('er').style.borderColor='var(--bbd)';
+  };
+});
+document.getElementById('th').onclick=function(){
+  wi=(wi+1)%3; wid=WIDS[wi];
+  this.textContent='Pen '+['S','M','L'][wi];
+};
+document.getElementById('hd').onclick=function(){
+  DPRCAP=(DPRCAP===1.5)?1:1.5;
+  this.textContent=(DPRCAP===1.5)?'HD':'Fast';
+  fit();
+};
+document.getElementById('er').onclick=function(){
+  erase=!erase;this.style.borderColor=erase?'var(--o)':'var(--bbd)';};
+document.getElementById('cl').onclick=function(){strokes[P]=[];redraw();};
+document.getElementById('hp').onclick=function(){
+  document.getElementById('hint').classList.toggle('hide');};
+function isStandalone(){
+  return window.navigator.standalone===true ||
+         (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches);
+}
+function setTheme(t){
+  theme=t;
+  document.body.classList.toggle('light', t==='light');
+  document.getElementById('tm').textContent = (t==='dark')?'Light':'Dark';
+  var sw=document.querySelectorAll('.pen');
+  for(var i=0;i<sw.length;i++) sw[i].style.background=PAL[t][i];
+  var tc=document.querySelector('meta[name="theme-color"]');
+  if(tc)tc.setAttribute('content', t==='light'?'#F2F0EA':'#0D0F10');
+  try{localStorage.setItem('m2255theme',t);}catch(e){}
+  redraw();
+}
+document.getElementById('tm').onclick=function(){ setTheme(theme==='dark'?'light':'dark'); };
+document.getElementById('fs').onclick=function(){
+  var d=document.documentElement;
+  var req=d.requestFullscreen||d.webkitRequestFullscreen;
+  if(document.fullscreenElement||document.webkitFullscreenElement){
+    (document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);
+    return;
+  }
+  if(req){ try{ req.call(d); return; }catch(err){} }
+  if(isStandalone()){ alert('Already running full screen.'); return; }
+  alert('For true full screen on iPad:\n\n'+
+        '1. Tap the Share button in Safari\n'+
+        '2. Choose "Add to Home Screen"\n'+
+        '3. Launch it from the home-screen icon\n\n'+
+        'It then opens with no address bar and no toolbars.');
+};
+if(isStandalone()){ document.getElementById('fs').textContent='FS'; }
+
+// ---- clock ----
+var t0=null,tick=null;
+function fmt(s){var m=Math.floor(s/60);return (m<10?'0':'')+m+':'+((s%60)<10?'0':'')+(s%60);}
+function startClk(){
+  if(tick)return;t0=Date.now();
+  tick=setInterval(function(){
+    var s=Math.floor((Date.now()-t0)/1000);
+    var el=document.getElementById('clk');
+    el.textContent=fmt(s);el.classList.toggle('over',s>55*60);
+  },1000);
+}
+
+// ---- keys ----
+addEventListener('keydown',function(e){
+  var k=e.key;
+  if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();next();}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev();}
+  else if(k==='ArrowDown'){e.preventDefault();pgDn();}
+  else if(k==='ArrowUp'){e.preventDefault();pgUp();}
+  else if(k>='1'&&k<='5'){document.querySelectorAll('.pen')[+k-1].click();}
+  else if(k==='e'||k==='E'){document.getElementById('er').click();}
+  else if(k==='c'||k==='C'){document.getElementById('cl').click();}
+  else if(k==='f'||k==='F'){document.getElementById('fs').click();}
+  else if(k==='t'||k==='T'){document.getElementById('bar').classList.toggle('hide');document.getElementById('topnav').classList.toggle('hide');}
+  else if(k==='g'||k==='G'){document.body.classList.toggle('guides');}
+  else if(k==='d'||k==='D'){document.getElementById('tm').click();}
+  else if(k==='r'||k==='R'){t0=Date.now();}
+  else if(k==='?'||k==='h'){document.getElementById('hp').click();}
+  if(k!=='?'&&k!=='h')startClk();
+});
+document.getElementById('hint').addEventListener('click',function(){
+  this.classList.add('hide');startClk();});
+
+// ---- auto-hiding chrome ----
+var chromeT=null;
+function showChrome(){
+  document.getElementById('bar').classList.remove('hide');
+  document.getElementById('topnav').classList.remove('hide');
+  clearTimeout(chromeT);
+  chromeT=setTimeout(hideChrome,3500);
+}
+function hideChrome(){
+  document.getElementById('bar').classList.add('hide');
+  document.getElementById('topnav').classList.add('hide');
+}
+document.getElementById('edge').addEventListener('pointerdown',function(e){
+  e.stopPropagation(); showChrome();
+});
+document.getElementById('bar').addEventListener('pointerdown',showChrome);
+document.getElementById('topnav').addEventListener('pointerdown',showChrome);
+showChrome();
+
+addEventListener('resize',function(){fit();syncRect();});
+addEventListener('orientationchange',function(){setTimeout(function(){fit();syncRect();},250);});
+addEventListener('scroll',syncRect,true);
+try{var sv=localStorage.getItem('m2255theme');}catch(e){}
+setTheme(sv==='light'?'light':'dark');
+fit();show();
+})();
+</script>
+
+</body>
+</html>
