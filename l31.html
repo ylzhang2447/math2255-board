@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="2255 L2">
+<meta name="theme-color" content="#0D0F10">
+<title>Math 2255 - Lecture 2 Board</title>
+<style>
+:root{
+  --bd:#0D0F10; --gr:#1B1F21;
+  --w:#F0EFE8; --y:#E3E34B; --c:#45CFC2; --m:#E85CD2; --o:#F09A42;
+  --dm:#7C8A8E; --wash-w:rgba(240,239,232,.07); --wash-o:rgba(240,154,66,.10);
+  --chrome:rgba(13,15,16,.86); --line:#23282A; --bfg:#9DACB1; --bbd:#2E3538;
+  --act:#1C2224; --sel:#8FA0A5; --kbd:#1E2426; --kbdb:#333B3E; --kbdf:#C3CFD2;
+  --solid:#12171A;
+  --fm:"Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
+  --fu:system-ui,-apple-system,"PingFang SC",sans-serif;
+}
+body.light{--bd:#FBFAF7; --gr:#E7E4DC;
+  --w:#16181B; --y:#8F6A05; --c:#0E7A70; --m:#A0198A; --o:#B4530A;
+  --dm:#6E787E; --wash-w:rgba(20,24,28,.05); --wash-o:rgba(180,83,10,.09);
+  --chrome:rgba(251,250,247,.92); --line:#DBD6CB; --bfg:#4A5459; --bbd:#CAC4B9;
+  --act:#EDE9E1; --sel:#5A6469; --kbd:#EFEBE3; --kbdb:#D2CCC2; --kbdf:#39434A;
+  --solid:#F2F0EA;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
+  overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+#app{position:relative;width:100%;height:100dvh;height:100svh;min-height:480px;overflow:hidden;background:var(--bd);
+  background-image:linear-gradient(var(--gr) 1px,transparent 1px),
+    linear-gradient(90deg,var(--gr) 1px,transparent 1px);
+  background-size:32px 32px;color:var(--w);font-family:var(--fm)}
+#stage{position:absolute;inset:0;padding:3.0vh 4vw 60px;overflow:hidden}
+.pg{display:none;height:100%}
+.pg.on{display:block}
+[data-s]{opacity:0;transition:opacity .16s ease}
+[data-s].vis{opacity:1}
+[data-until].gone{display:none}
+.pg.rv .h{font-size:clamp(1.3rem,min(3.8vw,5.60vh),2.9rem)}
+.pg.rv .lb{font-size:clamp(1rem,min(2.5vw,3.68vh),1.9rem);margin:.62em 0 .12em}
+.pg.rv .l{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.6;margin:0 0 .1em 1.0em}
+.pg.rv .e{font-size:clamp(1.05rem,min(2.7vw,4.00vh),2.1rem);margin-left:1.0em}
+
+.h{font-size:clamp(1.2rem,min(3.4vw,5.00vh),2.6rem);color:var(--y);display:table;
+  border-bottom:.09em solid var(--y);padding-bottom:.08em;margin:0 0 .55em}
+.lb{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);color:var(--y);display:table;
+  border-bottom:.07em solid var(--y);padding-bottom:.06em;margin:.65em 0 .32em}
+.l{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.62rem);line-height:1.72;margin:0 0 .1em}
+.e{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.95;margin:.3em 0 .3em 1.1em}
+.e.t{margin-top:.16em;margin-bottom:.16em}
+.a{font-size:clamp(.8rem,min(1.8vw,2.65vh),1.4rem);color:var(--m);margin:.12em 0 .3em 2em}
+.i{margin-left:1.5em}
+.n{color:var(--m)} .g{color:var(--c)} .v{color:var(--o)}
+.d{color:var(--dm)}
+.bx{display:inline-block;border:.09em solid var(--o);color:var(--o);
+  background:var(--wash-o);border-radius:.16em;padding:.2em .6em}
+.bw{display:inline-block;border:.09em solid var(--w);color:var(--w);
+  background:var(--wash-w);border-radius:.16em;padding:.2em .6em}
+sup,sub{line-height:0;font-size:.68em}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  line-height:1.18;font-size:.86em;margin:0 .14em}
+.fr>span{padding:0 .28em;display:block}
+.fr>span:first-child{border-bottom:.06em solid currentColor;padding-bottom:.1em}
+.fr>span:last-child{padding-top:.12em}
+ol.st{margin:.25em 0 .25em 1.1em;padding-left:1.1em;font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);line-height:1.65}
+table{border-collapse:collapse;margin:.4em 0 .4em 1.1em;font-size:clamp(.85rem,min(2vw,2.94vh),1.5rem);line-height:2}
+td,th{padding:.16em 1.4em .16em 0;text-align:left;font-weight:400}
+th{color:var(--y);font-size:.82em}
+.cols{display:flex;gap:5vw;align-items:flex-start}
+.two{display:grid;grid-template-columns:1fr 1fr;column-gap:2.4vw;align-items:start;margin:.15em 0 0 .2em}
+.two>div>*:first-child{margin-top:0}
+.two .e{margin:.12em 0 .12em .2em;line-height:1.6}
+.two .l{margin:.1em 0 .1em .2em}
+.two .lb{margin:.5em 0 .14em}
+.two .a{margin:.1em 0 .2em 1em}
+.split{display:flex;gap:1.4vw;align-items:flex-start;margin:.2em 0 0 .4em}
+.split>.sl{flex:0 0 auto}
+.split>.sr{flex:1 1 auto;min-width:0;display:flex;justify-content:center;align-items:flex-start}
+.split .e{margin:.05em 0 .05em .2em;line-height:1.45}
+.split .sl .e{font-size:clamp(.85rem,min(2.1vw,3.02vh),1.65rem)}
+svg.df.sp{width:auto;height:51vh;max-width:100%;margin:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;column-gap:2vw;row-gap:0;margin:.2em 0 .2em 1.1em}
+.g2 .e{margin-left:0;line-height:1.62}
+svg.df{display:block;width:100%;max-width:min(76vw,104vh);height:auto;margin:.5vh 0 .5vh 1vw}
+svg.df.ax{width:auto;height:45vh;max-width:96%;margin:.3vh 0 .3vh 1.6vw}
+svg.df.fx{width:auto;height:46vh;max-width:97%;margin:.3vh 0 .3vh 1.2vw}
+.hw{min-height:1.2em}
+body.guides .hw{outline:1px dashed rgba(69,207,194,.32);border-radius:4px}
+
+#wet{position:absolute;inset:0;pointer-events:none;z-index:6;transform:translateZ(0)}
+#ink{position:absolute;inset:0;touch-action:none;z-index:5;
+  transform:translateZ(0)}
+#topnav{position:absolute;top:0;right:0;z-index:12;display:flex;gap:6px;align-items:center;
+  padding:calc(6px + env(safe-area-inset-top)) 10px 6px;background:var(--solid);border-radius:0 0 0 10px;
+  font-family:var(--fu);font-size:13px;color:var(--bfg)}
+#topnav.hide{opacity:0;pointer-events:none}
+#bar{position:absolute;left:0;right:0;bottom:0;z-index:9;display:flex;gap:.5vw;
+  align-items:center;padding:.7vh 1.2vw;padding-bottom:calc(.7vh + env(safe-area-inset-bottom));background:var(--solid);
+  border-top:1px solid var(--line);font-family:var(--fu);font-size:13px;color:var(--dm);
+  transition:opacity .3s}
+#bar.hide{opacity:0;pointer-events:none}
+#bar,#topnav{transition:opacity .25s}
+#edge{position:absolute;left:0;right:0;bottom:0;height:46px;z-index:8}
+.pen{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;flex:none}
+.pen.sel{border-color:var(--sel);transform:scale(1.12)}
+.btn{padding:5px 11px;border:1px solid var(--bbd);border-radius:5px;background:transparent;
+  color:var(--bfg);font-family:var(--fu);font-size:12px;cursor:pointer}
+.btn:active{background:var(--act)}
+.sp{flex:1}
+.btn.nav{font-size:19px;padding:3px 20px;line-height:1.05;min-width:62px}
+#pos{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+#clk{font-variant-numeric:tabular-nums;font-size:15px;color:var(--w)}
+#clk.over{color:var(--o)}
+#hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;
+  font-family:var(--fu);font-size:15px;line-height:2;color:var(--bfg);text-align:center;
+  background:var(--chrome);border:1px solid var(--bbd);border-radius:10px;padding:26px 34px}
+#hint.hide{display:none}
+#hint b{color:var(--w)}
+kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);border-radius:4px;
+  padding:1px 6px;color:var(--kbdf);font-size:12px}
+</style>
+</head>
+<body>
+
+<div id="app">
+<div id="topnav">
+  <button class="btn nav" id="prev2">&#9664;</button>
+  <span id="pos2">1 / 23</span>
+  <button class="btn nav" id="next2">&#9654;</button>
+</div>
+<div id="stage">
+
+<div class="pg on" data-n="1">
+  <p class="h" data-s="0">Monday, in one page</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">The method</p>
+      <p class="l" data-s="1">Write <i>g</i> with steps, transform, solve for <i>Y</i>, group by <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>.</p>
+      <p class="l" data-s="2">Partial fractions without <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>, invert, shift.</p>
+      <p class="lb" data-s="3">What we saw</p>
+      <p class="e t" data-s="3">a step in <i>g</i>:&nbsp; <i>y</i>, <i>y</i>&#8242; continuous,&nbsp; <i>y</i>&#8243; jumps</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Today: &sect;6.5</p>
+      <p class="l" data-s="4">A force that acts in one instant: a hammer hits the spring.</p>
+      <p class="l" data-s="5">We need a new function, the delta, and its transform.</p>
+      <p class="e" data-s="6"><span class="bx">The method stays the same.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="2">
+  <p class="h" data-s="0">A short, strong force</p>
+  <p class="e" data-s="1"><span class="bw"><i>d</i><sub>&epsilon;</sub>(<i>t</i>) = <span class="fr"><span>1</span><span>&epsilon;</span></span>(<i>u</i><sub>1</sub>(<i>t</i>) &minus; <i>u</i><sub>1 + &epsilon;</sub>(<i>t</i>))</span></p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="2"><span class="d">dashed</span>: &epsilon; = 1, height 1.</p>
+      <p class="l" data-s="3"><span class="n">magenta</span>: &epsilon; = 1/2, height 2.</p>
+      <p class="l" data-s="4"><span class="g">teal</span>: &epsilon; = 1/4, height 4.</p>
+      <p class="e t" data-s="5">area = width &times; height = &epsilon; &middot; <span class="fr"><span>1</span><span>&epsilon;</span></span> = 1</p>
+      <p class="l" data-s="6">The area under a force is its <span class="v">impulse</span>: the total push. Here it is always 1.</p>
+      <p class="a" data-s="7">&#8627; its transform.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="272.2" x2="0" y2="272.2"/><line x1="-7" y1="194.4" x2="0" y2="194.4"/><line x1="-7" y1="116.7" x2="0" y2="116.7"/><line x1="-7" y1="38.9" x2="0" y2="38.9"/><line x1="206.7" y1="350" x2="206.7" y2="357"/><line x1="413.3" y1="350" x2="413.3" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">0</text><text x="-12" y="277.2" text-anchor="end">1</text><text x="-12" y="199.4" text-anchor="end">2</text><text x="-12" y="121.7" text-anchor="end">3</text><text x="-12" y="43.9" text-anchor="end">4</text><text x="0" y="375" text-anchor="middle">0</text><text x="206.7" y="375" text-anchor="middle">1</text><text x="413.3" y="375" text-anchor="middle">2</text><text x="620" y="375" text-anchor="middle">3</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="2" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="0.0,350.0 1.7,350.0 3.4,350.0 5.2,350.0 6.9,350.0 8.6,350.0 10.3,350.0 12.1,350.0 13.8,350.0 15.5,350.0 17.2,350.0 18.9,350.0 20.7,350.0 22.4,350.0 24.1,350.0 25.8,350.0 27.6,350.0 29.3,350.0 31.0,350.0 32.7,350.0 34.4,350.0 36.2,350.0 37.9,350.0 39.6,350.0 41.3,350.0 43.1,350.0 44.8,350.0 46.5,350.0 48.2,350.0 49.9,350.0 51.7,350.0 53.4,350.0 55.1,350.0 56.8,350.0 58.6,350.0 60.3,350.0 62.0,350.0 63.7,350.0 65.4,350.0 67.2,350.0 68.9,350.0 70.6,350.0 72.3,350.0 74.1,350.0 75.8,350.0 77.5,350.0 79.2,350.0 80.9,350.0 82.7,350.0 84.4,350.0 86.1,350.0 87.8,350.0 89.6,350.0 91.3,350.0 93.0,350.0 94.7,350.0 96.4,350.0 98.2,350.0 99.9,350.0 101.6,350.0 103.3,350.0 105.1,350.0 106.8,350.0 108.5,350.0 110.2,350.0 111.9,350.0 113.7,350.0 115.4,350.0 117.1,350.0 118.8,350.0 120.6,350.0 122.3,350.0 124.0,350.0 125.7,350.0 127.4,350.0 129.2,350.0 130.9,350.0 132.6,350.0 134.3,350.0 136.1,350.0 137.8,350.0 139.5,350.0 141.2,350.0 142.9,350.0 144.7,350.0 146.4,350.0 148.1,350.0 149.8,350.0 151.6,350.0 153.3,350.0 155.0,350.0 156.7,350.0 158.4,350.0 160.2,350.0 161.9,350.0 163.6,350.0 165.3,350.0 167.1,350.0 168.8,350.0 170.5,350.0 172.2,350.0 173.9,350.0 175.7,350.0 177.4,350.0 179.1,350.0 180.8,350.0 182.6,350.0 184.3,350.0 186.0,350.0 187.7,350.0 189.4,350.0 191.2,350.0 192.9,350.0 194.6,350.0 196.3,350.0 198.1,350.0 199.8,350.0 201.5,350.0 203.2,350.0 204.9,350.0 206.7,350.0"/><polyline data-s="2" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="206.7,272.2 208.4,272.2 210.1,272.2 211.8,272.2 213.6,272.2 215.3,272.2 217.0,272.2 218.7,272.2 220.4,272.2 222.2,272.2 223.9,272.2 225.6,272.2 227.3,272.2 229.1,272.2 230.8,272.2 232.5,272.2 234.2,272.2 235.9,272.2 237.7,272.2 239.4,272.2 241.1,272.2 242.8,272.2 244.6,272.2 246.3,272.2 248.0,272.2 249.7,272.2 251.4,272.2 253.2,272.2 254.9,272.2 256.6,272.2 258.3,272.2 260.1,272.2 261.8,272.2 263.5,272.2 265.2,272.2 266.9,272.2 268.7,272.2 270.4,272.2 272.1,272.2 273.8,272.2 275.6,272.2 277.3,272.2 279.0,272.2 280.7,272.2 282.4,272.2 284.2,272.2 285.9,272.2 287.6,272.2 289.3,272.2 291.1,272.2 292.8,272.2 294.5,272.2 296.2,272.2 297.9,272.2 299.7,272.2 301.4,272.2 303.1,272.2 304.8,272.2 306.6,272.2 308.3,272.2 310.0,272.2 311.7,272.2 313.4,272.2 315.2,272.2 316.9,272.2 318.6,272.2 320.3,272.2 322.1,272.2 323.8,272.2 325.5,272.2 327.2,272.2 328.9,272.2 330.7,272.2 332.4,272.2 334.1,272.2 335.8,272.2 337.6,272.2 339.3,272.2 341.0,272.2 342.7,272.2 344.4,272.2 346.2,272.2 347.9,272.2 349.6,272.2 351.3,272.2 353.1,272.2 354.8,272.2 356.5,272.2 358.2,272.2 359.9,272.2 361.7,272.2 363.4,272.2 365.1,272.2 366.8,272.2 368.6,272.2 370.3,272.2 372.0,272.2 373.7,272.2 375.4,272.2 377.2,272.2 378.9,272.2 380.6,272.2 382.3,272.2 384.1,272.2 385.8,272.2 387.5,272.2 389.2,272.2 390.9,272.2 392.7,272.2 394.4,272.2 396.1,272.2 397.8,272.2 399.6,272.2 401.3,272.2 403.0,272.2 404.7,272.2 406.4,272.2 408.2,272.2 409.9,272.2 411.6,272.2 413.3,272.2"/><polyline data-s="2" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="413.3,350.0 415.1,350.0 416.8,350.0 418.5,350.0 420.2,350.0 421.9,350.0 423.7,350.0 425.4,350.0 427.1,350.0 428.8,350.0 430.6,350.0 432.3,350.0 434.0,350.0 435.7,350.0 437.4,350.0 439.2,350.0 440.9,350.0 442.6,350.0 444.3,350.0 446.1,350.0 447.8,350.0 449.5,350.0 451.2,350.0 452.9,350.0 454.7,350.0 456.4,350.0 458.1,350.0 459.8,350.0 461.6,350.0 463.3,350.0 465.0,350.0 466.7,350.0 468.4,350.0 470.2,350.0 471.9,350.0 473.6,350.0 475.3,350.0 477.1,350.0 478.8,350.0 480.5,350.0 482.2,350.0 483.9,350.0 485.7,350.0 487.4,350.0 489.1,350.0 490.8,350.0 492.6,350.0 494.3,350.0 496.0,350.0 497.7,350.0 499.4,350.0 501.2,350.0 502.9,350.0 504.6,350.0 506.3,350.0 508.1,350.0 509.8,350.0 511.5,350.0 513.2,350.0 514.9,350.0 516.7,350.0 518.4,350.0 520.1,350.0 521.8,350.0 523.6,350.0 525.3,350.0 527.0,350.0 528.7,350.0 530.4,350.0 532.2,350.0 533.9,350.0 535.6,350.0 537.3,350.0 539.1,350.0 540.8,350.0 542.5,350.0 544.2,350.0 545.9,350.0 547.7,350.0 549.4,350.0 551.1,350.0 552.8,350.0 554.6,350.0 556.3,350.0 558.0,350.0 559.7,350.0 561.4,350.0 563.2,350.0 564.9,350.0 566.6,350.0 568.3,350.0 570.1,350.0 571.8,350.0 573.5,350.0 575.2,350.0 576.9,350.0 578.7,350.0 580.4,350.0 582.1,350.0 583.8,350.0 585.6,350.0 587.3,350.0 589.0,350.0 590.7,350.0 592.4,350.0 594.2,350.0 595.9,350.0 597.6,350.0 599.3,350.0 601.1,350.0 602.8,350.0 604.5,350.0 606.2,350.0 607.9,350.0 609.7,350.0 611.4,350.0 613.1,350.0 614.8,350.0 616.6,350.0 618.3,350.0 620.0,350.0"/><polyline data-s="3" fill="none" stroke="var(--m)" stroke-width="2.8" stroke-linejoin="round" points="0.0,350.0 1.7,350.0 3.4,350.0 5.2,350.0 6.9,350.0 8.6,350.0 10.3,350.0 12.1,350.0 13.8,350.0 15.5,350.0 17.2,350.0 18.9,350.0 20.7,350.0 22.4,350.0 24.1,350.0 25.8,350.0 27.6,350.0 29.3,350.0 31.0,350.0 32.7,350.0 34.4,350.0 36.2,350.0 37.9,350.0 39.6,350.0 41.3,350.0 43.1,350.0 44.8,350.0 46.5,350.0 48.2,350.0 49.9,350.0 51.7,350.0 53.4,350.0 55.1,350.0 56.8,350.0 58.6,350.0 60.3,350.0 62.0,350.0 63.7,350.0 65.4,350.0 67.2,350.0 68.9,350.0 70.6,350.0 72.3,350.0 74.1,350.0 75.8,350.0 77.5,350.0 79.2,350.0 80.9,350.0 82.7,350.0 84.4,350.0 86.1,350.0 87.8,350.0 89.6,350.0 91.3,350.0 93.0,350.0 94.7,350.0 96.4,350.0 98.2,350.0 99.9,350.0 101.6,350.0 103.3,350.0 105.1,350.0 106.8,350.0 108.5,350.0 110.2,350.0 111.9,350.0 113.7,350.0 115.4,350.0 117.1,350.0 118.8,350.0 120.6,350.0 122.3,350.0 124.0,350.0 125.7,350.0 127.4,350.0 129.2,350.0 130.9,350.0 132.6,350.0 134.3,350.0 136.1,350.0 137.8,350.0 139.5,350.0 141.2,350.0 142.9,350.0 144.7,350.0 146.4,350.0 148.1,350.0 149.8,350.0 151.6,350.0 153.3,350.0 155.0,350.0 156.7,350.0 158.4,350.0 160.2,350.0 161.9,350.0 163.6,350.0 165.3,350.0 167.1,350.0 168.8,350.0 170.5,350.0 172.2,350.0 173.9,350.0 175.7,350.0 177.4,350.0 179.1,350.0 180.8,350.0 182.6,350.0 184.3,350.0 186.0,350.0 187.7,350.0 189.4,350.0 191.2,350.0 192.9,350.0 194.6,350.0 196.3,350.0 198.1,350.0 199.8,350.0 201.5,350.0 203.2,350.0 204.9,350.0 206.7,350.0"/><polyline data-s="3" fill="none" stroke="var(--m)" stroke-width="2.8" stroke-linejoin="round" points="206.7,194.4 207.5,194.4 208.4,194.4 209.2,194.4 210.1,194.4 211.0,194.4 211.8,194.4 212.7,194.4 213.6,194.4 214.4,194.4 215.3,194.4 216.1,194.4 217.0,194.4 217.9,194.4 218.7,194.4 219.6,194.4 220.4,194.4 221.3,194.4 222.2,194.4 223.0,194.4 223.9,194.4 224.8,194.4 225.6,194.4 226.5,194.4 227.3,194.4 228.2,194.4 229.1,194.4 229.9,194.4 230.8,194.4 231.6,194.4 232.5,194.4 233.4,194.4 234.2,194.4 235.1,194.4 235.9,194.4 236.8,194.4 237.7,194.4 238.5,194.4 239.4,194.4 240.2,194.4 241.1,194.4 242.0,194.4 242.8,194.4 243.7,194.4 244.6,194.4 245.4,194.4 246.3,194.4 247.1,194.4 248.0,194.4 248.9,194.4 249.7,194.4 250.6,194.4 251.4,194.4 252.3,194.4 253.2,194.4 254.0,194.4 254.9,194.4 255.8,194.4 256.6,194.4 257.5,194.4 258.3,194.4 259.2,194.4 260.1,194.4 260.9,194.4 261.8,194.4 262.6,194.4 263.5,194.4 264.4,194.4 265.2,194.4 266.1,194.4 266.9,194.4 267.8,194.4 268.7,194.4 269.5,194.4 270.4,194.4 271.2,194.4 272.1,194.4 273.0,194.4 273.8,194.4 274.7,194.4 275.6,194.4 276.4,194.4 277.3,194.4 278.1,194.4 279.0,194.4 279.9,194.4 280.7,194.4 281.6,194.4 282.4,194.4 283.3,194.4 284.2,194.4 285.0,194.4 285.9,194.4 286.8,194.4 287.6,194.4 288.5,194.4 289.3,194.4 290.2,194.4 291.1,194.4 291.9,194.4 292.8,194.4 293.6,194.4 294.5,194.4 295.4,194.4 296.2,194.4 297.1,194.4 297.9,194.4 298.8,194.4 299.7,194.4 300.5,194.4 301.4,194.4 302.2,194.4 303.1,194.4 304.0,194.4 304.8,194.4 305.7,194.4 306.6,194.4 307.4,194.4 308.3,194.4 309.1,194.4 310.0,194.4"/><polyline data-s="3" fill="none" stroke="var(--m)" stroke-width="2.8" stroke-linejoin="round" points="310.0,350.0 312.6,350.0 315.2,350.0 317.8,350.0 320.3,350.0 322.9,350.0 325.5,350.0 328.1,350.0 330.7,350.0 333.2,350.0 335.8,350.0 338.4,350.0 341.0,350.0 343.6,350.0 346.2,350.0 348.8,350.0 351.3,350.0 353.9,350.0 356.5,350.0 359.1,350.0 361.7,350.0 364.2,350.0 366.8,350.0 369.4,350.0 372.0,350.0 374.6,350.0 377.2,350.0 379.8,350.0 382.3,350.0 384.9,350.0 387.5,350.0 390.1,350.0 392.7,350.0 395.2,350.0 397.8,350.0 400.4,350.0 403.0,350.0 405.6,350.0 408.2,350.0 410.8,350.0 413.3,350.0 415.9,350.0 418.5,350.0 421.1,350.0 423.7,350.0 426.2,350.0 428.8,350.0 431.4,350.0 434.0,350.0 436.6,350.0 439.2,350.0 441.8,350.0 444.3,350.0 446.9,350.0 449.5,350.0 452.1,350.0 454.7,350.0 457.2,350.0 459.8,350.0 462.4,350.0 465.0,350.0 467.6,350.0 470.2,350.0 472.8,350.0 475.3,350.0 477.9,350.0 480.5,350.0 483.1,350.0 485.7,350.0 488.2,350.0 490.8,350.0 493.4,350.0 496.0,350.0 498.6,350.0 501.2,350.0 503.8,350.0 506.3,350.0 508.9,350.0 511.5,350.0 514.1,350.0 516.7,350.0 519.2,350.0 521.8,350.0 524.4,350.0 527.0,350.0 529.6,350.0 532.2,350.0 534.8,350.0 537.3,350.0 539.9,350.0 542.5,350.0 545.1,350.0 547.7,350.0 550.2,350.0 552.8,350.0 555.4,350.0 558.0,350.0 560.6,350.0 563.2,350.0 565.8,350.0 568.3,350.0 570.9,350.0 573.5,350.0 576.1,350.0 578.7,350.0 581.2,350.0 583.8,350.0 586.4,350.0 589.0,350.0 591.6,350.0 594.2,350.0 596.8,350.0 599.3,350.0 601.9,350.0 604.5,350.0 607.1,350.0 609.7,350.0 612.2,350.0 614.8,350.0 617.4,350.0 620.0,350.0"/><polyline data-s="4" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,350.0 1.7,350.0 3.4,350.0 5.2,350.0 6.9,350.0 8.6,350.0 10.3,350.0 12.1,350.0 13.8,350.0 15.5,350.0 17.2,350.0 18.9,350.0 20.7,350.0 22.4,350.0 24.1,350.0 25.8,350.0 27.6,350.0 29.3,350.0 31.0,350.0 32.7,350.0 34.4,350.0 36.2,350.0 37.9,350.0 39.6,350.0 41.3,350.0 43.1,350.0 44.8,350.0 46.5,350.0 48.2,350.0 49.9,350.0 51.7,350.0 53.4,350.0 55.1,350.0 56.8,350.0 58.6,350.0 60.3,350.0 62.0,350.0 63.7,350.0 65.4,350.0 67.2,350.0 68.9,350.0 70.6,350.0 72.3,350.0 74.1,350.0 75.8,350.0 77.5,350.0 79.2,350.0 80.9,350.0 82.7,350.0 84.4,350.0 86.1,350.0 87.8,350.0 89.6,350.0 91.3,350.0 93.0,350.0 94.7,350.0 96.4,350.0 98.2,350.0 99.9,350.0 101.6,350.0 103.3,350.0 105.1,350.0 106.8,350.0 108.5,350.0 110.2,350.0 111.9,350.0 113.7,350.0 115.4,350.0 117.1,350.0 118.8,350.0 120.6,350.0 122.3,350.0 124.0,350.0 125.7,350.0 127.4,350.0 129.2,350.0 130.9,350.0 132.6,350.0 134.3,350.0 136.1,350.0 137.8,350.0 139.5,350.0 141.2,350.0 142.9,350.0 144.7,350.0 146.4,350.0 148.1,350.0 149.8,350.0 151.6,350.0 153.3,350.0 155.0,350.0 156.7,350.0 158.4,350.0 160.2,350.0 161.9,350.0 163.6,350.0 165.3,350.0 167.1,350.0 168.8,350.0 170.5,350.0 172.2,350.0 173.9,350.0 175.7,350.0 177.4,350.0 179.1,350.0 180.8,350.0 182.6,350.0 184.3,350.0 186.0,350.0 187.7,350.0 189.4,350.0 191.2,350.0 192.9,350.0 194.6,350.0 196.3,350.0 198.1,350.0 199.8,350.0 201.5,350.0 203.2,350.0 204.9,350.0 206.7,350.0"/><polyline data-s="4" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="206.7,38.9 207.1,38.9 207.5,38.9 208.0,38.9 208.4,38.9 208.8,38.9 209.2,38.9 209.7,38.9 210.1,38.9 210.5,38.9 211.0,38.9 211.4,38.9 211.8,38.9 212.3,38.9 212.7,38.9 213.1,38.9 213.6,38.9 214.0,38.9 214.4,38.9 214.8,38.9 215.3,38.9 215.7,38.9 216.1,38.9 216.6,38.9 217.0,38.9 217.4,38.9 217.9,38.9 218.3,38.9 218.7,38.9 219.2,38.9 219.6,38.9 220.0,38.9 220.4,38.9 220.9,38.9 221.3,38.9 221.7,38.9 222.2,38.9 222.6,38.9 223.0,38.9 223.5,38.9 223.9,38.9 224.3,38.9 224.8,38.9 225.2,38.9 225.6,38.9 226.0,38.9 226.5,38.9 226.9,38.9 227.3,38.9 227.8,38.9 228.2,38.9 228.6,38.9 229.1,38.9 229.5,38.9 229.9,38.9 230.3,38.9 230.8,38.9 231.2,38.9 231.6,38.9 232.1,38.9 232.5,38.9 232.9,38.9 233.4,38.9 233.8,38.9 234.2,38.9 234.7,38.9 235.1,38.9 235.5,38.9 235.9,38.9 236.4,38.9 236.8,38.9 237.2,38.9 237.7,38.9 238.1,38.9 238.5,38.9 239.0,38.9 239.4,38.9 239.8,38.9 240.2,38.9 240.7,38.9 241.1,38.9 241.5,38.9 242.0,38.9 242.4,38.9 242.8,38.9 243.3,38.9 243.7,38.9 244.1,38.9 244.6,38.9 245.0,38.9 245.4,38.9 245.8,38.9 246.3,38.9 246.7,38.9 247.1,38.9 247.6,38.9 248.0,38.9 248.4,38.9 248.9,38.9 249.3,38.9 249.7,38.9 250.2,38.9 250.6,38.9 251.0,38.9 251.4,38.9 251.9,38.9 252.3,38.9 252.7,38.9 253.2,38.9 253.6,38.9 254.0,38.9 254.5,38.9 254.9,38.9 255.3,38.9 255.8,38.9 256.2,38.9 256.6,38.9 257.0,38.9 257.5,38.9 257.9,38.9 258.3,38.9"/><polyline data-s="4" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="258.3,350.0 261.3,350.0 264.4,350.0 267.4,350.0 270.4,350.0 273.4,350.0 276.4,350.0 279.4,350.0 282.4,350.0 285.5,350.0 288.5,350.0 291.5,350.0 294.5,350.0 297.5,350.0 300.5,350.0 303.5,350.0 306.6,350.0 309.6,350.0 312.6,350.0 315.6,350.0 318.6,350.0 321.6,350.0 324.6,350.0 327.7,350.0 330.7,350.0 333.7,350.0 336.7,350.0 339.7,350.0 342.7,350.0 345.7,350.0 348.8,350.0 351.8,350.0 354.8,350.0 357.8,350.0 360.8,350.0 363.8,350.0 366.8,350.0 369.8,350.0 372.9,350.0 375.9,350.0 378.9,350.0 381.9,350.0 384.9,350.0 387.9,350.0 390.9,350.0 394.0,350.0 397.0,350.0 400.0,350.0 403.0,350.0 406.0,350.0 409.0,350.0 412.0,350.0 415.1,350.0 418.1,350.0 421.1,350.0 424.1,350.0 427.1,350.0 430.1,350.0 433.1,350.0 436.2,350.0 439.2,350.0 442.2,350.0 445.2,350.0 448.2,350.0 451.2,350.0 454.2,350.0 457.2,350.0 460.3,350.0 463.3,350.0 466.3,350.0 469.3,350.0 472.3,350.0 475.3,350.0 478.3,350.0 481.4,350.0 484.4,350.0 487.4,350.0 490.4,350.0 493.4,350.0 496.4,350.0 499.4,350.0 502.5,350.0 505.5,350.0 508.5,350.0 511.5,350.0 514.5,350.0 517.5,350.0 520.5,350.0 523.6,350.0 526.6,350.0 529.6,350.0 532.6,350.0 535.6,350.0 538.6,350.0 541.6,350.0 544.7,350.0 547.7,350.0 550.7,350.0 553.7,350.0 556.7,350.0 559.7,350.0 562.7,350.0 565.8,350.0 568.8,350.0 571.8,350.0 574.8,350.0 577.8,350.0 580.8,350.0 583.8,350.0 586.8,350.0 589.9,350.0 592.9,350.0 595.9,350.0 598.9,350.0 601.9,350.0 604.9,350.0 607.9,350.0 611.0,350.0 614.0,350.0 617.0,350.0 620.0,350.0"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="3">
+  <p class="h" data-s="0">The transform, and the limit &epsilon; &rarr; 0</p>
+  <p class="e" data-s="1"><span class="bw"><i>d</i><sub>&epsilon;</sub>(<i>t</i>) = <span class="fr"><span>1</span><span>&epsilon;</span></span>(<i>u</i><sub><i>c</i></sub>(<i>t</i>) &minus; <i>u</i><sub><i>c</i> + &epsilon;</sub>(<i>t</i>))</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Transform: steps from Lecture 28</p>
+      <p class="e t" data-s="2">&#8466;{<i>d</i><sub>&epsilon;</sub>(<i>t</i>)} = <span class="fr"><span>1</span><span>&epsilon;</span></span>(<span class="fr"><span><b>e</b><sup>&minus;<i>c</i><i>s</i></sup></span><span><i>s</i></span></span> &minus; <span class="fr"><span><b>e</b><sup>&minus;(<i>c</i> + &epsilon;)<i>s</i></sup></span><span><i>s</i></span></span>)</p>
+      <p class="e t" data-s="3">= <b>e</b><sup>&minus;<i>c</i><i>s</i></sup><span class="fr"><span>1 &minus; <b>e</b><sup>&minus;&epsilon;<i>s</i></sup></span><span>&epsilon;<i>s</i></span></span></p>
+      <p class="l" data-s="4"><span class="d"><b>e</b><sup>&minus;(<i>c</i> + &epsilon;)<i>s</i></sup> = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup><b>e</b><sup>&minus;&epsilon;<i>s</i></sup>: take <b>e</b><sup>&minus;<i>c</i><i>s</i></sup> out.</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Let &epsilon; &rarr; 0</p>
+      <p class="e t" data-s="5"><b>e</b><sup>&minus;&epsilon;<i>s</i></sup> &asymp; 1 &minus; &epsilon;<i>s</i>&nbsp; for small &epsilon;</p>
+      <p class="e t" data-s="6"><span class="fr"><span>1 &minus; <b>e</b><sup>&minus;&epsilon;<i>s</i></sup></span><span>&epsilon;<i>s</i></span></span> &asymp; <span class="fr"><span>1 &minus; (1 &minus; &epsilon;<i>s</i>)</span><span>&epsilon;<i>s</i></span></span> = <span class="fr"><span>&epsilon;<i>s</i></span><span>&epsilon;<i>s</i></span></span> = 1</p>
+      <p class="e" data-s="7"><span class="bx">&#8466;{<i>d</i><sub>&epsilon;</sub>(<i>t</i>)} &rarr; <b>e</b><sup>&minus;<i>c</i><i>s</i></sup></span></p>
+      <p class="l" data-s="8"><span class="d">L&rsquo;H&ocirc;pital in &epsilon; gives the same limit.</span></p>
+      <p class="a" data-s="9">&#8627; the name for this limit.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="4">
+  <p class="h" data-s="0">The delta function</p>
+  <p class="e" data-s="1"><span class="bw">&delta;(<i>t</i> &minus; <i>c</i>) = the limit of <i>d</i><sub>&epsilon;</sub>(<i>t</i>) as &epsilon; &rarr; 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">What it does</p>
+      <p class="e t" data-s="2">&delta;(<i>t</i> &minus; <i>c</i>) = 0&nbsp; for <i>t</i> &ne; <i>c</i></p>
+      <p class="e t" data-s="3">&int;<sub>0</sub><sup>&infin;</sup> &delta;(<i>t</i> &minus; <i>c</i>) <i>dt</i> = 1&nbsp;&nbsp;<span class="d">(<i>c</i> &gt; 0)</span></p>
+      <p class="l" data-s="4">It is not an ordinary function: zero everywhere except one point, but with area 1. It is a model of a push of size 1 at time <i>c</i>.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Its transform</p>
+      <p class="e" data-s="5"><span class="bx">&#8466;{&delta;(<i>t</i> &minus; <i>c</i>)} = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup></span></p>
+      <p class="e t" data-s="6">&#8466;{&delta;(<i>t</i>)} = 1&nbsp;&nbsp;<span class="d"><i>c</i> = 0</span></p>
+      <p class="l" data-s="7">Compare: &#8466;{<i>u</i><sub><i>c</i></sub>(<i>t</i>)} = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>/<i>s</i>. The delta has no 1/<i>s</i>.</p>
+      <p class="a" data-s="8">&#8627; a second way to see the transform.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="5">
+  <p class="h" data-s="0">Integrating against the delta</p>
+  <p class="e" data-s="1"><span class="bw">&int;<sub>0</sub><sup>&infin;</sup> <i>f</i>(<i>t</i>) &delta;(<i>t</i> &minus; <i>c</i>) <i>dt</i> = <i>f</i>(<i>c</i>)</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Why</p>
+      <p class="l" data-s="2">Use <i>d</i><sub>&epsilon;</sub>(<i>t</i>): it is 0 except on a short interval from <i>c</i> to <i>c</i> + &epsilon;.</p>
+      <p class="e t" data-s="3">there <i>f</i>(<i>t</i>) &asymp; <i>f</i>(<i>c</i>), so&nbsp; &int;<sub>0</sub><sup>&infin;</sup> <i>f</i> <i>d</i><sub>&epsilon;</sub>(<i>t</i>) <i>dt</i> &asymp; <i>f</i>(<i>c</i>) &middot; 1</p>
+      <p class="l" data-s="4">As &epsilon; &rarr; 0, the &asymp; becomes =.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">The transform again</p>
+      <p class="e t" data-s="5">&#8466;{&delta;(<i>t</i> &minus; <i>c</i>)} = &int;<sub>0</sub><sup>&infin;</sup> <b>e</b><sup>&minus;<i>st</i></sup> &delta;(<i>t</i> &minus; <i>c</i>) <i>dt</i></p>
+      <p class="e" data-s="6"><span class="bx">= <b>e</b><sup>&minus;<i>sc</i></sup>&nbsp;&nbsp;<span class="d"><i>f</i>(<i>t</i>) = <b>e</b><sup>&minus;<i>st</i></sup>, evaluated at <i>t</i> = <i>c</i></span></span></p>
+      <p class="l" data-s="7">The same answer as the limit. The delta picks out the value at <i>t</i> = <i>c</i>.</p>
+      <p class="a" data-s="8">&#8627; a quick round.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="6">
+  <p class="h" data-s="0">Call it out</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; &#8466;{&delta;(<i>t</i> &minus; 2)}</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; &#8466;{3&delta;(<i>t</i> &minus; &pi;)}</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; &#8466;<sup>&minus;1</sup>{<b>e</b><sup>&minus;4<i>s</i></sup>}</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; &#8466;<sup>&minus;1</sup>{5}</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; &int;<sub>0</sub><sup>&infin;</sup> cos <i>t</i> &delta;(<i>t</i> &minus; &pi;) <i>dt</i></p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <b>e</b><sup>&minus;2<i>s</i></sup></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; 3<b>e</b><sup>&minus;&pi;<i>s</i></sup></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; &delta;(<i>t</i> &minus; 4)</p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; 5&delta;(<i>t</i>)</p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; cos &pi; = &minus;1</p>
+      <p class="a" data-s="11">&#8627; number 4: a constant in <i>s</i> is a delta at <i>t</i> = 0, not a constant in <i>t</i>.</p>
+    </div>
+  </div>
+  <p class="l" data-s="1" style="margin-top:.8em;border-top:1px solid var(--line, #555);padding-top:.4em"><span class="d">Backwards:&nbsp; <span class="fr"><span>1</span><span><i>s</i> &minus; <i>a</i></span></span> &rarr; <b>e</b><sup><i>at</i></sup>,&nbsp; <span class="fr"><span><i>n</i>!</span><span><i>s</i><sup><i>n</i>+1</sup></span></span> &rarr; <i>t</i><sup><i>n</i></sup>,&nbsp; <span class="fr"><span><i>b</i></span><span><i>s</i><sup>2</sup> + <i>b</i><sup>2</sup></span></span> &rarr; sin <i>bt</i>,&nbsp; <span class="fr"><span><i>s</i></span><span><i>s</i><sup>2</sup> + <i>b</i><sup>2</sup></span></span> &rarr; cos <i>bt</i>,&nbsp; <span class="fr"><span>1</span><span>(<i>s</i> &minus; <i>a</i>)<sup>2</sup></span></span> &rarr; <i>t</i><b>e</b><sup><i>at</i></sup>,&nbsp; <i>F</i>(<i>s</i> &minus; <i>a</i>) &rarr; <b>e</b><sup><i>at</i></sup><i>f</i>(<i>t</i>),&nbsp; &#8466;{<i>u</i><sub><i>c</i></sub>(<i>t</i>)} = <span class="fr"><span><b>e</b><sup>&minus;<i>c</i><i>s</i></sup></span><span><i>s</i></span></span>,&nbsp; &#8466;{<i>u</i><sub><i>c</i></sub>(<i>t</i>)<i>f</i>(<i>t</i> &minus; <i>c</i>)} = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup><i>F</i>(<i>s</i>),&nbsp; &#8466;{&delta;(<i>t</i> &minus; <i>c</i>)} = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup></span></p>
+</div>
+
+<div class="pg" data-n="7">
+  <p class="h" data-s="0">Example 1 &mdash; a first order equation</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8242; + 2<i>y</i> = &delta;(<i>t</i> &minus; 1),&nbsp;&nbsp; <i>y</i>(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Transform both sides</p>
+      <p class="e t" data-s="2"><i>sY</i> + 2<i>Y</i> = <b>e</b><sup>&minus;<i>s</i></sup></p>
+      <p class="lb" data-s="3">Solve for <i>Y</i></p>
+      <p class="e t" data-s="3"><i>Y</i> = <b>e</b><sup>&minus;<i>s</i></sup><span class="fr"><span>1</span><span><i>s</i> + 2</span></span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Invert, then shift by 1</p>
+      <p class="e t" data-s="4"><span class="fr"><span>1</span><span><i>s</i> + 2</span></span> &rarr; <b>e</b><sup>&minus;2<i>t</i></sup></p>
+      <p class="e" data-s="5"><span class="bx"><i>y</i> = <i>u</i><sub>1</sub>(<i>t</i>)<b>e</b><sup>&minus;2(<i>t</i> &minus; 1)</sup></span></p>
+      <p class="l" data-s="6">No partial fractions this time: the delta has no 1/<i>s</i>.</p>
+      <p class="a" data-s="7">&#8627; the picture.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="8">
+  <p class="h" data-s="0">Example 1, the picture</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1"><span class="g">teal</span>: <i>y</i>(<i>t</i>).</p>
+      <p class="e t" data-s="2"><i>t</i> &lt; 1:&nbsp; <i>y</i> = 0</p>
+      <p class="e t" data-s="3"><i>t</i> = 1:&nbsp; <i>y</i> jumps from 0 to 1</p>
+      <p class="e t" data-s="4"><i>t</i> &gt; 1:&nbsp; decays like <b>e</b><sup>&minus;2(<i>t</i> &minus; 1)</sup></p>
+      <p class="l" data-s="5">The push of size 1 changes <i>y</i> by 1 at once. In a first order equation, <i>y</i> itself jumps.</p>
+      <p class="a" data-s="6">&#8627; a hammer hits a spring.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="204.2" x2="0" y2="204.2"/><line x1="-7" y1="58.3" x2="0" y2="58.3"/><line x1="124" y1="350" x2="124" y2="357"/><line x1="248" y1="350" x2="248" y2="357"/><line x1="372" y1="350" x2="372" y2="357"/><line x1="496" y1="350" x2="496" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">0</text><text x="-12" y="209.2" text-anchor="end">0.5</text><text x="-12" y="63.3" text-anchor="end">1</text><text x="0" y="375" text-anchor="middle">0</text><text x="124" y="375" text-anchor="middle">1</text><text x="248" y="375" text-anchor="middle">2</text><text x="372" y="375" text-anchor="middle">3</text><text x="496" y="375" text-anchor="middle">4</text><text x="620" y="375" text-anchor="middle">5</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,350.0 1.0,350.0 2.1,350.0 3.1,350.0 4.1,350.0 5.2,350.0 6.2,350.0 7.2,350.0 8.3,350.0 9.3,350.0 10.3,350.0 11.4,350.0 12.4,350.0 13.4,350.0 14.5,350.0 15.5,350.0 16.5,350.0 17.6,350.0 18.6,350.0 19.6,350.0 20.7,350.0 21.7,350.0 22.7,350.0 23.8,350.0 24.8,350.0 25.8,350.0 26.9,350.0 27.9,350.0 28.9,350.0 30.0,350.0 31.0,350.0 32.0,350.0 33.1,350.0 34.1,350.0 35.1,350.0 36.2,350.0 37.2,350.0 38.2,350.0 39.3,350.0 40.3,350.0 41.3,350.0 42.4,350.0 43.4,350.0 44.4,350.0 45.5,350.0 46.5,350.0 47.5,350.0 48.6,350.0 49.6,350.0 50.6,350.0 51.7,350.0 52.7,350.0 53.7,350.0 54.8,350.0 55.8,350.0 56.8,350.0 57.9,350.0 58.9,350.0 59.9,350.0 61.0,350.0 62.0,350.0 63.0,350.0 64.1,350.0 65.1,350.0 66.1,350.0 67.2,350.0 68.2,350.0 69.2,350.0 70.3,350.0 71.3,350.0 72.3,350.0 73.4,350.0 74.4,350.0 75.4,350.0 76.5,350.0 77.5,350.0 78.5,350.0 79.6,350.0 80.6,350.0 81.6,350.0 82.7,350.0 83.7,350.0 84.7,350.0 85.8,350.0 86.8,350.0 87.8,350.0 88.9,350.0 89.9,350.0 90.9,350.0 92.0,350.0 93.0,350.0 94.0,350.0 95.1,350.0 96.1,350.0 97.1,350.0 98.2,350.0 99.2,350.0 100.2,350.0 101.3,350.0 102.3,350.0 103.3,350.0 104.4,350.0 105.4,350.0 106.4,350.0 107.5,350.0 108.5,350.0 109.5,350.0 110.6,350.0 111.6,350.0 112.6,350.0 113.7,350.0 114.7,350.0 115.7,350.0 116.8,350.0 117.8,350.0 118.8,350.0 119.9,350.0 120.9,350.0 121.9,350.0 123.0,350.0 124.0,350.0"/><polyline data-s="1" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="124.0,58.3 128.1,77.1 132.3,94.7 136.4,111.2 140.5,126.6 144.7,141.0 148.8,154.5 152.9,167.1 157.1,178.9 161.2,189.9 165.3,200.3 169.5,209.9 173.6,218.9 177.7,227.4 181.9,235.3 186.0,242.7 190.1,249.6 194.3,256.1 198.4,262.2 202.5,267.8 206.7,273.1 210.8,278.1 214.9,282.7 219.1,287.1 223.2,291.1 227.3,294.9 231.5,298.5 235.6,301.8 239.7,304.9 243.9,307.8 248.0,310.5 252.1,313.1 256.3,315.5 260.4,317.7 264.5,319.8 268.7,321.7 272.8,323.5 276.9,325.2 281.1,326.8 285.2,328.3 289.3,329.7 293.5,331.0 297.6,332.3 301.7,333.4 305.9,334.5 310.0,335.5 314.1,336.4 318.3,337.3 322.4,338.1 326.5,338.9 330.7,339.6 334.8,340.3 338.9,340.9 343.1,341.5 347.2,342.0 351.3,342.5 355.5,343.0 359.6,343.5 363.7,343.9 367.9,344.3 372.0,344.7 376.1,345.0 380.3,345.3 384.4,345.6 388.5,345.9 392.7,346.2 396.8,346.4 400.9,346.7 405.1,346.9 409.2,347.1 413.3,347.3 417.5,347.4 421.6,347.6 425.7,347.8 429.9,347.9 434.0,348.0 438.1,348.2 442.3,348.3 446.4,348.4 450.5,348.5 454.7,348.6 458.8,348.7 462.9,348.8 467.1,348.8 471.2,348.9 475.3,349.0 479.5,349.1 483.6,349.1 487.7,349.2 491.9,349.2 496.0,349.3 500.1,349.3 504.3,349.4 508.4,349.4 512.5,349.4 516.7,349.5 520.8,349.5 524.9,349.5 529.1,349.6 533.2,349.6 537.3,349.6 541.5,349.7 545.6,349.7 549.7,349.7 553.9,349.7 558.0,349.7 562.1,349.8 566.3,349.8 570.4,349.8 574.5,349.8 578.7,349.8 582.8,349.8 586.9,349.8 591.1,349.8 595.2,349.9 599.3,349.9 603.5,349.9 607.6,349.9 611.7,349.9 615.9,349.9 620.0,349.9"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="9">
+  <p class="h" data-s="0">Example 2 &mdash; a hammer hits a spring at <i>t</i> = &pi;</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + 4<i>y</i> = &delta;(<i>t</i> &minus; &pi;),&nbsp;&nbsp; <i>y</i>(0) = 0,&nbsp; <i>y</i>&#8242;(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Transform, solve for <i>Y</i></p>
+      <p class="e t" data-s="2">(<i>s</i><sup>2</sup> + 4)<i>Y</i> = <b>e</b><sup>&minus;&pi;<i>s</i></sup></p>
+      <p class="e t" data-s="3"><i>Y</i> = <b>e</b><sup>&minus;&pi;<i>s</i></sup><span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 4</span></span> = <b>e</b><sup>&minus;&pi;<i>s</i></sup>&middot;<span class="fr"><span>1</span><span>2</span></span><span class="fr"><span>2</span><span><i>s</i><sup>2</sup> + 4</span></span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Invert, then shift by &pi;</p>
+      <p class="e t" data-s="4"><span class="fr"><span>1</span><span>2</span></span><span class="fr"><span>2</span><span><i>s</i><sup>2</sup> + 4</span></span> &rarr; <span class="fr"><span>1</span><span>2</span></span> sin 2<i>t</i></p>
+      <p class="e" data-s="5"><span class="bx"><i>y</i> = <span class="fr"><span>1</span><span>2</span></span><i>u</i><sub>&pi;</sub>(<i>t</i>) sin 2(<i>t</i> &minus; &pi;) = <span class="fr"><span>1</span><span>2</span></span><i>u</i><sub>&pi;</sub>(<i>t</i>) sin 2<i>t</i></span></p>
+      <p class="l" data-s="6"><span class="d">sin 2(<i>t</i> &minus; &pi;) = sin(2<i>t</i> &minus; 2&pi;) = sin 2<i>t</i></span></p>
+      <p class="a" data-s="7">&#8627; the picture.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="10">
+  <p class="h" data-s="0">Example 2, the picture</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1"><span class="g">teal</span>: <i>y</i>(<i>t</i>).</p>
+      <p class="e t" data-s="2"><i>t</i> &lt; &pi;:&nbsp; at rest,&nbsp; <i>y</i> = 0</p>
+      <p class="e t" data-s="3"><i>t</i> &gt; &pi;:&nbsp; <i>y</i> = <span class="fr"><span>1</span><span>2</span></span> sin 2<i>t</i></p>
+      <p class="e t" data-s="4">at <i>t</i> = &pi;:&nbsp; <i>y</i> = 0 on both sides,&nbsp; <i>y</i>&#8242; jumps from 0 to 1</p>
+      <p class="l" data-s="5">The hammer does not move the mass at once. It gives it speed at once.</p>
+      <p class="a" data-s="6">&#8627; why the jump is exactly 1.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="291.7" x2="0" y2="291.7"/><line x1="-7" y1="175" x2="0" y2="175"/><line x1="-7" y1="58.3" x2="0" y2="58.3"/><line x1="124" y1="350" x2="124" y2="357"/><line x1="248" y1="350" x2="248" y2="357"/><line x1="372" y1="350" x2="372" y2="357"/><line x1="496" y1="350" x2="496" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="296.7" text-anchor="end">−0.5</text><text x="-12" y="180" text-anchor="end">0</text><text x="-12" y="63.3" text-anchor="end">0.5</text><text x="0" y="375" text-anchor="middle">0</text><text x="124" y="375" text-anchor="middle">2</text><text x="248" y="375" text-anchor="middle">4</text><text x="372" y="375" text-anchor="middle">6</text><text x="496" y="375" text-anchor="middle">8</text><text x="620" y="375" text-anchor="middle">10</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,175.0 1.6,175.0 3.2,175.0 4.9,175.0 6.5,175.0 8.1,175.0 9.7,175.0 11.4,175.0 13.0,175.0 14.6,175.0 16.2,175.0 17.9,175.0 19.5,175.0 21.1,175.0 22.7,175.0 24.3,175.0 26.0,175.0 27.6,175.0 29.2,175.0 30.8,175.0 32.5,175.0 34.1,175.0 35.7,175.0 37.3,175.0 39.0,175.0 40.6,175.0 42.2,175.0 43.8,175.0 45.4,175.0 47.1,175.0 48.7,175.0 50.3,175.0 51.9,175.0 53.6,175.0 55.2,175.0 56.8,175.0 58.4,175.0 60.1,175.0 61.7,175.0 63.3,175.0 64.9,175.0 66.5,175.0 68.2,175.0 69.8,175.0 71.4,175.0 73.0,175.0 74.7,175.0 76.3,175.0 77.9,175.0 79.5,175.0 81.2,175.0 82.8,175.0 84.4,175.0 86.0,175.0 87.7,175.0 89.3,175.0 90.9,175.0 92.5,175.0 94.1,175.0 95.8,175.0 97.4,175.0 99.0,175.0 100.6,175.0 102.3,175.0 103.9,175.0 105.5,175.0 107.1,175.0 108.8,175.0 110.4,175.0 112.0,175.0 113.6,175.0 115.2,175.0 116.9,175.0 118.5,175.0 120.1,175.0 121.7,175.0 123.4,175.0 125.0,175.0 126.6,175.0 128.2,175.0 129.9,175.0 131.5,175.0 133.1,175.0 134.7,175.0 136.3,175.0 138.0,175.0 139.6,175.0 141.2,175.0 142.8,175.0 144.5,175.0 146.1,175.0 147.7,175.0 149.3,175.0 151.0,175.0 152.6,175.0 154.2,175.0 155.8,175.0 157.4,175.0 159.1,175.0 160.7,175.0 162.3,175.0 163.9,175.0 165.6,175.0 167.2,175.0 168.8,175.0 170.4,175.0 172.1,175.0 173.7,175.0 175.3,175.0 176.9,175.0 178.5,175.0 180.2,175.0 181.8,175.0 183.4,175.0 185.0,175.0 186.7,175.0 188.3,175.0 189.9,175.0 191.5,175.0 193.2,175.0 194.8,175.0"/><polyline data-s="1" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="194.8,175.0 198.3,161.7 201.9,148.6 205.4,135.8 209.0,123.5 212.5,111.9 216.0,101.1 219.6,91.3 223.1,82.6 226.7,75.1 230.2,68.8 233.8,64.0 237.3,60.6 240.8,58.8 244.4,58.4 247.9,59.5 251.5,62.2 255.0,66.3 258.6,71.9 262.1,78.8 265.6,86.9 269.2,96.2 272.7,106.6 276.3,117.8 279.8,129.8 283.4,142.3 286.9,155.3 290.5,168.6 294.0,181.9 297.5,195.1 301.1,208.1 304.6,220.6 308.2,232.6 311.7,243.8 315.3,254.1 318.8,263.3 322.3,271.5 325.9,278.3 329.4,283.8 333.0,287.9 336.5,290.5 340.1,291.6 343.6,291.2 347.1,289.3 350.7,285.8 354.2,281.0 357.8,274.7 361.3,267.2 364.9,258.4 368.4,248.6 372.0,237.7 375.5,226.1 379.0,213.8 382.6,201.0 386.1,187.9 389.7,174.6 393.2,161.3 396.8,148.1 400.3,135.4 403.8,123.1 407.4,111.5 410.9,100.8 414.5,91.0 418.0,82.3 421.6,74.8 425.1,68.7 428.7,63.9 432.2,60.6 435.7,58.7 439.3,58.4 442.8,59.6 446.4,62.3 449.9,66.5 453.5,72.1 457.0,79.0 460.5,87.2 464.1,96.6 467.6,106.9 471.2,118.2 474.7,130.2 478.3,142.7 481.8,155.7 485.3,169.0 488.9,182.3 492.4,195.5 496.0,208.5 499.5,221.0 503.1,233.0 506.6,244.1 510.2,254.4 513.7,263.6 517.2,271.7 520.8,278.5 524.3,284.0 527.9,288.0 531.4,290.6 535.0,291.6 538.5,291.2 542.0,289.2 545.6,285.7 549.1,280.8 552.7,274.5 556.2,266.9 559.8,258.1 563.3,248.2 566.8,237.4 570.4,225.7 573.9,213.4 577.5,200.6 581.0,187.5 584.6,174.1 588.1,160.8 591.7,147.7 595.2,135.0 598.7,122.7 602.3,111.2 605.8,100.4 609.4,90.7 612.9,82.1 616.5,74.6 620.0,68.5"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="11">
+  <p class="h" data-s="0">What jumps, and by how much</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + 4<i>y</i> = &delta;(<i>t</i> &minus; <i>c</i>)</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Integrate from just before <i>c</i> to just after</p>
+      <p class="e t" data-s="2">&int;<sub><i>c</i>&minus;</sub><sup><i>c</i>+</sup> <i>y</i>&#8243; <i>dt</i> + 4&int;<sub><i>c</i>&minus;</sub><sup><i>c</i>+</sup> <i>y dt</i> = &int;<sub><i>c</i>&minus;</sub><sup><i>c</i>+</sup> &delta;(<i>t</i> &minus; <i>c</i>) <i>dt</i></p>
+      <p class="e t" data-s="3"><i>y</i>&#8242;(<i>c</i>+) &minus; <i>y</i>&#8242;(<i>c</i>&minus;) + 0 = 1</p>
+      <p class="l" data-s="4"><span class="d"><i>y</i> is continuous, so its integral over a tiny interval is 0.</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">The rule</p>
+      <p class="e t" data-s="5">second order:&nbsp; <i>y</i>&#8242; jumps by the size of the push</p>
+      <p class="e t" data-s="6">first order:&nbsp; <i>y</i> jumps by the size of the push</p>
+      <p class="l" data-s="7">Divide by the leading coefficient: for 2<i>y</i>&#8243; + &hellip; = &delta;(<i>t</i> &minus; <i>c</i>), <i>y</i>&#8242; jumps by 1/2.</p>
+      <p class="e" data-s="8"><span class="bx">Step in <i>g</i>: <i>y</i>&#8243; jumps.&nbsp; Delta in <i>g</i>: <i>y</i>&#8242; jumps.</span></p>
+      <p class="a" data-s="9">&#8627; a hammer at the right moment.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="12">
+  <p class="h" data-s="0">Example 3 &mdash; a spring that is already moving</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + <i>y</i> = &delta;(<i>t</i> &minus; &pi;),&nbsp;&nbsp; <i>y</i>(0) = 0,&nbsp; <i>y</i>&#8242;(0) = 1</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Transform, solve for <i>Y</i></p>
+      <p class="e t" data-s="2"><i>s</i><sup>2</sup><i>Y</i> &minus; 1 + <i>Y</i> = <b>e</b><sup>&minus;&pi;<i>s</i></sup></p>
+      <p class="e t" data-s="3"><i>Y</i> = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 1</span></span> + <b>e</b><sup>&minus;&pi;<i>s</i></sup><span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 1</span></span></p>
+      <p class="lb" data-s="4">Invert each group</p>
+      <p class="e t" data-s="4"><i>y</i> = sin <i>t</i> + <i>u</i><sub>&pi;</sub>(<i>t</i>) sin(<i>t</i> &minus; &pi;)</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Simplify</p>
+      <p class="e t" data-s="5">sin(<i>t</i> &minus; &pi;) = &minus;sin <i>t</i></p>
+      <p class="e" data-s="6"><span class="bx"><i>y</i> = sin <i>t</i> &minus; <i>u</i><sub>&pi;</sub>(<i>t</i>) sin <i>t</i>&nbsp;:&nbsp; sin <i>t</i> before &pi;,&nbsp; 0 after</span></p>
+      <p class="l" data-s="7">At <i>t</i> = &pi;: <i>y</i> = 0 and <i>y</i>&#8242; = cos &pi; = &minus;1. The push adds 1 to <i>y</i>&#8242;, so the speed becomes 0 at the rest position.</p>
+      <p class="a" data-s="8">&#8627; the picture.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="13">
+  <p class="h" data-s="0">Example 3, the picture</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1"><span class="d">dashed</span>: sin <i>t</i>, the motion with no hammer.</p>
+      <p class="l" data-s="2"><span class="g">teal</span>: <i>y</i>(<i>t</i>), with the hammer at <i>t</i> = &pi;.</p>
+      <p class="e t" data-s="3">before &pi;: the same motion</p>
+      <p class="e t" data-s="4">after &pi;: <i>y</i> = 0, the mass is at rest</p>
+      <p class="l" data-s="5">The hammer hits against the motion, with exactly the right size. The same push at another time would not stop it.</p>
+      <p class="a" data-s="6">&#8627; a quick round: <i>Y</i>(<i>s</i>).</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="320.8" x2="0" y2="320.8"/><line x1="-7" y1="175" x2="0" y2="175"/><line x1="-7" y1="29.2" x2="0" y2="29.2"/><line x1="124" y1="350" x2="124" y2="357"/><line x1="248" y1="350" x2="248" y2="357"/><line x1="372" y1="350" x2="372" y2="357"/><line x1="496" y1="350" x2="496" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="325.8" text-anchor="end">−1</text><text x="-12" y="180" text-anchor="end">0</text><text x="-12" y="34.2" text-anchor="end">1</text><text x="0" y="375" text-anchor="middle">0</text><text x="124" y="375" text-anchor="middle">2</text><text x="248" y="375" text-anchor="middle">4</text><text x="372" y="375" text-anchor="middle">6</text><text x="496" y="375" text-anchor="middle">8</text><text x="620" y="375" text-anchor="middle">10</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="0.0,175.0 2.1,170.1 4.1,165.3 6.2,160.4 8.3,155.6 10.3,150.8 12.4,146.0 14.5,141.3 16.5,136.6 18.6,131.9 20.7,127.3 22.7,122.7 24.8,118.2 26.9,113.8 28.9,109.4 31.0,105.1 33.1,100.9 35.1,96.7 37.2,92.7 39.3,88.7 41.3,84.8 43.4,81.1 45.5,77.4 47.5,73.8 49.6,70.4 51.7,67.1 53.7,63.8 55.8,60.8 57.9,57.8 59.9,55.0 62.0,52.3 64.1,49.7 66.1,47.3 68.2,45.0 70.3,42.9 72.3,40.9 74.4,39.1 76.5,37.4 78.5,35.9 80.6,34.5 82.7,33.3 84.7,32.2 86.8,31.3 88.9,30.5 90.9,30.0 93.0,29.5 95.1,29.3 97.1,29.2 99.2,29.2 101.3,29.5 103.3,29.8 105.4,30.4 107.5,31.1 109.5,32.0 111.6,33.0 113.7,34.2 115.7,35.5 117.8,37.0 119.9,38.6 121.9,40.4 124.0,42.4 126.1,44.5 128.1,46.7 130.2,49.1 132.3,51.6 134.3,54.3 136.4,57.1 138.5,60.0 140.5,63.1 142.6,66.3 144.7,69.5 146.7,73.0 148.8,76.5 150.9,80.1 152.9,83.9 155.0,87.7 157.1,91.7 159.1,95.7 161.2,99.8 163.3,104.0 165.3,108.3 167.4,112.7 169.5,117.1 171.5,121.6 173.6,126.1 175.7,130.8 177.7,135.4 179.8,140.1 181.9,144.8 183.9,149.6 186.0,154.4 188.1,159.2 190.1,164.1 192.2,168.9 194.3,173.8 196.3,178.7 198.4,183.5 200.5,188.4 202.5,193.2 204.6,198.0 206.7,202.8 208.7,207.5 210.8,212.3 212.9,216.9 214.9,221.6 217.0,226.2 219.1,230.7 221.1,235.1 223.2,239.5 225.3,243.9 227.3,248.1 229.4,252.3 231.5,256.3 233.5,260.3 235.6,264.2 237.7,268.0 239.7,271.7 241.8,275.3 243.9,278.8 245.9,282.1 248.0,285.4 250.1,288.5 252.1,291.5 254.2,294.3 256.3,297.1 258.3,299.7 260.4,302.1 262.5,304.4 264.5,306.6 266.6,308.6 268.7,310.5 270.7,312.2 272.8,313.8 274.9,315.2 276.9,316.5 279.0,317.6 281.1,318.5 283.1,319.3 285.2,319.9 287.3,320.4 289.3,320.7 291.4,320.8 293.5,320.8 295.5,320.6 297.6,320.3 299.7,319.8 301.7,319.1 303.8,318.3 305.9,317.3 307.9,316.1 310.0,314.8 312.1,313.4 314.1,311.8 316.2,310.0 318.3,308.1 320.3,306.0 322.4,303.8 324.5,301.5 326.5,299.0 328.6,296.4 330.7,293.6 332.7,290.7 334.8,287.7 336.9,284.5 338.9,281.3 341.0,277.9 343.1,274.4 345.1,270.8 347.2,267.1 349.3,263.2 351.3,259.3 353.4,255.3 355.5,251.2 357.5,247.0 359.6,242.8 361.7,238.4 363.7,234.0 365.8,229.5 367.9,225.0 369.9,220.4 372.0,215.7 374.1,211.1 376.1,206.3 378.2,201.6 380.3,196.8 382.3,192.0 384.4,187.1 386.5,182.3 388.5,177.4 390.6,172.5 392.7,167.7 394.7,162.8 396.8,158.0 398.9,153.2 400.9,148.4 403.0,143.6 405.1,138.9 407.1,134.2 409.2,129.6 411.3,125.0 413.3,120.4 415.4,116.0 417.5,111.5 419.5,107.2 421.6,102.9 423.7,98.8 425.7,94.7 427.8,90.6 429.9,86.7 431.9,82.9 434.0,79.2 436.1,75.6 438.1,72.1 440.2,68.7 442.3,65.4 444.3,62.3 446.4,59.3 448.5,56.4 450.5,53.6 452.6,51.0 454.7,48.5 456.7,46.1 458.8,43.9 460.9,41.9 462.9,40.0 465.0,38.2 467.1,36.6 469.1,35.1 471.2,33.8 473.3,32.7 475.3,31.7 477.4,30.9 479.5,30.2 481.5,29.7 483.6,29.4 485.7,29.2 487.7,29.2 489.8,29.3 491.9,29.6 493.9,30.1 496.0,30.7 498.1,31.5 500.1,32.5 502.2,33.6 504.3,34.8 506.3,36.2 508.4,37.8 510.5,39.5 512.5,41.4 514.6,43.4 516.7,45.6 518.7,47.9 520.8,50.4 522.9,53.0 524.9,55.7 527.0,58.6 529.1,61.5 531.1,64.7 533.2,67.9 535.3,71.3 537.3,74.7 539.4,78.3 541.5,82.0 543.5,85.8 545.6,89.7 547.7,93.7 549.7,97.8 551.8,101.9 553.9,106.2 555.9,110.5 558.0,114.9 560.1,119.4 562.1,123.9 564.2,128.5 566.3,133.1 568.3,137.8 570.4,142.5 572.5,147.3 574.5,152.0 576.6,156.9 578.7,161.7 580.7,166.5 582.8,171.4 584.9,176.2 586.9,181.1 589.0,186.0 591.1,190.8 593.1,195.6 595.2,200.4 597.3,205.2 599.3,209.9 601.4,214.6 603.5,219.3 605.5,223.9 607.6,228.4 609.7,232.9 611.7,237.4 613.8,241.7 615.9,246.0 617.9,250.2 620.0,254.3"/><polyline data-s="2" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,175.0 1.6,171.2 3.2,167.4 4.9,163.6 6.5,159.8 8.1,156.0 9.7,152.2 11.4,148.4 13.0,144.7 14.6,141.0 16.2,137.3 17.9,133.6 19.5,129.9 21.1,126.3 22.7,122.7 24.3,119.2 26.0,115.7 27.6,112.2 29.2,108.8 30.8,105.4 32.5,102.1 34.1,98.8 35.7,95.6 37.3,92.4 39.0,89.3 40.6,86.2 42.2,83.2 43.8,80.3 45.4,77.4 47.1,74.6 48.7,71.9 50.3,69.2 51.9,66.6 53.6,64.1 55.2,61.7 56.8,59.3 58.4,57.0 60.1,54.8 61.7,52.7 63.3,50.7 64.9,48.7 66.5,46.8 68.2,45.1 69.8,43.4 71.4,41.8 73.0,40.3 74.7,38.9 76.3,37.5 77.9,36.3 79.5,35.2 81.2,34.1 82.8,33.2 84.4,32.4 86.0,31.6 87.7,31.0 89.3,30.4 90.9,30.0 92.5,29.6 94.1,29.4 95.8,29.2 97.4,29.2 99.0,29.2 100.6,29.4 102.3,29.6 103.9,30.0 105.5,30.4 107.1,31.0 108.8,31.6 110.4,32.4 112.0,33.2 113.6,34.1 115.2,35.2 116.9,36.3 118.5,37.5 120.1,38.9 121.7,40.3 123.4,41.8 125.0,43.4 126.6,45.1 128.2,46.8 129.9,48.7 131.5,50.7 133.1,52.7 134.7,54.8 136.3,57.0 138.0,59.3 139.6,61.7 141.2,64.1 142.8,66.6 144.5,69.2 146.1,71.9 147.7,74.6 149.3,77.4 151.0,80.3 152.6,83.2 154.2,86.2 155.8,89.3 157.4,92.4 159.1,95.6 160.7,98.8 162.3,102.1 163.9,105.4 165.6,108.8 167.2,112.2 168.8,115.7 170.4,119.2 172.1,122.7 173.7,126.3 175.3,129.9 176.9,133.6 178.5,137.3 180.2,141.0 181.8,144.7 183.4,148.4 185.0,152.2 186.7,156.0 188.3,159.8 189.9,163.6 191.5,167.4 193.2,171.2 194.8,175.0"/><polyline data-s="2" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="194.8,175.0 198.3,175.0 201.9,175.0 205.4,175.0 209.0,175.0 212.5,175.0 216.0,175.0 219.6,175.0 223.1,175.0 226.7,175.0 230.2,175.0 233.8,175.0 237.3,175.0 240.8,175.0 244.4,175.0 247.9,175.0 251.5,175.0 255.0,175.0 258.6,175.0 262.1,175.0 265.6,175.0 269.2,175.0 272.7,175.0 276.3,175.0 279.8,175.0 283.4,175.0 286.9,175.0 290.5,175.0 294.0,175.0 297.5,175.0 301.1,175.0 304.6,175.0 308.2,175.0 311.7,175.0 315.3,175.0 318.8,175.0 322.3,175.0 325.9,175.0 329.4,175.0 333.0,175.0 336.5,175.0 340.1,175.0 343.6,175.0 347.1,175.0 350.7,175.0 354.2,175.0 357.8,175.0 361.3,175.0 364.9,175.0 368.4,175.0 372.0,175.0 375.5,175.0 379.0,175.0 382.6,175.0 386.1,175.0 389.7,175.0 393.2,175.0 396.8,175.0 400.3,175.0 403.8,175.0 407.4,175.0 410.9,175.0 414.5,175.0 418.0,175.0 421.6,175.0 425.1,175.0 428.7,175.0 432.2,175.0 435.7,175.0 439.3,175.0 442.8,175.0 446.4,175.0 449.9,175.0 453.5,175.0 457.0,175.0 460.5,175.0 464.1,175.0 467.6,175.0 471.2,175.0 474.7,175.0 478.3,175.0 481.8,175.0 485.3,175.0 488.9,175.0 492.4,175.0 496.0,175.0 499.5,175.0 503.1,175.0 506.6,175.0 510.2,175.0 513.7,175.0 517.2,175.0 520.8,175.0 524.3,175.0 527.9,175.0 531.4,175.0 535.0,175.0 538.5,175.0 542.0,175.0 545.6,175.0 549.1,175.0 552.7,175.0 556.2,175.0 559.8,175.0 563.3,175.0 566.8,175.0 570.4,175.0 573.9,175.0 577.5,175.0 581.0,175.0 584.6,175.0 588.1,175.0 591.7,175.0 595.2,175.0 598.7,175.0 602.3,175.0 605.8,175.0 609.4,175.0 612.9,175.0 616.5,175.0 620.0,175.0"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="14">
+  <p class="h" data-s="0">Call it out &mdash; <i>Y</i>(<i>s</i>) only</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>y</i>&#8243; + <i>y</i> = &delta;(<i>t</i> &minus; 2),&nbsp; zero initial values</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>y</i>&#8242; + 3<i>y</i> = &delta;(<i>t</i> &minus; 1),&nbsp; <i>y</i>(0) = 0</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8243; + 4<i>y</i> = 3&delta;(<i>t</i>),&nbsp; zero initial values</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <i>y</i>&#8243; + 2<i>y</i>&#8242; + 2<i>y</i> = &delta;(<i>t</i> &minus; &pi;),&nbsp; zero initial values</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; <i>y</i>&#8243; &minus; <i>y</i> = &delta;(<i>t</i> &minus; 1),&nbsp; <i>y</i>(0) = 1,&nbsp; <i>y</i>&#8242;(0) = 0</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="fr"><span><b>e</b><sup>&minus;2<i>s</i></sup></span><span><i>s</i><sup>2</sup> + 1</span></span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="fr"><span><b>e</b><sup>&minus;<i>s</i></sup></span><span><i>s</i> + 3</span></span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="fr"><span>3</span><span><i>s</i><sup>2</sup> + 4</span></span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="fr"><span><b>e</b><sup>&minus;&pi;<i>s</i></sup></span><span><i>s</i><sup>2</sup> + 2<i>s</i> + 2</span></span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <span class="fr"><span><i>s</i></span><span><i>s</i><sup>2</sup> &minus; 1</span></span> + <span class="fr"><span><b>e</b><sup>&minus;<i>s</i></sup></span><span><i>s</i><sup>2</sup> &minus; 1</span></span></p>
+      <p class="a" data-s="11">&#8627; with a delta there is no extra factor <i>s</i>: the denominator is just the characteristic polynomial.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="15">
+  <p class="h" data-s="0">Example 4 &mdash; with damping</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + 2<i>y</i>&#8242; + 2<i>y</i> = &delta;(<i>t</i> &minus; &pi;),&nbsp;&nbsp; <i>y</i>(0) = 0,&nbsp; <i>y</i>&#8242;(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Transform, solve for <i>Y</i></p>
+      <p class="e t" data-s="2"><i>Y</i> = <b>e</b><sup>&minus;&pi;<i>s</i></sup><span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 2<i>s</i> + 2</span></span></p>
+      <p class="lb" data-s="3">Complete the square (Lecture 26)</p>
+      <p class="e t" data-s="3"><span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 2<i>s</i> + 2</span></span> = <span class="fr"><span>1</span><span>(<i>s</i> + 1)<sup>2</sup> + 1</span></span> &rarr; <b>e</b><sup>&minus;<i>t</i></sup> sin <i>t</i></p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Shift by &pi;: every <i>t</i> becomes <i>t</i> &minus; &pi;</p>
+      <p class="e" data-s="4"><span class="bx"><i>y</i> = <i>u</i><sub>&pi;</sub>(<i>t</i>)<b>e</b><sup>&minus;(<i>t</i> &minus; &pi;)</sup> sin(<i>t</i> &minus; &pi;)</span></p>
+      <p class="l" data-s="5">Both shifts from Friday: <i>s</i> + 1 gives <b>e</b><sup>&minus;<i>t</i></sup>, and <b>e</b><sup>&minus;&pi;<i>s</i></sup> gives the delay.</p>
+      <p class="a" data-s="6">&#8627; the picture.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="16">
+  <p class="h" data-s="0">Example 4, the picture</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1"><span class="g">teal</span>: <i>y</i>(<i>t</i>).</p>
+      <p class="e t" data-s="2"><i>t</i> &lt; &pi;:&nbsp; at rest</p>
+      <p class="e t" data-s="3"><i>t</i> = &pi;:&nbsp; <i>y</i>&#8242; jumps to 1, <i>y</i> starts to rise</p>
+      <p class="e t" data-s="4"><i>t</i> &gt; &pi;:&nbsp; one small swing, then <i>y</i> &rarr; 0</p>
+      <p class="l" data-s="5">With damping, the effect of a single push dies out. The factor <b>e</b><sup>&minus;(<i>t</i> &minus; &pi;)</sup> does that.</p>
+      <p class="a" data-s="6">&#8627; a quick round: what jumps?</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="280" x2="0" y2="280"/><line x1="-7" y1="140" x2="0" y2="140"/><line x1="-7" y1="0" x2="0" y2="0"/><line x1="124" y1="350" x2="124" y2="357"/><line x1="248" y1="350" x2="248" y2="357"/><line x1="372" y1="350" x2="372" y2="357"/><line x1="496" y1="350" x2="496" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="285" text-anchor="end">0</text><text x="-12" y="145" text-anchor="end">0.2</text><text x="-12" y="5" text-anchor="end">0.4</text><text x="0" y="375" text-anchor="middle">0</text><text x="124" y="375" text-anchor="middle">2</text><text x="248" y="375" text-anchor="middle">4</text><text x="372" y="375" text-anchor="middle">6</text><text x="496" y="375" text-anchor="middle">8</text><text x="620" y="375" text-anchor="middle">10</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,280.0 1.6,280.0 3.2,280.0 4.9,280.0 6.5,280.0 8.1,280.0 9.7,280.0 11.4,280.0 13.0,280.0 14.6,280.0 16.2,280.0 17.9,280.0 19.5,280.0 21.1,280.0 22.7,280.0 24.3,280.0 26.0,280.0 27.6,280.0 29.2,280.0 30.8,280.0 32.5,280.0 34.1,280.0 35.7,280.0 37.3,280.0 39.0,280.0 40.6,280.0 42.2,280.0 43.8,280.0 45.4,280.0 47.1,280.0 48.7,280.0 50.3,280.0 51.9,280.0 53.6,280.0 55.2,280.0 56.8,280.0 58.4,280.0 60.1,280.0 61.7,280.0 63.3,280.0 64.9,280.0 66.5,280.0 68.2,280.0 69.8,280.0 71.4,280.0 73.0,280.0 74.7,280.0 76.3,280.0 77.9,280.0 79.5,280.0 81.2,280.0 82.8,280.0 84.4,280.0 86.0,280.0 87.7,280.0 89.3,280.0 90.9,280.0 92.5,280.0 94.1,280.0 95.8,280.0 97.4,280.0 99.0,280.0 100.6,280.0 102.3,280.0 103.9,280.0 105.5,280.0 107.1,280.0 108.8,280.0 110.4,280.0 112.0,280.0 113.6,280.0 115.2,280.0 116.9,280.0 118.5,280.0 120.1,280.0 121.7,280.0 123.4,280.0 125.0,280.0 126.6,280.0 128.2,280.0 129.9,280.0 131.5,280.0 133.1,280.0 134.7,280.0 136.3,280.0 138.0,280.0 139.6,280.0 141.2,280.0 142.8,280.0 144.5,280.0 146.1,280.0 147.7,280.0 149.3,280.0 151.0,280.0 152.6,280.0 154.2,280.0 155.8,280.0 157.4,280.0 159.1,280.0 160.7,280.0 162.3,280.0 163.9,280.0 165.6,280.0 167.2,280.0 168.8,280.0 170.4,280.0 172.1,280.0 173.7,280.0 175.3,280.0 176.9,280.0 178.5,280.0 180.2,280.0 181.8,280.0 183.4,280.0 185.0,280.0 186.7,280.0 188.3,280.0 189.9,280.0 191.5,280.0 193.2,280.0 194.8,280.0"/><polyline data-s="1" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="194.8,280.0 198.3,242.2 201.9,208.8 205.4,179.4 209.0,153.8 212.5,131.7 216.0,113.0 219.6,97.3 223.1,84.4 226.7,74.1 230.2,66.2 233.8,60.5 237.3,56.7 240.8,54.7 244.4,54.4 247.9,55.4 251.5,57.8 255.0,61.2 258.6,65.7 262.1,70.9 265.6,76.9 269.2,83.5 272.7,90.6 276.3,98.1 279.8,105.9 283.4,114.0 286.9,122.2 290.5,130.5 294.0,138.8 297.5,147.1 301.1,155.3 304.6,163.4 308.2,171.3 311.7,179.1 315.3,186.6 318.8,193.9 322.3,200.9 325.9,207.7 329.4,214.2 333.0,220.4 336.5,226.3 340.1,231.9 343.6,237.1 347.1,242.1 350.7,246.8 354.2,251.2 357.8,255.2 361.3,259.0 364.9,262.5 368.4,265.8 372.0,268.7 375.5,271.5 379.0,273.9 382.6,276.2 386.1,278.2 389.7,280.1 393.2,281.7 396.8,283.1 400.3,284.4 403.8,285.5 407.4,286.4 410.9,287.2 414.5,287.9 418.0,288.5 421.6,288.9 425.1,289.2 428.7,289.5 432.2,289.7 435.7,289.7 439.3,289.7 442.8,289.7 446.4,289.6 449.9,289.4 453.5,289.3 457.0,289.0 460.5,288.8 464.1,288.5 467.6,288.2 471.2,287.8 474.7,287.5 478.3,287.2 481.8,286.8 485.3,286.5 488.9,286.1 492.4,285.7 496.0,285.4 499.5,285.0 503.1,284.7 506.6,284.4 510.2,284.0 513.7,283.7 517.2,283.4 520.8,283.1 524.3,282.8 527.9,282.6 531.4,282.3 535.0,282.1 538.5,281.8 542.0,281.6 545.6,281.4 549.1,281.2 552.7,281.1 556.2,280.9 559.8,280.8 563.3,280.6 566.8,280.5 570.4,280.4 573.9,280.3 577.5,280.2 581.0,280.1 584.6,280.0 588.1,279.9 591.7,279.9 595.2,279.8 598.7,279.8 602.3,279.7 605.8,279.7 609.4,279.7 612.9,279.6 616.5,279.6 620.0,279.6"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="17">
+  <p class="h" data-s="0">Call it out &mdash; what jumps, and by how much?</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>y</i>&#8242; + 2<i>y</i> = &delta;(<i>t</i> &minus; 1)</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>y</i>&#8243; + 4<i>y</i> = 3&delta;(<i>t</i> &minus; 2)</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8243; + <i>y</i> = <i>u</i><sub>2</sub>(<i>t</i>)</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; 2<i>y</i>&#8243; + <i>y</i> = &delta;(<i>t</i> &minus; 1)</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; <i>y</i>&#8242; + <i>y</i> = 5&delta;(<i>t</i> &minus; 3)</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <i>y</i>, by 1</p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <i>y</i>&#8242;, by 3</p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <i>y</i>&#8243;, by 1&nbsp;&nbsp;<span class="d"><i>y</i>, <i>y</i>&#8242; continuous</span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <i>y</i>&#8242;, by 1/2</p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <i>y</i>, by 5</p>
+      <p class="a" data-s="11">&#8627; number 4: divide by the 2 in front of <i>y</i>&#8243; first.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="18">
+  <p class="h" data-s="0">Example 5 &mdash; two pushes</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + <i>y</i> = &delta;(<i>t</i>) + &delta;(<i>t</i> &minus; 2&pi;),&nbsp;&nbsp; <i>y</i>(0) = 0,&nbsp; <i>y</i>&#8242;(0) = 0</span></p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="e t" data-s="2"><i>Y</i> = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 1</span></span> + <b>e</b><sup>&minus;2&pi;<i>s</i></sup><span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 1</span></span></p>
+      <p class="e t" data-s="3"><i>y</i> = sin <i>t</i> + <i>u</i><sub>2&pi;</sub>(<i>t</i>) sin(<i>t</i> &minus; 2&pi;) = sin <i>t</i> + <i>u</i><sub>2&pi;</sub>(<i>t</i>) sin <i>t</i></p>
+      <p class="e" data-s="4"><span class="bx">sin <i>t</i> before 2&pi;,&nbsp; 2 sin <i>t</i> after</span></p>
+      <p class="l" data-s="5">At <i>t</i> = 2&pi; the mass moves up with speed 1, and the push adds 1 more. Compare Example 3: there the push was against the motion.</p>
+      <p class="a" data-s="6">&#8627; step and delta, side by side.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="320.8" x2="0" y2="320.8"/><line x1="-7" y1="247.9" x2="0" y2="247.9"/><line x1="-7" y1="175" x2="0" y2="175"/><line x1="-7" y1="102.1" x2="0" y2="102.1"/><line x1="-7" y1="29.2" x2="0" y2="29.2"/><line x1="103.3" y1="350" x2="103.3" y2="357"/><line x1="206.7" y1="350" x2="206.7" y2="357"/><line x1="310" y1="350" x2="310" y2="357"/><line x1="413.3" y1="350" x2="413.3" y2="357"/><line x1="516.7" y1="350" x2="516.7" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="325.8" text-anchor="end">−2</text><text x="-12" y="252.9" text-anchor="end">−1</text><text x="-12" y="180" text-anchor="end">0</text><text x="-12" y="107.1" text-anchor="end">1</text><text x="-12" y="34.2" text-anchor="end">2</text><text x="0" y="375" text-anchor="middle">0</text><text x="103.3" y="375" text-anchor="middle">2</text><text x="206.7" y="375" text-anchor="middle">4</text><text x="310" y="375" text-anchor="middle">6</text><text x="413.3" y="375" text-anchor="middle">8</text><text x="516.7" y="375" text-anchor="middle">10</text><text x="620" y="375" text-anchor="middle">12</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,175.0 2.7,171.2 5.4,167.4 8.1,163.6 10.8,159.8 13.5,156.1 16.2,152.5 18.9,148.9 21.6,145.3 24.3,141.9 27.1,138.5 29.8,135.3 32.5,132.1 35.2,129.1 37.9,126.2 40.6,123.4 43.3,120.8 46.0,118.3 48.7,116.0 51.4,113.8 54.1,111.9 56.8,110.0 59.5,108.4 62.2,106.9 64.9,105.7 67.6,104.6 70.3,103.7 73.0,103.0 75.7,102.5 78.5,102.2 81.2,102.1 83.9,102.2 86.6,102.5 89.3,103.0 92.0,103.7 94.7,104.6 97.4,105.7 100.1,106.9 102.8,108.4 105.5,110.0 108.2,111.9 110.9,113.8 113.6,116.0 116.3,118.3 119.0,120.8 121.7,123.4 124.4,126.2 127.1,129.1 129.9,132.1 132.6,135.3 135.3,138.5 138.0,141.9 140.7,145.3 143.4,148.9 146.1,152.5 148.8,156.1 151.5,159.8 154.2,163.6 156.9,167.4 159.6,171.2 162.3,175.0 165.0,178.8 167.7,182.6 170.4,186.4 173.1,190.2 175.8,193.9 178.5,197.5 181.3,201.1 184.0,204.7 186.7,208.1 189.4,211.5 192.1,214.7 194.8,217.9 197.5,220.9 200.2,223.8 202.9,226.6 205.6,229.2 208.3,231.7 211.0,234.0 213.7,236.2 216.4,238.1 219.1,240.0 221.8,241.6 224.5,243.1 227.2,244.3 229.9,245.4 232.7,246.3 235.4,247.0 238.1,247.5 240.8,247.8 243.5,247.9 246.2,247.8 248.9,247.5 251.6,247.0 254.3,246.3 257.0,245.4 259.7,244.3 262.4,243.1 265.1,241.6 267.8,240.0 270.5,238.1 273.2,236.2 275.9,234.0 278.6,231.7 281.3,229.2 284.1,226.6 286.8,223.8 289.5,220.9 292.2,217.9 294.9,214.7 297.6,211.5 300.3,208.1 303.0,204.7 305.7,201.1 308.4,197.5 311.1,193.9 313.8,190.2 316.5,186.4 319.2,182.6 321.9,178.8 324.6,175.0"/><polyline data-s="1" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="324.6,175.0 327.1,168.1 329.6,161.1 332.0,154.2 334.5,147.4 336.9,140.6 339.4,133.9 341.9,127.3 344.3,120.8 346.8,114.4 349.2,108.1 351.7,102.0 354.2,96.1 356.6,90.3 359.1,84.8 361.6,79.4 364.0,74.3 366.5,69.4 368.9,64.7 371.4,60.3 373.9,56.1 376.3,52.3 378.8,48.6 381.2,45.3 383.7,42.3 386.2,39.6 388.6,37.1 391.1,35.0 393.6,33.2 396.0,31.8 398.5,30.6 400.9,29.8 403.4,29.3 405.9,29.2 408.3,29.3 410.8,29.8 413.2,30.7 415.7,31.8 418.2,33.3 420.6,35.1 423.1,37.3 425.5,39.7 428.0,42.4 430.5,45.5 432.9,48.8 435.4,52.5 437.9,56.4 440.3,60.5 442.8,65.0 445.2,69.7 447.7,74.6 450.2,79.7 452.6,85.1 455.1,90.7 457.5,96.4 460.0,102.4 462.5,108.5 464.9,114.7 467.4,121.1 469.9,127.6 472.3,134.3 474.8,141.0 477.2,147.8 479.7,154.6 482.2,161.5 484.6,168.4 487.1,175.4 489.5,182.3 492.0,189.3 494.5,196.2 496.9,203.0 499.4,209.8 501.9,216.5 504.3,223.1 506.8,229.6 509.2,236.0 511.7,242.2 514.2,248.3 516.6,254.2 519.1,260.0 521.5,265.5 524.0,270.9 526.5,276.0 528.9,280.9 531.4,285.5 533.9,289.9 536.3,294.1 538.8,298.0 541.2,301.6 543.7,304.9 546.2,307.9 548.6,310.6 551.1,313.0 553.5,315.1 556.0,316.9 558.5,318.3 560.9,319.4 563.4,320.2 565.8,320.7 568.3,320.8 570.8,320.6 573.2,320.1 575.7,319.3 578.2,318.1 580.6,316.6 583.1,314.8 585.5,312.6 588.0,310.2 590.5,307.4 592.9,304.3 595.4,301.0 597.8,297.3 600.3,293.4 602.8,289.2 605.2,284.8 607.7,280.1 610.2,275.1 612.6,270.0 615.1,264.6 617.5,259.0 620.0,253.3"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="19">
+  <p class="h" data-s="0">Step and delta, side by side</p>
+  <p class="e" data-s="1"><span class="bw">Do not mix them up</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Step <i>u</i><sub><i>c</i></sub>(<i>t</i>)</p>
+      <p class="e t" data-s="2">&#8466;{<i>u</i><sub><i>c</i></sub>(<i>t</i>)} = <span class="fr"><span><b>e</b><sup>&minus;<i>c</i><i>s</i></sup></span><span><i>s</i></span></span></p>
+      <p class="l" data-s="3">A force that stays on after <i>c</i>.</p>
+      <p class="l" data-s="4">In a second order equation: <i>y</i>&#8243; jumps.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Delta &delta;(<i>t</i> &minus; <i>c</i>)</p>
+      <p class="e t" data-s="5">&#8466;{&delta;(<i>t</i> &minus; <i>c</i>)} = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup></p>
+      <p class="l" data-s="6">One push at the instant <i>c</i>.</p>
+      <p class="l" data-s="7">In a second order equation: <i>y</i>&#8242; jumps.</p>
+      <p class="l" data-s="8"><span class="d">The step jumps by 1 at <i>c</i>, so its slope there is &ldquo;infinite with area 1&rdquo;: <i>u</i><sub><i>c</i></sub>(<i>t</i>)&#8242; = &delta;(<i>t</i> &minus; <i>c</i>). Then &#8466;{<i>u</i><sub><i>c</i></sub>(<i>t</i>)&#8242;} = <i>s</i> &middot; <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>/<i>s</i> = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>.</span></p>
+      <p class="a" data-s="9">&#8627; your turn.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="20">
+  <p class="h" data-s="0">Your turn</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>y</i>&#8243; + 9<i>y</i> = &delta;(<i>t</i> &minus; &pi;),&nbsp; zero initial values</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>y</i>&#8242; + 3<i>y</i> = 2&delta;(<i>t</i> &minus; 1),&nbsp; <i>y</i>(0) = 1</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8243; + 2<i>y</i>&#8242; + 5<i>y</i> = &delta;(<i>t</i> &minus; 2),&nbsp; zero initial values</p>
+      <p class="e" data-s="3"><span class="bx">7 minutes. Do 1 first.</span></p>
+      <p class="l" data-s="3"><span class="g">Bonus:</span> <i>y</i>&#8243; + <i>y</i> = &delta;(<i>t</i>) + &delta;(<i>t</i> &minus; &pi;), zero initial values.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="4"><span class="g">1.</span>&nbsp; <span class="v"><span class="fr"><span>1</span><span>3</span></span><i>u</i><sub>&pi;</sub>(<i>t</i>) sin 3(<i>t</i> &minus; &pi;)</span>&nbsp;&nbsp;<span class="d">= &minus;<span class="fr"><span>1</span><span>3</span></span><i>u</i><sub>&pi;</sub>(<i>t</i>) sin 3<i>t</i></span></p>
+      <p class="e t" data-s="5"><span class="g">2.</span>&nbsp; <span class="v"><b>e</b><sup>&minus;3<i>t</i></sup> + 2<i>u</i><sub>1</sub>(<i>t</i>)<b>e</b><sup>&minus;3(<i>t</i> &minus; 1)</sup></span></p>
+      <p class="e t" data-s="6"><span class="g">3.</span>&nbsp; <span class="v"><span class="fr"><span>1</span><span>2</span></span><i>u</i><sub>2</sub>(<i>t</i>)<b>e</b><sup>&minus;(<i>t</i> &minus; 2)</sup> sin 2(<i>t</i> &minus; 2)</span>&nbsp;&nbsp;<span class="d">(<i>s</i> + 1)<sup>2</sup> + 4</span></p>
+      <p class="e t" data-s="7"><span class="g">bonus.</span>&nbsp; sin <i>t</i> &minus; <i>u</i><sub>&pi;</sub>(<i>t</i>) sin <i>t</i>,&nbsp; 0 after &pi;</p>
+      <p class="a" data-s="8">&#8627; number 3: complete the square, as in Example 4.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="21">
+  <p class="h" data-s="0">True or false?</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; &#8466;{&delta;(<i>t</i>)} = 1.</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; &#8466;{&delta;(<i>t</i> &minus; 3)} = <span class="fr"><span><b>e</b><sup>&minus;3<i>s</i></sup></span><span><i>s</i></span></span>.</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; &int;<sub>0</sub><sup>&infin;</sup> <b>e</b><sup><i>t</i></sup> &delta;(<i>t</i> &minus; 1) <i>dt</i> = <b>e</b>.</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; For <i>y</i>&#8243; + <i>y</i> = &delta;(<i>t</i> &minus; <i>c</i>), <i>y</i> jumps at <i>t</i> = <i>c</i>.</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; A push at the right time can stop a moving spring.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="v">true</span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d"><b>e</b><sup>&minus;3<i>s</i></sup>, the step has the 1/<i>s</i></span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="v">true</span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d"><i>y</i>&#8242; jumps, <i>y</i> is continuous</span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <span class="v">true</span>&nbsp;&nbsp;<span class="d">Example 3</span></p>
+      <p class="a" data-s="11">&#8627; number 4: in a second order equation the delta changes the speed, not the position.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="22">
+  <p class="h" data-s="0">The card &mdash; the delta function</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">Facts</p>
+      <p class="e t" data-s="1">&delta;(<i>t</i> &minus; <i>c</i>) = 0 for <i>t</i> &ne; <i>c</i>, area 1</p>
+      <p class="e t" data-s="2">&int;<sub>0</sub><sup>&infin;</sup> <i>f</i>(<i>t</i>) &delta;(<i>t</i> &minus; <i>c</i>) <i>dt</i> = <i>f</i>(<i>c</i>)</p>
+      <p class="e t" data-s="3">&#8466;{&delta;(<i>t</i> &minus; <i>c</i>)} = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>,&nbsp; &#8466;{&delta;(<i>t</i>)} = 1</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">In an equation</p>
+      <p class="e t" data-s="4">same method: transform, solve for <i>Y</i>, invert, shift</p>
+      <p class="e t" data-s="5">first order: <i>y</i> jumps;&nbsp; second order: <i>y</i>&#8242; jumps</p>
+      <p class="e" data-s="6"><span class="bx">The jump = the size of the push, divided by the leading coefficient.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="23">
+  <p class="h" data-s="0">Next</p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="1"><span class="g">Mon Nov 16</span>: &sect;6.6 &mdash; the convolution integral.</p>
+      <p class="l" data-s="2"><span class="g">Wed Nov 18</span>: review.&nbsp; <span class="g">Fri Nov 20</span>: <span class="v">Midterm 2</span>.</p>
+      <p class="l" data-s="3"><span class="g">HW8</span> is due <span class="v">tonight</span>, 11:59 pm, on Gradescope.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Before Monday</p>
+      <p class="l" data-s="4">Read Boyce &sect;6.5 and &sect;6.6.</p>
+      <p class="e" data-s="5"><span class="bx">Questions: office hours, the Carmen discussion board, or email.</span></p>
+    </div>
+  </div>
+</div>
+
+<canvas id="ink"></canvas>
+<canvas id="wet"></canvas>
+<div id="edge"></div>
+
+<div id="hint">
+  <b>Math 2255 &mdash; Lecture 1</b><br><br>
+  <kbd>&#9654;</kbd> buttons (top right and bottom), or arrow keys<br>
+  <kbd>&#9664;</kbd> goes back<br>
+  <kbd>1</kbd>&ndash;<kbd>5</kbd> pen colour &nbsp; <kbd>E</kbd> eraser &nbsp; <kbd>C</kbd> clear ink<br>
+  <kbd>F</kbd> full screen &nbsp; <kbd>T</kbd> hide toolbar &nbsp; <kbd>G</kbd> writing zones<br>
+  <kbd>R</kbd> reset timer&nbsp;&nbsp;&nbsp;<kbd>D</kbd> dark / light<br><br><span style="color:var(--dm)">Pages turn with the arrow buttons only,<br>so nothing you touch by accident moves the board.<br><br>The toolbar hides itself after a few seconds.<br>Tap the very bottom edge to bring it back.</span><br><br>
+  <span style="color:var(--dm)">Only the Apple Pencil draws.<br>
+  Your palm and fingers leave no marks.<br><br>Tap anywhere to begin.</span>
+</div>
+
+<div id="bar">
+  <span class="pen sel" data-i="0" style="background:#F0EFE8"></span>
+  <span class="pen" data-i="1" style="background:#E3E34B"></span>
+  <span class="pen" data-i="2" style="background:#45CFC2"></span>
+  <span class="pen" data-i="3" style="background:#E85CD2"></span>
+  <span class="pen" data-i="4" style="background:#F09A42"></span>
+  <button class="btn" id="th">Pen M</button>
+  <button class="btn" id="hd">HD</button>
+  <button class="btn" id="er">Erase</button>
+  <button class="btn" id="cl">Clear</button>
+  <span class="sp"></span>
+  <button class="btn nav" id="prev">&#9664;</button>
+  <span id="pos">1 / 23</span>
+  <button class="btn nav" id="next">&#9654;</button>
+  <span class="sp"></span>
+  <span id="clk">00:00</span>
+  <button class="btn" id="tm">Light</button>
+  <button class="btn" id="fs">Full</button>
+  <button class="btn" id="hp">?</button>
+</div>
+</div>
+
+<script>
+(function(){
+var pgs=[].slice.call(document.querySelectorAll('.pg'));
+var maxStep=pgs.map(function(p){
+  var m=0;[].forEach.call(p.querySelectorAll('[data-s]'),function(e){
+    m=Math.max(m,+e.getAttribute('data-s'));});return m;});
+var P=0,S=0;
+var cv=document.getElementById('ink');
+var cx=cv.getContext('2d',{desynchronized:true,alpha:true})||cv.getContext('2d');
+var strokes=pgs.map(function(){return [];});
+var DPRCAP=1.5;
+var PAL={dark: ['#F0EFE8','#E3E34B','#45CFC2','#E85CD2','#F09A42'],
+          light:['#16181B','#8F6A05','#0E7A70','#A0198A','#B4530A']};
+var theme='dark', ci=0, wid=4.2, erase=false, drawing=false, cur=null;
+function inks(){return PAL[theme];}
+var WIDS=[3.0,4.2,6.0],wi=1;
+
+function fit(){
+  var r=Math.min(window.devicePixelRatio||1,DPRCAP);
+  cv.width=Math.round(innerWidth*r);cv.height=Math.round(innerHeight*r);
+  cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+  wet.width=cv.width;wet.height=cv.height;
+  wet.style.width=innerWidth+'px';wet.style.height=innerHeight+'px';
+  wx.setTransform(r,0,0,r,0,0);wetBox=null;
+  cx.setTransform(r,0,0,r,0,0);syncRect();redraw();
+}
+function setStyle(st){
+  cx.lineCap='round';cx.lineJoin='round';
+  cx.strokeStyle=inks()[st.ci];cx.lineWidth=st.w;
+  cx.globalCompositeOperation=st.e?'destination-out':'source-over';
+}
+function strokePath(st){
+  if(st.pts.length<2)return;
+  setStyle(st);
+  cx.beginPath();cx.moveTo(st.pts[0].x,st.pts[0].y);
+  for(var i=1;i<st.pts.length;i++){
+    var a=st.pts[i-1],b=st.pts[i];
+    cx.quadraticCurveTo(a.x,a.y,(a.x+b.x)/2,(a.y+b.y)/2);
+  }
+  cx.stroke();
+}
+// full repaint only on page change / clear / resize -- never while drawing
+function redraw(){
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  strokes[P].forEach(strokePath);
+  cx.globalCompositeOperation='source-over';
+}
+function show(){
+  pgs.forEach(function(p,i){p.classList.toggle('on',i===P);});
+  [].forEach.call(pgs[P].querySelectorAll('[data-s]'),function(e){
+    var from=+e.getAttribute('data-s');
+    var u=e.getAttribute('data-until');
+    var until=(u===null||u==='')?1e9:+u;
+    var live=(S>=from && S<=until);
+    e.classList.toggle('vis', live);
+    if(u!==null&&u!=='') e.classList.toggle('gone', S>until);});
+  var pt=(P+1)+' / '+pgs.length;
+  document.getElementById('pos').textContent=pt;
+  var p2=document.getElementById('pos2'); if(p2)p2.textContent=pt;
+  redraw();
+}
+function next(){ if(S<maxStep[P]){S++;} else if(P<pgs.length-1){P++;S=0;} show(); }
+function prev(){ if(S>0){S--;} else if(P>0){P--;S=maxStep[P];} show(); }
+function pgUp(){ if(P>0){P--;S=maxStep[P];show();} }
+function pgDn(){ if(P<pgs.length-1){P++;S=maxStep[P];show();} }
+
+// ---- pencil drawing ----
+var RC={left:0,top:0};
+function syncRect(){RC=cv.getBoundingClientRect();}
+function xy(e){return {x:e.clientX-RC.left,y:e.clientY-RC.top};}
+function isPen(e){
+  if(e.pointerType==='pen')return true;
+  if(e.pointerType==='touch'&&(e.width||99)<=12&&(e.height||99)<=12)return true;
+  return false;
+}
+cv.addEventListener('pointerdown',function(e){
+  if(!isPen(e))return;
+  e.preventDefault();drawing=true;syncRect();
+  var p=xy(e),w=erase?26:wid*(0.55+0.9*(e.pressure||0.5));
+  cur={ci:ci,w:w,e:erase,pts:[p]};strokes[P].push(cur);
+  setStyle(cur);
+  cx.beginPath();cx.arc(p.x,p.y,Math.max(w,1)/2,0,6.2832);
+  cx.fillStyle=inks()[cur.ci];cx.fill();
+  cx.globalCompositeOperation='source-over';
+},{passive:false});
+var pend=[],rafId=0,MINSTEP=1.7;
+var wet=document.getElementById('wet');
+var wx=wet.getContext('2d',{desynchronized:true})||wet.getContext('2d');
+var wetBox=null;
+function clearWet(){
+  if(!wetBox)return;
+  wx.clearRect(wetBox[0]-4,wetBox[1]-4,wetBox[2]-wetBox[0]+8,wetBox[3]-wetBox[1]+8);
+  wetBox=null;
+}
+function drawPredicted(e){
+  clearWet();
+  if(!cur||!e.getPredictedEvents)return;
+  var pr=e.getPredictedEvents(); if(!pr.length)return;
+  var a=cur.pts[cur.pts.length-1];
+  var x0=a.x,y0=a.y,x1=a.x,y1=a.y;
+  wx.lineCap='round';wx.lineJoin='round';
+  wx.strokeStyle=cur.c;wx.lineWidth=cur.w;
+  wx.globalCompositeOperation=cur.e?'destination-out':'source-over';
+  wx.beginPath();wx.moveTo(a.x,a.y);
+  for(var i=0;i<pr.length;i++){
+    var p=xy(pr[i]); wx.lineTo(p.x,p.y);
+    if(p.x<x0)x0=p.x; if(p.y<y0)y0=p.y;
+    if(p.x>x1)x1=p.x; if(p.y>y1)y1=p.y;
+  }
+  wx.stroke();
+  wetBox=[x0-cur.w,y0-cur.w,x1+cur.w,y1+cur.w];
+}
+function flush(){
+  rafId=0;
+  clearWet();
+  if(!cur||!pend.length)return;
+  setStyle(cur);
+  cx.beginPath();
+  var a=cur.pts[cur.pts.length-1];
+  cx.moveTo(a.x,a.y);
+  for(var i=0;i<pend.length;i++){ cx.lineTo(pend[i].x,pend[i].y); cur.pts.push(pend[i]); }
+  cx.stroke();
+  cx.globalCompositeOperation='source-over';
+  pend.length=0;
+}
+cv.addEventListener('pointermove',function(e){
+  if(!drawing||!isPen(e))return;
+  e.preventDefault();
+  var evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];
+  var last=pend.length?pend[pend.length-1]:cur.pts[cur.pts.length-1];
+  for(var i=0;i<evs.length;i++){
+    var p=xy(evs[i]);
+    var dx=p.x-last.x, dy=p.y-last.y;
+    if(dx*dx+dy*dy < MINSTEP) continue;
+    pend.push(p); last=p;
+  }
+  if(pend.length && !rafId) rafId=requestAnimationFrame(flush);
+  drawPredicted(e);
+},{passive:false});
+function end(e){ if(e.pointerType&&!isPen(e))return;
+  if(rafId){cancelAnimationFrame(rafId);rafId=0;} flush();
+  clearWet(); drawing=false;cur=null;pend.length=0; }
+cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+
+// ---- buttons only. no tap-to-advance, no swipe. ----
+cv.addEventListener('pointerup',function(e){
+  if(isPen(e))return;
+  startClk();
+  var h=document.getElementById('hint');
+  if(!h.classList.contains('hide')) h.classList.add('hide');
+  showChrome();
+});
+
+function bindNav(id,fn){
+  var el=document.getElementById(id); if(!el)return;
+  var go=function(e){ e.preventDefault(); e.stopPropagation(); fn(); startClk(); };
+  el.addEventListener('click',go);
+  el.addEventListener('touchend',go,{passive:false});
+}
+bindNav('prev',prev); bindNav('next',next);
+bindNav('prev2',prev); bindNav('next2',next);
+
+
+// ---- toolbar ----
+[].forEach.call(document.querySelectorAll('.pen'),function(b){
+  b.onclick=function(){
+    [].forEach.call(document.querySelectorAll('.pen'),function(x){x.classList.remove('sel');});
+    b.classList.add('sel');ci=+b.getAttribute('data-i');erase=false;
+    document.getElementById('er').style.borderColor='var(--bbd)';
+  };
+});
+document.getElementById('th').onclick=function(){
+  wi=(wi+1)%3; wid=WIDS[wi];
+  this.textContent='Pen '+['S','M','L'][wi];
+};
+document.getElementById('hd').onclick=function(){
+  DPRCAP=(DPRCAP===1.5)?1:1.5;
+  this.textContent=(DPRCAP===1.5)?'HD':'Fast';
+  fit();
+};
+document.getElementById('er').onclick=function(){
+  erase=!erase;this.style.borderColor=erase?'var(--o)':'var(--bbd)';};
+document.getElementById('cl').onclick=function(){strokes[P]=[];redraw();};
+document.getElementById('hp').onclick=function(){
+  document.getElementById('hint').classList.toggle('hide');};
+function isStandalone(){
+  return window.navigator.standalone===true ||
+         (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches);
+}
+function setTheme(t){
+  theme=t;
+  document.body.classList.toggle('light', t==='light');
+  document.getElementById('tm').textContent = (t==='dark')?'Light':'Dark';
+  var sw=document.querySelectorAll('.pen');
+  for(var i=0;i<sw.length;i++) sw[i].style.background=PAL[t][i];
+  var tc=document.querySelector('meta[name="theme-color"]');
+  if(tc)tc.setAttribute('content', t==='light'?'#F2F0EA':'#0D0F10');
+  try{localStorage.setItem('m2255theme',t);}catch(e){}
+  redraw();
+}
+document.getElementById('tm').onclick=function(){ setTheme(theme==='dark'?'light':'dark'); };
+document.getElementById('fs').onclick=function(){
+  var d=document.documentElement;
+  var req=d.requestFullscreen||d.webkitRequestFullscreen;
+  if(document.fullscreenElement||document.webkitFullscreenElement){
+    (document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);
+    return;
+  }
+  if(req){ try{ req.call(d); return; }catch(err){} }
+  if(isStandalone()){ alert('Already running full screen.'); return; }
+  alert('For true full screen on iPad:\n\n'+
+        '1. Tap the Share button in Safari\n'+
+        '2. Choose "Add to Home Screen"\n'+
+        '3. Launch it from the home-screen icon\n\n'+
+        'It then opens with no address bar and no toolbars.');
+};
+if(isStandalone()){ document.getElementById('fs').textContent='FS'; }
+
+// ---- clock ----
+var t0=null,tick=null;
+function fmt(s){var m=Math.floor(s/60);return (m<10?'0':'')+m+':'+((s%60)<10?'0':'')+(s%60);}
+function startClk(){
+  if(tick)return;t0=Date.now();
+  tick=setInterval(function(){
+    var s=Math.floor((Date.now()-t0)/1000);
+    var el=document.getElementById('clk');
+    el.textContent=fmt(s);el.classList.toggle('over',s>55*60);
+  },1000);
+}
+
+// ---- keys ----
+addEventListener('keydown',function(e){
+  var k=e.key;
+  if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();next();}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev();}
+  else if(k==='ArrowDown'){e.preventDefault();pgDn();}
+  else if(k==='ArrowUp'){e.preventDefault();pgUp();}
+  else if(k>='1'&&k<='5'){document.querySelectorAll('.pen')[+k-1].click();}
+  else if(k==='e'||k==='E'){document.getElementById('er').click();}
+  else if(k==='c'||k==='C'){document.getElementById('cl').click();}
+  else if(k==='f'||k==='F'){document.getElementById('fs').click();}
+  else if(k==='t'||k==='T'){document.getElementById('bar').classList.toggle('hide');document.getElementById('topnav').classList.toggle('hide');}
+  else if(k==='g'||k==='G'){document.body.classList.toggle('guides');}
+  else if(k==='d'||k==='D'){document.getElementById('tm').click();}
+  else if(k==='r'||k==='R'){t0=Date.now();}
+  else if(k==='?'||k==='h'){document.getElementById('hp').click();}
+  if(k!=='?'&&k!=='h')startClk();
+});
+document.getElementById('hint').addEventListener('click',function(){
+  this.classList.add('hide');startClk();});
+
+// ---- auto-hiding chrome ----
+var chromeT=null;
+function showChrome(){
+  document.getElementById('bar').classList.remove('hide');
+  document.getElementById('topnav').classList.remove('hide');
+  clearTimeout(chromeT);
+  chromeT=setTimeout(hideChrome,3500);
+}
+function hideChrome(){
+  document.getElementById('bar').classList.add('hide');
+  document.getElementById('topnav').classList.add('hide');
+}
+document.getElementById('edge').addEventListener('pointerdown',function(e){
+  e.stopPropagation(); showChrome();
+});
+document.getElementById('bar').addEventListener('pointerdown',showChrome);
+document.getElementById('topnav').addEventListener('pointerdown',showChrome);
+showChrome();
+
+addEventListener('resize',function(){fit();syncRect();});
+addEventListener('orientationchange',function(){setTimeout(function(){fit();syncRect();},250);});
+addEventListener('scroll',syncRect,true);
+try{var sv=localStorage.getItem('m2255theme');}catch(e){}
+setTheme(sv==='light'?'light':'dark');
+fit();show();
+})();
+</script>
+
+</body>
+</html>
