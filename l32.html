@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="2255 L2">
+<meta name="theme-color" content="#0D0F10">
+<title>Math 2255 - Lecture 2 Board</title>
+<style>
+:root{
+  --bd:#0D0F10; --gr:#1B1F21;
+  --w:#F0EFE8; --y:#E3E34B; --c:#45CFC2; --m:#E85CD2; --o:#F09A42;
+  --dm:#7C8A8E; --wash-w:rgba(240,239,232,.07); --wash-o:rgba(240,154,66,.10);
+  --chrome:rgba(13,15,16,.86); --line:#23282A; --bfg:#9DACB1; --bbd:#2E3538;
+  --act:#1C2224; --sel:#8FA0A5; --kbd:#1E2426; --kbdb:#333B3E; --kbdf:#C3CFD2;
+  --solid:#12171A;
+  --fm:"Palatino","Palatino Linotype","Book Antiqua",Georgia,serif;
+  --fu:system-ui,-apple-system,"PingFang SC",sans-serif;
+}
+body.light{--bd:#FBFAF7; --gr:#E7E4DC;
+  --w:#16181B; --y:#8F6A05; --c:#0E7A70; --m:#A0198A; --o:#B4530A;
+  --dm:#6E787E; --wash-w:rgba(20,24,28,.05); --wash-o:rgba(180,83,10,.09);
+  --chrome:rgba(251,250,247,.92); --line:#DBD6CB; --bfg:#4A5459; --bbd:#CAC4B9;
+  --act:#EDE9E1; --sel:#5A6469; --kbd:#EFEBE3; --kbdb:#D2CCC2; --kbdf:#39434A;
+  --solid:#F2F0EA;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bd);touch-action:none;
+  overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+#app{position:relative;width:100%;height:100dvh;height:100svh;min-height:480px;overflow:hidden;background:var(--bd);
+  background-image:linear-gradient(var(--gr) 1px,transparent 1px),
+    linear-gradient(90deg,var(--gr) 1px,transparent 1px);
+  background-size:32px 32px;color:var(--w);font-family:var(--fm)}
+#stage{position:absolute;inset:0;padding:3.0vh 4vw 60px;overflow:hidden}
+.pg{display:none;height:100%}
+.pg.on{display:block}
+[data-s]{opacity:0;transition:opacity .16s ease}
+[data-s].vis{opacity:1}
+[data-until].gone{display:none}
+.pg.rv .h{font-size:clamp(1.3rem,min(3.8vw,5.60vh),2.9rem)}
+.pg.rv .lb{font-size:clamp(1rem,min(2.5vw,3.68vh),1.9rem);margin:.62em 0 .12em}
+.pg.rv .l{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.6;margin:0 0 .1em 1.0em}
+.pg.rv .e{font-size:clamp(1.05rem,min(2.7vw,4.00vh),2.1rem);margin-left:1.0em}
+
+.h{font-size:clamp(1.2rem,min(3.4vw,5.00vh),2.6rem);color:var(--y);display:table;
+  border-bottom:.09em solid var(--y);padding-bottom:.08em;margin:0 0 .55em}
+.lb{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);color:var(--y);display:table;
+  border-bottom:.07em solid var(--y);padding-bottom:.06em;margin:.65em 0 .32em}
+.l{font-size:clamp(.88rem,min(2.1vw,3.09vh),1.62rem);line-height:1.72;margin:0 0 .1em}
+.e{font-size:clamp(1rem,min(2.5vw,3.68vh),1.95rem);line-height:1.95;margin:.3em 0 .3em 1.1em}
+.e.t{margin-top:.16em;margin-bottom:.16em}
+.a{font-size:clamp(.8rem,min(1.8vw,2.65vh),1.4rem);color:var(--m);margin:.12em 0 .3em 2em}
+.i{margin-left:1.5em}
+.n{color:var(--m)} .g{color:var(--c)} .v{color:var(--o)}
+.d{color:var(--dm)}
+.bx{display:inline-block;border:.09em solid var(--o);color:var(--o);
+  background:var(--wash-o);border-radius:.16em;padding:.2em .6em}
+.bw{display:inline-block;border:.09em solid var(--w);color:var(--w);
+  background:var(--wash-w);border-radius:.16em;padding:.2em .6em}
+sup,sub{line-height:0;font-size:.68em}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+  line-height:1.18;font-size:.86em;margin:0 .14em}
+.fr>span{padding:0 .28em;display:block}
+.fr>span:first-child{border-bottom:.06em solid currentColor;padding-bottom:.1em}
+.fr>span:last-child{padding-top:.12em}
+ol.st{margin:.25em 0 .25em 1.1em;padding-left:1.1em;font-size:clamp(.88rem,min(2.1vw,3.09vh),1.6rem);line-height:1.65}
+table{border-collapse:collapse;margin:.4em 0 .4em 1.1em;font-size:clamp(.85rem,min(2vw,2.94vh),1.5rem);line-height:2}
+td,th{padding:.16em 1.4em .16em 0;text-align:left;font-weight:400}
+th{color:var(--y);font-size:.82em}
+.cols{display:flex;gap:5vw;align-items:flex-start}
+.two{display:grid;grid-template-columns:1fr 1fr;column-gap:2.4vw;align-items:start;margin:.15em 0 0 .2em}
+.two>div>*:first-child{margin-top:0}
+.two .e{margin:.12em 0 .12em .2em;line-height:1.6}
+.two .l{margin:.1em 0 .1em .2em}
+.two .lb{margin:.5em 0 .14em}
+.two .a{margin:.1em 0 .2em 1em}
+.split{display:flex;gap:1.4vw;align-items:flex-start;margin:.2em 0 0 .4em}
+.split>.sl{flex:0 0 auto}
+.split>.sr{flex:1 1 auto;min-width:0;display:flex;justify-content:center;align-items:flex-start}
+.split .e{margin:.05em 0 .05em .2em;line-height:1.45}
+.split .sl .e{font-size:clamp(.85rem,min(2.1vw,3.02vh),1.65rem)}
+svg.df.sp{width:auto;height:51vh;max-width:100%;margin:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;column-gap:2vw;row-gap:0;margin:.2em 0 .2em 1.1em}
+.g2 .e{margin-left:0;line-height:1.62}
+svg.df{display:block;width:100%;max-width:min(76vw,104vh);height:auto;margin:.5vh 0 .5vh 1vw}
+svg.df.ax{width:auto;height:45vh;max-width:96%;margin:.3vh 0 .3vh 1.6vw}
+svg.df.fx{width:auto;height:46vh;max-width:97%;margin:.3vh 0 .3vh 1.2vw}
+.hw{min-height:1.2em}
+body.guides .hw{outline:1px dashed rgba(69,207,194,.32);border-radius:4px}
+
+#wet{position:absolute;inset:0;pointer-events:none;z-index:6;transform:translateZ(0)}
+#ink{position:absolute;inset:0;touch-action:none;z-index:5;
+  transform:translateZ(0)}
+#topnav{position:absolute;top:0;right:0;z-index:12;display:flex;gap:6px;align-items:center;
+  padding:calc(6px + env(safe-area-inset-top)) 10px 6px;background:var(--solid);border-radius:0 0 0 10px;
+  font-family:var(--fu);font-size:13px;color:var(--bfg)}
+#topnav.hide{opacity:0;pointer-events:none}
+#bar{position:absolute;left:0;right:0;bottom:0;z-index:9;display:flex;gap:.5vw;
+  align-items:center;padding:.7vh 1.2vw;padding-bottom:calc(.7vh + env(safe-area-inset-bottom));background:var(--solid);
+  border-top:1px solid var(--line);font-family:var(--fu);font-size:13px;color:var(--dm);
+  transition:opacity .3s}
+#bar.hide{opacity:0;pointer-events:none}
+#bar,#topnav{transition:opacity .25s}
+#edge{position:absolute;left:0;right:0;bottom:0;height:46px;z-index:8}
+.pen{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;flex:none}
+.pen.sel{border-color:var(--sel);transform:scale(1.12)}
+.btn{padding:5px 11px;border:1px solid var(--bbd);border-radius:5px;background:transparent;
+  color:var(--bfg);font-family:var(--fu);font-size:12px;cursor:pointer}
+.btn:active{background:var(--act)}
+.sp{flex:1}
+.btn.nav{font-size:19px;padding:3px 20px;line-height:1.05;min-width:62px}
+#pos{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+#clk{font-variant-numeric:tabular-nums;font-size:15px;color:var(--w)}
+#clk.over{color:var(--o)}
+#hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;
+  font-family:var(--fu);font-size:15px;line-height:2;color:var(--bfg);text-align:center;
+  background:var(--chrome);border:1px solid var(--bbd);border-radius:10px;padding:26px 34px}
+#hint.hide{display:none}
+#hint b{color:var(--w)}
+kbd{font-family:var(--fu);background:var(--kbd);border:1px solid var(--kbdb);border-radius:4px;
+  padding:1px 6px;color:var(--kbdf);font-size:12px}
+</style>
+</head>
+<body>
+
+<div id="app">
+<div id="topnav">
+  <button class="btn nav" id="prev2">&#9664;</button>
+  <span id="pos2">1 / 21</span>
+  <button class="btn nav" id="next2">&#9654;</button>
+</div>
+<div id="stage">
+
+<div class="pg on" data-n="1">
+  <p class="h" data-s="0">Friday, in one page</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">The delta</p>
+      <p class="e t" data-s="1">&#8466;{&delta;(<i>t</i> &minus; <i>c</i>)} = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup>,&nbsp; &#8466;{&delta;(<i>t</i>)} = 1</p>
+      <p class="e t" data-s="2">second order:&nbsp; <i>y</i>&#8242; jumps by the size of the push</p>
+      <p class="l" data-s="3">Same method as before: transform, solve for <i>Y</i>, invert, shift.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">Today: &sect;6.6</p>
+      <p class="l" data-s="4">Very often <i>Y</i>(<i>s</i>) is a product of two transforms.</p>
+      <p class="l" data-s="5">Which function has a product of two transforms as its transform?</p>
+      <p class="e" data-s="6"><span class="bx">The answer: the convolution <i>f</i> &lowast; <i>g</i>.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="2">
+  <p class="h" data-s="0">A product of transforms</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + <i>y</i> = <i>g</i>(<i>t</i>),&nbsp;&nbsp; <i>y</i>(0) = 0,&nbsp; <i>y</i>&#8242;(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Transform</p>
+      <p class="e t" data-s="2">(<i>s</i><sup>2</sup> + 1)<i>Y</i> = <i>G</i>(<i>s</i>)</p>
+      <p class="e t" data-s="3"><i>Y</i> = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 1</span></span> &middot; <i>G</i>(<i>s</i>)</p>
+      <p class="l" data-s="4">A product: the transform of sin <i>t</i>, times the transform of <i>g</i>. We do not know <i>g</i> yet, so we cannot use partial fractions.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Is the inverse of a product the product of the inverses?</p>
+      <p class="e t" data-s="5">try <i>F</i>(<i>s</i>) = <i>G</i>(<i>s</i>) = <span class="fr"><span>1</span><span><i>s</i></span></span>:&nbsp; <i>F</i>(<i>s</i>)<i>G</i>(<i>s</i>) = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span> &rarr; <i>t</i></p>
+      <p class="e t" data-s="6">but <i>f</i>(<i>t</i>)<i>g</i>(<i>t</i>) = 1 &middot; 1 = 1 &ne; <i>t</i></p>
+      <p class="e" data-s="7"><span class="bx">&#8466;<sup>&minus;1</sup>{<i>F</i>(<i>s</i>)<i>G</i>(<i>s</i>)} &ne; <i>f</i>(<i>t</i>)<i>g</i>(<i>t</i>)</span></p>
+      <p class="a" data-s="8">&#8627; the right operation.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="3">
+  <p class="h" data-s="0">The convolution of <i>f</i> and <i>g</i></p>
+  <p class="e" data-s="1"><span class="bw">(<i>f</i> &lowast; <i>g</i>)(<i>t</i>) = &int;<sub>0</sub><sup><i>t</i></sup> <i>f</i>(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>d</i>&tau;</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">How to read it</p>
+      <p class="l" data-s="2"><i>t</i> is fixed while we integrate. The variable is &tau;, from 0 to <i>t</i>.</p>
+      <p class="l" data-s="3"><i>f</i> is evaluated at <i>t</i> &minus; &tau;, and <i>g</i> at &tau;. The two arguments always add up to <i>t</i>.</p>
+      <p class="l" data-s="4">After the integral, the answer is a function of <i>t</i>.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Example: <i>f</i>(<i>t</i>) = <i>t</i>,&nbsp; <i>g</i>(<i>t</i>) = <i>t</i></p>
+      <p class="e t" data-s="5">(<i>t</i> &lowast; <i>t</i>)(<i>t</i>) = &int;<sub>0</sub><sup><i>t</i></sup> (<i>t</i> &minus; &tau;) &tau; <i>d</i>&tau;</p>
+      <p class="e t" data-s="6">= &int;<sub>0</sub><sup><i>t</i></sup> (<i>t</i>&tau; &minus; &tau;<sup>2</sup>) <i>d</i>&tau; = <i>t</i> &middot; <span class="fr"><span><i>t</i><sup>2</sup></span><span>2</span></span> &minus; <span class="fr"><span><i>t</i><sup>3</sup></span><span>3</span></span></p>
+      <p class="e" data-s="7"><span class="bx">= <span class="fr"><span><i>t</i><sup>3</sup></span><span>6</span></span></span></p>
+      <p class="a" data-s="8">&#8627; a second example, and a check.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="4">
+  <p class="h" data-s="0">Example 1 &mdash; two exponentials</p>
+  <p class="e" data-s="1"><span class="bw">(<b>e</b><sup>2<i>t</i></sup> &lowast; <b>e</b><sup>&minus;<i>t</i></sup>)(<i>t</i>)</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Write the integral</p>
+      <p class="e t" data-s="2">= &int;<sub>0</sub><sup><i>t</i></sup> <b>e</b><sup>2(<i>t</i> &minus; &tau;)</sup> <b>e</b><sup>&minus;&tau;</sup> <i>d</i>&tau;</p>
+      <p class="e t" data-s="3">= <b>e</b><sup>2<i>t</i></sup> &int;<sub>0</sub><sup><i>t</i></sup> <b>e</b><sup>&minus;2&tau;</sup> <b>e</b><sup>&minus;&tau;</sup> <i>d</i>&tau; = <b>e</b><sup>2<i>t</i></sup> &int;<sub>0</sub><sup><i>t</i></sup> <b>e</b><sup>&minus;3&tau;</sup> <i>d</i>&tau;</p>
+      <p class="l" data-s="4"><span class="d"><b>e</b><sup>2<i>t</i></sup> does not depend on &tau;, so it moves in front of the integral.</span></p>
+      <p class="e t" data-s="5">= <b>e</b><sup>2<i>t</i></sup> &middot; <span class="fr"><span>1 &minus; <b>e</b><sup>&minus;3<i>t</i></sup></span><span>3</span></span></p>
+    </div>
+    <div>
+      <p class="e" data-s="6"><span class="bx">= <span class="fr"><span><b>e</b><sup>2<i>t</i></sup> &minus; <b>e</b><sup>&minus;<i>t</i></sup></span><span>3</span></span></span></p>
+      <p class="lb" data-s="7">Compare with partial fractions</p>
+      <p class="e t" data-s="7"><span class="fr"><span>1</span><span><i>s</i> &minus; 2</span></span> &middot; <span class="fr"><span>1</span><span><i>s</i> + 1</span></span> = <span class="fr"><span>1</span><span>3</span></span>(<span class="fr"><span>1</span><span><i>s</i> &minus; 2</span></span> &minus; <span class="fr"><span>1</span><span><i>s</i> + 1</span></span>)</p>
+      <p class="e t" data-s="8">&rarr; <span class="fr"><span>1</span><span>3</span></span>(<b>e</b><sup>2<i>t</i></sup> &minus; <b>e</b><sup>&minus;<i>t</i></sup>)</p>
+      <p class="l" data-s="9">The same function. The inverse of the product of the transforms is the convolution. This is today&rsquo;s theorem.</p>
+      <p class="a" data-s="10">&#8627; some rules first.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="5">
+  <p class="h" data-s="0">Rules for convolution</p>
+  <p class="e" data-s="1"><span class="bw"><i>f</i> &lowast; <i>g</i> = <i>g</i> &lowast; <i>f</i></span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Why: substitute <i>u</i> = <i>t</i> &minus; &tau;</p>
+      <p class="e t" data-s="2">&tau; = 0 &rarr; <i>u</i> = <i>t</i>,&nbsp; &tau; = <i>t</i> &rarr; <i>u</i> = 0,&nbsp; <i>d</i>&tau; = &minus;<i>du</i></p>
+      <p class="e t" data-s="3">&int;<sub>0</sub><sup><i>t</i></sup> <i>f</i>(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>d</i>&tau; = &minus;&int;<sub><i>t</i></sub><sup>0</sup> <i>f</i>(<i>u</i>) <i>g</i>(<i>t</i> &minus; <i>u</i>) <i>du</i></p>
+      <p class="e t" data-s="4">= &int;<sub>0</sub><sup><i>t</i></sup> <i>g</i>(<i>t</i> &minus; <i>u</i>) <i>f</i>(<i>u</i>) <i>du</i> = (<i>g</i> &lowast; <i>f</i>)(<i>t</i>)</p>
+      <p class="l" data-s="5"><span class="d">The minus sign flips the limits back.</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="6">Like multiplication</p>
+      <p class="e t" data-s="6"><i>f</i> &lowast; (<i>g</i> + <i>k</i>) = <i>f</i> &lowast; <i>g</i> + <i>f</i> &lowast; <i>k</i></p>
+      <p class="e t" data-s="7">(<i>f</i> &lowast; <i>g</i>) &lowast; <i>k</i> = <i>f</i> &lowast; (<i>g</i> &lowast; <i>k</i>),&nbsp; <i>f</i> &lowast; 0 = 0</p>
+      <p class="lb" data-s="8">Not like multiplication</p>
+      <p class="e t" data-s="8">(1 &lowast; 1)(<i>t</i>) = &int;<sub>0</sub><sup><i>t</i></sup> 1 <i>d</i>&tau; = <i>t</i>,&nbsp; not 1</p>
+      <p class="l" data-s="9">So 1 &lowast; <i>f</i> is usually not <i>f</i>.</p>
+      <p class="a" data-s="10">&#8627; the theorem.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="6">
+  <p class="h" data-s="0">The convolution theorem</p>
+  <p class="e" data-s="1"><span class="bw">&#8466;{<i>f</i> &lowast; <i>g</i>} = <i>F</i>(<i>s</i>)<i>G</i>(<i>s</i>)</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Write the product of the transforms</p>
+      <p class="e t" data-s="2"><i>F</i>(<i>s</i>)<i>G</i>(<i>s</i>) = &int;<sub>0</sub><sup>&infin;</sup> <b>e</b><sup>&minus;<i>s</i>&xi;</sup><i>f</i>(&xi;) <i>d</i>&xi; &middot; &int;<sub>0</sub><sup>&infin;</sup> <b>e</b><sup>&minus;<i>s</i>&tau;</sup><i>g</i>(&tau;) <i>d</i>&tau;</p>
+      <p class="e t" data-s="3">= &int;<sub>0</sub><sup>&infin;</sup> <i>g</i>(&tau;) [&int;<sub>0</sub><sup>&infin;</sup> <b>e</b><sup>&minus;<i>s</i>(&xi; + &tau;)</sup><i>f</i>(&xi;) <i>d</i>&xi;] <i>d</i>&tau;</p>
+      <p class="lb" data-s="4">Inner integral: put &xi; = <i>t</i> &minus; &tau; (&tau; fixed)</p>
+      <p class="e t" data-s="4">&int;<sub>0</sub><sup>&infin;</sup> <b>e</b><sup>&minus;<i>s</i>(&xi; + &tau;)</sup><i>f</i>(&xi;) <i>d</i>&xi; = &int;<sub>&tau;</sub><sup>&infin;</sup> <b>e</b><sup>&minus;<i>st</i></sup><i>f</i>(<i>t</i> &minus; &tau;) <i>dt</i></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Put it back</p>
+      <p class="e t" data-s="5"><i>F</i>(<i>s</i>)<i>G</i>(<i>s</i>) = &int;<sub>0</sub><sup>&infin;</sup> &int;<sub>&tau;</sub><sup>&infin;</sup> <b>e</b><sup>&minus;<i>st</i></sup><i>f</i>(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>dt</i> <i>d</i>&tau;</p>
+      <p class="lb" data-s="6">Swap the order of integration</p>
+      <p class="e t" data-s="6">= &int;<sub>0</sub><sup>&infin;</sup> <b>e</b><sup>&minus;<i>st</i></sup> [&int;<sub>0</sub><sup><i>t</i></sup> <i>f</i>(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>d</i>&tau;] <i>dt</i></p>
+      <p class="e" data-s="7"><span class="bx">= &#8466;{<i>f</i> &lowast; <i>g</i>}</span></p>
+      <p class="a" data-s="8">&#8627; why we may swap.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="7">
+  <p class="h" data-s="0">Swapping the order</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="2">Both double integrals cover the same region: 0 &le; &tau; &le; <i>t</i>, the shaded triangle.</p>
+      <p class="e t" data-s="3"><span class="n">before</span>: fix &tau;, then <i>t</i> from &tau; to &infin;</p>
+      <p class="e t" data-s="4"><span style="color:var(--y)">after</span>: fix <i>t</i>, then &tau; from 0 to <i>t</i></p>
+      <p class="l" data-s="5">Only the order changes, so the value stays the same.</p>
+      <p class="e" data-s="6"><span class="bx">&#8466;<sup>&minus;1</sup>{<i>F</i>(<i>s</i>)<i>G</i>(<i>s</i>)} = (<i>f</i> &lowast; <i>g</i>)(<i>t</i>)</span></p>
+      <p class="a" data-s="7">&#8627; a quick round.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="262.5" x2="0" y2="262.5"/><line x1="-7" y1="175" x2="0" y2="175"/><line x1="-7" y1="87.5" x2="0" y2="87.5"/><line x1="-7" y1="0" x2="0" y2="0"/><line x1="155" y1="350" x2="155" y2="357"/><line x1="310" y1="350" x2="310" y2="357"/><line x1="465" y1="350" x2="465" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">0</text><text x="-12" y="267.5" text-anchor="end">1</text><text x="-12" y="180" text-anchor="end">2</text><text x="-12" y="92.5" text-anchor="end">3</text><text x="-12" y="5" text-anchor="end">4</text><text x="0" y="375" text-anchor="middle">0</text><text x="155" y="375" text-anchor="middle">1</text><text x="310" y="375" text-anchor="middle">2</text><text x="465" y="375" text-anchor="middle">3</text><text x="620" y="375" text-anchor="middle">4</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">&tau;</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polygon data-s="2" points="0.0,350.0 620.0,350.0 620.0,0.0" fill="var(--c)" fill-opacity=".16" stroke="none"/><line data-s="2" x1="0.0" y1="350.0" x2="620.0" y2="0.0" stroke="var(--c)" stroke-width="2.4"/><text data-s="2" x="333.0" y="116.5" font-size="22" fill="var(--c)" font-family="system-ui,sans-serif">&tau; = t</text><line data-s="3" x1="186.0" y1="245.0" x2="620.0" y2="245.0" stroke="var(--m)" stroke-width="7" stroke-opacity=".7"/><line data-s="4" x1="465.0" y1="350.0" x2="465.0" y2="87.5" stroke="var(--y)" stroke-width="7" stroke-opacity=".8"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="8">
+  <p class="h" data-s="0">Call it out &mdash; the transform</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; &#8466;{<i>t</i><sup>2</sup> &lowast; sin <i>t</i>}</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; &#8466;{<b>e</b><sup>3<i>t</i></sup> &lowast; cos 2<i>t</i>}</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; &#8466;{&int;<sub>0</sub><sup><i>t</i></sup> <b>e</b><sup>&minus;(<i>t</i> &minus; &tau;)</sup> &tau; <i>d</i>&tau;}</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; &#8466;{1 &lowast; <i>g</i>}</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; &#8466;{1 &lowast; 1}</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="fr"><span>2</span><span><i>s</i><sup>3</sup></span></span> &middot; <span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 1</span></span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="fr"><span>1</span><span><i>s</i> &minus; 3</span></span> &middot; <span class="fr"><span><i>s</i></span><span><i>s</i><sup>2</sup> + 4</span></span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="fr"><span>1</span><span><i>s</i> + 1</span></span> &middot; <span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="fr"><span><i>G</i>(<i>s</i>)</span><span><i>s</i></span></span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span>&nbsp;&nbsp;<span class="d">&rarr; <i>t</i>, as on the last page</span></p>
+      <p class="a" data-s="11">&#8627; number 3: read <i>f</i> from <i>f</i>(<i>t</i> &minus; &tau;) = <b>e</b><sup>&minus;(<i>t</i> &minus; &tau;)</sup>, so <i>f</i>(<i>t</i>) = <b>e</b><sup>&minus;<i>t</i></sup>, and <i>g</i>(<i>t</i>) = <i>t</i>.</p>
+    </div>
+  </div>
+  <p class="l" data-s="1" style="margin-top:.8em;border-top:1px solid var(--line, #555);padding-top:.4em"><span class="d">Backwards:&nbsp; <span class="fr"><span>1</span><span><i>s</i> &minus; <i>a</i></span></span> &rarr; <b>e</b><sup><i>at</i></sup>,&nbsp; <span class="fr"><span><i>n</i>!</span><span><i>s</i><sup><i>n</i>+1</sup></span></span> &rarr; <i>t</i><sup><i>n</i></sup>,&nbsp; <span class="fr"><span><i>b</i></span><span><i>s</i><sup>2</sup> + <i>b</i><sup>2</sup></span></span> &rarr; sin <i>bt</i>,&nbsp; <span class="fr"><span><i>s</i></span><span><i>s</i><sup>2</sup> + <i>b</i><sup>2</sup></span></span> &rarr; cos <i>bt</i>,&nbsp; <span class="fr"><span>1</span><span>(<i>s</i> &minus; <i>a</i>)<sup>2</sup></span></span> &rarr; <i>t</i><b>e</b><sup><i>at</i></sup>,&nbsp; <i>F</i>(<i>s</i> &minus; <i>a</i>) &rarr; <b>e</b><sup><i>at</i></sup><i>f</i>(<i>t</i>),&nbsp; &#8466;{<i>u</i><sub><i>c</i></sub>(<i>t</i>)} = <span class="fr"><span><b>e</b><sup>&minus;<i>c</i><i>s</i></sup></span><span><i>s</i></span></span>,&nbsp; &#8466;{<i>u</i><sub><i>c</i></sub>(<i>t</i>)<i>f</i>(<i>t</i> &minus; <i>c</i>)} = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup><i>F</i>(<i>s</i>),&nbsp; &#8466;{&delta;(<i>t</i> &minus; <i>c</i>)} = <b>e</b><sup>&minus;<i>c</i><i>s</i></sup></span></p>
+</div>
+
+<div class="pg" data-n="9">
+  <p class="h" data-s="0">Example 2 &mdash; an inverse that is not in the table</p>
+  <p class="e" data-s="1"><span class="bw">&#8466;<sup>&minus;1</sup>{<span class="fr"><span>1</span><span>(<i>s</i><sup>2</sup> + 1)<sup>2</sup></span></span>}</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">A product</p>
+      <p class="e t" data-s="2"><span class="fr"><span>1</span><span>(<i>s</i><sup>2</sup> + 1)<sup>2</sup></span></span> = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 1</span></span> &middot; <span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 1</span></span> &rarr; sin <i>t</i> &lowast; sin <i>t</i></p>
+      <p class="e t" data-s="3">= &int;<sub>0</sub><sup><i>t</i></sup> sin(<i>t</i> &minus; &tau;) sin &tau; <i>d</i>&tau;</p>
+      <p class="lb" data-s="4">Product to sum</p>
+      <p class="e t" data-s="4">sin <i>A</i> sin <i>B</i> = <span class="fr"><span>1</span><span>2</span></span>[cos(<i>A</i> &minus; <i>B</i>) &minus; cos(<i>A</i> + <i>B</i>)]</p>
+      <p class="e t" data-s="5"><i>A</i> &minus; <i>B</i> = <i>t</i> &minus; 2&tau;,&nbsp; <i>A</i> + <i>B</i> = <i>t</i></p>
+    </div>
+    <div>
+      <p class="e t" data-s="6">= <span class="fr"><span>1</span><span>2</span></span>&int;<sub>0</sub><sup><i>t</i></sup> cos(<i>t</i> &minus; 2&tau;) <i>d</i>&tau; &minus; <span class="fr"><span>1</span><span>2</span></span>&int;<sub>0</sub><sup><i>t</i></sup> cos <i>t</i> <i>d</i>&tau;</p>
+      <p class="e t" data-s="7">&int;<sub>0</sub><sup><i>t</i></sup> cos(<i>t</i> &minus; 2&tau;) <i>d</i>&tau; = [&minus;<span class="fr"><span>1</span><span>2</span></span> sin(<i>t</i> &minus; 2&tau;)]<sub>0</sub><sup><i>t</i></sup> = sin <i>t</i></p>
+      <p class="e t" data-s="8">&int;<sub>0</sub><sup><i>t</i></sup> cos <i>t</i> <i>d</i>&tau; = <i>t</i> cos <i>t</i>&nbsp;&nbsp;<span class="d">cos <i>t</i> is a constant in &tau;</span></p>
+      <p class="e" data-s="9"><span class="bx">= <span class="fr"><span>1</span><span>2</span></span>(sin <i>t</i> &minus; <i>t</i> cos <i>t</i>)</span></p>
+      <p class="a" data-s="10">&#8627; more inverses, written as convolutions.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="10">
+  <p class="h" data-s="0">Call it out &mdash; write the inverse as a convolution</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; &#8466;<sup>&minus;1</sup>{<span class="fr"><span>1</span><span><i>s</i><sup>2</sup>(<i>s</i> + 1)</span></span>}</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; &#8466;<sup>&minus;1</sup>{<span class="fr"><span>1</span><span>(<i>s</i> &minus; 1)(<i>s</i><sup>2</sup> + 4)</span></span>}</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; &#8466;<sup>&minus;1</sup>{<span class="fr"><span><i>s</i></span><span>(<i>s</i><sup>2</sup> + 1)(<i>s</i> + 3)</span></span>}</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; &#8466;<sup>&minus;1</sup>{<span class="fr"><span>1</span><span>(<i>s</i> + 2)<sup>2</sup></span></span>}</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; &#8466;<sup>&minus;1</sup>{<span class="fr"><span><i>G</i>(<i>s</i>)</span><span><i>s</i> + 5</span></span>}</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <i>t</i> &lowast; <b>e</b><sup>&minus;<i>t</i></sup></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <b>e</b><sup><i>t</i></sup> &lowast; <span class="fr"><span>1</span><span>2</span></span> sin 2<i>t</i></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; cos <i>t</i> &lowast; <b>e</b><sup>&minus;3<i>t</i></sup></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <b>e</b><sup>&minus;2<i>t</i></sup> &lowast; <b>e</b><sup>&minus;2<i>t</i></sup>&nbsp;&nbsp;<span class="d">= <i>t</i><b>e</b><sup>&minus;2<i>t</i></sup></span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <b>e</b><sup>&minus;5<i>t</i></sup> &lowast; <i>g</i></p>
+      <p class="a" data-s="11">&#8627; number 2: the 2 goes with the sine: <span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 4</span></span> = <span class="fr"><span>1</span><span>2</span></span> &middot; <span class="fr"><span>2</span><span><i>s</i><sup>2</sup> + 4</span></span>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="11">
+  <p class="h" data-s="0">Initial value problems with any forcing <i>g</i></p>
+  <p class="e" data-s="1"><span class="bw"><i>a</i><i>y</i>&#8243; + <i>b</i><i>y</i>&#8242; + <i>c</i><i>y</i> = <i>g</i>(<i>t</i>),&nbsp;&nbsp; <i>y</i>(0) = <i>y</i><sub>0</sub>,&nbsp; <i>y</i>&#8242;(0) = <i>y</i><sub>0</sub>&#8242;</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Transform</p>
+      <p class="e t" data-s="2">(<i>as</i><sup>2</sup> + <i>bs</i> + <i>c</i>)<i>Y</i> &minus; (<i>as</i><i>y</i><sub>0</sub> + <i>a</i><i>y</i><sub>0</sub>&#8242; + <i>b</i><i>y</i><sub>0</sub>) = <i>G</i>(<i>s</i>)</p>
+      <p class="e t" data-s="3"><i>Y</i> = <span class="fr"><span><i>as</i><i>y</i><sub>0</sub> + <i>a</i><i>y</i><sub>0</sub>&#8242; + <i>b</i><i>y</i><sub>0</sub></span><span><i>as</i><sup>2</sup> + <i>bs</i> + <i>c</i></span></span> + <span class="fr"><span><i>G</i>(<i>s</i>)</span><span><i>as</i><sup>2</sup> + <i>bs</i> + <i>c</i></span></span></p>
+      <p class="lb" data-s="4">Name the parts</p>
+      <p class="e t" data-s="4"><i>H</i>(<i>s</i>) = <span class="fr"><span>1</span><span><i>as</i><sup>2</sup> + <i>bs</i> + <i>c</i></span></span>,&nbsp; <i>h</i>(<i>t</i>) = &#8466;<sup>&minus;1</sup>{<i>H</i>(<i>s</i>)}</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Invert</p>
+      <p class="e" data-s="5"><span class="bx"><i>y</i> = &phi;(<i>t</i>) + (<i>h</i> &lowast; <i>g</i>)(<i>t</i>) = &phi;(<i>t</i>) + &int;<sub>0</sub><sup><i>t</i></sup> <i>h</i>(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>d</i>&tau;</span></p>
+      <p class="l" data-s="6">&phi;(<i>t</i>): the <span class="g">free part</span>. It comes from the initial values, as if <i>g</i> = 0.</p>
+      <p class="l" data-s="7"><i>h</i> &lowast; <i>g</i>: the <span class="g">forced part</span>. It comes from <i>g</i>, with zero initial values.</p>
+      <p class="l" data-s="8">If <i>g</i> = &delta;(<i>t</i>), then <i>G</i>(<i>s</i>) = 1 and <i>Y</i> = <i>H</i>. So <i>h</i> is the response to one push at <i>t</i> = 0, as on Friday.</p>
+      <p class="a" data-s="9">&#8627; an example with zero initial values.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="12">
+  <p class="h" data-s="0">Example 3 &mdash; any <i>g</i>, zero initial values</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + 9<i>y</i> = <i>g</i>(<i>t</i>),&nbsp;&nbsp; <i>y</i>(0) = 0,&nbsp; <i>y</i>&#8242;(0) = 0</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Transform, solve for <i>Y</i></p>
+      <p class="e t" data-s="2">(<i>s</i><sup>2</sup> + 9)<i>Y</i> = <i>G</i>(<i>s</i>)</p>
+      <p class="e t" data-s="3"><i>Y</i> = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 9</span></span> &middot; <i>G</i>(<i>s</i>) = <span class="fr"><span>1</span><span>3</span></span><span class="fr"><span>3</span><span><i>s</i><sup>2</sup> + 9</span></span> &middot; <i>G</i>(<i>s</i>)</p>
+      <p class="lb" data-s="4">Invert</p>
+      <p class="e" data-s="4"><span class="bx"><i>y</i> = <span class="fr"><span>1</span><span>3</span></span>&int;<sub>0</sub><sup><i>t</i></sup> sin 3(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>d</i>&tau;</span></p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Check with <i>g</i>(<i>t</i>) = <i>t</i></p>
+      <p class="e t" data-s="5"><i>Y</i> = <span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 9</span></span> &middot; <span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span> = <span class="fr"><span>1</span><span>9</span></span>(<span class="fr"><span>1</span><span><i>s</i><sup>2</sup></span></span> &minus; <span class="fr"><span>1</span><span><i>s</i><sup>2</sup> + 9</span></span>)</p>
+      <p class="e t" data-s="6"><i>y</i> = <span class="fr"><span><i>t</i></span><span>9</span></span> &minus; <span class="fr"><span>sin 3<i>t</i></span><span>27</span></span></p>
+      <p class="e t" data-s="7"><i>y</i>&#8243; = <span class="fr"><span>1</span><span>3</span></span> sin 3<i>t</i>,&nbsp; 9<i>y</i> = <i>t</i> &minus; <span class="fr"><span>1</span><span>3</span></span> sin 3<i>t</i>,&nbsp; sum = <i>t</i> &#10003;</p>
+      <p class="l" data-s="8">One formula works for every <i>g</i>. Only the last integral changes.</p>
+      <p class="a" data-s="9">&#8627; the picture.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="13">
+  <p class="h" data-s="0">Example 3 with <i>g</i>(<i>t</i>) = <i>t</i>, the picture</p>
+  <div class="split">
+    <div class="sl" style="flex:0 0 45%">
+      <p class="l" data-s="1"><span class="d">dashed</span>: <i>t</i>/9.</p>
+      <p class="l" data-s="2"><span class="g">teal</span>: <i>y</i>(<i>t</i>).</p>
+      <p class="e t" data-s="3"><i>y</i> = <span class="fr"><span><i>t</i></span><span>9</span></span> &minus; <span class="fr"><span>sin 3<i>t</i></span><span>27</span></span></p>
+      <p class="l" data-s="4"><i>y</i> follows the line <i>t</i>/9 with a small oscillation of size 1/27.</p>
+      <p class="l" data-s="5">With another <i>g</i>, the same formula gives another curve.</p>
+      <p class="a" data-s="6">&#8627; nonzero initial values.</p>
+    </div>
+    <div class="sr"><svg class="df sp" viewBox="-58 -34 720 424" preserveAspectRatio="xMidYMid meet"><g data-s="1"><g stroke="var(--dm)" stroke-width="1.2"><line x1="0" y1="350" x2="644" y2="350"/><line x1="0" y1="350" x2="0" y2="-8"/><line x1="-7" y1="350" x2="0" y2="350"/><line x1="-7" y1="204.2" x2="0" y2="204.2"/><line x1="-7" y1="58.3" x2="0" y2="58.3"/><line x1="124" y1="350" x2="124" y2="357"/><line x1="248" y1="350" x2="248" y2="357"/><line x1="372" y1="350" x2="372" y2="357"/><line x1="496" y1="350" x2="496" y2="357"/><line x1="620" y1="350" x2="620" y2="357"/></g><g fill="var(--dm)" font-size="15" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="355" text-anchor="end">0</text><text x="-12" y="209.2" text-anchor="end">0.5</text><text x="-12" y="63.3" text-anchor="end">1</text><text x="0" y="375" text-anchor="middle">0</text><text x="124" y="375" text-anchor="middle">2</text><text x="248" y="375" text-anchor="middle">4</text><text x="372" y="375" text-anchor="middle">6</text><text x="496" y="375" text-anchor="middle">8</text><text x="620" y="375" text-anchor="middle">10</text></g><g fill="var(--dm)" font-size="17" font-style="italic" font-family="system-ui,-apple-system,sans-serif"><text x="-12" y="-14" text-anchor="end">y</text><text x="650" y="355">t</text></g></g><g data-s="1" stroke="var(--w)" stroke-width="2.1" stroke-linecap="round"></g><polyline data-s="1" fill="none" stroke="var(--y)" stroke-width="1.8" stroke-dasharray="7 6" stroke-linejoin="round" points="0.0,350.0 12.4,343.5 24.8,337.0 37.2,330.6 49.6,324.1 62.0,317.6 74.4,311.1 86.8,304.6 99.2,298.1 111.6,291.7 124.0,285.2 136.4,278.7 148.8,272.2 161.2,265.7 173.6,259.3 186.0,252.8 198.4,246.3 210.8,239.8 223.2,233.3 235.6,226.9 248.0,220.4 260.4,213.9 272.8,207.4 285.2,200.9 297.6,194.4 310.0,188.0 322.4,181.5 334.8,175.0 347.2,168.5 359.6,162.0 372.0,155.6 384.4,149.1 396.8,142.6 409.2,136.1 421.6,129.6 434.0,123.1 446.4,116.7 458.8,110.2 471.2,103.7 483.6,97.2 496.0,90.7 508.4,84.3 520.8,77.8 533.2,71.3 545.6,64.8 558.0,58.3 570.4,51.9 582.8,45.4 595.2,38.9 607.6,32.4 620.0,25.9"/><polyline data-s="2" fill="none" stroke="var(--c)" stroke-width="2.8" stroke-linejoin="round" points="0.0,350.0 1.6,350.0 3.1,350.0 4.7,350.0 6.2,350.0 7.8,349.9 9.3,349.8 10.8,349.7 12.4,349.6 13.9,349.5 15.5,349.3 17.1,349.0 18.6,348.7 20.1,348.4 21.7,348.0 23.2,347.6 24.8,347.1 26.4,346.6 27.9,346.0 29.4,345.3 31.0,344.6 32.5,343.8 34.1,342.9 35.6,342.0 37.2,341.1 38.8,340.1 40.3,339.0 41.9,337.8 43.4,336.6 45.0,335.4 46.5,334.1 48.0,332.8 49.6,331.4 51.1,329.9 52.7,328.5 54.2,327.0 55.8,325.5 57.4,323.9 58.9,322.3 60.5,320.7 62.0,319.1 63.5,317.5 65.1,315.9 66.7,314.3 68.2,312.6 69.8,311.0 71.3,309.5 72.8,307.9 74.4,306.3 76.0,304.8 77.5,303.3 79.0,301.9 80.6,300.4 82.2,299.1 83.7,297.7 85.2,296.4 86.8,295.2 88.3,294.0 89.9,292.9 91.5,291.8 93.0,290.8 94.5,289.9 96.1,289.0 97.7,288.2 99.2,287.4 100.8,286.7 102.3,286.0 103.8,285.4 105.4,284.9 107.0,284.4 108.5,284.0 110.0,283.6 111.6,283.3 113.2,283.0 114.7,282.8 116.2,282.6 117.8,282.5 119.3,282.4 120.9,282.3 122.5,282.2 124.0,282.2 125.5,282.1 127.1,282.1 128.7,282.1 130.2,282.1 131.8,282.1 133.3,282.1 134.8,282.1 136.4,282.1 137.9,282.0 139.5,281.9 141.1,281.8 142.6,281.7 144.2,281.5 145.7,281.3 147.2,281.1 148.8,280.8 150.3,280.5 151.9,280.1 153.4,279.6 155.0,279.1 156.6,278.6 158.1,277.9 159.7,277.3 161.2,276.5 162.8,275.7 164.3,274.9 165.8,274.0 167.4,273.0 168.9,271.9 170.5,270.8 172.1,269.7 173.6,268.5 175.2,267.2 176.7,265.9 178.2,264.6 179.8,263.2 181.3,261.7 182.9,260.3 184.4,258.8 186.0,257.2 187.6,255.7 189.1,254.1 190.7,252.5 192.2,250.9 193.8,249.3 195.3,247.6 196.8,246.0 198.4,244.4 199.9,242.8 201.5,241.2 203.1,239.7 204.6,238.1 206.2,236.6 207.7,235.1 209.2,233.7 210.8,232.3 212.3,230.9 213.9,229.6 215.4,228.3 217.0,227.1 218.6,225.9 220.1,224.8 221.7,223.7 223.2,222.7 224.8,221.8 226.3,220.9 227.8,220.1 229.4,219.3 230.9,218.7 232.5,218.0 234.1,217.4 235.6,216.9 237.2,216.5 238.7,216.0 240.2,215.7 241.8,215.4 243.3,215.1 244.9,214.9 246.4,214.7 248.0,214.6 249.6,214.5 251.1,214.4 252.7,214.3 254.2,214.3 255.8,214.3 257.3,214.3 258.9,214.3 260.4,214.3 261.9,214.2 263.5,214.2 265.1,214.2 266.6,214.2 268.1,214.1 269.7,214.1 271.2,213.9 272.8,213.8 274.4,213.6 275.9,213.4 277.4,213.2 279.0,212.8 280.6,212.5 282.1,212.1 283.6,211.6 285.2,211.1 286.8,210.5 288.3,209.9 289.9,209.2 291.4,208.5 292.9,207.7 294.5,206.8 296.1,205.9 297.6,204.9 299.1,203.8 300.7,202.7 302.2,201.6 303.8,200.3 305.4,199.1 306.9,197.8 308.4,196.4 310.0,195.0 311.6,193.5 313.1,192.1 314.6,190.5 316.2,189.0 317.8,187.4 319.3,185.9 320.9,184.3 322.4,182.6 323.9,181.0 325.5,179.4 327.1,177.8 328.6,176.2 330.1,174.6 331.7,173.0 333.2,171.4 334.8,169.9 336.4,168.4 337.9,166.9 339.4,165.5 341.0,164.1 342.6,162.7 344.1,161.4 345.6,160.1 347.2,158.9 348.8,157.8 350.3,156.7 351.9,155.6 353.4,154.6 354.9,153.7 356.5,152.9 358.1,152.1 359.6,151.3 361.1,150.6 362.7,150.0 364.2,149.4 365.8,148.9 367.4,148.5 368.9,148.1 370.4,147.7 372.0,147.4 373.6,147.2 375.1,147.0 376.6,146.8 378.2,146.7 379.8,146.6 381.3,146.5 382.9,146.4 384.4,146.4 385.9,146.4 387.5,146.4 389.1,146.4 390.6,146.4 392.1,146.4 393.7,146.4 395.2,146.3 396.8,146.3 398.4,146.2 399.9,146.2 401.4,146.0 403.0,145.9 404.6,145.7 406.1,145.5 407.6,145.2 409.2,144.9 410.8,144.5 412.3,144.1 413.9,143.6 415.4,143.1 416.9,142.5 418.5,141.9 420.1,141.2 421.6,140.4 423.1,139.6 424.7,138.7 426.2,137.8 427.8,136.8 429.4,135.7 430.9,134.6 432.4,133.4 434.0,132.2 435.6,130.9 437.1,129.6 438.6,128.2 440.2,126.8 441.8,125.3 443.3,123.9 444.9,122.3 446.4,120.8 447.9,119.2 449.5,117.6 451.1,116.0 452.6,114.4 454.1,112.8 455.7,111.2 457.2,109.6 458.8,107.9 460.4,106.3 461.9,104.8 463.4,103.2 465.0,101.7 466.6,100.2 468.1,98.7 469.6,97.3 471.2,95.9 472.8,94.5 474.3,93.2 475.9,92.0 477.4,90.8 478.9,89.6 480.5,88.6 482.1,87.5 483.6,86.6 485.1,85.7 486.7,84.8 488.2,84.0 489.8,83.3 491.4,82.6 492.9,82.0 494.4,81.5 496.0,81.0 497.6,80.5 499.1,80.1 500.6,79.8 502.2,79.5 503.8,79.3 505.3,79.1 506.9,78.9 508.4,78.8 509.9,78.7 511.5,78.6 513.0,78.6 514.6,78.5 516.1,78.5 517.7,78.5 519.2,78.5 520.8,78.5 522.4,78.5 523.9,78.5 525.5,78.5 527.0,78.4 528.5,78.4 530.1,78.3 531.6,78.1 533.2,78.0 534.8,77.8 536.3,77.6 537.9,77.3 539.4,76.9 541.0,76.6 542.5,76.1 544.0,75.7 545.6,75.1 547.1,74.5 548.7,73.9 550.2,73.2 551.8,72.4 553.4,71.5 554.9,70.6 556.5,69.7 558.0,68.7 559.5,67.6 561.1,66.5 562.6,65.3 564.2,64.0 565.8,62.7 567.3,61.4 568.9,60.0 570.4,58.6 572.0,57.1 573.5,55.6 575.0,54.1 576.6,52.6 578.1,51.0 579.7,49.4 581.2,47.8 582.8,46.2 584.4,44.6 585.9,42.9 587.5,41.3 589.0,39.7 590.5,38.1 592.1,36.5 593.6,35.0 595.2,33.5 596.8,32.0 598.3,30.5 599.9,29.1 601.4,27.7 603.0,26.4 604.5,25.1 606.0,23.8 607.6,22.7 609.1,21.5 610.7,20.5 612.2,19.4 613.8,18.5 615.4,17.6 616.9,16.7 618.5,16.0 620.0,15.3"/></svg></div>
+  </div>
+</div>
+
+<div class="pg" data-n="14">
+  <p class="h" data-s="0">Example 4 &mdash; nonzero initial values</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8243; + 4<i>y</i>&#8242; + 4<i>y</i> = <i>g</i>(<i>t</i>),&nbsp;&nbsp; <i>y</i>(0) = 2,&nbsp; <i>y</i>&#8242;(0) = &minus;3</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">Transform</p>
+      <p class="e t" data-s="2">(<i>s</i><sup>2</sup><i>Y</i> &minus; 2<i>s</i> + 3) + 4(<i>sY</i> &minus; 2) + 4<i>Y</i> = <i>G</i>(<i>s</i>)</p>
+      <p class="e t" data-s="3">(<i>s</i> + 2)<sup>2</sup><i>Y</i> = 2<i>s</i> + 5 + <i>G</i>(<i>s</i>)</p>
+      <p class="e t" data-s="4"><i>Y</i> = <span class="fr"><span>2<i>s</i> + 5</span><span>(<i>s</i> + 2)<sup>2</sup></span></span> + <span class="fr"><span>1</span><span>(<i>s</i> + 2)<sup>2</sup></span></span> &middot; <i>G</i>(<i>s</i>)</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Free part</p>
+      <p class="e t" data-s="5"><span class="fr"><span>2<i>s</i> + 5</span><span>(<i>s</i> + 2)<sup>2</sup></span></span> = <span class="fr"><span>2</span><span><i>s</i> + 2</span></span> + <span class="fr"><span>1</span><span>(<i>s</i> + 2)<sup>2</sup></span></span>&nbsp;&nbsp;<span class="d">2<i>s</i> + 5 = 2(<i>s</i> + 2) + 1</span></p>
+      <p class="e t" data-s="6">&phi;(<i>t</i>) = 2<b>e</b><sup>&minus;2<i>t</i></sup> + <i>t</i><b>e</b><sup>&minus;2<i>t</i></sup></p>
+      <p class="lb" data-s="7">Forced part</p>
+      <p class="e t" data-s="7"><span class="fr"><span>1</span><span>(<i>s</i> + 2)<sup>2</sup></span></span> &rarr; <i>h</i>(<i>t</i>) = <i>t</i><b>e</b><sup>&minus;2<i>t</i></sup></p>
+      <p class="e" data-s="8"><span class="bx"><i>y</i> = (2 + <i>t</i>)<b>e</b><sup>&minus;2<i>t</i></sup> + &int;<sub>0</sub><sup><i>t</i></sup> (<i>t</i> &minus; &tau;)<b>e</b><sup>&minus;2(<i>t</i> &minus; &tau;)</sup> <i>g</i>(&tau;) <i>d</i>&tau;</span></p>
+      <p class="a" data-s="9">&#8627; a first order equation, two ways.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="15">
+  <p class="h" data-s="0">Example 5 &mdash; a first order equation, two ways</p>
+  <p class="e" data-s="1"><span class="bw"><i>y</i>&#8242; + 2<i>y</i> = <i>g</i>(<i>t</i>),&nbsp;&nbsp; <i>y</i>(0) = 1</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">With the transform</p>
+      <p class="e t" data-s="2"><i>sY</i> &minus; 1 + 2<i>Y</i> = <i>G</i>(<i>s</i>)</p>
+      <p class="e t" data-s="3"><i>Y</i> = <span class="fr"><span>1</span><span><i>s</i> + 2</span></span> + <span class="fr"><span>1</span><span><i>s</i> + 2</span></span> &middot; <i>G</i>(<i>s</i>)</p>
+      <p class="e t" data-s="4"><i>y</i> = <b>e</b><sup>&minus;2<i>t</i></sup> + &int;<sub>0</sub><sup><i>t</i></sup> <b>e</b><sup>&minus;2(<i>t</i> &minus; &tau;)</sup> <i>g</i>(&tau;) <i>d</i>&tau;</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">With the integrating factor &mu; = <b>e</b><sup>2<i>t</i></sup> (Lecture 3)</p>
+      <p class="e t" data-s="5">(<b>e</b><sup>2<i>t</i></sup><i>y</i>)&#8242; = <b>e</b><sup>2<i>t</i></sup><i>g</i>(<i>t</i>)</p>
+      <p class="e t" data-s="6"><b>e</b><sup>2<i>t</i></sup><i>y</i> &minus; 1 = &int;<sub>0</sub><sup><i>t</i></sup> <b>e</b><sup>2&tau;</sup><i>g</i>(&tau;) <i>d</i>&tau;&nbsp;&nbsp;<span class="d">integrate from 0 to <i>t</i>, <i>y</i>(0) = 1</span></p>
+      <p class="e t" data-s="7"><i>y</i> = <span class="fr"><span>1 + &int;<sub>0</sub><sup><i>t</i></sup> <b>e</b><sup>2&tau;</sup><i>g</i>(&tau;) <i>d</i>&tau;</span><span><b>e</b><sup>2<i>t</i></sup></span></span> = <b>e</b><sup>&minus;2<i>t</i></sup> + &int;<sub>0</sub><sup><i>t</i></sup> <b>e</b><sup>&minus;2<i>t</i></sup><b>e</b><sup>2&tau;</sup><i>g</i>(&tau;) <i>d</i>&tau;</p>
+      <p class="e" data-s="8"><span class="bx">The same formula:&nbsp; <b>e</b><sup>&minus;2<i>t</i></sup><b>e</b><sup>2&tau;</sup> = <b>e</b><sup>&minus;2(<i>t</i> &minus; &tau;)</sup></span></p>
+      <p class="a" data-s="9">&#8627; why <i>h</i> &lowast; <i>g</i> gives the forced part.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="16">
+  <p class="h" data-s="0">Why the forced part is <i>h</i> &lowast; <i>g</i></p>
+  <p class="e" data-s="1"><span class="bw">zero initial values:&nbsp; <i>y</i> = &int;<sub>0</sub><sup><i>t</i></sup> <i>h</i>(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>d</i>&tau;</span></p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="2">One push</p>
+      <p class="l" data-s="2">A push of size 1 at time 0 gives the response <i>h</i>(<i>t</i>).</p>
+      <p class="l" data-s="3">A push of size 1 at time &tau; gives the shifted response <i>h</i>(<i>t</i> &minus; &tau;) for <i>t</i> &gt; &tau;.</p>
+      <p class="e t" data-s="4">push of size <i>g</i>(&tau;) <i>d</i>&tau; at time &tau;&nbsp; &rarr;&nbsp; <i>g</i>(&tau;) <i>d</i>&tau; &middot; <i>h</i>(<i>t</i> &minus; &tau;)</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Many pushes</p>
+      <p class="l" data-s="5">Think of <i>g</i> on [0, <i>t</i>] as many small pushes, one at each time &tau;.</p>
+      <p class="l" data-s="6">The equation is linear, so the responses add.</p>
+      <p class="e t" data-s="7">adding them:&nbsp; &int;<sub>0</sub><sup><i>t</i></sup> <i>h</i>(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>d</i>&tau;</p>
+      <p class="e" data-s="8"><span class="bx"><i>h</i>: the answer to one push.&nbsp; <i>g</i>: the pushes.</span></p>
+      <p class="a" data-s="9">&#8627; a quick round.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="17">
+  <p class="h" data-s="0">Call it out &mdash; <i>h</i>(<i>t</i>) for each equation</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>y</i>&#8242; + 3<i>y</i> = <i>g</i></p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; <i>y</i>&#8243; + <i>y</i> = <i>g</i></p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8243; &minus; <i>y</i> = <i>g</i></p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; <i>y</i>&#8243; + 2<i>y</i>&#8242; + 5<i>y</i> = <i>g</i></p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; <i>y</i>&#8243; &minus; 3<i>y</i>&#8242; + 2<i>y</i> = <i>g</i></p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <b>e</b><sup>&minus;3<i>t</i></sup></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; sin <i>t</i></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="fr"><span>1</span><span>2</span></span>(<b>e</b><sup><i>t</i></sup> &minus; <b>e</b><sup>&minus;<i>t</i></sup>)&nbsp;&nbsp;<span class="d">partial fractions</span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="fr"><span>1</span><span>2</span></span><b>e</b><sup>&minus;<i>t</i></sup> sin 2<i>t</i>&nbsp;&nbsp;<span class="d">(<i>s</i> + 1)<sup>2</sup> + 4</span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <b>e</b><sup>2<i>t</i></sup> &minus; <b>e</b><sup><i>t</i></sup>&nbsp;&nbsp;<span class="d">(<i>s</i> &minus; 1)(<i>s</i> &minus; 2)</span></p>
+      <p class="a" data-s="11">&#8627; <i>h</i> = &#8466;<sup>&minus;1</sup>{<span class="fr"><span>1</span><span><i>as</i><sup>2</sup> + <i>bs</i> + <i>c</i></span></span>}. Then, with zero initial values, <i>y</i> = &int;<sub>0</sub><sup><i>t</i></sup> <i>h</i>(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>d</i>&tau;.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="18">
+  <p class="h" data-s="0">Your turn</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; Compute (<b>e</b><sup><i>t</i></sup> &lowast; <b>e</b><sup><i>t</i></sup>)(<i>t</i>) from the definition.</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; Write &#8466;<sup>&minus;1</sup>{<span class="fr"><span>1</span><span>(<i>s</i> &minus; 2)(<i>s</i><sup>2</sup> + 9)</span></span>} as a convolution integral.</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; <i>y</i>&#8243; + 16<i>y</i> = <i>g</i>(<i>t</i>), zero initial values. Write <i>y</i> as an integral.</p>
+      <p class="e" data-s="3"><span class="bx">6 minutes. Do 1 first.</span></p>
+      <p class="l" data-s="3"><span class="g">Bonus:</span> Number 3 again, with <i>y</i>(0) = 1, <i>y</i>&#8242;(0) = 0.</p>
+    </div>
+    <div>
+      <p class="e t" data-s="4"><span class="g">1.</span>&nbsp; <span class="v"><i>t</i><b>e</b><sup><i>t</i></sup></span>&nbsp;&nbsp;<span class="d"><b>e</b><sup><i>t</i> &minus; &tau;</sup><b>e</b><sup>&tau;</sup> = <b>e</b><sup><i>t</i></sup></span></p>
+      <p class="e t" data-s="5"><span class="g">2.</span>&nbsp; <span class="v">&int;<sub>0</sub><sup><i>t</i></sup> <b>e</b><sup>2(<i>t</i> &minus; &tau;)</sup> <span class="fr"><span>1</span><span>3</span></span> sin 3&tau; <i>d</i>&tau;</span></p>
+      <p class="e t" data-s="6"><span class="g">3.</span>&nbsp; <span class="v"><span class="fr"><span>1</span><span>4</span></span>&int;<sub>0</sub><sup><i>t</i></sup> sin 4(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>d</i>&tau;</span></p>
+      <p class="e t" data-s="7"><span class="g">bonus.</span>&nbsp; cos 4<i>t</i> + <span class="fr"><span>1</span><span>4</span></span>&int;<sub>0</sub><sup><i>t</i></sup> sin 4(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>d</i>&tau;</p>
+      <p class="a" data-s="8">&#8627; number 1: <b>e</b><sup><i>t</i></sup> does not depend on &tau;, so the integral is <b>e</b><sup><i>t</i></sup> times <i>t</i>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="19">
+  <p class="h" data-s="0">True or false?</p>
+  <div class="two">
+    <div>
+      <p class="e t" data-s="1"><span class="g">1.</span>&nbsp; <i>f</i> &lowast; <i>g</i> = <i>g</i> &lowast; <i>f</i>.</p>
+      <p class="e t" data-s="2"><span class="g">2.</span>&nbsp; (1 &lowast; 1)(<i>t</i>) = 1.</p>
+      <p class="e t" data-s="3"><span class="g">3.</span>&nbsp; &#8466;{<i>f</i>(<i>t</i>)<i>g</i>(<i>t</i>)} = <i>F</i>(<i>s</i>)<i>G</i>(<i>s</i>).</p>
+      <p class="e t" data-s="4"><span class="g">4.</span>&nbsp; &#8466;<sup>&minus;1</sup>{<i>F</i>(<i>s</i>)<i>G</i>(<i>s</i>)} = (<i>f</i> &lowast; <i>g</i>)(<i>t</i>).</p>
+      <p class="e t" data-s="5"><span class="g">5.</span>&nbsp; With zero initial values, <i>h</i> is the solution for <i>g</i> = &delta;(<i>t</i>).</p>
+    </div>
+    <div>
+      <p class="e t" data-s="6"><span class="g">1.</span>&nbsp; <span class="v">true</span></p>
+      <p class="e t" data-s="7"><span class="g">2.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d">it is <i>t</i></span></p>
+      <p class="e t" data-s="8"><span class="g">3.</span>&nbsp; <span class="n">false</span>&nbsp;&nbsp;<span class="d">that is the convolution</span></p>
+      <p class="e t" data-s="9"><span class="g">4.</span>&nbsp; <span class="v">true</span></p>
+      <p class="e t" data-s="10"><span class="g">5.</span>&nbsp; <span class="v">true</span>&nbsp;&nbsp;<span class="d"><i>G</i>(<i>s</i>) = 1</span></p>
+      <p class="a" data-s="11">&#8627; number 3: a product of transforms comes from the convolution, not from the product of the functions.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="20">
+  <p class="h" data-s="0">The card &mdash; convolution</p>
+  <div class="two">
+    <div>
+      <p class="lb" data-s="1">Facts</p>
+      <p class="e t" data-s="1">(<i>f</i> &lowast; <i>g</i>)(<i>t</i>) = &int;<sub>0</sub><sup><i>t</i></sup> <i>f</i>(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>d</i>&tau;</p>
+      <p class="e t" data-s="2"><i>f</i> &lowast; <i>g</i> = <i>g</i> &lowast; <i>f</i>,&nbsp; but 1 &lowast; 1 = <i>t</i></p>
+      <p class="e t" data-s="3">&#8466;{<i>f</i> &lowast; <i>g</i>} = <i>F</i>(<i>s</i>)<i>G</i>(<i>s</i>),&nbsp; &#8466;<sup>&minus;1</sup>{<i>F</i>(<i>s</i>)<i>G</i>(<i>s</i>)} = <i>f</i> &lowast; <i>g</i></p>
+    </div>
+    <div>
+      <p class="lb" data-s="4">In an equation</p>
+      <p class="e t" data-s="4"><i>y</i> = &phi;(<i>t</i>) + &int;<sub>0</sub><sup><i>t</i></sup> <i>h</i>(<i>t</i> &minus; &tau;) <i>g</i>(&tau;) <i>d</i>&tau;</p>
+      <p class="e t" data-s="5"><i>h</i> = &#8466;<sup>&minus;1</sup>{<span class="fr"><span>1</span><span><i>as</i><sup>2</sup> + <i>bs</i> + <i>c</i></span></span>}, the response to &delta;(<i>t</i>)</p>
+      <p class="e" data-s="6"><span class="bx">Free part from the initial values, forced part from <i>g</i>.</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="pg" data-n="21">
+  <p class="h" data-s="0">Next</p>
+  <div class="two">
+    <div>
+      <p class="l" data-s="1"><span class="g">Wed Nov 18</span>: review.&nbsp; <span class="g">Fri Nov 20</span>: <span class="v">Midterm 2</span>, in class.</p>
+      <p class="l" data-s="2"><span class="v">Midterm 2</span> covers &sect;3.2, 3.4, 3.5 and &sect;6.1&ndash;6.5. Today&rsquo;s &sect;6.6 is <span class="v">not</span> on it.</p>
+      <p class="l" data-s="3"><span class="g">Practice problems and solutions</span>: Carmen, Modules &gt; Week 12.</p>
+      <p class="l" data-s="4"><span class="g">HW9</span> (&sect;6.6): on Carmen, due <span class="v">Mon Nov 30</span>, 11:59 pm.</p>
+    </div>
+    <div>
+      <p class="lb" data-s="5">Before Wednesday</p>
+      <p class="l" data-s="5">Do the practice problems. Bring your questions to the review.</p>
+      <p class="e" data-s="6"><span class="bx">Questions: office hours, the Carmen discussion board, or email.</span></p>
+    </div>
+  </div>
+</div>
+
+<canvas id="ink"></canvas>
+<canvas id="wet"></canvas>
+<div id="edge"></div>
+
+<div id="hint">
+  <b>Math 2255 &mdash; Lecture 1</b><br><br>
+  <kbd>&#9654;</kbd> buttons (top right and bottom), or arrow keys<br>
+  <kbd>&#9664;</kbd> goes back<br>
+  <kbd>1</kbd>&ndash;<kbd>5</kbd> pen colour &nbsp; <kbd>E</kbd> eraser &nbsp; <kbd>C</kbd> clear ink<br>
+  <kbd>F</kbd> full screen &nbsp; <kbd>T</kbd> hide toolbar &nbsp; <kbd>G</kbd> writing zones<br>
+  <kbd>R</kbd> reset timer&nbsp;&nbsp;&nbsp;<kbd>D</kbd> dark / light<br><br><span style="color:var(--dm)">Pages turn with the arrow buttons only,<br>so nothing you touch by accident moves the board.<br><br>The toolbar hides itself after a few seconds.<br>Tap the very bottom edge to bring it back.</span><br><br>
+  <span style="color:var(--dm)">Only the Apple Pencil draws.<br>
+  Your palm and fingers leave no marks.<br><br>Tap anywhere to begin.</span>
+</div>
+
+<div id="bar">
+  <span class="pen sel" data-i="0" style="background:#F0EFE8"></span>
+  <span class="pen" data-i="1" style="background:#E3E34B"></span>
+  <span class="pen" data-i="2" style="background:#45CFC2"></span>
+  <span class="pen" data-i="3" style="background:#E85CD2"></span>
+  <span class="pen" data-i="4" style="background:#F09A42"></span>
+  <button class="btn" id="th">Pen M</button>
+  <button class="btn" id="hd">HD</button>
+  <button class="btn" id="er">Erase</button>
+  <button class="btn" id="cl">Clear</button>
+  <span class="sp"></span>
+  <button class="btn nav" id="prev">&#9664;</button>
+  <span id="pos">1 / 21</span>
+  <button class="btn nav" id="next">&#9654;</button>
+  <span class="sp"></span>
+  <span id="clk">00:00</span>
+  <button class="btn" id="tm">Light</button>
+  <button class="btn" id="fs">Full</button>
+  <button class="btn" id="hp">?</button>
+</div>
+</div>
+
+<script>
+(function(){
+var pgs=[].slice.call(document.querySelectorAll('.pg'));
+var maxStep=pgs.map(function(p){
+  var m=0;[].forEach.call(p.querySelectorAll('[data-s]'),function(e){
+    m=Math.max(m,+e.getAttribute('data-s'));});return m;});
+var P=0,S=0;
+var cv=document.getElementById('ink');
+var cx=cv.getContext('2d',{desynchronized:true,alpha:true})||cv.getContext('2d');
+var strokes=pgs.map(function(){return [];});
+var DPRCAP=1.5;
+var PAL={dark: ['#F0EFE8','#E3E34B','#45CFC2','#E85CD2','#F09A42'],
+          light:['#16181B','#8F6A05','#0E7A70','#A0198A','#B4530A']};
+var theme='dark', ci=0, wid=4.2, erase=false, drawing=false, cur=null;
+function inks(){return PAL[theme];}
+var WIDS=[3.0,4.2,6.0],wi=1;
+
+function fit(){
+  var r=Math.min(window.devicePixelRatio||1,DPRCAP);
+  cv.width=Math.round(innerWidth*r);cv.height=Math.round(innerHeight*r);
+  cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+  wet.width=cv.width;wet.height=cv.height;
+  wet.style.width=innerWidth+'px';wet.style.height=innerHeight+'px';
+  wx.setTransform(r,0,0,r,0,0);wetBox=null;
+  cx.setTransform(r,0,0,r,0,0);syncRect();redraw();
+}
+function setStyle(st){
+  cx.lineCap='round';cx.lineJoin='round';
+  cx.strokeStyle=inks()[st.ci];cx.lineWidth=st.w;
+  cx.globalCompositeOperation=st.e?'destination-out':'source-over';
+}
+function strokePath(st){
+  if(st.pts.length<2)return;
+  setStyle(st);
+  cx.beginPath();cx.moveTo(st.pts[0].x,st.pts[0].y);
+  for(var i=1;i<st.pts.length;i++){
+    var a=st.pts[i-1],b=st.pts[i];
+    cx.quadraticCurveTo(a.x,a.y,(a.x+b.x)/2,(a.y+b.y)/2);
+  }
+  cx.stroke();
+}
+// full repaint only on page change / clear / resize -- never while drawing
+function redraw(){
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  strokes[P].forEach(strokePath);
+  cx.globalCompositeOperation='source-over';
+}
+function show(){
+  pgs.forEach(function(p,i){p.classList.toggle('on',i===P);});
+  [].forEach.call(pgs[P].querySelectorAll('[data-s]'),function(e){
+    var from=+e.getAttribute('data-s');
+    var u=e.getAttribute('data-until');
+    var until=(u===null||u==='')?1e9:+u;
+    var live=(S>=from && S<=until);
+    e.classList.toggle('vis', live);
+    if(u!==null&&u!=='') e.classList.toggle('gone', S>until);});
+  var pt=(P+1)+' / '+pgs.length;
+  document.getElementById('pos').textContent=pt;
+  var p2=document.getElementById('pos2'); if(p2)p2.textContent=pt;
+  redraw();
+}
+function next(){ if(S<maxStep[P]){S++;} else if(P<pgs.length-1){P++;S=0;} show(); }
+function prev(){ if(S>0){S--;} else if(P>0){P--;S=maxStep[P];} show(); }
+function pgUp(){ if(P>0){P--;S=maxStep[P];show();} }
+function pgDn(){ if(P<pgs.length-1){P++;S=maxStep[P];show();} }
+
+// ---- pencil drawing ----
+var RC={left:0,top:0};
+function syncRect(){RC=cv.getBoundingClientRect();}
+function xy(e){return {x:e.clientX-RC.left,y:e.clientY-RC.top};}
+function isPen(e){
+  if(e.pointerType==='pen')return true;
+  if(e.pointerType==='touch'&&(e.width||99)<=12&&(e.height||99)<=12)return true;
+  return false;
+}
+cv.addEventListener('pointerdown',function(e){
+  if(!isPen(e))return;
+  e.preventDefault();drawing=true;syncRect();
+  var p=xy(e),w=erase?26:wid*(0.55+0.9*(e.pressure||0.5));
+  cur={ci:ci,w:w,e:erase,pts:[p]};strokes[P].push(cur);
+  setStyle(cur);
+  cx.beginPath();cx.arc(p.x,p.y,Math.max(w,1)/2,0,6.2832);
+  cx.fillStyle=inks()[cur.ci];cx.fill();
+  cx.globalCompositeOperation='source-over';
+},{passive:false});
+var pend=[],rafId=0,MINSTEP=1.7;
+var wet=document.getElementById('wet');
+var wx=wet.getContext('2d',{desynchronized:true})||wet.getContext('2d');
+var wetBox=null;
+function clearWet(){
+  if(!wetBox)return;
+  wx.clearRect(wetBox[0]-4,wetBox[1]-4,wetBox[2]-wetBox[0]+8,wetBox[3]-wetBox[1]+8);
+  wetBox=null;
+}
+function drawPredicted(e){
+  clearWet();
+  if(!cur||!e.getPredictedEvents)return;
+  var pr=e.getPredictedEvents(); if(!pr.length)return;
+  var a=cur.pts[cur.pts.length-1];
+  var x0=a.x,y0=a.y,x1=a.x,y1=a.y;
+  wx.lineCap='round';wx.lineJoin='round';
+  wx.strokeStyle=cur.c;wx.lineWidth=cur.w;
+  wx.globalCompositeOperation=cur.e?'destination-out':'source-over';
+  wx.beginPath();wx.moveTo(a.x,a.y);
+  for(var i=0;i<pr.length;i++){
+    var p=xy(pr[i]); wx.lineTo(p.x,p.y);
+    if(p.x<x0)x0=p.x; if(p.y<y0)y0=p.y;
+    if(p.x>x1)x1=p.x; if(p.y>y1)y1=p.y;
+  }
+  wx.stroke();
+  wetBox=[x0-cur.w,y0-cur.w,x1+cur.w,y1+cur.w];
+}
+function flush(){
+  rafId=0;
+  clearWet();
+  if(!cur||!pend.length)return;
+  setStyle(cur);
+  cx.beginPath();
+  var a=cur.pts[cur.pts.length-1];
+  cx.moveTo(a.x,a.y);
+  for(var i=0;i<pend.length;i++){ cx.lineTo(pend[i].x,pend[i].y); cur.pts.push(pend[i]); }
+  cx.stroke();
+  cx.globalCompositeOperation='source-over';
+  pend.length=0;
+}
+cv.addEventListener('pointermove',function(e){
+  if(!drawing||!isPen(e))return;
+  e.preventDefault();
+  var evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];
+  var last=pend.length?pend[pend.length-1]:cur.pts[cur.pts.length-1];
+  for(var i=0;i<evs.length;i++){
+    var p=xy(evs[i]);
+    var dx=p.x-last.x, dy=p.y-last.y;
+    if(dx*dx+dy*dy < MINSTEP) continue;
+    pend.push(p); last=p;
+  }
+  if(pend.length && !rafId) rafId=requestAnimationFrame(flush);
+  drawPredicted(e);
+},{passive:false});
+function end(e){ if(e.pointerType&&!isPen(e))return;
+  if(rafId){cancelAnimationFrame(rafId);rafId=0;} flush();
+  clearWet(); drawing=false;cur=null;pend.length=0; }
+cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+
+// ---- buttons only. no tap-to-advance, no swipe. ----
+cv.addEventListener('pointerup',function(e){
+  if(isPen(e))return;
+  startClk();
+  var h=document.getElementById('hint');
+  if(!h.classList.contains('hide')) h.classList.add('hide');
+  showChrome();
+});
+
+function bindNav(id,fn){
+  var el=document.getElementById(id); if(!el)return;
+  var go=function(e){ e.preventDefault(); e.stopPropagation(); fn(); startClk(); };
+  el.addEventListener('click',go);
+  el.addEventListener('touchend',go,{passive:false});
+}
+bindNav('prev',prev); bindNav('next',next);
+bindNav('prev2',prev); bindNav('next2',next);
+
+
+// ---- toolbar ----
+[].forEach.call(document.querySelectorAll('.pen'),function(b){
+  b.onclick=function(){
+    [].forEach.call(document.querySelectorAll('.pen'),function(x){x.classList.remove('sel');});
+    b.classList.add('sel');ci=+b.getAttribute('data-i');erase=false;
+    document.getElementById('er').style.borderColor='var(--bbd)';
+  };
+});
+document.getElementById('th').onclick=function(){
+  wi=(wi+1)%3; wid=WIDS[wi];
+  this.textContent='Pen '+['S','M','L'][wi];
+};
+document.getElementById('hd').onclick=function(){
+  DPRCAP=(DPRCAP===1.5)?1:1.5;
+  this.textContent=(DPRCAP===1.5)?'HD':'Fast';
+  fit();
+};
+document.getElementById('er').onclick=function(){
+  erase=!erase;this.style.borderColor=erase?'var(--o)':'var(--bbd)';};
+document.getElementById('cl').onclick=function(){strokes[P]=[];redraw();};
+document.getElementById('hp').onclick=function(){
+  document.getElementById('hint').classList.toggle('hide');};
+function isStandalone(){
+  return window.navigator.standalone===true ||
+         (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches);
+}
+function setTheme(t){
+  theme=t;
+  document.body.classList.toggle('light', t==='light');
+  document.getElementById('tm').textContent = (t==='dark')?'Light':'Dark';
+  var sw=document.querySelectorAll('.pen');
+  for(var i=0;i<sw.length;i++) sw[i].style.background=PAL[t][i];
+  var tc=document.querySelector('meta[name="theme-color"]');
+  if(tc)tc.setAttribute('content', t==='light'?'#F2F0EA':'#0D0F10');
+  try{localStorage.setItem('m2255theme',t);}catch(e){}
+  redraw();
+}
+document.getElementById('tm').onclick=function(){ setTheme(theme==='dark'?'light':'dark'); };
+document.getElementById('fs').onclick=function(){
+  var d=document.documentElement;
+  var req=d.requestFullscreen||d.webkitRequestFullscreen;
+  if(document.fullscreenElement||document.webkitFullscreenElement){
+    (document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);
+    return;
+  }
+  if(req){ try{ req.call(d); return; }catch(err){} }
+  if(isStandalone()){ alert('Already running full screen.'); return; }
+  alert('For true full screen on iPad:\n\n'+
+        '1. Tap the Share button in Safari\n'+
+        '2. Choose "Add to Home Screen"\n'+
+        '3. Launch it from the home-screen icon\n\n'+
+        'It then opens with no address bar and no toolbars.');
+};
+if(isStandalone()){ document.getElementById('fs').textContent='FS'; }
+
+// ---- clock ----
+var t0=null,tick=null;
+function fmt(s){var m=Math.floor(s/60);return (m<10?'0':'')+m+':'+((s%60)<10?'0':'')+(s%60);}
+function startClk(){
+  if(tick)return;t0=Date.now();
+  tick=setInterval(function(){
+    var s=Math.floor((Date.now()-t0)/1000);
+    var el=document.getElementById('clk');
+    el.textContent=fmt(s);el.classList.toggle('over',s>55*60);
+  },1000);
+}
+
+// ---- keys ----
+addEventListener('keydown',function(e){
+  var k=e.key;
+  if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();next();}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev();}
+  else if(k==='ArrowDown'){e.preventDefault();pgDn();}
+  else if(k==='ArrowUp'){e.preventDefault();pgUp();}
+  else if(k>='1'&&k<='5'){document.querySelectorAll('.pen')[+k-1].click();}
+  else if(k==='e'||k==='E'){document.getElementById('er').click();}
+  else if(k==='c'||k==='C'){document.getElementById('cl').click();}
+  else if(k==='f'||k==='F'){document.getElementById('fs').click();}
+  else if(k==='t'||k==='T'){document.getElementById('bar').classList.toggle('hide');document.getElementById('topnav').classList.toggle('hide');}
+  else if(k==='g'||k==='G'){document.body.classList.toggle('guides');}
+  else if(k==='d'||k==='D'){document.getElementById('tm').click();}
+  else if(k==='r'||k==='R'){t0=Date.now();}
+  else if(k==='?'||k==='h'){document.getElementById('hp').click();}
+  if(k!=='?'&&k!=='h')startClk();
+});
+document.getElementById('hint').addEventListener('click',function(){
+  this.classList.add('hide');startClk();});
+
+// ---- auto-hiding chrome ----
+var chromeT=null;
+function showChrome(){
+  document.getElementById('bar').classList.remove('hide');
+  document.getElementById('topnav').classList.remove('hide');
+  clearTimeout(chromeT);
+  chromeT=setTimeout(hideChrome,3500);
+}
+function hideChrome(){
+  document.getElementById('bar').classList.add('hide');
+  document.getElementById('topnav').classList.add('hide');
+}
+document.getElementById('edge').addEventListener('pointerdown',function(e){
+  e.stopPropagation(); showChrome();
+});
+document.getElementById('bar').addEventListener('pointerdown',showChrome);
+document.getElementById('topnav').addEventListener('pointerdown',showChrome);
+showChrome();
+
+addEventListener('resize',function(){fit();syncRect();});
+addEventListener('orientationchange',function(){setTimeout(function(){fit();syncRect();},250);});
+addEventListener('scroll',syncRect,true);
+try{var sv=localStorage.getItem('m2255theme');}catch(e){}
+setTheme(sv==='light'?'light':'dark');
+fit();show();
+})();
+</script>
+
+</body>
+</html>
